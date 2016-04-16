@@ -1,0 +1,105 @@
+table.small_in .tablesorter-filter{
+  width: 30px !important;
+}
+table.small_in input{
+  width: 40px !important;
+}
+textarea.form-control{
+	height: 100px;
+}
+.required{
+	color: #F00;
+}
+.error{
+	color: #F42B2B;
+}
+.tablesorter-headerRow{
+	border-top: 2px solid #ddd;
+}
+label.error{
+	font-size: 11px;
+}
+.sortable div{
+	cursor: move;
+}
+.sortable-div{
+	padding: 10px;
+	border: 1px dashed #CCC;
+	font-size: 16px;
+	margin: 10px 0;
+}
+.sortable-div button {
+	padding-top: 3px;
+	padding-bottom: 3px;
+}
+.sortable-div a.btn {
+	padding-top: 3px;
+	padding-bottom: 3px;
+}
+.clear{
+	clear: both;
+}
+.small-text{
+	font-size:14px;
+	color:#888;
+}
+.nav-pills li{
+	background: #EEE;
+}
+.nav-pills li a{
+	padding-top:5px;
+	padding-bottom:5px;
+}
+.event_1{
+	background: #35aa47;
+	color: #FFF;
+	font-weight: bold;
+}
+.event_2{
+	background: #FFB848;
+	color: #FFF;
+	font-weight: bold;
+}
+.event_3{
+	background: #c63927;
+	color: #FFF;
+	font-weight: bold;
+}
+.event_5{
+	background: #35aa47;
+	color: #FFF;
+	font-weight: bold;
+}
+.event_6{
+	background: #c63927;
+	color: #FFF;
+	font-weight: bold;
+}
+.red-text{
+	color: #d84a38;
+}
+.green-text{
+	color: #35aa47;
+}
+.assess_textarea{
+	width: 100%;
+	height:60px;
+}
+.displaytable{
+	display: table;
+	width: 100%;
+}
+.displaytable >div{
+	display: table-cell;
+	vertical-align: middle;
+	float: none;
+}
+.displaytable > div:first-child{
+	font-size: 22px;
+}
+.alert-failure{
+	background: red;
+}
+.big-text{
+	font-size: 20px;
+}
