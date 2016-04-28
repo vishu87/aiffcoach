@@ -17,6 +17,10 @@
 <script type="text/javascript">
   var base_url = '{{URL::to('/')}}';
 </script>
+<script type="text/javascript">
+  var validator = $( "#registration" ).validate();
+  validator.form();
+</script>
 {{HTML::script("assets/global/plugins/jquery-migrate.min.js")}}
 <!-- IMPORTANT! Load jquery-ui-1.10.3.custom.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
 {{HTML::script("assets/global/plugins/jquery-ui/jquery-ui-1.10.3.custom.min.js")}}
@@ -37,6 +41,7 @@
 {{HTML::script("assets/admin/scripts/jquery.validate.js")}}
 {{HTML::script("assets/admin/scripts/additional-methods.min.js")}}
 {{HTML::script("assets/admin/scripts/jquery.floatThead.min.js")}}
+{{HTML::script("assets/admin/scripts/dropzone.js")}}
 {{HTML::script("assets/admin/scripts/custom.js")}}
 <script>
 jQuery(document).ready(function() {   

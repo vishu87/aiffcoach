@@ -48,7 +48,31 @@ Route::filter('auth', function()
 	}
 });
 
+Route::filter('coach', function()
+{
+	if(Auth::user()->privilege != 1){
+		return Redirect::to('/');
+	}
+});
 
+Route::filter('admin1', function()
+{
+	if(Auth::user()->privilege != 2){
+		return Redirect::to('/');
+	}
+});
+Route::filter('admin2', function()
+{
+	if(Auth::user()->privilege != 3){
+		return Redirect::to('/');
+	}
+});
+Route::filter('admin3', function()
+{
+	if(Auth::user()->privilege != 4){
+		return Redirect::to('/');
+	}
+});
 Route::filter('auth.basic', function()
 {
 	return Auth::basic();
