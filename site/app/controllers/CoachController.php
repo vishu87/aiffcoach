@@ -19,7 +19,7 @@ class CoachController extends BaseController {
      	
 
     }
-// 6TARQ-CWGTQ-4PFV
+
 
     public function addNewEmployment(){
         $this->layout->sidebar = View::make('coaches.sidebar',['sidebar'=>2]);

@@ -17,10 +17,6 @@
 <script type="text/javascript">
   var base_url = '{{URL::to('/')}}';
 </script>
-<script type="text/javascript">
-  var validator = $( "#registration" ).validate();
-  validator.form();
-</script>
 {{HTML::script("assets/global/plugins/jquery-migrate.min.js")}}
 <!-- IMPORTANT! Load jquery-ui-1.10.3.custom.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
 {{HTML::script("assets/global/plugins/jquery-ui/jquery-ui-1.10.3.custom.min.js")}}
@@ -51,6 +47,7 @@ jQuery(document).ready(function() {
   QuickSidebar.init(); // init quick sidebar
 });
 </script>
+
 <!-- END JAVASCRIPTS -->
 </body>
 <!-- END BODY -->

@@ -33,6 +33,59 @@
         </li>
       </ul>
     </li>
+    <li class="@if($sidebar == 'license' ) active @endif" >
+      <a href="{{url('/admin/License')}}">
+        <i class="fa fa-user"></i>
+        <span class="title">License</span>
+        <span class="selected"></span>
+      </a>
+    </li>
+    <li class="@if($sidebar == 'courses' ) active open @endif">
+      <a href="javascript:;">
+      <i class="fa fa-users"></i>
+      <span class="title">Courses</span>
+      <span class="arrow @if($sidebar == 'courses' ) open @endif"></span>
+      </a>
+      <ul class="sub-menu">
+        <li class="@if($sidebar == 'courses' && $subsidebar == 1 ) active @endif" style="display:inherit">
+          <a href="{{url('admin/Courses')}}">
+          <i class="fa fa-user"></i>
+          ALL</a>
+        </li>
+        
+         <li class="@if($sidebar == 'courses' && $subsidebar == 2 ) active @endif">
+          <a href="{{url('admin/Courses/active')}}">
+          <i class="fa fa-database"></i>
+          Active</a>
+        </li>
+
+        <li class="@if($sidebar == 'courses' && $subsidebar == 3 ) active @endif">
+          <a href="{{url('admin/Courses/inactive')}}">
+          <i class="fa fa-group"></i>
+          Inactive</a>
+        </li>
+      </ul>
+    </li>
+    <li class="@if($sidebar == 'Applications' ) active open @endif">
+      <a href="javascript:;">
+      <i class="fa fa-users"></i>
+      <span class="title">Applications</span>
+      <span class="arrow @if($sidebar == 'Applications' ) open @endif"></span>
+      </a>
+      <ul class="sub-menu">
+        <li class="@if($sidebar == 'Applications' && $subsidebar == 2 ) active @endif">
+          <a href="{{url('admin/Applications/approved')}}">
+          <i class="fa fa-database"></i>
+          Approved</a>
+        </li>
+
+        <li class="@if($sidebar == 'Applications' && $subsidebar == 3 ) active @endif">
+          <a href="{{url('admin/Applications/pending')}}">
+          <i class="fa fa-group"></i>
+          Pending</a>
+        </li>
+      </ul>
+    </li>
     <li class="@if($sidebar == 'profile' ) active @endif" >
       <a href="{{url('/admin')}}">
         <i class="fa fa-user"></i>

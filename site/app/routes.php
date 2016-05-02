@@ -33,7 +33,7 @@ Route::get('/logout', function(){
 
 Route::post('/register', 'CoachController@register');
 
-Route::group(['prefix'=>'coach','before'=>'auth','before'=>'coach'], function () {
+Route::group(['prefix'=>'coach','before'=>['auth','coach']], function () {
 	Route::get('/','CoachController@index');
 	Route::post('/postEmployment','CoachController@postEmployment');
 	Route::post('updateProfile','CoachController@updateProfile');
@@ -53,13 +53,26 @@ Route::group(['prefix'=>'coach','before'=>'auth','before'=>'coach'], function ()
 		Route::get('/edit/{id}','CoachActivityController@edit');
 		Route::put('/update/{id}','CoachActivityController@update');
 		Route::delete('/delete/{id}','CoachActivityController@delete');
-		
 	});
+	Route::group(["prefix"=>'courses'],function(){
+		Route::get('/','CourseController@allCourses');
+		Route::get('/active','CourseController@activeCourse');
+		Route::get('/inactive','CourseController@inactiveCourse');
+		Route::get('/apply/{course_id}','ApplicationController@applyCourse');
+	});
+	Route::group(["prefix"=>'applications'],function(){
+		Route::get('/','ApplicationController@allApplications');
+		Route::get('/applied','ApplicationController@applied');
+		Route::get('/active','ApplicationController@active');
+		Route::get('/inactive','ApplicationController@inactive');
+		Route::delete('/delete/{id}','ApplicationController@deleteCoachApplication');
+	});
+
 });
 
 
-Route::group(["before"=>'auth'],function(){
-	Route::group(["before"=>'admin'],function(){
+Route::group(["before"=>['auth']],function(){
+	Route::group(["before"=>['admin']],function(){
 		Route::group(["prefix"=>'admin'],function(){
 			Route::get('/','AdminController@index');
 			Route::get('/approvedCoach','AdminController@approvedCoach');
@@ -68,6 +81,33 @@ Route::group(["before"=>'auth'],function(){
 			Route::get('viewCoach/{id}','AdminController@viewCoach');
 			Route::get('markCoachStatus/{id}','AdminController@markCoachStatus');
 			
+			Route::group(["prefix"=>'Courses'],function(){
+				Route::get('/','CourseController@index');
+				Route::get('/active','CourseController@active');
+				Route::get('/inactive','CourseController@inactive');
+				Route::get('/add','CourseController@add');
+				Route::post('/insert','CourseController@insert');
+				Route::get('/edit/{id}','CourseController@edit');
+				Route::put('/update/{id}','CourseController@update');
+				Route::delete('/delete/{id}','CourseController@delete');
+			});
+
+			Route::group(["prefix"=>'License'],function(){
+				Route::get('/','LicenseController@index');
+				Route::get('/add','LicenseController@add');
+				Route::post('/insert','LicenseController@insert');
+				Route::get('/edit/{id}','LicenseController@edit');
+				Route::put('/update/{id}','LicenseController@update');
+				Route::delete('/delete/{id}','LicenseController@delete');
+			});
+
+			Route::group(["prefix"=>'Applications'],function(){
+				Route::get('/','ApplicationController@ApprovedApplications');
+				Route::get('/approved','ApplicationController@ApprovedApplications');
+				Route::get('/pending','ApplicationController@PendingApplications');
+				Route::get('/markApplication/{id}','ApplicationController@markApplication');
+				
+			});
 		});
 	});
 });

@@ -52,7 +52,7 @@ var addDiv = '';
 
 
 $(document).ready(function(e){
-	$(".datepicker").datepicker({'format':'dd-mm-yyyy'});
+	$(".datepicker").datepicker({'format':'yyyy-mm-dd'});
 	$(".check_form").validate();
 	$( "#sortable1" ).sortable();
 	$( "#sortable1" ).disableSelection();
@@ -125,6 +125,38 @@ $(document).on("click", ".approve-coach", function() {
 			    	$("#"+deleteDiv).hide('500', function(){
 		    			$("#"+deleteDiv).remove();
 			    	});
+			    	
+		    	}
+
+		    }
+		},"json");
+
+      }
+    });
+});
+
+
+$(document).on("click", ".apply-course", function() {
+    var btn = $(this);
+	bootbox.confirm("Are you sure?", function(result) {
+      if(result) {
+    	var initial_html = btn.html();
+    	btn.html(initial_html+' <i class="fa fa-spin fa-spinner"></i>');
+		var deleteDiv = btn.attr('div-id');
+		
+		var formAction = base_url+'/'+btn.attr('action');
+		$.ajax({
+		    type: "GET",
+		    url : formAction,
+		    success : function(data){
+		    	data = JSON.parse(data);
+		    	if(!data.success) bootbox.alert(data.message);
+		    	else {
+		    		bootbox.alert(data.message);
+
+			    	btn.html(data.btn_title);
+			    	btn.addClass(data.add_class);
+			    	btn.removeClass(data.remove_class);
 			    	
 		    	}
 
@@ -287,7 +319,7 @@ $(document).on("click", ".details", function() {
 });
 
 function initialize(){
-	$(".datepicker").datepicker({'format':'dd-mm-yyyy'});
+	$(".datepicker").datepicker({'format':'yyyy-mm-dd'});
 	tablesorter();
 }
 

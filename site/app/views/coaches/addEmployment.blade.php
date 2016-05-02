@@ -6,7 +6,7 @@
 @endif
 <div class="row" style="margin-bottom:25px;">
 	<div class="col-md-12">
-		<a href="{{url('/coach/employmentDetails')}}" class="btn blue pull-right">Go Back</a>
+		<a href="{{URL::previous()}}" class="btn blue pull-right">Go Back</a>
 	</div>
 </div>
 
@@ -43,12 +43,12 @@
 						<div class="col-md-6 form-group">
 							@if(isset($employment))
 				        		<div class="row">
-				        			<div class="col-md-8">
+				        			<div class="col-md-8 form-group">
 				        				<label>Copy of Present Footballing Employment Contract</label><span class="error"> *</span>
 						        		{{Form::file('present_emp_copy',["class"=>"form-control","id"=>"contract"])}}
 							            <span class="error">{{$errors->first('present_emp_copy')}}</span>
 				        			</div>
-				        			<div class="col-md-4" style="margin-top:25px;">
+				        			<div class="col-md-4 form-group" style="margin-top:25px;">
 				        				<a href="{{url($employment->contract)}}" class="btn yellow" target="_blank">View Old Contract</a>
 				        			</div>
 				        		</div>

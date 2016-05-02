@@ -27,5 +27,52 @@
         <span class="selected"></span>
       </a>
     </li>
+    <li class="@if($sidebar == 5 ) active open @endif">
+      <a href="javascript:;">
+      <i class="fa fa-users"></i>
+      <span class="title">Courses</span>
+      <span class="arrow @if($sidebar == 5 ) open @endif"></span>
+      </a>
+      <ul class="sub-menu">
+      
+        <li class="@if($sidebar == 5 && $subsidebar == 1 ) active @endif">
+          <a href="{{url('coach/courses/active')}}">
+          <i class="fa fa-database"></i>
+          Active</a>
+        </li>
+
+        <li class="@if($sidebar == 5 && $subsidebar == 2 ) active @endif">
+          <a href="{{url('coach/courses/inactive')}}">
+          <i class="fa fa-group"></i>
+          Inactive</a>
+        </li>
+      </ul>
+    </li>
+    <li class="@if($sidebar == 4 ) active open @endif">
+      <a href="javascript:;">
+      <i class="fa fa-users"></i>
+      <span class="title">Applications</span>
+      <span class="arrow @if($sidebar == 4 ) open @endif"></span>
+      </a>
+      <ul class="sub-menu">
+        <li class="@if($sidebar == 4 && $subsidebar == 1 ) active @endif" style="display:inherit">
+          <a href="{{url('coach/applications/applied')}}">
+          <i class="fa fa-user"></i>
+          Applied</a>
+        </li>
+        
+        <!-- <li class="@if($sidebar == 4 && $subsidebar == 2 ) active @endif">
+          <a href="{{url('coach/applications/active')}}">
+          <i class="fa fa-database"></i>
+          Active</a>
+        </li>
+
+        <li class="@if($sidebar == 4 && $subsidebar == 3 ) active @endif">
+          <a href="{{url('coach/applications/inactive')}}">
+          <i class="fa fa-group"></i>
+          Inactive</a> -->
+        </li>
+      </ul>
+    </li>
   </ul>
 </div>

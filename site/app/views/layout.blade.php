@@ -20,10 +20,10 @@
 
     <!-- END RESPONSIVE MENU TOGGLER -->
     <!-- BEGIN TOP NAVIGATION MENU -->
- <div class="top-menu pull-right">
+    <div class="top-menu pull-right">
      
-          <span class="username username-hide-on-mobile">
-           Welcome {{Auth::User()->username}} <b></b> <a class="btn blue" href="{{url('/logout')}}"><i class="fa fa-sign-out"></i> Logout</a></span>
+      <span class="username username-hide-on-mobile">
+       Welcome {{Auth::User()->username}}<a class="blue" style="color:#fff;margin:20px;" href="{{url('/logout')}}"><i class="fa fa-sign-out"></i> Logout</a></span>
           
     </div>
     <!-- END TOP NAVIGATION MENU -->
