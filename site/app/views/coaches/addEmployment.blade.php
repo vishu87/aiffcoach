@@ -1,24 +1,32 @@
+<div class="row">
+	<div class="col-md-9">
+		<h3 class="page-title">
+			@if(!isset($employment))
+				Add New Employment
+			@else
+				{{$employment->employment}}
+			@endif
+		</h3>
+	</div>
+	<div class="col-md-3">
+		<a href="{{URL::previous()}}" class="btn blue pull-right">Go Back</a>
+	</div>
+</div>
 @if(Session::has('success'))
 	<div class="alert alert-success alert-dismissable">
 		<button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>
 		{{Session::get('success')}}
 	</div>
 @endif
-<div class="row" style="margin-bottom:25px;">
-	<div class="col-md-12">
-		<a href="{{URL::previous()}}" class="btn blue pull-right">Go Back</a>
-	</div>
-</div>
-
 <div class="portlet box blue">
     <div class="portlet-title"><div class="caption">@if(!isset($employment))Add New Employment @else Edit Employment Details @endif</div></div>
         <div class="portlet-body form">
+	        {{ Form::open(array('url' =>(isset($employment))?'coach/updateEmployment/'.$employment->id:'coach/addEmployment',"method"=>"POST","files"=>'true','class'=>'form')) }}			        
           	<div class="form-body">
-	          	{{ Form::open(array('url' =>(isset($employment))?'coach/updateEmployment/'.$employment->id:'coach/addEmployment',"method"=>"POST","files"=>'true','class'=>'form')) }}			        
 				    <div class="row">
 						<div class="col-md-6">
 					      <div class="form-group">
-					        <label>Employment</label><span class="error"> *</span>
+					        <label>Organization</label><span class="error"> *</span>
 					        
 					          {{Form::text('present_emp',(isset($employment))?$employment->employment:'',['required'=>'true','placeholder'=>"Present Football Employment",'class'=>"form-control "])}}
 					          <span class="error">{{$errors->first('present_emp')}}</span>
@@ -44,7 +52,7 @@
 							@if(isset($employment))
 				        		<div class="row">
 				        			<div class="col-md-8 form-group">
-				        				<label>Copy of Present Footballing Employment Contract</label><span class="error"> *</span>
+				        				<label>Copy of Present Footballing Employment Contract</label><span class="error">*</span>
 						        		{{Form::file('present_emp_copy',["class"=>"form-control","id"=>"contract"])}}
 							            <span class="error">{{$errors->first('present_emp_copy')}}</span>
 				        			</div>
@@ -53,7 +61,7 @@
 				        			</div>
 				        		</div>
 					        @else
-					        	<label>Copy of Present Footballing Employment Contract</label><span class="error"> *</span>
+					        	<label>Copy of Present Footballing Employment Contract</label><span class="error">*</span>
 				        		{{Form::file('present_emp_copy',["class"=>"form-control","id"=>"contract"])}}
 					            <span class="error">{{$errors->first('present_emp_copy')}}</span>
 					        @endif    
@@ -61,11 +69,12 @@
 				        </div>
 					</div>
 
-				    <div class="form-actions">
-				    	<button type="submit" class="btn green">Submit</button>
-				    </div>
-				{{Form::close()}}        
+		      
           	</div>      
+          	<div class="form-actions">
+		    	<button type="submit" class="btn green">Submit</button>
+		    </div>
+			{{Form::close()}}
     	</div>
         
     </div>

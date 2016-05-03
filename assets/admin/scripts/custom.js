@@ -54,6 +54,7 @@ var addDiv = '';
 $(document).ready(function(e){
 	$(".datepicker").datepicker({'format':'yyyy-mm-dd'});
 	$(".check_form").validate();
+	$(".check_form_2").validate();
 	$( "#sortable1" ).sortable();
 	$( "#sortable1" ).disableSelection();
 

@@ -6,7 +6,7 @@ class CoachController extends BaseController {
         $id = Auth::User()->coach_id;
         $coach = Coach::find($id);
         if($coach->status!=0){
-            $state =[""=>'Select'] + State::lists('name','id');
+            $state =[""=>'Select'] + State::orderBy('name','asc')->lists('name','id');
             $CoachParameters = CoachParameter::where('coach_id',Auth::User()->coach_id)->first();
             $this->layout->sidebar = View::make('coaches.sidebar',["sidebar"=>'profile']);
             $this->layout->main = View::make('coaches.profile',['state'=>$state,'coach'=>$CoachParameters]);
@@ -16,8 +16,6 @@ class CoachController extends BaseController {
             $this->layout->sidebar = '';
             $this->layout->main = View::make('coaches.index');
         }
-     	
-
     }
 
 
@@ -25,9 +23,9 @@ class CoachController extends BaseController {
         $this->layout->sidebar = View::make('coaches.sidebar',['sidebar'=>2]);
         $this->layout->main = View::make('coaches.addEmployment');
     }
+
     public function register(){
     	
-     	
      	$cre = [
      			'photo'=>Input::file('photo'),
      			'passport_proof'=>Input::file('passport_proof'),
@@ -279,17 +277,10 @@ class CoachController extends BaseController {
         if(Input::hasFile('passport_proof')){
             
             $extension = Input::file('passport_proof')->getClientOriginalExtension();
-            $doc = str_replace(' ','-',Input::file('passport_proof')->getClientOriginalName());
-            $count = 1;
-            $doc_ori = $doc;
-            while(File::exists($destinationPath.$doc)){
-                $doc = $count.'-'.$doc_ori;
-                $count++;
-            }
-            Input::file('passport_proof')->move($destinationPath,$doc);
-            // $coach_parameter->passport_copy = $destinationPath.$doc;
+            $name = "Passport_".Auth::id().'_'.strtotime("now").'.'.$extension;
+            Input::file('passport_proof')->move($destinationPath,$name);
         }
-        $updatePassport = CoachParameter::where('coach_id',Auth::User()->coach_id)->update(['passport_no'=>Input::get('passport_no'),"passport_expiry"=>Input::get('passport_expiry'),"passport_copy"=>$destinationPath.$doc]);
+        $updatePassport = CoachParameter::where('coach_id',Auth::User()->coach_id)->update(['passport_no'=>Input::get('passport_no'),"passport_expiry"=>Input::get('passport_expiry'),"passport_copy"=>$destinationPath.$name]);
         return Redirect::Back()->with('success','Passport Details Updated Successfully');
         
     }
@@ -297,8 +288,6 @@ class CoachController extends BaseController {
         
         $updateContact = CoachParameter::where('coach_id',Auth::User()->coach_id)->update(["address1"=>Input::get('address1'),"address2"=>Input::get('address2'),"city"=>Input::get('city'),"pincode"=>Input::get('pincode'),"address_state_id"=>Input::get('state'),"mobile"=>Input::get('mobile'),"landline"=>Input::get('landline'),"alternate_email"=>Input::get('aemail')]);
         return Redirect::Back()->with('success','Contact Details Updated Successfully');
-
-
         
     }
 
