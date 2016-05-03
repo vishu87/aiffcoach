@@ -25,7 +25,8 @@ Route::get('/reset', function(){
 Route::post('/tm_admin', 'UserController@postLogin');
 Route::post('/reset', 'UserController@postReset');
 
-
+Route::get('changePassword','UserController@changePassword');
+Route::post('updatePassword','UserController@updatePassword');
 Route::get('/logout', function(){
     Auth::logout();
     return Redirect::to('/');
@@ -45,6 +46,7 @@ Route::group(['prefix'=>'coach','before'=>['auth','coach']], function () {
 	Route::get('addNewEmployment','CoachController@addNewEmployment');
 	Route::post('updateEmployment/{id}','CoachController@updateEmployment');
 	Route::delete('/deleteEmployment/{id}','CoachController@deleteEmployment');
+
 
 	Route::group(['prefix'=>'activity','before'=>'auth'],function(){
 		Route::get('/','CoachActivityController@index');

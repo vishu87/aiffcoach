@@ -22,14 +22,14 @@
     </li>
     <li class="@if($sidebar == 3 ) active @endif" >
       <a href="{{url('/coach/activity')}}">
-        <i class="fa fa-cube"></i>
+        <i class="fa fa-tasks"></i>
         <span class="title">Activities</span>
         <span class="selected"></span>
       </a>
     </li>
     <li class="@if($sidebar == 5 ) active open @endif">
       <a href="javascript:;">
-      <i class="fa fa-users"></i>
+      <i class="fa fa-book"></i>
       <span class="title">Courses</span>
       <span class="arrow @if($sidebar == 5 ) open @endif"></span>
       </a>
@@ -50,7 +50,7 @@
     </li>
     <li class="@if($sidebar == 4 ) active open @endif">
       <a href="javascript:;">
-      <i class="fa fa-users"></i>
+      <i class="fa fa-envelope"></i>
       <span class="title">Applications</span>
       <span class="arrow @if($sidebar == 4 ) open @endif"></span>
       </a>
@@ -73,6 +73,13 @@
           Inactive</a> -->
         </li>
       </ul>
+    </li>
+    <li class="@if($sidebar == 6 ) active @endif" >
+      <a href="{{url('/changePassword')}}">
+        <i class="fa fa-key"></i>
+        <span class="title">Change Password</span>
+        <span class="selected"></span>
+      </a>
     </li>
   </ul>
 </div>
