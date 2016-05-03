@@ -5,7 +5,7 @@
         <div class="portlet-body form">
           	<div class="form-body">
 	           
-	                {{ Form::open(array('url' =>'coach/postEmployment',"method"=>"POST","files"=>'true','class'=>'check_form')) }}
+	                {{ Form::open(array('url' =>'coach/postEmployment',"method"=>"POST","files"=>'true','class'=>'')) }}
 	                <div class="row">
 	                	<div class="col-md-6">
 				            <div class="form-group">
@@ -19,7 +19,7 @@
 				          	<div class="form-group">
 				            	<label>Date Since Employed</label><span class="error"> *</span>
 				            
-					            {{Form::text('date_since_emp','',['placeholder'=>"Date Since Employed",'class'=>"form-control datepicker ","date"=>'true'])}}
+					            {{Form::text('date_since_emp','',['placeholder'=>"Date Since Employed",'class'=>"form-control datepicker "])}}
 					            <span class="error">{{$errors->first('date_since_emp')}}</span>
 			            
 				          	</div>
@@ -30,28 +30,28 @@
 	            	<label>Last Five Employment</label>
 	            	<div class="row">
 	            		<div class="col-md-6 form-group">{{Form::text('emp_name[]','',['placeholder'=>"Employment Name",'class'=>"form-control "])}}</div>
-	            		<div class="col-md-3 form-group">{{Form::text('start_date[]','',['placeholder'=>"Start Date",'class'=>"form-control  datepicker","date"=>'true'])}}</div>
-	            		<div class="col-md-3 form-group">{{Form::text('end_date[]','',['placeholder'=>"End Date",'class'=>"form-control  datepicker","date"=>'true'])}}</div>
+	            		<div class="col-md-3 form-group">{{Form::text('start_date[]','',['placeholder'=>"Start Date",'class'=>"form-control  datepicker"])}}</div>
+	            		<div class="col-md-3 form-group">{{Form::text('end_date[]','',['placeholder'=>"End Date",'class'=>"form-control  datepicker"])}}</div>
 	            	</div>
 	            	<div class="row">
 	            		<div class="col-md-6 form-group">{{Form::text('emp_name[]','',['placeholder'=>"Employment Name",'class'=>"form-control "])}}</div>
-	            		<div class="col-md-3 form-group">{{Form::text('start_date[]','',['placeholder'=>"Start Date",'class'=>"form-control  datepicker","date"=>'true'])}}</div>
-	            		<div class="col-md-3 form-group">{{Form::text('end_date[]','',['placeholder'=>"End Date",'class'=>"form-control  datepicker","date"=>'true'])}}</div>
+	            		<div class="col-md-3 form-group">{{Form::text('start_date[]','',['placeholder'=>"Start Date",'class'=>"form-control  datepicker"])}}</div>
+	            		<div class="col-md-3 form-group">{{Form::text('end_date[]','',['placeholder'=>"End Date",'class'=>"form-control  datepicker"])}}</div>
 	            	</div>
 	            	<div class="row">
 	            		<div class="col-md-6 form-group">{{Form::text('emp_name[]','',['placeholder'=>"Employment Name",'class'=>"form-control "])}}</div>
-	            		<div class="col-md-3 form-group">{{Form::text('start_date[]','',['placeholder'=>"Start Date",'class'=>"form-control  datepicker","date"=>'true'])}}</div>
-	            		<div class="col-md-3 form-group">{{Form::text('end_date[]','',['placeholder'=>"End Date",'class'=>"form-control  datepicker","date"=>'true'])}}</div>
+	            		<div class="col-md-3 form-group">{{Form::text('start_date[]','',['placeholder'=>"Start Date",'class'=>"form-control  datepicker"])}}</div>
+	            		<div class="col-md-3 form-group">{{Form::text('end_date[]','',['placeholder'=>"End Date",'class'=>"form-control  datepicker"])}}</div>
 	            	</div>
 	            	<div class="row">
 	            		<div class="col-md-6 form-group">{{Form::text('emp_name[]','',['placeholder'=>"Employment Name",'class'=>"form-control "])}}</div>
-	            		<div class="col-md-3 form-group">{{Form::text('start_date[]','',['placeholder'=>"Start Date",'class'=>"form-control  datepicker","date"=>'true'])}}</div>
-	            		<div class="col-md-3 form-group">{{Form::text('end_date[]','',['placeholder'=>"End Date",'class'=>"form-control  datepicker","date"=>'true'])}}</div>
+	            		<div class="col-md-3 form-group">{{Form::text('start_date[]','',['placeholder'=>"Start Date",'class'=>"form-control  datepicker"])}}</div>
+	            		<div class="col-md-3 form-group">{{Form::text('end_date[]','',['placeholder'=>"End Date",'class'=>"form-control  datepicker"])}}</div>
 	            	</div>
 	            	<div class="row">
 	            		<div class="col-md-6 form-group">{{Form::text('emp_name[]','',['placeholder'=>"Employment Name",'class'=>"form-control "])}}</div>
-	            		<div class="col-md-3 form-group">{{Form::text('start_date[]','',['placeholder'=>"Start Date",'class'=>"form-control  datepicker","date"=>'true'])}}</div>
-	            		<div class="col-md-3 form-group">{{Form::text('end_date[]','',['placeholder'=>"End Date",'class'=>"form-control  datepicker","date"=>'true'])}}</div>
+	            		<div class="col-md-3 form-group">{{Form::text('start_date[]','',['placeholder'=>"Start Date",'class'=>"form-control  datepicker"])}}</div>
+	            		<div class="col-md-3 form-group">{{Form::text('end_date[]','',['placeholder'=>"End Date",'class'=>"form-control  datepicker"])}}</div>
 	            	</div>
 	            	
 				           
@@ -70,7 +70,7 @@
 	                <div class="row">
 	                	<div class="col-md-6 form-group">
 				        	<label>Date of Completion of last AFC Coaching Licence</label><span class="error"> *</span>
-				        	{{Form::text('last_afc_date','',["class"=>"form-control datepicker","date"=>'true'])}}
+				        	{{Form::text('last_afc_date','',["class"=>"form-control datepicker"])}}
 				        </div>
 				        <div class="col-md-6 form-group">
 				        	<label>Copy of Latest AFC/AIFF Certificate</label><span class="error"> *</span>

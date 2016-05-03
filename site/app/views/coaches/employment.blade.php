@@ -1,17 +1,17 @@
-
-	@if(Session::has('success'))
-	<div class="alert alert-success alert-dismissable">
-		<button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>
-		{{Session::get('success')}}
+<div class="row">
+	<div class="col-md-9">
+		<h3 class="page-title">Employment Details</h3>
 	</div>
-	@endif
-
-<div class="row" style="margin-bottom:25px;">
-	<div class="col-md-12">
+	<div class="col-md-3">
 		<a href="{{url('/coach/addNewEmployment')}}" class="btn blue pull-right">Add Employment</a>
 	</div>
 </div>
-
+@if(Session::has('success'))
+<div class="alert alert-success alert-dismissable">
+	<button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>
+	{{Session::get('success')}}
+</div>
+@endif
 <div class="row">
 	<div class="col-md-12">
 		<table class="table table-bordered table-hover tablesorter">
@@ -29,8 +29,6 @@
 				@include('coaches.view')
 			<?php $count++;?>
 			@endforeach
-			
-
 		</table>
 	</div>
 </div>

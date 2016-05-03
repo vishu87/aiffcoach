@@ -14,7 +14,7 @@
     <div class="portlet-title"><div class="caption">@if(!isset($employment))Add New Employment @else Edit Employment Details @endif</div></div>
         <div class="portlet-body form">
           	<div class="form-body">
-	          	{{ Form::open(array('url' =>(isset($employment))?'coach/updateEmployment/'.$employment->id:'coach/addEmployment',"method"=>"POST","files"=>'true','class'=>'form check_form')) }}			        
+	          	{{ Form::open(array('url' =>(isset($employment))?'coach/updateEmployment/'.$employment->id:'coach/addEmployment',"method"=>"POST","files"=>'true','class'=>'form')) }}			        
 				    <div class="row">
 						<div class="col-md-6">
 					      <div class="form-group">

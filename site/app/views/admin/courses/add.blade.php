@@ -1,9 +1,9 @@
 
 	<div class="row">
-		<div class="col-md-9">
+		<div class="col-md-6">
 			<h3 class="page-title">Courses</h3>
 		</div>
-		<div class="col-md-3">
+		<div class="col-md-6">
 			<a href="{{URL::previous()}}" class="btn blue pull-right">Go Back</a>
 		</div>
 	</div>
@@ -37,12 +37,12 @@
 				</div>
 				<div class="col-md-3 form-group">
 					{{Form::label('Start Date')}}
-					{{Form::text('start_date',(isset($course))?$course->start_date:'',["class"=>"form-control datepicker","required"=>"true","date"=>'true'])}}
+					{{Form::text('start_date',(isset($course))?$course->start_date:'',["class"=>"form-control datepicker","required"=>"true"])}}
 					<span class="error">{{$errors->first('start_date')}}</span>
 				</div>
 				<div class="col-md-3 form-group">
 					{{Form::label('End Date')}}
-					{{Form::text('end_date',(isset($course))?$course->end_date:'',["class"=>"form-control datepicker","required"=>"true","date"=>'true'])}}
+					{{Form::text('end_date',(isset($course))?$course->end_date:'',["class"=>"form-control datepicker","required"=>"true"])}}
 					<span class="error">{{$errors->first('end_date')}}</span>
 				</div>
 			</div>
@@ -66,7 +66,7 @@
 					<div class="row">
 						<div class="col-md-8">
 							{{Form::label('Documents')}}
-							{{Form::file('documents',["class"=>"form-control","pdf"=>'true'])}}
+							{{Form::file('documents',["class"=>"form-control"])}}
 							<span class="error">{{$errors->first('documents')}}</span>
 
 						</div>
