@@ -12,7 +12,7 @@
     <div class="portlet-body form">
       	<div class="form-body">
             <div class="">
-                {{ Form::open(array('url' =>'coach/updateContact',"method"=>"POST","files"=>'true','class'=>'form')) }}			        
+                {{ Form::open(array('url' =>'coach/updateContact',"method"=>"POST","files"=>'true','class'=>'form check_form')) }}			        
 	            <div class="row">
 		        	<div class="col-md-6 form-group">
 			        	<label>Alternate Email</label>
@@ -76,7 +76,7 @@
     <div class="portlet-body form">
       	<div class="form-body">
             <div class="">
-                {{ Form::open(array('url' =>'coach/updatePassport',"method"=>"POST","files"=>'true','class'=>'form')) }}			        
+                {{ Form::open(array('url' =>'coach/updatePassport',"method"=>"POST","files"=>'true','class'=>'form check_form')) }}			        
 	            <div class="row">
 					<div class="col-md-6 form-group">
 						<label>Passport No</label>
