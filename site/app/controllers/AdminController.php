@@ -39,19 +39,33 @@ class AdminController extends BaseController {
         return View::make('admin.viewCoach',['coach'=>$coach,'employmentDetails'=>$employmentDetails]);
     }
 
-   public function markCoachStatus($id){
-        $coach = Coach::find($id);
-        if($coach->status==1){
+    public function markCoachStatus($flag,$id){
+
+        if($flag==1){
             Coach::where('id',$id)->update(['status'=>2]);
             $data['success']=true;
             $data['message']='Disapprove';
 
         }
-        if($coach->status==2){
+
+        if($flag==2){
             Coach::where('id',$id)->update(['status'=>1]);
             $data['success']=true;
             $data['message']='Approve';
 
+        }
+
+        if($flag==3){
+            Coach::where('id',$id)->update(['status'=>2]);
+            User::where('coach_id',$id)->update(['active'=>0]);
+            $data['success']=true;
+            $data['message']='Approve';
+        }
+        if($flag==4){
+            User::where('coach_id',$id)->update(['active'=>1]);
+            Coach::where('id',$id)->update(['status'=>0]);
+            $data['success']=true;
+            $data['message']='Approve';
         }
         
         return json_encode($data);

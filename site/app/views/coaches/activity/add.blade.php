@@ -22,7 +22,7 @@
 @if(isset($activity))
 {{Form::open(array("url"=>'coach/activity/update/'.$activity->id,"method"=>'PUT',"class"=>""))}}
 @else
-{{Form::open(array("url"=>'coach/activity/insert',"method"=>'post',"class"=>""))}}
+{{Form::open(array("url"=>'coach/activity/insert',"method"=>'post',"class"=>"check_form"))}}
 @endif
 	<div class="form-body">
 		<!--- my form start -->
@@ -34,14 +34,14 @@
 				</div>
 				<div class="col-md-6 form-group">
 					{{Form::label('From')}}
-					{{Form::text('from_date',(isset($activity))?$activity->from_date:'',["class"=>"form-control datepicker","required"=>"true"])}}
+					{{Form::text('from_date',(isset($activity))?$activity->from_date:'',["class"=>"form-control datepicker","required"=>"true","date"=>'true'])}}
 					<span class="error">{{$errors->first('from_date')}}</span>
 				</div>
 			</div>
 			<div class="row">	
 				<div class="col-md-6 form-group">
 					{{Form::label('To')}}
-					{{Form::text('to_date',(isset($activity))?$activity->to_date:'',["class"=>"form-control datepicker","required"=>"true"])}}
+					{{Form::text('to_date',(isset($activity))?$activity->to_date:'',["class"=>"form-control datepicker","required"=>"true","date"=>'true'])}}
 					<span class="error">{{$errors->first('to_date')}}</span>
 				</div>
 				<div class="col-md-6 form-group">

@@ -39,7 +39,7 @@
   <div class="col-md-6">
     <div class="content" style="margin-left:210px">
     <!-- BEGIN LOGIN FORM -->
-    {{ Form::open(array('action' => 'UserController@postLogin','class' => 'login-form',"method"=>"POST")) }}
+    {{ Form::open(array('action' => 'UserController@postLogin','class' => 'login-form check_form',"method"=>"POST")) }}
     @if(Session::has('failure'))
       <div class="alert alert-danger">
           <i class="fa fa-ban-circle"></i><strong>Failure!</strong> {{Session::get('failure')}}

@@ -81,7 +81,7 @@ Route::group(["before"=>['auth']],function(){
 			Route::get('/pendingCoach','AdminController@pendingCoach');
 			Route::get('/inactiveCoach','AdminController@inactiveCoach');
 			Route::get('viewCoach/{id}','AdminController@viewCoach');
-			Route::get('markCoachStatus/{id}','AdminController@markCoachStatus');
+			Route::get('markCoachStatus/{flag}/{id}','AdminController@markCoachStatus');
 			
 			Route::group(["prefix"=>'Courses'],function(){
 				Route::get('/','CourseController@index');

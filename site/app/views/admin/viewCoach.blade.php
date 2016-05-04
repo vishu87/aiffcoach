@@ -8,11 +8,12 @@
 		<td id="emp_{{$data->id}}">		
 			<button action="{{url('admin/viewCoach/'.$data->id)}}" class="btn yellow details" modal-title="{{$data->first_name.' '.$data->middle_name.' '.$data->last_name}}">View</button>
 			@if($data->status==1)
-				<button type="button" class="btn green pull-right approve-coach" action="{{'admin/markCoachStatus/'.$data->id}}" div-id="emp_{{$data->id}}">Approve <i class="m-icon-swapright m-icon-white"></i></button>
+				<button type="button" class="btn green  approve-coach" action="{{'admin/markCoachStatus/1/'.$data->id}}" div-id="emp_{{$data->id}}">Approve <i class="m-icon-swapright m-icon-white"></i></button>
 			@elseif($data->status==2)
-				<button type="button" class="btn red pull-right approve-coach" action="{{'admin/markCoachStatus/'.$data->id}}" div-id="emp_{{$data->id}}">Disapprove <i class="m-icon-swapright m-icon-white"></i></button>
+				<button type="button" class="btn green  approve-coach" action="{{'admin/markCoachStatus/4/'.$data->id}}" div-id="emp_{{$data->id}}">Mark Inactive <i class="m-icon-swapright m-icon-white"></i></button>
+				<button type="button" class="btn red  approve-coach" action="{{'admin/markCoachStatus/2/'.$data->id}}" div-id="emp_{{$data->id}}">Disapprove <i class="m-icon-swapright m-icon-white"></i></button>
 			@else
-			<button type="button" class="btn green pull-right" div-id="emp_{{$data->id}}">Mark Active <i class="m-icon-swapright m-icon-white"></i></button>	
+			<button type="button" class="btn green  approve-coach" action="{{'admin/markCoachStatus/3/'.$data->id}}" div-id="emp_{{$data->id}}">Mark Active <i class="m-icon-swapright m-icon-white"></i></button>	
 			@endif	
 		</td>
 	</tr>
