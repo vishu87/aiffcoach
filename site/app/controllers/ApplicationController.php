@@ -10,9 +10,17 @@ class ApplicationController extends BaseController {
     protected $layout = 'layout';
 
     public function ApprovedApplications(){
-        $applications = Application::select('courses.name as course_name','courses.id as course_id','applications.id','applications.status','applications.remarks','coaches.first_name','coaches.last_name','coaches.middle_name')->join('coaches','applications.coach_id','=','coaches.id')->join('courses','applications.course_id','=','courses.id')->where('applications.status',1)->get();
+
+        $courses = ["" => "Select Course"] + Course::lists('name','id');
+
+        if(Input::has('course')){
+            $applications = Application::select('courses.name as course_name','courses.id as course_id','applications.id','applications.status','applications.remarks','coaches.first_name','coaches.last_name','coaches.middle_name')->join('coaches','applications.coach_id','=','coaches.id')->join('courses','applications.course_id','=','courses.id')->where('applications.status',1)->get();
+        } else {
+            $applications = [];
+        }
+        
         $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'Applications','subsidebar'=>2]);
-        $this->layout->main = View::make('admin.applications.list',["applications"=>$applications,'title'=>'Approved Applications','flag'=>'true']);
+        $this->layout->main = View::make('admin.applications.list',["applications"=>$applications,'title'=>'Approved Applications','flag'=>'true', "courses" => $courses]);
     }
     
     public function PendingApplications(){

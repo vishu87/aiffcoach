@@ -108,8 +108,11 @@ $.validator.addMethod('filesize_img', function(value, element) {
 
 $(document).on("click", ".approve-coach", function() {
     var btn = $(this);
-	bootbox.confirm("Are you sure?", function(result) {
-      if(result) {
+	bootbox.prompt("Remarks", function(result) {
+      if(result === null || result == ''){
+      	alert('Please enter some remarks');
+      } else {
+      	alert(result);
     	var initial_html = btn.html();
     	btn.html(initial_html+' <i class="fa fa-spin fa-spinner"></i>');
 		var deleteDiv = btn.attr('div-id');

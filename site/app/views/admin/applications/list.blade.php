@@ -2,7 +2,6 @@
 	<div class="col-md-8">
 		<h3 class="page-title">{{$title}}</h3>
 	</div>
-	
 </div>
 @if(Session::has('success'))
 	<div class="alert alert-success alert-dismissable">
@@ -10,6 +9,21 @@
 		{{Session::get('success')}}
 	</div>
 @endif
+
+<div style="margin-bottom:20px;">
+	{{Form::open(array('url'=>'/admin/Applications/approved', 'method'=>'GET', 'class' => 'check_form'))}}
+		Filter by course
+		<div class="row">
+			<div class="col-md-4">
+				{{Form::select('course',$courses,(Input::has('course'))?Input::get('course'):'',["class"=>"form-control", "required" => "true"])}}
+			</div>
+			<div class="col-md-4">
+				{{Form::submit('Submit',["class"=>"btn blue"])}}
+			</div>
+		</div>
+	{{Form::close()}}
+</div>
+
 <div style="overflow-y:auto">
 	<table class="table table-bordered table-hover tablesorter">
 		<thead>

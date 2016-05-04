@@ -15,23 +15,24 @@ class AdminController extends BaseController {
     }
     
     public function approvedCoach(){
-    	$coaches = User::select('coaches.id','coaches.first_name','coaches.status','coaches.middle_name','coaches.last_name','states.name as state_reference','coach_parameters.email','coach_parameters.mobile')->join('coaches','users.coach_id','=','coaches.id')->join('states','coaches.state_reference','=','states.id')->join('coach_parameters','users.coach_id','=','coach_parameters.coach_id')->where('coaches.status',2)->get();
-
+    	$coaches = Coach::listing()->approved()->get();
+        $status = Coach::Status();
     	$this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'coach','subsidebar'=>1]);
-    	$this->layout->main = View::make('admin.coaches',['coaches'=>$coaches,"title"=>'Approved Coach']);
+    	$this->layout->main = View::make('admin.coaches',['coaches'=>$coaches,"title"=>'Approved Coaches', "status" => $status]);
     }
     public function pendingCoach(){
-    	$coaches = User::select('coaches.id','coaches.first_name','coaches.status','coaches.middle_name','coaches.last_name','states.name as state_reference','coach_parameters.email','coach_parameters.mobile')->join('coaches','users.coach_id','=','coaches.id')->join('states','coaches.state_reference','=','states.id')->join('coach_parameters','users.coach_id','=','coach_parameters.coach_id')->where('coaches.status',1)->where('active',0)->get();
-
-    	$this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'coach','subsidebar'=>2]);
-    	$this->layout->main = View::make('admin.coaches',['coaches'=>$coaches,"title"=>'Pending Coach']);
+    	$coaches = Coach::listing()->pending()->get();
+        $status = Coach::Status();
+        $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'coach','subsidebar'=>2]);
+        $this->layout->main = View::make('admin.coaches',['coaches'=>$coaches,"title"=>'Pending for Approval', "status" => $status]);
     }
     public function inactiveCoach(){
-    	$coaches = User::select('coaches.id','coaches.first_name','coaches.status','coaches.middle_name','coaches.last_name','states.name as state_reference','coach_parameters.email','coach_parameters.mobile')->join('coaches','users.coach_id','=','coaches.id')->join('states','coaches.state_reference','=','states.id')->join('coach_parameters','users.coach_id','=','coach_parameters.coach_id')->where('active',1)->get();
-
+    	$coaches = Coach::listing()->disapproved()->get();
+        $status = Coach::Status();
     	$this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'coach','subsidebar'=>3]);
-    	$this->layout->main = View::make('admin.coaches',['coaches'=>$coaches,"title"=>'Inactive Coach']);
+    	$this->layout->main = View::make('admin.coaches',['coaches'=>$coaches,"title"=>'Inactive Coaches', "status" => $status]);
     }
+    
     public function viewCoach($id){
         $coach = Coach::select('coaches.first_name','coaches.status','states.name as state_registation','coaches.middle_name','coaches.last_name','coaches.dob','coaches.gender','coaches.photo','coach_parameters.email','coach_parameters.address1','coach_parameters.address2','coach_parameters.city','coach_parameters.pincode','coach_parameters.mobile')->join('states','coaches.state_registration','=','states.id')->join('coach_parameters','coaches.id','=','coach_parameters.coach_id')->where('coaches.id',$id)->first();
         $employmentDetails = EmploymentDetails::where('coach_id',$id)->get();

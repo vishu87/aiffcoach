@@ -36,7 +36,7 @@
     <li class="@if($sidebar == 'license' ) active @endif" >
       <a href="{{url('/admin/License')}}">
         <i class="fa fa-user"></i>
-        <span class="title">License</span>
+        <span class="title">Licenses</span>
         <span class="selected"></span>
       </a>
     </li>
@@ -47,12 +47,7 @@
       <span class="arrow @if($sidebar == 'courses' ) open @endif"></span>
       </a>
       <ul class="sub-menu">
-        <li class="@if($sidebar == 'courses' && $subsidebar == 1 ) active @endif" style="display:inherit">
-          <a href="{{url('admin/Courses')}}">
-          <i class="fa fa-user"></i>
-          ALL</a>
-        </li>
-        
+
          <li class="@if($sidebar == 'courses' && $subsidebar == 2 ) active @endif">
           <a href="{{url('admin/Courses/active')}}">
           <i class="fa fa-database"></i>
@@ -63,6 +58,12 @@
           <a href="{{url('admin/Courses/inactive')}}">
           <i class="fa fa-group"></i>
           Inactive</a>
+        </li>
+
+        <li class="@if($sidebar == 'courses' && $subsidebar == 1 ) active @endif" style="display:inherit">
+          <a href="{{url('admin/Courses')}}">
+          <i class="fa fa-user"></i>
+          All</a>
         </li>
       </ul>
     </li>

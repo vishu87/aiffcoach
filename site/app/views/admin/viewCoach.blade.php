@@ -2,19 +2,23 @@
 	<tr id="emp_{{$data->id}}">
 		<td>{{$count}}</td>
 		<td>{{$data->first_name}} {{$data->middle_name}} {{$data->last_name}}</td>
-		<td>{{$data->email}}</td>
+		<td>{{$data->email}} / {{$data->mobile}}</td>
 		<td>{{$data->state_reference}}</td>
-		<td>{{$data->mobile}}</td>
-		<td id="emp_{{$data->id}}">		
-			<button action="{{url('admin/viewCoach/'.$data->id)}}" class="btn yellow details" modal-title="{{$data->first_name.' '.$data->middle_name.' '.$data->last_name}}">View</button>
-			@if($data->status==1)
-				<button type="button" class="btn green  approve-coach" action="{{'admin/markCoachStatus/1/'.$data->id}}" div-id="emp_{{$data->id}}">Approve <i class="m-icon-swapright m-icon-white"></i></button>
+		<td></td>
+		<td>{{(isset($status[$data->status]))?$status[$data->status]:''}}</td>
+		<td id="emp_{{$data->id}}" style="width:250px">		
+			<button action="{{url('admin/viewCoach/'.$data->id)}}" class="btn btn-sm yellow details" modal-title="{{$data->first_name.' '.$data->middle_name.' '.$data->last_name}}">View</button>
+			<a action="{{url('admin/viewCoach/'.$data->id)}}" class="btn btn-sm blue details" modal-title="{{$data->first_name.' '.$data->middle_name.' '.$data->last_name}}" target="_blank">Details</a>
+
+			@if($data->status == 1)
+				<button type="button" class="btn btn-sm green  approve-coach" action="{{'admin/markCoachStatus/1/'.$data->id}}" div-id="emp_{{$data->id}}">Approve</button>
 			@elseif($data->status==2)
-				<button type="button" class="btn green  approve-coach" action="{{'admin/markCoachStatus/4/'.$data->id}}" div-id="emp_{{$data->id}}">Mark Inactive <i class="m-icon-swapright m-icon-white"></i></button>
-				<button type="button" class="btn red  approve-coach" action="{{'admin/markCoachStatus/2/'.$data->id}}" div-id="emp_{{$data->id}}">Disapprove <i class="m-icon-swapright m-icon-white"></i></button>
+				<button type="button" class="btn btn-sm green hidden approve-coach" action="{{'admin/markCoachStatus/4/'.$data->id}}" div-id="emp_{{$data->id}}">Mark Inactive</button>
+				<button type="button" class="btn btn-sm red  approve-coach" action="{{'admin/markCoachStatus/2/'.$data->id}}" div-id="emp_{{$data->id}}">Disapprove</button>
 			@else
-			<button type="button" class="btn green  approve-coach" action="{{'admin/markCoachStatus/3/'.$data->id}}" div-id="emp_{{$data->id}}">Mark Active <i class="m-icon-swapright m-icon-white"></i></button>	
-			@endif	
+			<button type="button" class="btn btn-sm green  approve-coach" action="{{'admin/markCoachStatus/3/'.$data->id}}" div-id="emp_{{$data->id}}">Mark Active</button>	
+			@endif
+
 		</td>
 	</tr>
 @endif

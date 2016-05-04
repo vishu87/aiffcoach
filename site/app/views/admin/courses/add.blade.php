@@ -49,14 +49,29 @@
 			
 			<div class="row">	
 				
-				<div class="col-md-6 form-group">
+				<div class="col-md-3 form-group">
 					{{Form::label('License Type')}}
 					{{Form::select('license_id',$licenses,(isset($course))?$course->license_id:'',["class"=>"form-control","required"=>"true"])}}
 					<span class="error">{{$errors->first('license_id')}}</span>
 				</div>
-				<div class="col-md-6 form-group">
+				<div class="col-md-3 form-group">
 					{{Form::label('Fee')}}
 					{{Form::text('fee',(isset($course))?$course->fees:'',["class"=>"form-control","required"=>"true"])}}
+					<span class="error">{{$errors->first('fee')}}</span>
+				</div>
+				<div class="col-md-6 form-group">
+					{{Form::label('Venue')}}
+					{{Form::text('fee',(isset($course))?$course->fees:'',["class"=>"form-control","required"=>"true"])}}
+					<span class="error">{{$errors->first('fee')}}</span>
+				</div>
+			</div>
+
+			<div class="row">	
+				
+				
+				<div class="col-md-12 form-group">
+					{{Form::label('Description')}}
+					{{Form::textarea('fee',(isset($course))?$course->fees:'',["class"=>"form-control","required"=>"true"])}}
 					<span class="error">{{$errors->first('fee')}}</span>
 				</div>
 			</div>
