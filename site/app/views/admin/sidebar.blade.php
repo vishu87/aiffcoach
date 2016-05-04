@@ -87,9 +87,9 @@
       </ul>
     </li>
     <li class="@if($sidebar == 'profile' ) active @endif" >
-      <a href="{{url('/admin')}}">
+      <a href="{{url('/changePassword')}}">
         <i class="fa fa-user"></i>
-        <span class="title">Profile</span>
+        <span class="title">Change Password</span>
         <span class="selected"></span>
       </a>
     </li>
