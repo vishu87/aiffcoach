@@ -3,7 +3,7 @@
 	<td>{{$data->course_name}}</td>
 	<td>{{$data->first_name.' '.$data->middle_name.' '.$data->last_name}}</td>
 	<td>{{$data->remarks}}</td>
-	<td>{{($data->status==0)?'Pending':'Approved'}}</td>
+	<td>{{(isset($status[$data->status]))?$status[$data->status]:''}}</td>
 	<td>
 		@if(!isset($flag))
 		<button type="button" class="btn blue approve-coach" div-id="activity_{{$data->id}}"  action="{{'admin/Applications/markApplication/'.$data->id}}">Approve <i class="fa fa-arrow-right"></i></button>

@@ -274,13 +274,19 @@ class CoachController extends BaseController {
 
     public function updatePassport(){
         $destinationPath = 'coaches-doc/';
+        
+        $updatePassport = CoachParameter::find(Auth::User()->coach_id);
+        $updatePassport->passport_no= Input::get('passport_no');
+        $updatePassport->passport_expiry = Input::get('passport_expiry');
+
         if(Input::hasFile('passport_proof')){
             
             $extension = Input::file('passport_proof')->getClientOriginalExtension();
             $name = "Passport_".Auth::id().'_'.strtotime("now").'.'.$extension;
             Input::file('passport_proof')->move($destinationPath,$name);
+            $updatePassport->passport_copy=$destinationPath.$name;
         }
-        $updatePassport = CoachParameter::where('coach_id',Auth::User()->coach_id)->update(['passport_no'=>Input::get('passport_no'),"passport_expiry"=>Input::get('passport_expiry'),"passport_copy"=>$destinationPath.$name]);
+        $updatePassport->save();
         return Redirect::Back()->with('success','Passport Details Updated Successfully');
         
     }

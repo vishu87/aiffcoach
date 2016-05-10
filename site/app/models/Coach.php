@@ -18,7 +18,7 @@ class Coach extends Eloquent {
     }
 
     public function scopePending($query){
-        return $query->where('coaches.status', '=', 1);
+        return $query->where('coaches.status', '=', 1)->orWhere('coaches.status','=',0);
     }
 
     public function scopeDisapproved($query){

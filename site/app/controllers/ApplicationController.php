@@ -12,21 +12,27 @@ class ApplicationController extends BaseController {
     public function ApprovedApplications(){
 
         $courses = ["" => "Select Course"] + Course::lists('name','id');
-
+        $status = Application::status();
         if(Input::has('course')){
-            $applications = Application::select('courses.name as course_name','courses.id as course_id','applications.id','applications.status','applications.remarks','coaches.first_name','coaches.last_name','coaches.middle_name')->join('coaches','applications.coach_id','=','coaches.id')->join('courses','applications.course_id','=','courses.id')->where('applications.status',1)->get();
+            $applications = Application::applications()->where('applications.status',3)->where('applications.course_id',Input::get('course'))->get();
         } else {
-            $applications = [];
+            $applications = Application::applications()->where('applications.status',3)->get();
         }
         
         $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'Applications','subsidebar'=>2]);
-        $this->layout->main = View::make('admin.applications.list',["applications"=>$applications,'title'=>'Approved Applications','flag'=>'true', "courses" => $courses]);
+        $this->layout->main = View::make('admin.applications.list',['status'=>$status,"applications"=>$applications,'title'=>'Approved Applications','flag'=>'true', "courses" => $courses]);
     }
     
     public function PendingApplications(){
-        $applications = Application::select('courses.name as course_name','courses.id as course_id','applications.id','applications.status','applications.remarks','coaches.first_name','coaches.last_name','coaches.middle_name')->join('coaches','applications.coach_id','=','coaches.id')->join('courses','applications.course_id','=','courses.id')->where('applications.status',0)->get();
+        $status = Application::status();
+        $courses = ["" => "Select Course"] + Course::lists('name','id');
+        if(Input::has('course')){
+            $applications = Application::applications()->where('applications.status','!=',3)->where('applications.course_id',Input::get('course'))->get();
+        } else {
+            $applications = Application::applications()->where('applications.status','!=',3)->get();
+        }
         $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'Applications','subsidebar'=>3]);
-        $this->layout->main = View::make('admin.applications.list',["applications"=>$applications,'title'=>'Pending Applications']);
+        $this->layout->main = View::make('admin.applications.list',['status'=>$status,"courses" => $courses,"applications"=>$applications,'title'=>'Pending Applications']);
     }
 
     public function markApplication($id){
@@ -46,9 +52,9 @@ class ApplicationController extends BaseController {
     /************* Coaches methods return here********/
     public function applied(){
         $applications =  Application::select('applications.status','applications.remarks','applications.id as application_id','courses.fees','courses.name as course_name','courses.end_date','license.id as license_id','license.name as license_name','license.authorised_by','license.description')->join('courses','applications.course_id','=','courses.id')->join('license','courses.license_id','=','license.id')->where('applications.coach_id',Auth::User()->coach_id)->get();
-
+        $status = Application::status();
         $this->layout->sidebar = View::make('coaches.sidebar',['sidebar'=>'4','subsidebar'=>1]);
-        $this->layout->main = View::make('coaches.applications.list',["applications"=>$applications,'title'=>'Applied Applications']);
+        $this->layout->main = View::make('coaches.applications.list',['status'=>$status,"applications"=>$applications,'title'=>'Applied Applications']);
 
     }
 
@@ -89,6 +95,8 @@ class ApplicationController extends BaseController {
         $data['message'] = 'You Have Successfully Applied For This Course';
         return json_encode($data);
     } 
+
+    
 }
 
 

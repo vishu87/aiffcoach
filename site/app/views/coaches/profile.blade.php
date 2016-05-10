@@ -78,11 +78,11 @@
     <div class="portlet-body form">
       	<div class="form-body">
             <div class="">
-<<<<<<< HEAD
+
                 {{ Form::open(array('url' =>'coach/updatePassport',"method"=>"POST","files"=>'true','class'=>'form check_form')) }}			        
-=======
+
                 {{ Form::open(array('url' =>'coach/updatePassport',"method"=>"POST","files"=>'true','class'=>'form check_form_2')) }}			        
->>>>>>> eb948cfe5b8e2ad8a7667abd63e9274901dfa2be
+
 	            <div class="row">
 					<div class="col-md-6 form-group">
 						<label>Passport No</label>

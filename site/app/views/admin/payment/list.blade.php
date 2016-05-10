@@ -1,5 +1,5 @@
 <div class="row">
-	<div class="col-md-8">
+	<div class="col-md-12">
 		<h3 class="page-title">{{$title}}</h3>
 	</div>
 </div>
@@ -11,10 +11,10 @@
 @endif
 
 <div style="margin-bottom:20px;">
-	@if(isset($flag))
-	{{Form::open(array('url'=>'/admin/Applications/approved', 'method'=>'GET', 'class' => 'check_form'))}}
+	@if(!isset($flag))
+	{{Form::open(array('url'=>'/admin/Payment', 'method'=>'GET', 'class' => 'check_form'))}}
 	@else
-	{{Form::open(array('url'=>'/admin/Applications/pending', 'method'=>'GET', 'class' => 'check_form'))}}
+	{{Form::open(array('url'=>'/admin/Payment/pending', 'method'=>'GET', 'class' => 'check_form'))}}
 	@endif
 		Filter by course
 		<div class="row">
@@ -33,18 +33,21 @@
 		<thead>
 			<tr>
 				<th style="width:50px">SN</th>
-				<th>Course Name</th>
 				<th>Coach Name</th>
-				<th>Remark</th>
-				<th>Status</th>
+				<th>Course Name</th>
+				<th>Bank Name</th>
+				<th>Fee Amount</th>
+				<th>Payment Mode</th>
+				<th>Remarks</th>
+				<th>Application Status</th>
 				<th>#</th>
 				
 				
 			</tr></thead>
-			<tbody id="applications">
+			<tbody id="payments">
 				<?php $count = 1; ?>
-				@foreach($applications as $data)
-					@include('admin.applications.view')
+				@foreach($payments as $data)
+					@include('admin.payment.view')
 					<?php $count++ ?>
 				@endforeach
 			</tbody>

@@ -8,7 +8,7 @@
 	@if(!isset($value))
 
 	<td>{{($data->status==1)?'Application Accepted':$data->remarks}}</td>
-	<td>{{($data->status==0)?'Applied | Approval Pending':'Approved'}}</td>
+	<td>{{(isset($status[$data->status]))?$status[$data->status]:''}}</td>
 	@endif	
 	<td>
 		@if(!isset($value))
@@ -20,5 +20,9 @@
 				<button type="button" class="btn blue approve-coach" div-id="activity_{{$data->application_id}}"  action="{{'coach/activity/delete/'.$data->application_id}}">Apply <i class="fa fa-arrow-right"></i></button>
 			@endif	
 		@endif
+
+		@if($data->status==1 || $data->status==0)
+			<button type="button" class="btn blue add-div" div-id="activity_{{$data->application_id}}" count="{{$count}}" modal-title="Select Payment Option"  action="{{'coach/Payment/'.$data->application_id}}">Pay Fee </button>
+		@endif	
 	</td>
 </tr>

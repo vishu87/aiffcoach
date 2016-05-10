@@ -1,6 +1,8 @@
 <?php
 class UserController extends BaseController {
     protected $layout = 'layout';
+
+
     public function postLogin()
     {
         $credentials = [

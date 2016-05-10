@@ -23,10 +23,9 @@
         <div class="portlet-body form">
 	        {{ Form::open(array('url' =>(isset($employment))?'coach/updateEmployment/'.$employment->id:'coach/addEmployment',"method"=>"POST","files"=>'true','class'=>'form check_form')) }}			        
           	<div class="form-body">
-<<<<<<< HEAD
+
 	          	{{ Form::open(array('url' =>(isset($employment))?'coach/updateEmployment/'.$employment->id:'coach/addEmployment',"method"=>"POST","files"=>'true','class'=>'form check_form')) }}			        
-=======
->>>>>>> eb948cfe5b8e2ad8a7667abd63e9274901dfa2be
+
 				    <div class="row">
 						<div class="col-md-6">
 					      <div class="form-group">
@@ -72,21 +71,12 @@
 
 				        </div>
 					</div>
-
-<<<<<<< HEAD
-				          
-          	</div>   <div class="form-actions">
-				    	<button type="submit" class="btn green">Submit</button>
-				    </div>
-				{{Form::close()}}     
-=======
-		      
           	</div>      
           	<div class="form-actions">
 		    	<button type="submit" class="btn green">Submit</button>
 		    </div>
 			{{Form::close()}}
->>>>>>> eb948cfe5b8e2ad8a7667abd63e9274901dfa2be
+
     	</div>
         
     </div>

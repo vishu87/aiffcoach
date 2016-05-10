@@ -1,5 +1,5 @@
 @include('header')
-<body class="page-header-fixed page-quick-sidebar-over-content ">
+<body class="page-header-fixed page-quick-sidebar-over-content page-full-width ">
 <!-- BEGIN HEADER -->
 <div class="page-header navbar navbar-fixed-top">
   <!-- BEGIN HEADER INNER -->
@@ -40,9 +40,7 @@
 <!-- BEGIN CONTAINER -->
 <div class="page-container">
   <!-- BEGIN SIDEBAR -->
-  <div class="page-sidebar-wrapper">
-    {{$sidebar}}
-  </div>
+
   <!-- END SIDEBAR -->
   <!-- BEGIN CONTENT -->
   <div class="page-content-wrapper">
