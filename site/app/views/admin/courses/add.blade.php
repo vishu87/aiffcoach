@@ -61,8 +61,8 @@
 				</div>
 				<div class="col-md-6 form-group">
 					{{Form::label('Venue')}}
-					{{Form::text('fee',(isset($course))?$course->fees:'',["class"=>"form-control","required"=>"true"])}}
-					<span class="error">{{$errors->first('fee')}}</span>
+					{{Form::text('venue',(isset($course))?$course->venue:'',["class"=>"form-control","required"=>"true"])}}
+					<span class="error">{{$errors->first('venue')}}</span>
 				</div>
 			</div>
 
@@ -71,8 +71,8 @@
 				
 				<div class="col-md-12 form-group">
 					{{Form::label('Description')}}
-					{{Form::textarea('fee',(isset($course))?$course->fees:'',["class"=>"form-control","required"=>"true"])}}
-					<span class="error">{{$errors->first('fee')}}</span>
+					{{Form::textarea('description',(isset($course))?$course->description:'',["class"=>"form-control","required"=>"true"])}}
+					<span class="error">{{$errors->first('description')}}</span>
 				</div>
 			</div>
 			<div class="row">	

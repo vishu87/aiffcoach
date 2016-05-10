@@ -50,6 +50,8 @@ class CourseController extends BaseController {
             $course->start_date = date('y-m-d',strtotime(Input::get('start_date')));
             $course->end_date = date('y-m-d',strtotime(Input::get('end_date')));
             $course->license_id = Input::get('license_id');
+            $course->venue = Input::get('venue');
+            $course->description = Input::get('description');
             $course->fees = Input::get('fee');
 
             $destinationPath = 'coaches-doc/';
@@ -96,6 +98,8 @@ class CourseController extends BaseController {
             $course->name= Input::get('name');
             $course->start_date = date('y-m-d',strtotime(Input::get('start_date')));
             $course->end_date = date('y-m-d',strtotime(Input::get('end_date')));
+            $course->venue = Input::get('venue');
+            $course->description = Input::get('description');
             $course->license_id = Input::get('license_id');
             $course->fees = Input::get('fee');
 
