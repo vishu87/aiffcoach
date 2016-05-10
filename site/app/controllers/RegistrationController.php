@@ -45,26 +45,16 @@ class RegistrationController extends BaseController {
             if(Input::hasFile('photo')){
             
                 $extension = Input::file('photo')->getClientOriginalExtension();
-                $doc = str_replace(' ','-',Input::file('photo')->getClientOriginalName());
-                $count = 1;
-                $doc_ori = $doc;
-                while(File::exists($destinationPath.$doc)){
-                    $doc = $count.'-'.$doc_ori;
-                    $count++;
-                }
+                $doc = "photo_".Auth::id().'_'.str_replace(' ','-',Input::file('photo')->getClientOriginalName());
+                
                 Input::file('photo')->move($destinationPath,$doc);
                 $data["photo"] = $destinationPath.$doc;
             }
             if(Input::hasFile('dob_proof')){
             
                 $extension = Input::file('dob_proof')->getClientOriginalExtension();
-                $doc = str_replace(' ','-',Input::file('dob_proof')->getClientOriginalName());
-                $count = 1;
-                $doc_ori = $doc;
-                while(File::exists($destinationPath.$doc)){
-                    $doc = $count.'-'.$doc_ori;
-                    $count++;
-                }
+                $doc = "dobProof_".Auth::id().'_'.str_replace(' ','-',Input::file('dob_proof')->getClientOriginalName());
+                
                 Input::file('dob_proof')->move($destinationPath,$doc);
                 $data["dob_proof"] = $destinationPath.$doc;
             }
@@ -167,13 +157,8 @@ class RegistrationController extends BaseController {
             if(Input::hasFile('passport_proof')){
             
                 $extension = Input::file('passport_proof')->getClientOriginalExtension();
-                $doc = str_replace(' ','-',Input::file('passport_proof')->getClientOriginalName());
-                $count = 1;
-                $doc_ori = $doc;
-                while(File::exists($destinationPath.$doc)){
-                    $doc = $count.'-'.$doc_ori;
-                    $count++;
-                }
+                $doc = "PassportProof_".Auth::id().'_'.str_replace(' ','-',Input::file('passport_proof')->getClientOriginalName());
+                
                 Input::file('passport_proof')->move($destinationPath,$doc);
                 $data["passport_proof"] = $destinationPath.$doc;
             }

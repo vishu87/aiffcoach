@@ -97,13 +97,8 @@ class CoachController extends BaseController {
      		if(Input::hasFile('photo')){
 			
 	            $extension = Input::file('photo')->getClientOriginalExtension();
-	            $doc = str_replace(' ','-',Input::file('photo')->getClientOriginalName());
-	            $count = 1;
-	            $doc_ori = $doc;
-	            while(File::exists($destinationPath.$doc)){
-	                $doc = $count.'-'.$doc_ori;
-	                $count++;
-	            }
+	            $doc = "photo_".Auth::id().'_'.str_replace(' ','-',Input::file('photo')->getClientOriginalName());
+	            
 	            Input::file('photo')->move($destinationPath,$doc);
 				$coach->photo = $destinationPath.$doc;
 			}
@@ -116,13 +111,8 @@ class CoachController extends BaseController {
             if(Input::hasFile('dob_proof')){
             
                 $extension = Input::file('dob_proof')->getClientOriginalExtension();
-                $doc = str_replace(' ','-',Input::file('dob_proof')->getClientOriginalName());
-                $count = 1;
-                $doc_ori = $doc;
-                while(File::exists($destinationPath.$doc)){
-                    $doc = $count.'-'.$doc_ori;
-                    $count++;
-                }
+                $doc = "dobProof_".Auth::id().'_'.str_replace(' ','-',Input::file('dob_proof')->getClientOriginalName());
+                
                 Input::file('dob_proof')->move($destinationPath,$doc);
                 $coach_parameter->dob_proof = $destinationPath.$doc;
             }
@@ -131,13 +121,8 @@ class CoachController extends BaseController {
      		if(Input::hasFile('passport_proof')){
 			
 	            $extension = Input::file('passport_proof')->getClientOriginalExtension();
-	            $doc = str_replace(' ','-',Input::file('passport_proof')->getClientOriginalName());
-	            $count = 1;
-	            $doc_ori = $doc;
-	            while(File::exists($destinationPath.$doc)){
-	                $doc = $count.'-'.$doc_ori;
-	                $count++;
-	            }
+	            $doc = "PassportProof_".Auth::id().'_'.str_replace(' ','-',Input::file('passport_proof')->getClientOriginalName());
+	            
 	            Input::file('passport_proof')->move($destinationPath,$doc);
 				$coach_parameter->passport_copy = $destinationPath.$doc;
 			}
@@ -202,13 +187,8 @@ class CoachController extends BaseController {
             $employment_details->start_date = Input::get('date_since_emp');
             if(Input::hasFile('present_emp_copy')){
                 $extension = Input::file('present_emp_copy')->getClientOriginalExtension();
-                $doc = str_replace(' ','-',Input::file('present_emp_copy')->getClientOriginalName());
-                $count = 1;
-                $doc_ori = $doc;
-                while(File::exists($destinationPath.$doc)){
-                    $doc = $count.'-'.$doc_ori;
-                    $count++;
-                }
+                $doc = "PassportProof_".Auth::id().'_'.str_replace(' ','-',Input::file('present_emp_copy')->getClientOriginalName());
+                
                 Input::file('present_emp_copy')->move($destinationPath,$doc);
                 $employment_details->contract = $destinationPath.$doc;
             }
@@ -239,26 +219,16 @@ class CoachController extends BaseController {
             if(Input::hasFile('aiff_certificate_copy')){
 
                 $extension = Input::file('aiff_certificate_copy')->getClientOriginalExtension();
-                $doc = str_replace(' ','-',Input::file('aiff_certificate_copy')->getClientOriginalName());
-                $count = 1;
-                $doc_ori = $doc;
-                while(File::exists($destinationPath.$doc)){
-                     $doc = $count.'-'.$doc_ori;
-                     $count++;
-                }
+                $doc = "aiffcertificate_".Auth::id().'_'.str_replace(' ','-',Input::file('aiff_certificate_copy')->getClientOriginalName());
+                
                 Input::file('aiff_certificate_copy')->move($destinationPath,$doc);
                 $registeration_details->certificate_copy = $destinationPath.$doc;
             }
             if(Input::hasFile('aiff_latest_copy')){
 
                 $extension = Input::file('aiff_latest_copy')->getClientOriginalExtension();
-                $doc = str_replace(' ','-',Input::file('aiff_latest_copy')->getClientOriginalName());
-                $count = 1;
-                $doc_ori = $doc;
-                while(File::exists($destinationPath.$doc)){
-                     $doc = $count.'-'.$doc_ori;
-                     $count++;
-                }
+                $doc = "aiffLatest_".Auth::id().'_'.str_replace(' ','-',Input::file('aiff_latest_copy')->getClientOriginalName());
+                
                 Input::file('aiff_latest_copy')->move($destinationPath,$doc);
                 $registeration_details->latest_certificate_copy = $destinationPath.$doc;
             }
@@ -268,7 +238,6 @@ class CoachController extends BaseController {
 
             return Redirect::back()->with('success','All Details Uploaded Successfully');
         } 
-        return "welcom";
         return Redirect::back()->withErrors($validator)->withInput();     
     }
 
@@ -282,7 +251,7 @@ class CoachController extends BaseController {
         if(Input::hasFile('passport_proof')){
             
             $extension = Input::file('passport_proof')->getClientOriginalExtension();
-            $name = "Passport_".Auth::id().'_'.strtotime("now").'.'.$extension;
+            $name = "PassportProof_".Auth::id().'_'.strtotime("now").'.'.$extension;
             Input::file('passport_proof')->move($destinationPath,$name);
             $updatePassport->passport_copy=$destinationPath.$name;
         }
@@ -325,14 +294,8 @@ class CoachController extends BaseController {
             $employment->end_date = Input::get('end_date');
             if(Input::hasFile('present_emp_copy')){
                 $extension = Input::file('present_emp_copy')->getClientOriginalExtension();
-                $doc = str_replace(' ','-',Input::file('present_emp_copy')->getClientOriginalName());
-                $count = 1;
-
-                $doc_ori = $doc;
-                while(File::exists($destinationPath.$doc)){
-                    $doc = $count.'-'.$doc_ori;
-                    $count++;
-                }
+                $doc = "presentemp_".Auth::id().'_'.str_replace(' ','-',Input::file('present_emp_copy')->getClientOriginalName());
+                
                 Input::file('present_emp_copy')->move($destinationPath,$doc);
                 $employment->contract = $destinationPath.$doc;
             }
@@ -369,13 +332,8 @@ class CoachController extends BaseController {
             $updateEmployment->end_date = Input::get('end_date');
             if(Input::hasFile('present_emp_copy')){
                 $extension = Input::file('present_emp_copy')->getClientOriginalExtension();
-                $doc = str_replace(' ','-',Input::file('present_emp_copy')->getClientOriginalName());
-                $count = 1;
-                $doc_ori = $doc;
-                while(File::exists($destinationPath.$doc)){
-                    $doc = $count.'-'.$doc_ori;
-                    $count++;
-                }
+                $doc = "presentemp_".Auth::id().'_'.str_replace(' ','-',Input::file('present_emp_copy')->getClientOriginalName());
+                
                 Input::file('present_emp_copy')->move($destinationPath,$doc);
                 $updateEmployment->contract = $destinationPath.$doc;
             }

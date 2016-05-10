@@ -56,13 +56,8 @@ class CourseController extends BaseController {
 
             if(Input::hasFile('documents')){
                 $extension = Input::file('documents')->getClientOriginalExtension();
-                $doc = str_replace(' ','-',Input::file('documents')->getClientOriginalName());
-                $count = 1;
-                $doc_ori = $doc;
-                while(File::exists($destinationPath.$doc)){
-                    $doc = $count.'-'.$doc_ori;
-                    $count++;
-                }
+                $doc = "Document_".Auth::id().'_'.str_replace(' ','-',Input::file('documents')->getClientOriginalName());
+                
                 Input::file('documents')->move($destinationPath,$doc);
                 $course->documents = $destinationPath.$doc;
             }
@@ -108,13 +103,8 @@ class CourseController extends BaseController {
 
             if(Input::hasFile('documents')){
                 $extension = Input::file('documents')->getClientOriginalExtension();
-                $doc = str_replace(' ','-',Input::file('documents')->getClientOriginalName());
-                $count = 1;
-                $doc_ori = $doc;
-                while(File::exists($destinationPath.$doc)){
-                    $doc = $count.'-'.$doc_ori;
-                    $count++;
-                }
+                $doc = "Document_".Auth::id().'_'.str_replace(' ','-',Input::file('documents')->getClientOriginalName());
+                
                 Input::file('documents')->move($destinationPath,$doc);
                 $course->documents = $destinationPath.$doc;
             }
