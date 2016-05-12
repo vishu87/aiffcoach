@@ -48,8 +48,8 @@ class PaymentController extends BaseController {
     public function approvePaymentStatus($id,$remarks,$count){
 
         $applicationId = Payment::select('application_id')->where('id',$id)->first();
-        $paymentStatus = Payment::where('id',$id)->update(["status"=>1]);
-        $applicationStatus = Application::where('id',$applicationId->application_id)->update(['status'=>3]);
+        $paymentStatus = Payment::where('id',$id)->update(["status"=>1,'remarks'=>$remarks]);
+        $applicationStatus = Application::where('id',$applicationId->application_id)->update(['status'=>3,'remarks'=>$remarks]);
         $payment = Payment::listing()->where('payment.id',$id)->first();
         $status = Application::status();
         $data['success']= 'true';
@@ -59,8 +59,8 @@ class PaymentController extends BaseController {
 
     public function disapprovePaymentStatus($id,$remarks,$count){
         $applicationId = Payment::select('application_id')->where('id',$id)->first();
-        $paymentStatus = Payment::where('id',$id)->update(["status"=>0]);
-        $applicationStatus = Application::where('id',$applicationId->application_id)->update(['status'=>2]);
+        $paymentStatus = Payment::where('id',$id)->update(["status"=>0,'remarks'=>$remarks]);
+        $applicationStatus = Application::where('id',$applicationId->application_id)->update(['status'=>2,'remarks'=>$remarks]);
         $payment = Payment::listing()->where('payment.id',$id)->first();
         $status = Application::status();
         $data['success']= 'true';
