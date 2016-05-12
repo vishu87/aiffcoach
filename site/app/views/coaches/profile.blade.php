@@ -5,6 +5,12 @@
 	{{Session::get('success')}}
 </div>
 @endif
+@if(Session::has('failure'))
+    	<div class="alert alert-danger">
+        	<button type="button" class="close" data-dismiss="alert">×</button>
+        	<i class="fa fa-ban-circle"></i><strong>Failure!</strong> {{Session::get('failure')}}
+       	</div>
+@endif
 <div class="portlet box blue">
     <div class="portlet-title"><div class="caption">Contact Details</div>
 	</div>
@@ -79,7 +85,7 @@
       	<div class="form-body">
             <div class="">
 
-                {{ Form::open(array('url' =>'coach/updatePassport',"method"=>"POST","files"=>'true','class'=>'form check_form')) }}			        
+                {{ Form::open(array('url' =>'coach/updatePassport',"method"=>"POST","files"=>'true','class'=>'form check_form')) }}
 
                 {{ Form::open(array('url' =>'coach/updatePassport',"method"=>"POST","files"=>'true','class'=>'form check_form_2')) }}			        
 

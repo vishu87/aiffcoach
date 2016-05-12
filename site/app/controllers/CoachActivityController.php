@@ -51,7 +51,7 @@ class CoachActivityController extends BaseController {
             return Redirect::back()->with('success','New Activity Added Successfully');
         }
         
-        return Redirect::back()->withErrors($validator)->withInput();
+        return Redirect::back()->withErrors($validator)->withInput()->with('failure','All Fields Are Not Field!');
 
     }
     public function edit($id){
@@ -92,7 +92,7 @@ class CoachActivityController extends BaseController {
             return Redirect::back()->with('success',' Activity Updated Successfully');
         }
         
-        return Redirect::back()->withErrors($validator)->withInput();
+        return Redirect::back()->withErrors($validator)->withInput()->with('failure','All Fields Are Not Field!');
 
     }
     public function delete($id){

@@ -66,7 +66,7 @@ class CourseController extends BaseController {
             $course->save();
             return Redirect::Back()->with('success','New Course  Added!!');
         }
-        return Redirect::Back()->withInput()->withErrors($validator);
+        return Redirect::back()->withErrors($validator)->withInput()->with('failure','All Fields Are Not Field!');
     }
 
     public function edit($id){
@@ -115,7 +115,7 @@ class CourseController extends BaseController {
             $course->save();
             return Redirect::Back()->with('success','Course Details Updated!!');
         }
-        return Redirect::Back()->withInput()->withErrors($validator);
+        return Redirect::back()->withErrors($validator)->withInput()->with('failure','All Fields Are Not Field!');
     }
 
     public function delete($id){

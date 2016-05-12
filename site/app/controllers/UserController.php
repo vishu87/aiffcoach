@@ -22,7 +22,7 @@ class UserController extends BaseController {
             }
             else return Redirect::back()->withInput()->with('failure', 'username or password is invalid!');
         } else {
-            return Redirect::back()->withErrors($validator)->withInput();
+            return Redirect::back()->withErrors($validator)->withInput()->with('failure','All Fields Are Not Field!');
         }
     }
 

@@ -28,7 +28,7 @@ class LicenseController extends BaseController {
             $license->save();
             return Redirect::back()->with('success','New License  Added!!');
         }
-        return Redirect::back()->withErrors($validator)->withInput();
+        return Redirect::back()->withErrors($validator)->withInput()->with('failure','All Fields Are Not Field!');
     }
 
     public function edit($id){
@@ -51,7 +51,7 @@ class LicenseController extends BaseController {
             $license->save();
             return Redirect::back()->with('success','License Updated Successfully!!');
         }
-        return Redirect::back()->withErrors($validator)->withInput();
+        return Redirect::back()->withErrors($validator)->withInput()->with('failure','All Fields Are Not Field!');
     }
 
     public function delete($id){

@@ -155,7 +155,7 @@ class CoachController extends BaseController {
 
      		return Redirect::Back()->with('success','You Have Successfully Registered');
      	}
-     	return Redirect::back()->withErrors($validator)->withInput();			
+     	return Redirect::back()->withErrors($validator)->withInput()->with('failure','All Fields Are Not Field!');			
     }
 
     public function postEmployment(){
@@ -238,31 +238,57 @@ class CoachController extends BaseController {
 
             return Redirect::back()->with('success','All Details Uploaded Successfully');
         } 
-        return Redirect::back()->withErrors($validator)->withInput();     
+        return Redirect::back()->withErrors($validator)->withInput()->with('failure','All Fields Are Not Field!');     
     }
 
     public function updatePassport(){
-        $destinationPath = 'coaches-doc/';
-        
-        $updatePassport = CoachParameter::find(Auth::User()->coach_id);
-        $updatePassport->passport_no= Input::get('passport_no');
-        $updatePassport->passport_expiry = Input::get('passport_expiry');
+        $cre = ['passport_no'=>Input::get('passport_no'),'passport_expiry'=>Input::get('passport_expiry')];
+        $rules = ['passport_no'=>'required','passport_expiry'=>'required|date'];
+        $validator = Validator::make($cre,$rules);
+        if($validator->passes()){
+            $destinationPath = 'coaches-doc/';
+            $updatePassport = CoachParameter::find(Auth::User()->coach_id);
+            $updatePassport->passport_no= Input::get('passport_no');
+            $updatePassport->passport_expiry = Input::get('passport_expiry');
 
-        if(Input::hasFile('passport_proof')){
-            
-            $extension = Input::file('passport_proof')->getClientOriginalExtension();
-            $name = "PassportProof_".Auth::id().'_'.strtotime("now").'.'.$extension;
-            Input::file('passport_proof')->move($destinationPath,$name);
-            $updatePassport->passport_copy=$destinationPath.$name;
+            if(Input::hasFile('passport_proof')){
+                
+                $extension = Input::file('passport_proof')->getClientOriginalExtension();
+                $name = "PassportProof_".Auth::id().'_'.strtotime("now").'.'.$extension;
+                Input::file('passport_proof')->move($destinationPath,$name);
+                $updatePassport->passport_copy=$destinationPath.$name;
+            }
+            $updatePassport->save();
+            return Redirect::Back()->with('success','Passport Details Updated Successfully');
         }
-        $updatePassport->save();
-        return Redirect::Back()->with('success','Passport Details Updated Successfully');
+        return Redirect::back()->withErrors($validator)->withInput()->with('failure','All Fields Are Not Field!');
+
+        
         
     }
     public function updateContact(){
+        $cre = [
+            'address1'=>Input::get('address1'),
+            'city'=>Input::get('city'),
+            'pincode'=>Input::get('pincode'),
+            'address_state_id'=>Input::get('address_state_id'),
+            'mobile'=>Input::get('mobile'),
+            ];
+        $rules =  [
+            'address1'=>'required',
+            'city'=>'required',
+            'pincode'=>'required',
+            'address_state_id'=>'required',
+            'mobile'=>'required',
+            ];   
+        $validator = Validator::make($cre,$rules);
+        if($validator->passes()){
+            $updateContact = CoachParameter::where('coach_id',Auth::User()->coach_id)->update(["address1"=>Input::get('address1'),"address2"=>Input::get('address2'),"city"=>Input::get('city'),"pincode"=>Input::get('pincode'),"address_state_id"=>Input::get('state'),"mobile"=>Input::get('mobile'),"landline"=>Input::get('landline'),"alternate_email"=>Input::get('aemail')]);
+            return Redirect::Back()->with('success','Contact Details Updated Successfully');
+        } 
+        return Redirect::back()->withErrors($validator)->withInput()->with('failure','All Fields Are Not Field!');
+
         
-        $updateContact = CoachParameter::where('coach_id',Auth::User()->coach_id)->update(["address1"=>Input::get('address1'),"address2"=>Input::get('address2'),"city"=>Input::get('city'),"pincode"=>Input::get('pincode'),"address_state_id"=>Input::get('state'),"mobile"=>Input::get('mobile'),"landline"=>Input::get('landline'),"alternate_email"=>Input::get('aemail')]);
-        return Redirect::Back()->with('success','Contact Details Updated Successfully');
         
     }
 
@@ -303,7 +329,7 @@ class CoachController extends BaseController {
             $employment->save();
             return Redirect::to('coach/employmentDetails')->with('success','Employment Details Added Successfully');    
         }
-        return Redirect::back()->withErrors($validator)->withInput();    
+        return Redirect::back()->withErrors($validator)->withInput()->with('failure','All Fields Are Not Field!');
         
     }
     public function editEmployment($id){
@@ -341,7 +367,7 @@ class CoachController extends BaseController {
            
             return Redirect::back()->with('success','Details Updated Successfully');    
         }
-        return Redirect::back()->withErrors($validator)->withInput();    
+        return Redirect::back()->withErrors($validator)->withInput()->with('failure','All Fields Are Not Field!');
         
     }
 

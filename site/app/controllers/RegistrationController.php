@@ -77,7 +77,7 @@ class RegistrationController extends BaseController {
     		}
     		
     	}
-        return Redirect::Back()->withErrors($validator)->withInput();
+        return Redirect::back()->withErrors($validator)->withInput()->with('failure','All Fields Are Not Field!');
 
     }
 
@@ -134,7 +134,7 @@ class RegistrationController extends BaseController {
                 return Redirect::to('registerStep3/'.Input::get('id'));
             }
         }  
-        return Redirect::Back()->withErrors($validator)->withInput();      
+        return Redirect::back()->withErrors($validator)->withInput()->with('failure','All Fields Are Not Field!');
     	    
     }
 
@@ -228,7 +228,7 @@ class RegistrationController extends BaseController {
             $delete_temp_row = DB::table('reg_data')->where('id',$id)->delete();
             return Redirect::to('/')->with('success','Registration Completed Successfully An email is Sent to Your Registered Mail Id for Varification!');
         }
-        return Redirect::Back()->withErrors($validator)->withInput();
+        return Redirect::back()->withErrors($validator)->withInput()->with('failure','All Fields Are Not Field!');
     }
     
 

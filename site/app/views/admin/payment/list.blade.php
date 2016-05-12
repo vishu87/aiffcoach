@@ -9,6 +9,12 @@
 		{{Session::get('success')}}
 	</div>
 @endif
+@if(Session::has('failure'))
+    	<div class="alert alert-danger">
+        	<button type="button" class="close" data-dismiss="alert">×</button>
+        	<i class="fa fa-ban-circle"></i><strong>Failure!</strong> {{Session::get('failure')}}
+       	</div>
+@endif
 
 <div style="margin-bottom:20px;">
 	@if(!isset($flag))
