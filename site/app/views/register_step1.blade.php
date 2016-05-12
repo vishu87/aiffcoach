@@ -76,7 +76,7 @@
 						  <div class="form-group">
 						    <label class="control-label ">Email Id</label>
 						      {{Form::text('email',(isset($data["email"]))?$data["email"]:'',['required1'=>'true','placeholder'=>"Email Id",'class'=>"form-control placeholder-no-fix"])}}
-						      <span class="error">{{$errors->first('email')}}</span>
+						      <span class="error">{{$errors->first('username')}}</span>
 
 						  </div>
 						</div>

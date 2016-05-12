@@ -62,4 +62,41 @@ class UserController extends BaseController {
             return Redirect::back()->with('failure','Unauthorised Access or Invalid Password')->withErrors($validator)->withInput();
     }
 
+    public function postReset(){
+        $credentials = [
+            'username' => Input::get('username')
+        ];
+        $rules = [
+            'username' => 'required|email'
+        ];
+        $validator = Validator::make($credentials, $rules);
+        if ($validator->passes()) {
+            
+            $check = User::where('username',Input::get('username'))->count();
+            if($check > 0){
+                $user = User::where('username',Input::get('username'))->first();
+                $password = str_random(8);
+                $user->password = Hash::make($password);
+                $user->password_check = $password;
+                $user->save();
+                
+                require app_path().'/classes/PHPMailerAutoload.php';
+                $mail = new PHPMailer;
+                $mail->isMail();
+                $mail->setFrom('info@the-aiff.com', 'All India Football Federation');
+                $mail->addAddress(Input::get("username"));
+                $mail->isHTML(true);
+                $mail->Subject = "AIFF - CMS Password Reset";
+                $mail->Body = View::make('mail',["type" => 2, "name" => $user->username, "username"=>$user->username, "password"=>$password]);
+                $mail->send();
+
+                return Redirect::Back()->with('success', 'Your Password has been reset. Please check your email');
+            } else {
+                return Redirect::Back()->with('failure', 'No user found with this email');
+            }
+        } else {
+            return Redirect::Back()->withErrors($validator)->withInput();
+        }
+    }
+
 }

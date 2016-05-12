@@ -37,27 +37,27 @@
       
         <li class="@if($sidebar == 5 && $subsidebar == 1 ) active @endif">
           <a href="{{url('coach/courses/active')}}">
-          <i class="fa fa-database"></i>
+          <i class="fa fa-chevron-right"></i>
           Active</a>
         </li>
 
         <li class="@if($sidebar == 5 && $subsidebar == 2 ) active @endif">
           <a href="{{url('coach/courses/inactive')}}">
-          <i class="fa fa-group"></i>
+          <i class="fa fa-chevron-right"></i>
           Inactive</a>
         </li>
       </ul>
     </li>
     <li class="@if($sidebar == 4 ) active open @endif">
       <a href="javascript:;">
-      <i class="fa fa-envelope"></i>
+      <i class="fa fa-edit"></i>
       <span class="title">Applications</span>
       <span class="arrow @if($sidebar == 4 ) open @endif"></span>
       </a>
       <ul class="sub-menu">
         <li class="@if($sidebar == 4 && $subsidebar == 1 ) active @endif" style="display:inherit">
           <a href="{{url('coach/applications/applied')}}">
-          <i class="fa fa-user"></i>
+          <i class="fa fa-chevron-right"></i>
           Applied</a>
         </li>
         
@@ -76,7 +76,7 @@
     </li>
     <li class="@if($sidebar == 6 ) active @endif" >
       <a href="{{url('/changePassword')}}">
-        <i class="fa fa-key"></i>
+        <i class="fa fa-lock"></i>
         <span class="title">Change Password</span>
         <span class="selected"></span>
       </a>

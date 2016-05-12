@@ -19,7 +19,7 @@ class RegistrationController extends BaseController {
     	$cre = [
     		"first_name"=>Input::get("first_name"),
     		"last_name"=>Input::get("last_name"),
-    		"email"=>Input::get("email"),
+    		"username"=>Input::get("email"),
     		"gender"=>Input::get("gender"),
     		"dob"=>Input::get("dob"),
     		"dob_proof"=>Input::file("dob_proof"),
@@ -30,7 +30,7 @@ class RegistrationController extends BaseController {
     	$rules = [
     		"first_name"=>'required',
     		"last_name"=>'required',
-    		"email"=>'required',
+    		"username"=>'required|email|unique:users',
     		"gender"=>'required',
     		"dob"=>'required|date',
     		"dob_proof"=>'required',
@@ -225,8 +225,18 @@ class RegistrationController extends BaseController {
             $user->password_check = $password;
             $user->save();
 
+            require app_path().'/classes/PHPMailerAutoload.php';
+            $mail = new PHPMailer;
+            $mail->isMail();
+            $mail->setFrom('info@the-aiff.com', 'All India Football Federation');
+            $mail->addAddress($data1['email']);
+            $mail->isHTML(true);
+            $mail->Subject = "AIFF - CMS";
+            $mail->Body = View::make('mail',["type" => 1,'name'=>$user->username,"username"=>$user->username, "password"=>$password]);
+            $mail->send();
+
             $delete_temp_row = DB::table('reg_data')->where('id',$id)->delete();
-            return Redirect::to('/')->with('success','Registration Completed Successfully An email is Sent to Your Registered Mail Id for Varification!');
+            return Redirect::to('/')->with('success','Registration Completed Successfully An Email is Sent to Your Registered Mail Id With Login Details!');
         }
         return Redirect::back()->withErrors($validator)->withInput()->with('failure','All Fields Are Not Field!');
     }
