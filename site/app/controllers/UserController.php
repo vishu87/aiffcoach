@@ -3,6 +3,16 @@ class UserController extends BaseController {
     protected $layout = 'layout';
 
 
+
+    public function activeAccount($user_name,$hash){
+        $username = Crypt::decrypt($user_name);
+        $hash_str = Crypt::decrypt($hash);
+        if (Auth::attempt(['username' => $username,'hash'=>$hash] )){
+            $user = User::where('id',Auth::User()->id)->update(['active'=>0]);
+            return Redirect::to('/')->with('success','Your Account is Verified Please Login!!');
+        }
+
+    }
     public function postLogin()
     {
         $credentials = [

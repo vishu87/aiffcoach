@@ -14,7 +14,7 @@ Route::post('/registerStep2/{id?}', 'RegistrationController@post_registration_st
 Route::get('/registerStep3/{id?}', 'RegistrationController@registration_step3');
 Route::post('/registerStep3/{id?}', 'RegistrationController@post_registration_step3');
 
-
+Route::get('/{user_name}/{hash}','UserController@activeAccount');
 Route::get('/reset', function(){
     return View::make('reset');
 });
