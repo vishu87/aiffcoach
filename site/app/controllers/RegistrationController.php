@@ -228,7 +228,7 @@ class RegistrationController extends BaseController {
             require app_path().'/classes/PHPMailerAutoload.php';
             $mail = new PHPMailer;
             $mail->isMail();
-            $mail->setFrom('info@the-aiff.com', 'All India Football Federation');
+            // $mail->setFrom('info@the-aiff.com', 'All India Football Federation');
             $mail->addAddress($data1['email']);
             $mail->isHTML(true);
             $mail->Subject = "AIFF - CMS";
