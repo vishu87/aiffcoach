@@ -230,7 +230,7 @@ class RegistrationController extends BaseController {
             $user->save();
             
 
-            $username = Crypt::encrypt($data1['email'])
+            $username = Crypt::encrypt($data1['email']);
              
             
             
