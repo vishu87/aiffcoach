@@ -19,7 +19,9 @@ App::before(function($request)
 
 App::after(function($request, $response)
 {
-	//
+	$content = $response->getContent();
+	$contentLength = strlen($content);
+	$response->header('Content-Length',$contentLength);
 });
 
 /*
