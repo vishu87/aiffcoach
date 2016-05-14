@@ -7,7 +7,7 @@
 
 	<p>Click the link below or copy paste to url to activate your account</p>
 
-	<p><a href="{{url('/'.$user_name.'/'.$hash)}}">{{url('/'.$user_name.'/'.$hash)}}</a></p>
+	<p><a href="{{url('/'.$user_name.'/'.$hash)}}" style="background:blue;padding:5px;">Click Here to Verify</a></p>
 
 
 	<p>Username: {{$username}}</p>
