@@ -228,8 +228,6 @@ class RegistrationController extends BaseController {
             $user->active = 1;
             $user->password_check = $password;
             $user->save();          
-            
-            return $hash;
 
             require app_path().'/classes/PHPMailerAutoload.php';
             $mail = new PHPMailer;
@@ -239,6 +237,7 @@ class RegistrationController extends BaseController {
             $mail->isHTML(true);
             $mail->Subject = "AIFF - CMS";
             $mail->Body = View::make('mail',["type" => 1,'hash'=>$hash,'name'=>$user->username,"username"=>$user->username, "password"=>$password]);
+            
             $mail->send();
 
             $delete_temp_row = DB::table('reg_data')->where('id',$id)->delete();
