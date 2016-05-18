@@ -218,7 +218,7 @@ class RegistrationController extends BaseController {
 
             $password = str_random(8);
 
-            $hash =Hash::make(str_random(6).$data1['email']);
+            $hash =Hash::make(str_random(6));
             $user = new User;
             $user->coach_id = $coach->id;
             $user->username = $data1['email'];
@@ -227,7 +227,13 @@ class RegistrationController extends BaseController {
             $user->hash = $hash;
             $user->active = 1;
             $user->password_check = $password;
-            $user->save();          
+            $user->save();
+            
+
+            $username = $user->username;
+             
+            
+            
 
             require app_path().'/classes/PHPMailerAutoload.php';
             $mail = new PHPMailer;
@@ -236,7 +242,7 @@ class RegistrationController extends BaseController {
             $mail->addAddress($data1['email']);
             $mail->isHTML(true);
             $mail->Subject = "AIFF - CMS";
-            $mail->Body = "dskjla";
+            $mail->Body = View::make('mail',["type" => 1,'hash'=>$hash,'user_name'=>$username,'name'=>$user->username,"username"=>$user->username, "password"=>$password]);
             $mail->send();
 
             $delete_temp_row = DB::table('reg_data')->where('id',$id)->delete();
