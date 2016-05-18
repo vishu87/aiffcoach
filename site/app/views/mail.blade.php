@@ -5,9 +5,9 @@
 	<p>Following are login details for your account on AIFF CMS: </p>
 	<p>Link: <a href="http://administrator.the-aiff.com/">http://administrator.the-aiff.com</a></p>
 
-	<p>Click the link below or copy paste to url to activate your account</p>
+	<p>Click the link below to activate your account</p>
 
-	<p><a href="{{url('/'.$user_name.'/'.$hash)}}" style="background:blue;padding:5px;">Click Here to Verify</a></p>
+	<p><a href="{{url('verify/'.$hash)}}" style="background:blue;padding:5px;color:#fff">Click Here to Verify</a></p>
 
 
 	<p>Username: {{$username}}</p>
