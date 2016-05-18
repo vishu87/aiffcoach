@@ -229,7 +229,7 @@ class RegistrationController extends BaseController {
             $user->password_check = $password;
             $user->save();          
             
-            
+            return $hash;
 
             require app_path().'/classes/PHPMailerAutoload.php';
             $mail = new PHPMailer;
