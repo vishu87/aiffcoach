@@ -236,8 +236,7 @@ class RegistrationController extends BaseController {
             $mail->addAddress($data1['email']);
             $mail->isHTML(true);
             $mail->Subject = "AIFF - CMS";
-            $mail->Body = View::make('mail',["type" => 1,'hash'=>$hash,'name'=>$user->username,"username"=>$user->username, "password"=>$password]);
-            
+            $mail->Body = "dskjla";
             $mail->send();
 
             $delete_temp_row = DB::table('reg_data')->where('id',$id)->delete();
