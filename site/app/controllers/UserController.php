@@ -4,8 +4,9 @@ class UserController extends BaseController {
 
 
 
-    public function activeAccount($user_name,$hash){
-        $user = User::where('username',$username)->where('hash',$hash)->update(['active'=>0]);
+    public function activeAccount($hash){
+        
+        $user = User::where('hash',$hash)->update(['active'=>0]);
         return Redirect::to('/')->with('success','Your Account is Verified Please Login!!');
         
 

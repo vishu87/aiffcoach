@@ -231,8 +231,9 @@ class RegistrationController extends BaseController {
             
 
             $username = $user->username;
+
              
-            
+            return View::make('mail',["type" => 1,'hash'=>$hash,'user_name'=>$username,'name'=>$user->username,"username"=>$user->username, "password"=>$password]);
             
 
             require app_path().'/classes/PHPMailerAutoload.php';
