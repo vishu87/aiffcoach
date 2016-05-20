@@ -1,8 +1,11 @@
 <div class="row">
-	<div class="col-md-12">
+	<div class="col-md-8">
 		<h3 class="page-title">
-		{{$title}}
-	</h3>
+			{{$title}}
+		</h3>
+	</div>
+	<div class="col-md-4">
+		<a class="btn green pull-right" href="{{url('/admin/coachExport/'.$flag)}}">Export Excel</a>
 	</div>
 </div>
 @if(Session::has('success'))

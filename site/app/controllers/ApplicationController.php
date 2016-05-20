@@ -20,7 +20,7 @@ class ApplicationController extends BaseController {
         }
         
         $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'Applications','subsidebar'=>2]);
-        $this->layout->main = View::make('admin.applications.list',['status'=>$status,"applications"=>$applications,'title'=>'Approved Applications','flag'=>'true', "courses" => $courses]);
+        $this->layout->main = View::make('admin.applications.list',['status'=>$status,"applications"=>$applications,'title'=>'Approved Applications','flag'=>1, "courses" => $courses]);
     }
     
     public function PendingApplications(){
@@ -32,7 +32,7 @@ class ApplicationController extends BaseController {
             $applications = Application::applications()->where('applications.status','!=',3)->get();
         }
         $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'Applications','subsidebar'=>3]);
-        $this->layout->main = View::make('admin.applications.list',['status'=>$status,"courses" => $courses,"applications"=>$applications,'title'=>'Pending Applications']);
+        $this->layout->main = View::make('admin.applications.list',['status'=>$status,"courses" => $courses,"applications"=>$applications,'title'=>'Pending Applications','flag'=>2]);
     }
 
     public function markApplication($id){

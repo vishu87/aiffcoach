@@ -17,4 +17,9 @@ class Course extends Eloquent {
             ->join('license','courses.license_id','=','license.id')->where('end_date','<',$currentDate)->get();
 		return $query;
 	}
+	public static function allCourses(){
+		$query = DB::table('courses')->select('courses.*','license.name as license_name','license.authorised_by')
+            ->join('license','courses.license_id','=','license.id')->get();
+		return $query;
+	}
 }

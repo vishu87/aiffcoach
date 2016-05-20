@@ -26,7 +26,7 @@ class Coach extends Eloquent {
     }
 
     public static function listing(){
-    	return Coach::select('coaches.id','coaches.first_name','coaches.middle_name','coaches.last_name','states.name as state_reference','coach_parameters.email','coach_parameters.mobile','coaches.status')->join('states','coaches.state_reference','=','states.id')->join('coach_parameters','coaches.id','=','coach_parameters.coach_id');
+    	return Coach::select('coaches.id','coaches.gender','coaches.dob','coaches.first_name','coaches.middle_name','coaches.last_name','states.name as state_reference','coach_parameters.email','coach_parameters.mobile','coaches.status')->join('states','coaches.state_reference','=','states.id')->join('coach_parameters','coaches.id','=','coach_parameters.coach_id');
     }
 
 }

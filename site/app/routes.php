@@ -88,7 +88,12 @@ Route::group(["before"=>['auth']],function(){
 			Route::get('viewCoachDetails/{id}','AdminController@viewCoachDetails');
 			Route::get('all','AdminController@allCoach');
 			Route::get('markCoachStatus/{flag}/{id}/{remarks}/{count}','AdminController@markCoachStatus');
-			
+			Route::get('/coachExport/{flag}','ExcelExportController@coachExport');
+			Route::get('/exportLicence','ExcelExportController@exportLicence');
+			Route::get('/coursesExport/{flag}','ExcelExportController@coursesExport');
+			Route::get('applicationExport/{flag}/{course_id?}','ExcelExportController@applicationExport');
+			Route::get('paymentExport/{flag}/{course_id?}','ExcelExportController@paymentExport');
+
 			Route::group(["prefix"=>'Courses'],function(){
 				Route::get('/','CourseController@index');
 				Route::get('/active','CourseController@active');

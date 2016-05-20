@@ -16,22 +16,27 @@
        	</div>
 @endif
 
-<div style="margin-bottom:20px;">
-	@if(!isset($flag))
-	{{Form::open(array('url'=>'/admin/Payment', 'method'=>'GET', 'class' => 'check_form'))}}
-	@else
-	{{Form::open(array('url'=>'/admin/Payment/pending', 'method'=>'GET', 'class' => 'check_form'))}}
-	@endif
-		Filter by course
-		<div class="row">
-			<div class="col-md-4">
-				{{Form::select('course',$courses,(Input::has('course'))?Input::get('course'):'',["class"=>"form-control", "required" => "true"])}}
+<div style="margin-bottom:20px;" class="row">
+	<div class="col-md-8">
+		@if($flag==1)
+		{{Form::open(array('url'=>'/admin/Payment', 'method'=>'GET', 'class' => 'check_form'))}}
+		@else
+		{{Form::open(array('url'=>'/admin/Payment/pending', 'method'=>'GET', 'class' => 'check_form'))}}
+		@endif
+			Filter by course
+			<div class="row">
+				<div class="col-md-4">
+					{{Form::select('course',$courses,(Input::has('course'))?Input::get('course'):'',["class"=>"form-control", "required" => "true"])}}
+				</div>
+				<div class="col-md-4">
+					{{Form::submit('Submit',["class"=>"btn blue"])}}
+				</div>
 			</div>
-			<div class="col-md-4">
-				{{Form::submit('Submit',["class"=>"btn blue"])}}
-			</div>
-		</div>
-	{{Form::close()}}
+		{{Form::close()}}
+	</div>
+	<div class="col-md-4">
+		<a class="btn green pull-right" href="{{url('/admin/paymentExport/'.$flag.'/'.app('request')->input('course'))}}">Export Excel</a>
+	</div>
 </div>
 
 <div style="overflow-y:auto">

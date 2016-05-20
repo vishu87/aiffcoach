@@ -11,6 +11,8 @@ class PaymentController extends BaseController {
 
     // admin panel function  starts
     public function index(){
+
+        
         if(Input::has('course')){
             $payments = Payment::listing()->where('applications.course_id',Input::get('course'))->get();
 
@@ -24,7 +26,7 @@ class PaymentController extends BaseController {
         $courses = [""=>"Select"]+Course::lists('name','id');
         $status = Application::status();
         $this->layout->sidebar = View::make('admin.sidebar',["sidebar"=>'payment','subsidebar'=>1]);
-        $this->layout->main = View::make('admin.payment.list',['courses'=>$courses,'status'=>$status,'payments'=>$payments,"title"=>'Payment Due List']);
+        $this->layout->main = View::make('admin.payment.list',['courses'=>$courses,'status'=>$status,'payments'=>$payments,"title"=>'Payment Due List','flag'=>1]);
 
     }
 
@@ -42,7 +44,7 @@ class PaymentController extends BaseController {
         $courses = [""=>"Select"]+Course::lists('name','id');
         $status = Application::status();
         $this->layout->sidebar = View::make('admin.sidebar',["sidebar"=>'payment','subsidebar'=>2]);
-        $this->layout->main = View::make('admin.payment.list',['flag'=>'true','courses'=>$courses,'status'=>$status,'payments'=>$payments,"title"=>'Payment Due List']);
+        $this->layout->main = View::make('admin.payment.list',['flag'=>'2','courses'=>$courses,'status'=>$status,'payments'=>$payments,"title"=>'Payment Due List']);
     }
 
     public function approvePaymentStatus($id,$remarks,$count){

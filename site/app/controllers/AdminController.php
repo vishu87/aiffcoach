@@ -18,13 +18,13 @@ class AdminController extends BaseController {
     	$coaches = Coach::listing()->approved()->get();
         $status = Coach::Status();
     	$this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'coach','subsidebar'=>1]);
-    	$this->layout->main = View::make('admin.coaches',['coaches'=>$coaches,"title"=>'Approved Coaches', "status" => $status]);
+    	$this->layout->main = View::make('admin.coaches',['coaches'=>$coaches,"title"=>'Approved Coaches', "status" => $status,'flag'=>1]);
     }
     public function pendingCoach(){
     	$coaches = Coach::listing()->pending()->get();
         $status = Coach::Status();
         $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'coach','subsidebar'=>2]);
-        $this->layout->main = View::make('admin.coaches',['coaches'=>$coaches,"title"=>'Pending for Approval', "status" => $status]);
+        $this->layout->main = View::make('admin.coaches',['coaches'=>$coaches,"title"=>'Pending for Approval', "status" => $status,'flag'=>2]);
     }
     public function inactiveCoach(){
     	$coaches = Coach::listing()->disapproved()->get();
@@ -36,7 +36,7 @@ class AdminController extends BaseController {
         $coaches = Coach::listing()->get();
         $status = Coach::Status();
         $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'coach','subsidebar'=>3]);
-        $this->layout->main = View::make('admin.coaches',['coaches'=>$coaches,"title"=>'Coaches', "status" => $status]);
+        $this->layout->main = View::make('admin.coaches',['coaches'=>$coaches,"title"=>'Coaches', "status" => $status,'flag'=>3]);
     }
     public function viewCoach($id){
         $coach = Coach::select('coaches.first_name','coaches.status','states.name as state_registation','coaches.middle_name','coaches.last_name','coaches.dob','coaches.gender','coaches.photo','coach_parameters.email','coach_parameters.address1','coach_parameters.address2','coach_parameters.city','coach_parameters.pincode','coach_parameters.mobile')->join('states','coaches.state_registration','=','states.id')->join('coach_parameters','coaches.id','=','coach_parameters.coach_id')->where('coaches.id',$id)->first();

@@ -7,13 +7,13 @@ class CourseController extends BaseController {
             ->join('license','courses.license_id','=','license.id')
             ->get();
         $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'courses','subsidebar'=>1]);
-        $this->layout->main = View::make('admin.courses.list',['courses'=>$courses,'title'=>'Courses']);
+        $this->layout->main = View::make('admin.courses.list',['courses'=>$courses,'title'=>'Courses','flag'=>1]);
     }
 
     public function active(){
         $courses =  Course::Active();
         $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'courses','subsidebar'=>2]);
-        $this->layout->main = View::make('admin.courses.list',['courses'=>$courses,'title'=>'Active Courses']);
+        $this->layout->main = View::make('admin.courses.list',['courses'=>$courses,'title'=>'Active Courses','flag'=>2]);
     }
     public function inactive(){
         $courses =  Course::Inactive();

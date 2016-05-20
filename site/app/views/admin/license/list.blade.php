@@ -1,8 +1,9 @@
 <div class="row">
-	<div class="col-md-8">
+	<div class="col-md-9">
 		<h3 class="page-title">Licenses</h3>
 	</div>
-	<div class="col-md-4">
+	<div class="col-md-3">
+		<a class="btn green " href="{{url('/admin/exportLicence')}}">Export Excel</a>
 		<a type="button" class="btn green pull-right" href="{{url('admin/License/add')}}"> <i class="fa fa-plus"></i> Add License</a>
 	</div>
 </div>
