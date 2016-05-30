@@ -14,9 +14,9 @@ class ApplicationController extends BaseController {
         $courses = ["" => "Select Course"] + Course::lists('name','id');
         $status = Application::status();
         if(Input::has('course')){
-            $applications = Application::applications()->where('applications.status',3)->where('applications.course_id',Input::get('course'))->get();
+            $applications = Application::applications()->where('applications.status','!=',0)->where('applications.course_id',Input::get('course'))->get();
         } else {
-            $applications = Application::applications()->where('applications.status',3)->get();
+            $applications = Application::applications()->where('applications.status','!=',0)->get();
         }
         
         $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'Applications','subsidebar'=>2]);
@@ -27,9 +27,9 @@ class ApplicationController extends BaseController {
         $status = Application::status();
         $courses = ["" => "Select Course"] + Course::lists('name','id');
         if(Input::has('course')){
-            $applications = Application::applications()->where('applications.status','!=',3)->where('applications.course_id',Input::get('course'))->get();
+            $applications = Application::applications()->where('applications.status','=',0)->where('applications.course_id',Input::get('course'))->get();
         } else {
-            $applications = Application::applications()->where('applications.status','!=',3)->get();
+            $applications = Application::applications()->where('applications.status','=',0)->get();
         }
         $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'Applications','subsidebar'=>3]);
         $this->layout->main = View::make('admin.applications.list',['status'=>$status,"courses" => $courses,"applications"=>$applications,'title'=>'Pending Applications','flag'=>2]);
@@ -48,11 +48,12 @@ class ApplicationController extends BaseController {
             $flag = 0;
 
         }
-        // return $flag;
+        $status = Application::status();
+        
         $application->save();
         $applications = Application::applications()->where('applications.id',$id)->first();
         $data['success'] = true;
-        $data['message'] = html_entity_decode(View::make('admin.applications.view',['data'=>$applications,'count'=>$count,'flag'=>$flag]));
+        $data['message'] = html_entity_decode(View::make('admin.applications.view',['status'=>$status,'data'=>$applications,'count'=>$count,'flag'=>$flag]));
         return json_encode($data);
     }
 
