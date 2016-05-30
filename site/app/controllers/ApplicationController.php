@@ -32,7 +32,7 @@ class ApplicationController extends BaseController {
             $applications = Application::applications()->where('applications.status','=',0)->get();
         }
         $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'Applications','subsidebar'=>3]);
-        $this->layout->main = View::make('admin.applications.list',['status'=>$status,"courses" => $courses,"applications"=>$applications,'title'=>'Pending Applications','flag'=>2]);
+        $this->layout->main = View::make('admin.applications.list',['status'=>$status,"courses" => $courses,"applications"=>$applications,'title'=>'Pending Applications','flag'=>0]);
     }
 
     public function markApplication($id,$count){
