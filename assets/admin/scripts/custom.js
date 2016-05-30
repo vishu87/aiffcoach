@@ -341,6 +341,32 @@ $(document).on('click','form.ajax_edit_pop button[type=submit]', function(e){
     }
 });
 
+$(document).on('click','.mark-application', function(e){
+    e.preventDefault();
+  
+    	var btn = $(this);
+    	var initial_html = btn.html();
+    	btn.html(initial_html+' <i class="fa fa-spin fa-spinner"></i>');
+		var rmvDiv = btn.attr('div-id');
+		var count1 = btn.attr('count');
+		
+		var formAction = base_url + '/'+ btn.attr('action') + '/'+count1;
+		$.ajax({
+		    type: "GET",
+		    url : formAction,
+		    success : function(data){
+		    	data = JSON.parse(data);
+		    	if(data.success){
+		    		$("#"+rmvDiv).replaceWith(data.message);
+			    	$(".modal").modal("hide");
+		    	} else {
+		    		bootbox.alert(data.message);
+		    	}
+			    btn.html(initial_html);
+		    }
+		},"json");
+});
+
 $(document).on("click", ".details", function() {
     var btn = $(this);
     $(".modal").modal('show');

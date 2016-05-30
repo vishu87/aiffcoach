@@ -35,17 +35,24 @@ class ApplicationController extends BaseController {
         $this->layout->main = View::make('admin.applications.list',['status'=>$status,"courses" => $courses,"applications"=>$applications,'title'=>'Pending Applications','flag'=>2]);
     }
 
-    public function markApplication($id){
+    public function markApplication($id,$count){
         $application = Application::find($id);
         if($application->status==0){
-            $application->status = 1;
+            DB::table('applications')->where('id',$id)->update(["status"=>1]);
+            
+            $flag = 1;
         }
         else{
-            $application->status = 0;
+            DB::table('applications')->where('id',$id)->update(["status"=>0]);
+            
+            $flag = 0;
+
         }
-        
+        // return $flag;
         $application->save();
+        $applications = Application::applications()->where('applications.id',$id)->first();
         $data['success'] = true;
+        $data['message'] = html_entity_decode(View::make('admin.applications.view',['data'=>$applications,'count'=>$count,'flag'=>$flag]));
         return json_encode($data);
     }
 

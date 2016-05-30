@@ -126,7 +126,7 @@ Route::group(["before"=>['auth']],function(){
 				Route::get('/','ApplicationController@ApprovedApplications');
 				Route::get('/approved','ApplicationController@ApprovedApplications');
 				Route::get('/pending','ApplicationController@PendingApplications');
-				Route::get('/markApplication/{id}','ApplicationController@markApplication');
+				Route::get('/markApplication/{id}/{count}','ApplicationController@markApplication');
 				
 			});
 			
