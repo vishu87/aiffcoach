@@ -40,6 +40,7 @@
 					{{Form::text('name',(isset($course))?$course->name:'',["class"=>"form-control ","required"=>"true"])}}
 					<span class="error">{{$errors->first('name')}}</span>
 				</div>
+				
 				<div class="col-md-3 form-group">
 					{{Form::label('Start Date')}}
 					{{Form::text('start_date',(isset($course))?$course->start_date:'',["class"=>"form-control datepicker","required"=>"true","date"=>'true'])}}

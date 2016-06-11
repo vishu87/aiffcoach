@@ -23,8 +23,8 @@ Route::get('/reset', function(){
 Route::post('/tm_admin', 'UserController@postLogin');
 Route::post('/reset', 'UserController@postReset');
 
-Route::get('changePassword','UserController@changePassword');
-Route::post('updatePassword','UserController@updatePassword');
+Route::get('/changePassword','UserController@changePassword');
+Route::post('/updatePassword','UserController@updatePassword');
 Route::get('/logout', function(){
     Auth::logout();
     return Redirect::to('/');
@@ -132,4 +132,8 @@ Route::group(["before"=>['auth']],function(){
 			
 		});
 	});
+});
+
+Route::group(["prefix"=>'resultAdmin','before'=>["auth","resultAdmin"]],function(){
+	Route::get('/','resultAdminController@index');
 });

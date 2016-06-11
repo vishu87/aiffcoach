@@ -57,24 +57,19 @@ Route::filter('coach', function()
 	}
 });
 
-Route::filter('admin1', function()
+Route::filter('admin', function()
 {
 	if(Auth::user()->privilege != 2){
 		return Redirect::to('/');
 	}
 });
-Route::filter('admin2', function()
+Route::filter('resultAdmin', function()
 {
 	if(Auth::user()->privilege != 3){
 		return Redirect::to('/');
 	}
 });
-Route::filter('admin3', function()
-{
-	if(Auth::user()->privilege != 4){
-		return Redirect::to('/');
-	}
-});
+
 Route::filter('auth.basic', function()
 {
 	return Auth::basic();
