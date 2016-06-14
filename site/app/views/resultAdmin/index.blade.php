@@ -44,9 +44,8 @@
 			<tr>
 				<th style="width:50px">SN</th>
 				<th>Course Name</th>
+				<th>License Name</th>
 				<th>Coach Name</th>
-				<th>Marks Obtained</th>
-				<th>Maximum Marks</th>
 				<th>Remark</th>
 				<th>Status</th>
 				<th>#</th>
@@ -59,14 +58,15 @@
 					<tr id="activity_{{$data->id}}">
 						<td>{{$count}}</td>
 						<td>{{$data->course_name}}</td>
+						<td>{{$data->license_name}}</td>
 						<td>{{$data->first_name.' '.$data->middle_name.' '.$data->last_name}}</td>
-						<td>{{$data->score}}</td>
-						<td>{{$data->max_marks}}</td>
 						<td>{{$data->remarks}}</td>
 						<td>{{(isset($status[$data->status]))?$status[$data->status]:''}}</td>
 						<td>
 							
-							<button type="button" class="btn blue details" div-id="activity_{{$data->id}}" count="{{$count}}" action="{{url('/')}}">Result <i class="fa fa-arrow-right"></i></button>
+							<button type="button" class="btn btn-sm blue edit-div" modal-title="Result " div-id="activity_{{$data->id}}" count="{{$count}}" action="{{('/resultAdmin/result/edit/'.$data->id)}}">View <i class="fa fa-arrow-right"></i></button>
+							
+							<button type="button" class="btn yellow edit-div" modal-title="Update Marks "  action="{{('resultAdmin/result/editParameterMarks/'.$data->id)}}" count = "{{$count}}"> <i class="fa fa-edit"></i> Edit</button>
 										
 						</td>
 					</tr>

@@ -136,4 +136,31 @@ Route::group(["before"=>['auth']],function(){
 
 Route::group(["prefix"=>'resultAdmin','before'=>["auth","resultAdmin"]],function(){
 	Route::get('/','resultAdminController@index');
+
+	Route::group(["prefix"=>"Parameter"],function(){
+		Route::get('/','ParameterController@index');
+		Route::post('/insert','ParameterController@insert');
+		Route::get('/edit/{id}','ParameterController@edit');
+		Route::put('/update/{id}','ParameterController@update');
+		Route::delete('/delete/{id}','ParameterController@delete');
+
+	});
+	Route::group(["prefix"=>"coursesParameter"],function(){
+		Route::get('/','CoursesParameterController@index');
+		Route::post('/insert','CoursesParameterController@insert');
+		Route::get('/edit/{id}','CoursesParameterController@edit');
+		Route::put('/update/{id}','CoursesParameterController@update');
+		Route::delete('/delete/{id}','CoursesParameterController@delete');
+
+	});
+	Route::group(["prefix"=>"result"],function(){
+		Route::get('/','resultAdminController@indexResult');
+		Route::post('/insert','resultAdminController@insert');
+		Route::get('/details/{id}','resultAdminController@details');
+		Route::get('/edit/{id}','resultAdminController@edit');
+		Route::get('/editParameterMarks/{id}','resultAdminController@editParameterMarks');
+		Route::put('/update/{id}','resultAdminController@update');
+		Route::delete('/delete/{id}','resultAdminController@delete');
+
+	});
 });

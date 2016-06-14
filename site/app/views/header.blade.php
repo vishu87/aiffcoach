@@ -24,7 +24,7 @@
 <!-- END GLOBAL MANDATORY STYLES -->
 <!-- BEGIN THEME STYLES -->
 {{HTML::style("assets/global/css/components.css")}}
-{{HTML::style("assets/global/css/plugins.css")}}
+{{HTML::style("assets/global/css/plugins.css")}}{{HTML::style("assets/global/plugins/select2/select2.min.css")}}
 {{HTML::style("assets/admin/css/layout.css")}}
 {{HTML::style("assets/admin/css/themes/light2.css")}}
 {{HTML::style("assets/admin/css/theme.bootstrap.css")}}

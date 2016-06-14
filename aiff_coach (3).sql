@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: May 10, 2016 at 01:12 PM
+-- Generation Time: Jun 14, 2016 at 03:25 PM
 -- Server version: 5.6.16
 -- PHP Version: 5.5.11
 
@@ -77,16 +77,17 @@ CREATE TABLE IF NOT EXISTS `applications` (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `applications`
 --
 
 INSERT INTO `applications` (`id`, `course_id`, `coach_id`, `status`, `remarks`, `updated_at`, `created_at`) VALUES
-(2, 1, 3, 2, 'Applied | Pending', '2016-05-10 11:11:07', '2016-04-30 13:27:41'),
-(4, 2, 3, 2, 'Applied | Pending', '2016-05-10 11:04:43', '2016-05-02 10:00:09'),
-(5, 6, 3, 3, 'Applied | Pending', '2016-05-09 14:18:18', '2016-05-09 13:04:38');
+(2, 1, 3, 0, 'Applied | Pending', '2016-05-30 07:09:48', '2016-04-30 13:27:41'),
+(4, 2, 3, 3, 'afdsafd', '2016-06-14 13:00:30', '2016-05-02 10:00:09'),
+(5, 6, 3, 3, 'Applied | Pending', '2016-05-09 14:18:18', '2016-05-09 13:04:38'),
+(6, 7, 3, 3, 'Applied | Pending', '2016-06-13 11:34:36', '2016-05-10 12:59:09');
 
 -- --------------------------------------------------------
 
@@ -164,7 +165,7 @@ CREATE TABLE IF NOT EXISTS `coaches` (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=25 ;
 
 --
 -- Dumping data for table `coaches`
@@ -179,7 +180,21 @@ INSERT INTO `coaches` (`id`, `registration_id`, `first_name`, `middle_name`, `la
 (7, '', 'Sachin', 'Ramesh', 'Tendulkar', 'coaches-doc/2-CHIRAG---WIN_20151003_143457.JPG', '2016-05-26', '36', 0, 36, 1, '2016-05-09 12:39:40', '2016-05-09 12:39:40'),
 (8, '', 'Sachin', 'Ramesh', 'Tendulkar', 'coaches-doc/13-CHIRAG---WIN_20151003_143525.JPG', '2016-05-26', '32', 0, 32, 1, '2016-05-09 12:43:21', '2016-05-09 12:43:21'),
 (9, '', 'ankit ', 'kumar', 'gupta', 'coaches-doc/3-CHIRAG---WIN_20151003_143457.JPG', '2016-05-10', '36', 0, 36, 1, '2016-05-09 12:47:19', '2016-05-09 12:47:19'),
-(10, '', 'shubham', '', 'bhatt', 'coaches-doc/4-CHIRAG---WIN_20151003_143431.JPG', '2016-05-25', '23', 0, 32, 1, '2016-05-10 09:39:54', '2016-05-10 09:39:54');
+(10, '', 'shubham', '', 'bhatt', 'coaches-doc/4-CHIRAG---WIN_20151003_143431.JPG', '2016-05-25', '23', 0, 32, 1, '2016-05-10 09:39:54', '2016-05-10 09:39:54'),
+(11, '', 'Avyay', 'kumar', 'Aggarwal', 'coaches-doc/photo__CHIRAG---WIN_20151003_143525.JPG', '2016-05-19', '36', 0, 36, 1, '2016-05-12 12:24:55', '2016-05-12 12:24:55'),
+(12, '', 'Sachin', 'Ramesh', 'Tendulkar', 'coaches-doc/13-CHIRAG---WIN_20151003_143525.JPG', '2016-05-26', '32', 0, 32, 1, '2016-05-12 12:27:57', '2016-05-12 12:27:57'),
+(13, '', 'chirag', '', 'verma', 'coaches-doc/photo__CHIRAG---WIN_20150602_192149.JPG', '2016-05-18', '36', 0, 36, 1, '2016-05-18 13:16:40', '2016-05-18 13:16:40'),
+(14, '', 'chirag', '', 'verma', 'coaches-doc/photo__CHIRAG---WIN_20150602_192149.JPG', '2016-05-18', '36', 0, 36, 1, '2016-05-18 13:18:50', '2016-05-18 13:18:50'),
+(15, '', 'chirag', '', 'verma', 'coaches-doc/photo__CHIRAG---WIN_20150602_192149.JPG', '2016-05-18', '36', 0, 36, 1, '2016-05-18 13:21:59', '2016-05-18 13:21:59'),
+(16, '', 'chirag', '', 'verma', 'coaches-doc/photo__CHIRAG---WIN_20150602_192149.JPG', '2016-05-18', '36', 0, 36, 1, '2016-05-18 13:24:10', '2016-05-18 13:24:10'),
+(17, '', 'chirag', '', 'verma', 'coaches-doc/photo__CHIRAG---WIN_20150602_192149.JPG', '2016-05-18', '36', 0, 36, 1, '2016-05-18 13:24:33', '2016-05-18 13:24:33'),
+(18, '', 'chirag', '', 'verma', 'coaches-doc/photo__CHIRAG---WIN_20150602_192149.JPG', '2016-05-18', '36', 0, 36, 1, '2016-05-18 13:25:09', '2016-05-18 13:25:09'),
+(19, '', 'chirag', '', 'verma', 'coaches-doc/photo__CHIRAG---WIN_20150602_192149.JPG', '2016-05-18', '36', 0, 36, 1, '2016-05-18 13:25:19', '2016-05-18 13:25:19'),
+(20, '', 'chirag', '', 'verma', 'coaches-doc/photo__CHIRAG---WIN_20150602_192149.JPG', '2016-05-18', '36', 0, 36, 1, '2016-05-18 13:25:25', '2016-05-18 13:25:25'),
+(21, '', 'chirag', '', 'verma', 'coaches-doc/photo__CHIRAG---WIN_20150602_192149.JPG', '2016-05-18', '36', 0, 36, 1, '2016-05-18 13:25:31', '2016-05-18 13:25:31'),
+(22, '', 'chirag', '', 'verma', 'coaches-doc/photo__CHIRAG---WIN_20150602_192149.JPG', '2016-05-18', '36', 0, 36, 1, '2016-05-18 13:25:39', '2016-05-18 13:25:39'),
+(23, '', 'chirag', '', 'verma', 'coaches-doc/photo__CHIRAG---WIN_20150602_192149.JPG', '2016-05-18', '36', 0, 36, 1, '2016-05-18 13:26:32', '2016-05-18 13:26:32'),
+(24, '', 'chirag', '', 'verma', 'coaches-doc/photo__CHIRAG---WIN_20150602_192149.JPG', '2016-05-18', '36', 0, 36, 1, '2016-05-18 13:26:55', '2016-05-18 13:26:55');
 
 -- --------------------------------------------------------
 
@@ -206,7 +221,7 @@ CREATE TABLE IF NOT EXISTS `coach_activity` (
 --
 
 INSERT INTO `coach_activity` (`id`, `coach_id`, `from_date`, `to_date`, `place`, `event`, `participants`, `position_role`, `updated_at`, `created_at`) VALUES
-(2, 3, '0000-00-00', '0000-00-00', 'India', '2016 IIFA', '15', '3', '2016-04-26 11:40:45', '2016-04-26 11:40:45'),
+(2, 3, '2016-12-21', '2016-12-22', 'India', '2016 IIFA', '15', '3', '2016-05-30 07:37:31', '2016-04-26 11:40:45'),
 (3, 3, '0000-00-00', '0000-00-00', 'delhi', 'world Cup', '16', '2', '2016-04-26 11:49:30', '2016-04-26 11:49:30');
 
 -- --------------------------------------------------------
@@ -235,7 +250,7 @@ CREATE TABLE IF NOT EXISTS `coach_parameters` (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=20 ;
 
 --
 -- Dumping data for table `coach_parameters`
@@ -243,10 +258,24 @@ CREATE TABLE IF NOT EXISTS `coach_parameters` (
 
 INSERT INTO `coach_parameters` (`id`, `coach_id`, `dob_proof`, `birth_place`, `address1`, `address2`, `city`, `pincode`, `address_state_id`, `email`, `alternate_email`, `mobile`, `landline`, `passport_no`, `passport_expiry`, `passport_copy`, `updated_at`, `created_at`) VALUES
 (1, 1, 'coaches-doc/2-CHIRAG---WIN_20151003_143525.JPG', 'Delhi', '80, mootichoor hari', '', 'Delhi/NCR', 110094, 32, 'chiragverma2207@gmail.com', '', '07078395691', '07078395691', '5465466', '2020-02-03', 'coaches-doc/CHIRAG---WIN_20151003_143540.JPG', '2016-04-22 13:00:18', '2016-04-22 13:00:18'),
-(2, 3, 'coaches-doc/7-CHIRAG---WIN_20151003_143525.JPG', 'uttrakhand', '80, mootichoor haripur', 'Sidkul Haridwar 2', 'Delhi/NCR 1', 110093, 36, 'vishu@gmail.com', 'vishu123@gmail.com', '9548766941', '9548766941', 'dfadsa456', '0000-00-00', 'coaches-doc/11-CHIRAG---WIN_20151003_143525.JPG', '2016-05-09 12:49:16', '2016-04-22 13:15:57'),
-(3, 8, 'coaches-doc/11-Table-of-Contents.pdf', 'Delhi', 'MB-33 Inderlok Colony', 'Sidkul Haridwar', 'haridwar', 249403, 36, 'sachin@blasters.com', '', '9548766941', '09548766941', 'dfadsa456', '1900-12-22', 'coaches-doc/1-syno-revise.pdf', '2016-05-09 12:57:48', '2016-05-09 12:43:21'),
+(2, 3, 'coaches-doc/7-CHIRAG---WIN_20151003_143525.JPG', 'uttrakhand', '80, mootichoor haripur', 'Sidkul Haridwar 2', 'Delhi/NCR 1', 110093, 36, 'vishu@gmail.com', 'vishu123@gmail.com', '9548766941', '9548766941', 'dfadsa456', '2020-02-03', 'coaches-doc/11-CHIRAG---WIN_20151003_143525.JPG', '2016-05-10 13:15:33', '2016-04-22 13:15:57'),
+(3, 8, 'coaches-doc/11-Table-of-Contents.pdf', 'Delhi', 'MB-33 Inderlok Colony', 'Sidkul Haridwar', 'haridwar', 249403, 36, 'sachin@blasters.com', '', '9548766941', '09548766941', 'dfadsa456', '2020-02-03', 'coaches-doc/PassportProof_4_1462885757.pdf', '2016-05-10 13:15:54', '2016-05-09 12:43:21'),
 (4, 9, 'coaches-doc/12-Table-of-Contents.pdf', 'delhi', '80, mootichoor hari', '', 'Delhi/NCR', 124646, 36, 'chiragverma2207@gmail.com', '', '9548766941', '09548766941', '5465466', '2016-05-11', 'coaches-doc/13-Table-of-Contents.pdf', '2016-05-09 12:47:19', '2016-05-09 12:47:19'),
-(5, 10, 'coaches-doc/16-Table-of-Contents.pdf', 'Ranipokhri', '80, mootichoor hari', '', 'Delhi/NCR', 110094, 9, 'shubham@gmail.com', '', '78798798797', '', '8789798', '2016-05-24', 'coaches-doc/17-Table-of-Contents.pdf', '2016-05-10 09:39:54', '2016-05-10 09:39:54');
+(5, 10, 'coaches-doc/16-Table-of-Contents.pdf', 'Ranipokhri', '80, mootichoor hari', '', 'Delhi/NCR', 110094, 9, 'shubham@gmail.com', '', '78798798797', '', '8789798', '2016-05-24', 'coaches-doc/17-Table-of-Contents.pdf', '2016-05-10 09:39:54', '2016-05-10 09:39:54'),
+(6, 11, 'coaches-doc/dobProof__Table-of-Contents.pdf', 'HARIDWAR UTTRAKHAND', '80, mootichoor hari', 'Sidkul Haridwar', 'Delhi/NCR', 110094, 36, 'avyay@gmail.com', '', '9548766941', '09548766941', '5465466', '2016-05-11', 'coaches-doc/PassportProof__Table-of-Contents.pdf', '2016-05-12 12:24:55', '2016-05-12 12:24:55'),
+(7, 12, 'coaches-doc/11-Table-of-Contents.pdf', 'Delhi', 'MB-33 Inderlok Colony', 'Sidkul Haridwar', 'haridwar', 249403, 36, 'sachin@blasters.com', '', '9548766941', '09548766941', '21234646', '2016-05-17', 'coaches-doc/PassportProof__Table-of-Contents.pdf', '2016-05-12 12:27:57', '2016-05-12 12:27:57'),
+(8, 13, 'coaches-doc/dobProof__Table-of-Contents.pdf', 'Delhi', '80, mootichoor hari', '', 'Delhi/NCR', 110094, 36, 'chiragverma2207@gmail.com', '', '9548766941', '09548766941', 'dasfd', '2016-05-20', 'coaches-doc/PassportProof__Table-of-Contents.pdf', '2016-05-18 13:16:40', '2016-05-18 13:16:40'),
+(9, 14, 'coaches-doc/dobProof__Table-of-Contents.pdf', 'Delhi', '80, mootichoor hari', '', 'Delhi/NCR', 110094, 36, 'chiragverma2207@gmail.com', '', '9548766941', '09548766941', 'dfadsa', '2016-05-11', 'coaches-doc/PassportProof__Table-of-Contents.pdf', '2016-05-18 13:18:51', '2016-05-18 13:18:51'),
+(10, 15, 'coaches-doc/dobProof__Table-of-Contents.pdf', 'Delhi', '80, mootichoor hari', '', 'Delhi/NCR', 110094, 36, 'chiragverma2207@gmail.com', '', '9548766941', '09548766941', 'dfadsa', '2016-05-11', 'coaches-doc/PassportProof__Table-of-Contents.pdf', '2016-05-18 13:21:59', '2016-05-18 13:21:59'),
+(11, 16, 'coaches-doc/dobProof__Table-of-Contents.pdf', 'Delhi', '80, mootichoor hari', '', 'Delhi/NCR', 110094, 36, 'chiragverma2207@gmail.com', '', '9548766941', '09548766941', '21234646', '2016-05-14', 'coaches-doc/PassportProof__Table-of-Contents.pdf', '2016-05-18 13:24:10', '2016-05-18 13:24:10'),
+(12, 17, 'coaches-doc/dobProof__Table-of-Contents.pdf', 'Delhi', '80, mootichoor hari', '', 'Delhi/NCR', 110094, 36, 'chiragverma2207@gmail.com', '', '9548766941', '09548766941', '21234646', '2016-05-14', 'coaches-doc/PassportProof__Table-of-Contents.pdf', '2016-05-18 13:24:33', '2016-05-18 13:24:33'),
+(13, 18, 'coaches-doc/dobProof__Table-of-Contents.pdf', 'Delhi', '80, mootichoor hari', '', 'Delhi/NCR', 110094, 36, 'chiragverma2207@gmail.com', '', '9548766941', '09548766941', '21234646', '2016-05-14', 'coaches-doc/PassportProof__Table-of-Contents.pdf', '2016-05-18 13:25:09', '2016-05-18 13:25:09'),
+(14, 19, 'coaches-doc/dobProof__Table-of-Contents.pdf', 'Delhi', '80, mootichoor hari', '', 'Delhi/NCR', 110094, 36, 'chiragverma2207@gmail.com', '', '9548766941', '09548766941', '21234646', '2016-05-14', 'coaches-doc/PassportProof__Table-of-Contents.pdf', '2016-05-18 13:25:19', '2016-05-18 13:25:19'),
+(15, 20, 'coaches-doc/dobProof__Table-of-Contents.pdf', 'Delhi', '80, mootichoor hari', '', 'Delhi/NCR', 110094, 36, 'chiragverma2207@gmail.com', '', '9548766941', '09548766941', '21234646', '2016-05-14', 'coaches-doc/PassportProof__Table-of-Contents.pdf', '2016-05-18 13:25:25', '2016-05-18 13:25:25'),
+(16, 21, 'coaches-doc/dobProof__Table-of-Contents.pdf', 'Delhi', '80, mootichoor hari', '', 'Delhi/NCR', 110094, 36, 'chiragverma2207@gmail.com', '', '9548766941', '09548766941', '21234646', '2016-05-14', 'coaches-doc/PassportProof__Table-of-Contents.pdf', '2016-05-18 13:25:31', '2016-05-18 13:25:31'),
+(17, 22, 'coaches-doc/dobProof__Table-of-Contents.pdf', 'Delhi', '80, mootichoor hari', '', 'Delhi/NCR', 110094, 36, 'chiragverma2207@gmail.com', '', '9548766941', '09548766941', '21234646', '2016-05-14', 'coaches-doc/PassportProof__Table-of-Contents.pdf', '2016-05-18 13:25:39', '2016-05-18 13:25:39'),
+(18, 23, 'coaches-doc/dobProof__Table-of-Contents.pdf', 'Delhi', '80, mootichoor hari', '', 'Delhi/NCR', 110094, 36, 'chiragverma2207@gmail.com', '', '9548766941', '09548766941', '21234646', '2016-05-14', 'coaches-doc/PassportProof__Table-of-Contents.pdf', '2016-05-18 13:26:33', '2016-05-18 13:26:33'),
+(19, 24, 'coaches-doc/dobProof__Table-of-Contents.pdf', 'Delhi', '80, mootichoor hari', '', 'Delhi/NCR', 110094, 36, 'chiragverma2207@gmail.com', '', '9548766941', '09548766941', '21234646', '2016-05-14', 'coaches-doc/PassportProof__Table-of-Contents.pdf', '2016-05-18 13:26:55', '2016-05-18 13:26:55');
 
 -- --------------------------------------------------------
 
@@ -261,22 +290,56 @@ CREATE TABLE IF NOT EXISTS `courses` (
   `start_date` date NOT NULL,
   `end_date` date NOT NULL,
   `fees` int(10) NOT NULL,
+  `venue` text NOT NULL,
+  `active` int(1) NOT NULL,
+  `description` text NOT NULL,
   `documents` varchar(100) NOT NULL,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
 
 --
 -- Dumping data for table `courses`
 --
 
-INSERT INTO `courses` (`id`, `name`, `license_id`, `start_date`, `end_date`, `fees`, `documents`, `updated_at`, `created_at`) VALUES
-(1, 'cjdfk', 1, '2016-04-20', '2016-04-28', 100, 'coaches-doc/8-CHIRAG---WIN_20151003_143540.JPG', '2016-05-02 09:23:57', '2016-04-29 12:08:03'),
-(2, 'caskdfja', 1, '2016-04-04', '2016-05-20', 500, 'coaches-doc/9-CHIRAG---WIN_20151003_143540.JPG', '2016-05-02 09:27:03', '2016-04-29 12:11:49'),
-(4, 'past course', 1, '2016-03-27', '2016-04-02', 500, 'coaches-doc/10-CHIRAG---WIN_20151003_143540.JPG', '2016-04-29 13:05:59', '2016-04-29 13:05:59'),
-(5, 'B-grade', 2, '2016-04-04', '2016-04-28', 500, 'coaches-doc/11-CHIRAG---WIN_20151003_143540.JPG', '2016-04-30 10:45:14', '2016-04-30 10:45:14'),
-(6, 'license bc', 2, '2016-05-12', '2016-05-28', 100, '', '2016-05-09 13:53:39', '2016-05-05 09:27:49');
+INSERT INTO `courses` (`id`, `name`, `license_id`, `start_date`, `end_date`, `fees`, `venue`, `active`, `description`, `documents`, `updated_at`, `created_at`) VALUES
+(1, 'cjdfk', 1, '2016-04-20', '2016-04-28', 100, 'Delhi', 0, 'dflsssssssafd', 'coaches-doc/8-CHIRAG---WIN_20151003_143540.JPG', '2016-06-09 10:31:39', '2016-04-29 12:08:03'),
+(2, 'caskdfja', 1, '2016-04-13', '2016-05-20', 500, 'delhi', 0, 'djkfasjd sjdlalsjdl afj', 'coaches-doc/9-CHIRAG---WIN_20151003_143540.JPG', '2016-05-10 13:16:49', '2016-04-29 12:11:49'),
+(4, 'past course', 1, '2016-03-27', '2016-04-02', 500, '', 0, '', 'coaches-doc/10-CHIRAG---WIN_20151003_143540.JPG', '2016-04-29 13:05:59', '2016-04-29 13:05:59'),
+(5, 'B-grade', 2, '2016-04-04', '2016-04-28', 500, '', 0, '', 'coaches-doc/11-CHIRAG---WIN_20151003_143540.JPG', '2016-04-30 10:45:14', '2016-04-30 10:45:14'),
+(6, 'license bc', 2, '2016-05-12', '2016-05-28', 100, '', 0, '', '', '2016-06-13 10:58:44', '2016-05-05 09:27:49'),
+(7, 'LLB', 1, '2016-05-02', '2016-05-28', 500, 'delhi', 0, 'kdfajlsdjfla', 'coaches-doc/Document_5_Table-of-Contents.pdf', '2016-06-14 09:56:39', '2016-05-10 12:47:30'),
+(8, 'new course', 2, '2016-06-17', '2016-06-22', 1500, 'Delhi', 0, 'A test course', 'coaches-doc/Document_5_OR.pdf', '2016-06-09 10:33:25', '2016-06-09 10:33:25');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `courses_parameter`
+--
+
+CREATE TABLE IF NOT EXISTS `courses_parameter` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `license_id` int(11) NOT NULL,
+  `parameter_id` int(11) NOT NULL,
+  `active` int(1) NOT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
+
+--
+-- Dumping data for table `courses_parameter`
+--
+
+INSERT INTO `courses_parameter` (`id`, `license_id`, `parameter_id`, `active`, `updated_at`, `created_at`) VALUES
+(4, 2, 1, 0, '2016-06-13 11:32:17', '2016-06-13 11:32:17'),
+(5, 2, 2, 0, '2016-06-13 11:32:17', '2016-06-13 11:32:17'),
+(6, 2, 7, 0, '2016-06-14 09:46:11', '2016-06-14 09:46:11'),
+(7, 2, 8, 0, '2016-06-14 09:46:27', '2016-06-14 09:46:27'),
+(8, 1, 1, 0, '2016-06-14 10:01:34', '2016-06-14 10:01:34'),
+(9, 1, 7, 0, '2016-06-14 10:01:34', '2016-06-14 10:01:34'),
+(10, 1, 8, 0, '2016-06-14 10:01:34', '2016-06-14 10:01:34');
 
 -- --------------------------------------------------------
 
@@ -333,6 +396,36 @@ INSERT INTO `license` (`id`, `name`, `description`, `authorised_by`, `updated_at
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `parameters`
+--
+
+CREATE TABLE IF NOT EXISTS `parameters` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `parameter` varchar(100) NOT NULL,
+  `max_marks` varchar(20) NOT NULL,
+  `active` int(1) NOT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+
+--
+-- Dumping data for table `parameters`
+--
+
+INSERT INTO `parameters` (`id`, `parameter`, `max_marks`, `active`, `updated_at`, `created_at`) VALUES
+(1, 'Theory1', '100', 0, '2016-06-11 11:47:45', '2016-06-11 11:34:02'),
+(2, 'Practicles', '100', 0, '2016-06-11 11:57:29', '2016-06-11 11:50:54'),
+(3, 'dasdafd', '100', 1, '2016-06-11 11:52:09', '2016-06-11 11:51:07'),
+(4, 'dfasdf', '450', 1, '2016-06-11 11:53:29', '2016-06-11 11:53:18'),
+(5, 'dfadsf', '54', 1, '2016-06-11 11:54:24', '2016-06-11 11:54:16'),
+(6, 'sdasdfad', '100', 1, '2016-06-13 09:36:21', '2016-06-13 09:36:13'),
+(7, 'English', '100', 0, '2016-06-14 09:45:50', '2016-06-14 09:45:50'),
+(8, 'Hindi', '100', 0, '2016-06-14 09:45:57', '2016-06-14 09:45:57');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `payment`
 --
 
@@ -349,16 +442,17 @@ CREATE TABLE IF NOT EXISTS `payment` (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
 
 --
 -- Dumping data for table `payment`
 --
 
 INSERT INTO `payment` (`id`, `application_id`, `fees`, `payment_method`, `cheque_date`, `cheque_number`, `bank_name`, `remarks`, `status`, `updated_at`, `created_at`) VALUES
-(2, 4, 500, 2, '2016-05-13', 125633, 'PNB', 'payment paid', 0, '2016-05-10 11:04:43', '2016-05-06 14:08:35'),
+(2, 4, 500, 2, '2016-05-13', 125633, 'PNB', 'afdsafd', 0, '2016-05-30 06:31:34', '2016-05-06 14:08:35'),
 (3, 2, 100, 3, '0000-00-00', 0, '', 'dafsdfa1', 0, '2016-05-10 11:11:07', '2016-05-06 14:16:35'),
-(7, 5, 100, 3, '0000-00-00', 0, '', 'i wil pay that ammount at the department counter', 0, '2016-05-09 13:53:48', '2016-05-09 13:05:17');
+(7, 5, 100, 3, '0000-00-00', 0, '', 'i wil pay that ammount at the department counter', 0, '2016-05-09 13:53:48', '2016-05-09 13:05:17'),
+(8, 6, 500, 1, '2016-05-25', 454512, 'SBI', 'dfads asdf adsf', 0, '2016-05-30 07:38:22', '2016-05-30 07:38:22');
 
 -- --------------------------------------------------------
 
@@ -421,7 +515,40 @@ INSERT INTO `reg_data` (`id`, `temp_id`, `data1`, `data2`, `data3`, `updated_at`
 (10, 0, 'a:11:{s:6:"_token";s:40:"zeUsRDOQvY4djbtnZCN6kRwziD4besG2blPl3bPL";s:2:"id";s:0:"";s:9:"state_reg";s:1:"3";s:15:"state_reference";s:1:"1";s:8:"address1";s:7:" dsafsd";s:8:"address2";s:7:"ds afsd";s:4:"city";s:0:"";s:7:"pincode";s:0:"";s:5:"state";s:1:"7";s:6:"mobile";s:6:"554645";s:8:"landline";s:3:"546";}', '', '', '2016-05-09 09:35:21', '0000-00-00 00:00:00'),
 (12, 0, '', '', 'a:3:{s:14:"passport_proof";s:33:"coaches-doc/Table-of-Contents.pdf";s:15:"passport_expiry";s:10:"2016-05-05";s:8:"passport";s:7:"5465466";}', '2016-05-09 11:41:57', '0000-00-00 00:00:00'),
 (13, 0, '', '', 'a:3:{s:14:"passport_proof";s:35:"coaches-doc/1-Table-of-Contents.pdf";s:15:"passport_expiry";s:10:"2016-05-05";s:8:"passport";s:7:"5465466";}', '2016-05-09 11:42:15', '0000-00-00 00:00:00'),
-(14, 0, 'a:9:{s:5:"photo";s:47:"coaches-doc/13-CHIRAG---WIN_20151003_143525.JPG";s:9:"dob_proof";s:36:"coaches-doc/11-Table-of-Contents.pdf";s:10:"first_name";s:6:"Sachin";s:11:"middle_name";s:6:"Ramesh";s:9:"last_name";s:9:"Tendulkar";s:5:"email";s:19:"sachin@blasters.com";s:6:"gender";s:1:"1";s:3:"dob";s:10:"2016-05-26";s:11:"birth_place";s:5:"Delhi";}', 'a:11:{s:6:"_token";s:40:"zeUsRDOQvY4djbtnZCN6kRwziD4besG2blPl3bPL";s:2:"id";s:2:"14";s:9:"state_reg";s:2:"32";s:15:"state_reference";s:2:"32";s:8:"address1";s:21:"MB-33 Inderlok Colony";s:8:"address2";s:15:"Sidkul Haridwar";s:4:"city";s:8:"haridwar";s:7:"pincode";s:6:"249403";s:5:"state";s:2:"36";s:6:"mobile";s:10:"9548766941";s:8:"landline";s:11:"09548766941";}', 'a:3:{s:14:"passport_proof";s:29:"coaches-doc/1-syno-revise.pdf";s:15:"passport_expiry";s:10:"2016-05-18";s:8:"passport";s:7:"5465466";}', '2016-05-09 12:43:21', '0000-00-00 00:00:00');
+(14, 0, 'a:9:{s:5:"photo";s:51:"coaches-doc/photo__CHIRAG---WIN_20150602_192149.JPG";s:9:"dob_proof";s:43:"coaches-doc/dobProof__Table-of-Contents.pdf";s:10:"first_name";s:6:"chirag";s:11:"middle_name";s:0:"";s:9:"last_name";s:5:"verma";s:5:"email";s:25:"chiragverma2207@gmail.com";s:6:"gender";s:1:"1";s:3:"dob";s:10:"2016-05-18";s:11:"birth_place";s:5:"Delhi";}', 'a:11:{s:6:"_token";s:40:"2Es55k9ZmH5l0MvdYPckDCYcZLYFB5ovcoZJp4Nw";s:2:"id";s:2:"14";s:9:"state_reg";s:2:"36";s:15:"state_reference";s:2:"36";s:8:"address1";s:19:"80, mootichoor hari";s:8:"address2";s:0:"";s:4:"city";s:9:"Delhi/NCR";s:7:"pincode";s:6:"110094";s:5:"state";s:2:"36";s:6:"mobile";s:10:"9548766941";s:8:"landline";s:11:"09548766941";}', 'a:3:{s:14:"passport_proof";s:48:"coaches-doc/PassportProof__Table-of-Contents.pdf";s:15:"passport_expiry";s:10:"2016-05-14";s:8:"passport";s:8:"21234646";}', '2016-05-18 13:24:10', '0000-00-00 00:00:00'),
+(15, 0, '', '', 'a:3:{s:14:"passport_proof";s:48:"coaches-doc/PassportProof__Table-of-Contents.pdf";s:15:"passport_expiry";s:10:"2016-05-20";s:8:"passport";s:7:"5465466";}', '2016-05-18 13:17:54', '0000-00-00 00:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `results`
+--
+
+CREATE TABLE IF NOT EXISTS `results` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `application_id` int(11) NOT NULL,
+  `parameter_id` int(11) NOT NULL,
+  `marks` varchar(50) NOT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=118 ;
+
+--
+-- Dumping data for table `results`
+--
+
+INSERT INTO `results` (`id`, `application_id`, `parameter_id`, `marks`, `updated_at`, `created_at`) VALUES
+(108, 5, 1, '30', '2016-06-14 12:52:21', '2016-06-14 12:52:21'),
+(109, 5, 2, '40', '2016-06-14 12:52:21', '2016-06-14 12:52:21'),
+(110, 5, 7, '50', '2016-06-14 12:52:21', '2016-06-14 12:52:21'),
+(111, 5, 8, '60', '2016-06-14 12:52:21', '2016-06-14 12:52:21'),
+(112, 6, 1, '50', '2016-06-14 13:00:06', '2016-06-14 13:00:06'),
+(113, 6, 7, '55', '2016-06-14 13:00:07', '2016-06-14 13:00:07'),
+(114, 6, 8, '78', '2016-06-14 13:00:07', '2016-06-14 13:00:07'),
+(115, 4, 1, '88', '2016-06-14 13:00:59', '2016-06-14 13:00:59'),
+(116, 4, 7, '99', '2016-06-14 13:00:59', '2016-06-14 13:00:59'),
+(117, 4, 8, '55', '2016-06-14 13:00:59', '2016-06-14 13:00:59');
 
 -- --------------------------------------------------------
 
@@ -489,25 +616,38 @@ CREATE TABLE IF NOT EXISTS `users` (
   `username` varchar(150) NOT NULL,
   `password` varchar(200) NOT NULL,
   `password_check` varchar(50) NOT NULL,
+  `hash` varchar(200) NOT NULL,
   `active` int(11) NOT NULL,
   `privilege` int(11) NOT NULL,
   `remember_token` varchar(200) NOT NULL,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=23 ;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `coach_id`, `username`, `password`, `password_check`, `active`, `privilege`, `remember_token`, `updated_at`, `created_at`) VALUES
-(3, 1, 'chiragverma2207@gmail.com', '$2y$10$BoJ.8qC7BfiY1C13m1jg4.yOzfqzr6sZI7/GK8nUVRcXP70b0jHcC', 'sample', 0, 1, 'ToOW9ro1YabsLn5XKxB8msk8Qtavm9ShYS0rd3gYnULNvAXZcOSaegQGgiAZ', '2016-05-05 11:39:36', '2016-04-22 13:00:18'),
-(4, 3, 'vishu@gmail.com', '$2y$10$7Hp3Q9jqYu7eJ/mDhYq/MuDy/N.IPrlllYstAxaDMHru8kH3NBSE.', 'sample123', 0, 1, '6FMGjdwrvz6Vb8Uk3zDZdB9t1fcrrsBfzoWPMvY0QzkpXpN9NSOtPTuaqPnG', '2016-05-09 13:05:40', '2016-04-22 13:15:58'),
-(5, 0, 'admin', '$2y$10$QOY2gfuw6v6.oqDB4V30nuXy.y3QVMJxVF26JK3dhHddnR8XF2KwS', 'sample', 0, 2, 'uytIBaKjZUZDVH3wLDIZOito5s22uLa8odwJTjbRw8Bx4ThcHbGWfY5gVCk7', '2016-05-07 12:31:27', '0000-00-00 00:00:00'),
-(6, 8, 'sachin@blasters.com', '$2y$10$5jJBfXXG/yKijR0RDTXp4Oo0Nv.QLD0wQHiZWAz2K42NGnle13QdO', '0D42uMJI', 0, 1, '', '2016-05-09 12:43:22', '2016-05-09 12:43:22'),
-(7, 9, 'chiragverma2207@gmail.com', '$2y$10$igo95Vkkyk6GTYeqHBUH6O2LeeNOrp6i7SQqkgz9tUvxXpAaQRUvq', 'MCpBfIfR', 0, 1, '', '2016-05-09 12:47:19', '2016-05-09 12:47:19'),
-(8, 10, 'shubham@gmail.com', '$2y$10$wWMRIknP6GIG7/VRYjv1VOYzOBArH9H1rXQb5KqY.QPl95znjwc.u', 'HCVQX3N4', 0, 1, '', '2016-05-10 09:39:54', '2016-05-10 09:39:54');
+INSERT INTO `users` (`id`, `coach_id`, `username`, `password`, `password_check`, `hash`, `active`, `privilege`, `remember_token`, `updated_at`, `created_at`) VALUES
+(4, 3, 'vishu@gmail.com', '$2y$10$BoJ.8qC7BfiY1C13m1jg4.yOzfqzr6sZI7/GK8nUVRcXP70b0jHcC', 'sample', '', 0, 1, 'pYXmTB3cx0FvK6kshoDJFtWEikBchzpOJQon1PIWSks2oD45SzmTz9reqBkJ', '2016-05-12 12:14:42', '2016-04-22 13:15:58'),
+(5, 0, 'admin', '$2y$10$QOY2gfuw6v6.oqDB4V30nuXy.y3QVMJxVF26JK3dhHddnR8XF2KwS', 'sample', '', 0, 2, 'EobWIxGkVqEhQ0mX8YS2hFhT8vBgotiYRL20C6eqvwYdpHq2F1NInNOe7UBx', '2016-06-09 11:20:10', '0000-00-00 00:00:00'),
+(6, 8, 'sachin@blasters.com', '$2y$10$5jJBfXXG/yKijR0RDTXp4Oo0Nv.QLD0wQHiZWAz2K42NGnle13QdO', '0D42uMJI', '', 0, 1, '', '2016-05-09 12:43:22', '2016-05-09 12:43:22'),
+(8, 10, 'shubham@gmail.com', '$2y$10$wWMRIknP6GIG7/VRYjv1VOYzOBArH9H1rXQb5KqY.QPl95znjwc.u', 'HCVQX3N4', '', 0, 1, '', '2016-05-10 09:39:54', '2016-05-10 09:39:54'),
+(9, 11, 'avyay@gmail.com', '$2y$10$7CjfQ9JoTUz.Fs4.L1Jkau95TnT6vW.ZIZx5RoBQI2hX/ioRob0am', '80efBswP', '', 0, 1, '', '2016-05-12 12:24:56', '2016-05-12 12:24:56'),
+(10, 12, 'sachin@blasters.com', '$2y$10$5pB0fsnXoTG0kxYFVArpk.7Oxxr4wpcZARCS7mcnt6a89/YalzbXO', 'PHTHcmxi', '', 0, 1, '', '2016-05-12 12:27:57', '2016-05-12 12:27:57'),
+(11, 13, 'chiragverma2207@gmail.com', '$2y$10$tgibepon0xZLgGoz07neBuBJKJkooAPQ/pqvDBxSDBMvhikqjfd6e', '6FeTVief', '$2y$10$2XziIWTJjFc6gYHgcthYEe8hN7P2/Up.OrvxOhThytwPW9dKeXvEG', 1, 1, '', '2016-05-18 13:16:41', '2016-05-18 13:16:41'),
+(12, 14, 'chiragverma2207@gmail.com', '$2y$10$iwWrpxNQ5wG4P2YjkwDqCeSzjccCWNxcUNvzlCXiB5rw8i7/c3zMq', 'CAgJBGL9', '$2y$10$qr9SbQFheBQqnc3Qr2zga.3/3PY1WbHtWq.3pcxnqGyeQtTOqcoXu', 1, 1, '', '2016-05-18 13:18:51', '2016-05-18 13:18:51'),
+(13, 15, 'chiragverma2207@gmail.com', '$2y$10$0h5L0iFR8UDsm4LG.TkSGuN65OVktbOIeYVzqFWhvK6lbhO8tA23.', '0Ku0eE3V', '$2y$10$vxMmq8ptcTjzJeC69I1QfeM1.zLunmfW2m0Mmt.p29mxYuwRtd8fe', 0, 1, '', '2016-05-18 13:22:13', '2016-05-18 13:22:00'),
+(14, 17, 'chiragverma2207@gmail.com', '$2y$10$ltxwi2iZj//qHQUKVHo22O/uLtU7oWA4..8Zggld/C.7nQIsUUFy.', 'JikQ37Tp', '$2y$10$zjHDAbZ/RdlbnGlj2kdiLehTxOStoTId/VTljQgFvDRUQPdf9F7nm', 1, 1, '', '2016-05-18 13:24:34', '2016-05-18 13:24:34'),
+(15, 18, 'chiragverma2207@gmail.com', '$2y$10$g5TbJuFpSifPpW9nqrpdr.YJba4y2BfaRgUyMGgzd6G8ezegzU4Ge', 'OQ3cFbA3', '$2y$10$X8HWSFERscAyytFFnXqn2uVdZPYP8PqLPLe2siT.ApQ0SsLjzJw56', 1, 1, '', '2016-05-18 13:25:10', '2016-05-18 13:25:10'),
+(16, 19, 'chiragverma2207@gmail.com', '$2y$10$QgR3Bj63MdZkTXxesiopMeY6a9qE78np.kj2jtWe.eAZfwkHRvPai', 'RKp7YsLr', '$2y$10$IL/LJxoBQXiW9muk23nrye1YaY8PCYVHtmGrhX1AXENAx1b/qxoHK', 1, 1, '', '2016-05-18 13:25:20', '2016-05-18 13:25:20'),
+(17, 20, 'chiragverma2207@gmail.com', '$2y$10$VBiK36q.GfXLkMacdvSvWOZ5IX.QFRiPIC54oXtU9M1aE0VeyPjR.', 'YY3GqcJ0', '$2y$10$ZO7qTXTFveASKU0eUzsYou08rDDVJVhyvNl662ecbCW2kH3JiTtoy', 1, 1, '', '2016-05-18 13:25:26', '2016-05-18 13:25:26'),
+(18, 21, 'chiragverma2207@gmail.com', '$2y$10$kYP/pffZ.Mi7Nw/9TV7KwODHYQh6rzCMw5vNCOjUJ6vWOVghSaOs2', 'zK2rEDOK', '$2y$10$PSMEVKPZEwtxaqHIb0e1puJcbcwAenYlbWWFBiW1sTuqX9jGV5Ram', 1, 1, '', '2016-05-18 13:25:32', '2016-05-18 13:25:32'),
+(19, 22, 'chiragverma2207@gmail.com', '$2y$10$wYFrXNkIDyWHZklaIV3vhe8/gR7wXemT33zXeGy9axoDJVMjxjyZy', 'hBPIEEKX', '$2y$10$jo5FFcRxm.aTjPPqRKcg7eWDL.hzDsumOmIaXTAfTC1r3Wdr3zB06', 0, 1, '', '2016-05-18 13:25:44', '2016-05-18 13:25:39'),
+(20, 23, 'chiragverma2207@gmail.com', '$2y$10$MeQi2w9//wke8OJ61lu2mObbBrdpADDoA0ryBoD39Dg3KI6eh9bP2', 'M2ALHTHk', '$2y$10$3N9epV2nue0jM/Wk1y7FE.rI6wASgjp9u49LqePuHB7mOyoSPPa8i', 1, 1, '', '2016-05-18 13:26:33', '2016-05-18 13:26:33'),
+(21, 24, 'chiragverma2207@gmail.com', '$2y$10$XpiWBSjYuGmWVgdqfCErceIxzNJgiRUg/dMCRTHeoj0jbqzigYXWy', 'gjsS0qt2', '$2y$10$1ScDLgQMJK5DgMKTHLyuc.68lzdkiiZEAlSI0RBYV6erFlZJc8dVq', 0, 1, '', '2016-05-18 13:27:08', '2016-05-18 13:26:56'),
+(22, 0, 'resultAdmin', '$2y$10$/3PFbaVqp8KW7oHcpR5z8e4K7DhgiMGCRVy1HYMTJvgbz86GxoBpm', 'sample123', '', 0, 3, '29cSsLy0bgYdF6gULZa3mls9F1h72yiTEA3OnDs0gw3o43uNAqijVGPPILPO', '2016-06-14 13:12:27', '0000-00-00 00:00:00');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

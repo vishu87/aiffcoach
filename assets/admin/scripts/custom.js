@@ -340,6 +340,29 @@ $(document).on('click','form.ajax_edit_pop button[type=submit]', function(e){
 		},"json");
     }
 });
+$(document).on('click','form.update-marks button[type=submit]', function(e){
+    e.preventDefault();
+    if($(".update-marks").valid()){
+    	var btn = $(this);
+    	var initial_html = btn.html();
+    	btn.html(initial_html+' <i class="fa fa-spin fa-spinner"></i>');
+    	var form = jQuery(this).parents("form:first");
+		var dataString = form.serialize();
+		var setPrice =form.attr('set-price');
+		dataString = dataString + "&count=" + count;
+		var formAction = form.attr('action');
+		$.ajax({
+		    type: "PUT",
+		    url : formAction,
+		    data : dataString,
+		    success : function(data){
+			    btn.html(initial_html);
+			    $(".modal").modal("hide");
+			    
+		    }
+		},"json");
+    };
+});
 
 $(document).on('click','.mark-application', function(e){
     e.preventDefault();
@@ -381,11 +404,17 @@ $(document).on("click", ".details", function() {
 	    type: "GET",
 	    url : formAction,
 	    success : function(data){
-	    	$(".modal-body").html(data);
+	    	if(data.success){
+	    		$(".modal-body").modal("hide");
+	    	}
+	    	else{
+	    		$(".modal-body").html(data.message);
+	    	}
 	    }
 	},"json");
 
 });
+
 
 function initialize(){
 	$(".check_form").validate();
@@ -396,6 +425,7 @@ function initialize(){
 }
 
 
+$('.select').select2();
 
 $(document).on("submit", ".ajax_check_form", function(e) {
 	e.preventDefault();

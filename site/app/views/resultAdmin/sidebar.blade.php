@@ -6,24 +6,35 @@
     </li>
     <li style="height:10px">
     </li>
-
-    
-    <li class="@if($sidebar == 1 ) active open @endif">
-      <a href="javascript:;">
-      <i class="fa fa-edit"></i>
-      <span class="title">Applications</span>
-      <span class="arrow @if($sidebar == 1 ) open @endif"></span>
+    <li class="@if($sidebar == 1 ) active @endif" >
+      <a href="{{url('/resultAdmin')}}">
+        <i class="fa fa-lock"></i>
+        <span class="title">Applications Scores</span>
+        <span class="selected"></span>
       </a>
-      <ul class="sub-menu">
-        <li class="@if($sidebar == 1 && $subsidebar == 1 ) active @endif">
-          <a href="{{url('admin/Applications/approved')}}">
-          <i class="fa fa-chevron-right"></i>
-          Approved</a>
-        </li>
-      </ul>
     </li>
-
-    <li class="@if($sidebar == 'profile' ) active @endif" >
+    <li class="@if($sidebar == 2 ) active @endif" >
+      <a href="{{url('/resultAdmin/Parameter')}}">
+        <i class="fa fa-lock"></i>
+        <span class="title">Parameters</span>
+        <span class="selected"></span>
+      </a>
+    </li>
+    <li class="@if($sidebar == 3 ) active @endif" >
+      <a href="{{url('/resultAdmin/coursesParameter')}}">
+        <i class="fa fa-lock"></i>
+        <span class="title">License Parameter</span>
+        <span class="selected"></span>
+      </a>
+    </li>
+    <!-- <li class="@if($sidebar == 4 ) active @endif" >
+      <a href="{{url('/resultAdmin/result')}}">
+        <i class="fa fa-lock"></i>
+        <span class="title">Result</span>
+        <span class="selected"></span>
+      </a>
+    </li> -->
+    <li class="@if($sidebar == 4) active @endif" >
       <a href="{{url('/changePassword')}}">
         <i class="fa fa-lock"></i>
         <span class="title">Change Password</span>

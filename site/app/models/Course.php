@@ -22,4 +22,9 @@ class Course extends Eloquent {
             ->join('license','courses.license_id','=','license.id')->get();
 		return $query;
 	}
+
+	public static function courselist(){
+		return [""=>"Select"]+Course::where('active',0)->lists('name','id');
+
+	}
 }
