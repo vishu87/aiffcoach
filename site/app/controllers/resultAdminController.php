@@ -66,4 +66,10 @@ class resultAdminController extends BaseController {
         $data['message']= 'result updated !';
         return json_encode($data);
     }
+
+    public function exportExcel($course_id){
+        $applicationsResults = Result::select('coaches.first_name','coaches.middle_name','coaches.last_name','license.name as license_name','courses.name as course_name','results.marks','parameters.parameter') ;
+        include(app_path().'/libraries/Classes/PHPExcel.php');
+        include(app_path().'/libraries/export/coach.php');
+    }
 }

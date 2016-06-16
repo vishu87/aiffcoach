@@ -70,6 +70,13 @@ class ParameterController extends BaseController {
         $data['message'] ="Unit Deleted Successully";
         return json_encode($data);
     }
+
+    public function exportExcel(){
+        $parameters = Parameter::where('parameters.active',0)->get();
+        include(app_path().'/libraries/Classes/PHPExcel.php');
+        include(app_path().'/libraries/export/coach.php');
+    }
 }
+
 
 

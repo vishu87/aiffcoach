@@ -136,6 +136,7 @@ Route::group(["before"=>['auth']],function(){
 
 Route::group(["prefix"=>'resultAdmin','before'=>["auth","resultAdmin"]],function(){
 	Route::get('/','resultAdminController@index');
+	Route::get('/exportApplications/{course_id}','resultAdminController@exportExcel');
 
 	Route::group(["prefix"=>"Parameter"],function(){
 		Route::get('/','ParameterController@index');
@@ -143,6 +144,8 @@ Route::group(["prefix"=>'resultAdmin','before'=>["auth","resultAdmin"]],function
 		Route::get('/edit/{id}','ParameterController@edit');
 		Route::put('/update/{id}','ParameterController@update');
 		Route::delete('/delete/{id}','ParameterController@delete');
+		Route::get('/exportExcel','ParameterController@exportExcel');
+
 
 	});
 	Route::group(["prefix"=>"coursesParameter"],function(){
@@ -151,6 +154,7 @@ Route::group(["prefix"=>'resultAdmin','before'=>["auth","resultAdmin"]],function
 		Route::get('/edit/{id}','CoursesParameterController@edit');
 		Route::put('/update/{id}','CoursesParameterController@update');
 		Route::delete('/delete/{id}','CoursesParameterController@delete');
+		Route::get('/exportExcel','CoursesParameterController@exportExcel');
 
 	});
 	Route::group(["prefix"=>"result"],function(){

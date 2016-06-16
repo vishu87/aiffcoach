@@ -2,6 +2,10 @@
 	<div class="col-md-8">
 		<h3 class="page-title">Courses Parameters</h3>
 	</div>
+	<div class="col-md-4">
+		<a class="btn green pull-right" href="{{url('/resultAdmin/Parameter/exportExcel')}}">Export Excel</a>
+
+	</div>
 	
 </div>
 @if(Session::has('success'))

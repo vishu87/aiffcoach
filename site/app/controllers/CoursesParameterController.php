@@ -84,6 +84,12 @@ class CoursesParameterController extends BaseController {
         $data['message'] ="Unit Deleted Successully";
         return json_encode($data);
     }
+
+    public function exportExcel(){
+        $licenseParameter = CourseParameter::select('courses_parameter.id','parameters.parameter','license.name as license_name')->join('parameters','courses_parameter.parameter_id','=','parameters.id')->join('license','courses_parameter.license_id','=','license.id')->where('courses_parameter.active',0)->get();
+        include(app_path().'/libraries/Classes/PHPExcel.php');
+        include(app_path().'/libraries/export/coach.php');
+    }
 }
 
 

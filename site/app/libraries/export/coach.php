@@ -96,6 +96,24 @@ if(isset($payments)){
 	$title = 'Payments';
 
 }
+if(isset($parameters)){
+	$fields = array("sn",'parameter','max_marks');
+	$field_names = array("SN","Parameter Name", "Maximum Marks");
+	$widths = array("10","30","20","20");
+	$exportData = $parameters;
+	$title = 'Parameters';
+
+}
+
+if(isset($licenseParameter)){
+	$fields = array("sn",'license_name','parameter');
+	$field_names = array("SN","License Name","Parameter Name");
+	$widths = array("10","30","20","20");
+	$exportData = $licenseParameter;
+	$title = 'License Parameters';
+
+}
+
 
 if(isset($payments)){
 	$appStatus =  array(

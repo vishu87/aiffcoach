@@ -34,7 +34,7 @@
 
 	</div>
 	<div class="col-md-3">
-		<a class="btn green pull-right" href="{{url('/')}}">Export Excel</a>
+		<a class="btn green pull-right" href="{{url('/resultAdmin/exportApplications/'.app('request')->input('course'))}}">Export Results</a>
 	</div>
 </div>
 

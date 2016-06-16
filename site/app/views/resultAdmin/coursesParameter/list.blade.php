@@ -1,6 +1,11 @@
 <div class="row">
 	<div class="col-md-8">
 		<h3 class="page-title">License Parameters</h3>
+		
+	</div>
+	<div class="col-md-4">
+		<a class="btn green pull-right" href="{{url('/resultAdmin/coursesParameter/exportExcel')}}">Export Excel</a>
+
 	</div>
 	
 </div>
