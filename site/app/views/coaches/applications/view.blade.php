@@ -9,6 +9,7 @@
 
 	<td>{{($data->status==1)?'Application Accepted':$data->remarks}}</td>
 	<td>{{(isset($status[$data->status]))?$status[$data->status]:''}}</td>
+	<td>{{($data->finalResult!='')?$resultStatus[$data->finalResult]:''}}</td>
 	@endif	
 	<td>
 		@if(!isset($value))
@@ -24,5 +25,8 @@
 		@if($data->status==1 || $data->status==0)
 			<button type="button" class="btn blue add-div" div-id="activity_{{$data->application_id}}" count="{{$count}}" modal-title="Select Payment Option"  action="{{'coach/Payment/'.$data->application_id}}">Pay Fee </button>
 		@endif	
+		@if($data->finalResult!='')	
+		<button type="button" class="btn blue edit-div"  modal-title="MarksSheet for {{$data->course_name}}" action="{{('coach/applications/viewMarks/'.$data->application_id)}}"> View Marks</button>
+		@endif
 	</td>
 </tr>

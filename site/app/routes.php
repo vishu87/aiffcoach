@@ -69,8 +69,9 @@ Route::group(['prefix'=>'coach','before'=>['auth','coach']], function () {
 	Route::group(["prefix"=>'applications'],function(){
 		Route::get('/','ApplicationController@allApplications');
 		Route::get('/applied','ApplicationController@applied');
-		Route::get('/active','ApplicationController@active');
-		Route::get('/inactive','ApplicationController@inactive');
+		// Route::get('/active','ApplicationController@active');
+		// Route::get('/inactive','ApplicationController@inactive');
+		Route::get('/viewMarks/{application_id}','ApplicationController@viewMarks');
 		Route::delete('/delete/{id}','ApplicationController@deleteCoachApplication');
 	});
 
@@ -161,7 +162,7 @@ Route::group(["prefix"=>'resultAdmin','before'=>["auth","resultAdmin"]],function
 		Route::get('/','resultAdminController@indexResult');
 		Route::post('/insert','resultAdminController@insert');
 		Route::get('/details/{id}','resultAdminController@details');
-		Route::get('/edit/{id}','resultAdminController@edit');
+		Route::get('/view/{id}','resultAdminController@view');
 		Route::get('/editParameterMarks/{id}','resultAdminController@editParameterMarks');
 		Route::put('/update/{id}','resultAdminController@update');
 		Route::delete('/delete/{id}','resultAdminController@delete');

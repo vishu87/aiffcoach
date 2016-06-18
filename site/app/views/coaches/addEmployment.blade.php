@@ -9,7 +9,7 @@
 		</h3>
 	</div>
 	<div class="col-md-3">
-		<a href="{{URL::previous()}}" class="btn blue pull-right">Go Back</a>
+		<a href="{{url('coach/employmentDetails	')}}" class="btn blue pull-right">Go Back</a>
 	</div>
 </div>
 @if(Session::has('success'))

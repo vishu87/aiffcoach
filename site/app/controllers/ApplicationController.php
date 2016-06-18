@@ -59,13 +59,29 @@ class ApplicationController extends BaseController {
 
     /************* Coaches methods return here********/
     public function applied(){
-        $applications =  Application::select('applications.status','applications.remarks','applications.id as application_id','courses.fees','courses.name as course_name','courses.end_date','license.id as license_id','license.name as license_name','license.authorised_by','license.description')->join('courses','applications.course_id','=','courses.id')->join('license','courses.license_id','=','license.id')->where('applications.coach_id',Auth::User()->coach_id)->get();
+        $applications =  Application::select('applications.status','application_result.status as finalResult','applications.remarks','applications.id as application_id','courses.fees','courses.name as course_name','courses.end_date','license.id as license_id','license.name as license_name','license.authorised_by','license.description')
+            ->join('courses','applications.course_id','=','courses.id')
+            ->join('license','courses.license_id','=','license.id')
+            ->leftJoin('application_result','applications.id','=','application_result.application_id')
+            ->where('applications.coach_id',Auth::User()->coach_id)
+            ->get();
         $status = Application::status();
+        $resultStatus = Result::status();
         $this->layout->sidebar = View::make('coaches.sidebar',['sidebar'=>'4','subsidebar'=>1]);
-        $this->layout->main = View::make('coaches.applications.list',['status'=>$status,"applications"=>$applications,'title'=>'Applied Applications']);
+        $this->layout->main = View::make('coaches.applications.list',['resultStatus'=>$resultStatus,'status'=>$status,"applications"=>$applications,'title'=>'Applied Applications']);
 
     }
 
+    public function viewMarks($application_id){
+        $course = Application::select('license.id as license_id')->join('courses','applications.course_id','=','courses.id')->join('license','courses.license_id','=','license.id')->where('applications.id',$application_id)->first();
+        $parameters = CourseParameter::select('parameters.parameter','parameters.max_marks','courses_parameter.parameter_id')
+            ->join('parameters','courses_parameter.parameter_id','=','parameters.id')
+            ->where('license_id',$course->license_id)
+            ->where('courses_parameter.active',0)
+            ->get();
+        $results = Result::where('application_id',$application_id)->get();   
+        return View::make('coaches.applications.marks',['parameters'=>$parameters,'application_id'=>$application_id,"results"=>$results]);
+    }
     public function active(){
         $currentDate = date('y-m-d',strtotime('now'));
         $applications =  Course::select('courses.id','courses.name as course_name','courses.end_date','courses.fees','license.name as license_name','license.authorised_by')

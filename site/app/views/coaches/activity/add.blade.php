@@ -1,7 +1,7 @@
 
 <div class="row" style="margin-bottom:25px;">
 	<div class="col-md-12">
-		<a href="{{URL::previous()}}" class="btn blue pull-right">Go Back</a>
+		<a href="{{url('coach/activity')}}" class="btn blue pull-right">Go Back</a>
 	</div>
 </div>
 

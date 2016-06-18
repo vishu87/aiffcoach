@@ -320,7 +320,6 @@ $(document).on('click','form.ajax_edit_pop button[type=submit]', function(e){
     	btn.html(initial_html+' <i class="fa fa-spin fa-spinner"></i>');
     	var form = jQuery(this).parents("form:first");
 		var dataString = form.serialize();
-		var setPrice =form.attr('set-price');
 		dataString = dataString + "&count=" + count;
 		var formAction = form.attr('action');
 		$.ajax({
@@ -329,6 +328,7 @@ $(document).on('click','form.ajax_edit_pop button[type=submit]', function(e){
 		    data : dataString,
 		    success : function(data){
 		    	data = JSON.parse(data);
+		    	alert(data.message);
 		    	if(data.success){
 		    		$("#"+editDiv).replaceWith(data.message);
 			    	$(".modal").modal("hide");
@@ -356,9 +356,10 @@ $(document).on('click','form.update-marks button[type=submit]', function(e){
 		    url : formAction,
 		    data : dataString,
 		    success : function(data){
+		    	data = JSON.parse(data);
 			    btn.html(initial_html);
 			    $(".modal").modal("hide");
-			    
+			    alert(data.message);
 		    }
 		},"json");
     };

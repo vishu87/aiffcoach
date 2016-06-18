@@ -29,8 +29,9 @@
 				<th>Fees</th>
 				@if(!isset($value))
 				<th>Remark</th>
-				<th>Status</th>
+				<th>Application Status</th>
 				@endif
+				<th>Result Status</th>
 				<th>#</th>
 				
 				

@@ -1,3 +1,4 @@
+
 <table class="table table-bordered table-hover">
 	<tr>
 		<th>Exam Name</th>
@@ -22,3 +23,4 @@
 	<?php $count++;?>
 	@endforeach
 </table>
+	

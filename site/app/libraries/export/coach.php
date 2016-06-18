@@ -1,5 +1,5 @@
 <?php
-
+ob_end_clean();
 $objPHPExcel = new PHPExcel();
 
 $styleArray1 = array(
@@ -111,6 +111,15 @@ if(isset($licenseParameter)){
 	$widths = array("10","30","20","20");
 	$exportData = $licenseParameter;
 	$title = 'License Parameters';
+
+}
+
+if(isset($applicationsResult)){
+	$fields = array("sn",'course_name','license_name',"first_name",'middle_name','last_name','status');
+	$field_names = array("SN","Course Name", "License Name","Coach First Name", "Middle Name","Last Name",'Status');
+	$widths = array("10","20","20","40","20","30","20","20","20");
+	$exportData = $applicationsResult;
+	$title = 'Courses List';
 
 }
 

@@ -15,10 +15,9 @@
         	<i class="fa fa-ban-circle"></i><strong>Failure!</strong> {{Session::get('failure')}}
        	</div>
 @endif
-
 <div style="margin-bottom:20px;" class="row">
 	<div class="col-md-9">
-		
+	
 	{{Form::open(array('url'=>'/resultAdmin', 'method'=>'GET', 'class' => 'check_form'))}}
 	
 		Filter by course
@@ -49,28 +48,11 @@
 				<th>Remark</th>
 				<th>Status</th>
 				<th>#</th>
-				
-				
 			</tr></thead>
 			<tbody id="applications">
 				<?php $count = 1; ?>
 				@foreach($applications as $data)
-					<tr id="activity_{{$data->id}}">
-						<td>{{$count}}</td>
-						<td>{{$data->course_name}}</td>
-						<td>{{$data->license_name}}</td>
-						<td>{{$data->first_name.' '.$data->middle_name.' '.$data->last_name}}</td>
-						<td>{{$data->remarks}}</td>
-						<td>{{(isset($status[$data->status]))?$status[$data->status]:''}}</td>
-						<td>
-							
-							<button type="button" class="btn btn-sm blue edit-div" modal-title="Result " div-id="activity_{{$data->id}}" count="{{$count}}" action="{{('/resultAdmin/result/edit/'.$data->id)}}">View <i class="fa fa-arrow-right"></i></button>
-							
-							<button type="button" class="btn yellow edit-div" modal-title="Update Marks "  action="{{('resultAdmin/result/editParameterMarks/'.$data->id)}}" count = "{{$count}}"> <i class="fa fa-edit"></i> Edit</button>
-										
-						</td>
-					</tr>
-					<?php $count++ ?>
+					@include('resultAdmin.view')
 				@endforeach
 			</tbody>
 	</table>
