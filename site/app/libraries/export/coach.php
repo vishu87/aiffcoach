@@ -115,7 +115,7 @@ if(isset($licenseParameter)){
 }
 
 if(isset($applicationsResult)){
-	$fields = array("sn",'course_name','license_name',"first_name",'middle_name','last_name','status');
+	$fields = array("sn",'course_name','license_name',"first_name",'middle_name','last_name','finalResult');
 	$field_names = array("SN","Course Name", "License Name","Coach First Name", "Middle Name","Last Name",'Status');
 	$widths = array("10","20","20","40","20","30","20","20","20");
 	$exportData = $applicationsResult;
@@ -200,6 +200,9 @@ foreach ($exportData as $data) {
 		}
 		else if($field == 'payment_method'){
 			$var = $paymentMethod[$data[$field]];
+		}
+		else if($field == 'finalResult'){
+			$var = $resultStatus[$data[$field]];
 		}
 		else {
 			$var = $data[$field];

@@ -83,10 +83,11 @@ class resultAdminController extends BaseController {
     }
 
     public function exportExcel($course_id){
-        $applicationsResult = Application::applications()
+        $applicationsResult = Application::applicationsResult()
                 ->where('applications.status',3)
                 ->where('applications.course_id',$course_id)
                 ->get();      
+        $resultStatus = Result::status();        
         include(app_path().'/libraries/Classes/PHPExcel.php');
         include(app_path().'/libraries/export/coach.php');
     }
