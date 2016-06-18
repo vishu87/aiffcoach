@@ -77,18 +77,8 @@ class resultAdminController extends BaseController {
                 $resultStatus = ApplicationResult::where('application_id',$id)->update(["application_id"=>$id,"status"=>Input::get('status'),"remarks"=>Input::get('remarks')]);
             }
         }
-        $courses = ["" => "Select Course"] + Course::lists('name','id');
-        
-        $applications = Application::select('courses.name as course_name','courses.id as course_id','applications.id','applications.status','coaches.first_name','coaches.last_name','coaches.middle_name','license.name as license_name','application_result.status as finalResult','application_result.remarks')
-            ->join('coaches','applications.coach_id','=','coaches.id')
-            ->join('courses','applications.course_id','=','courses.id')
-            ->leftJoin('license','courses.license_id','=','license.id')
-            ->leftJoin('application_result','applications.id','=','application_result.application_id')
-            ->where('applications.id',$id)
-            ->first();
-        
         $data['success'] = true;
-        $data['message']= html_entity_decode(View::make('resultAdmin.index',['count'=>Input::get('count'),"data"=>$applications,'resultStatus'=>$resultStatus]));
+        $data['message']= 'result updated !';
         return json_encode($data);
     }
 

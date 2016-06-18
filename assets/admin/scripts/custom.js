@@ -356,10 +356,9 @@ $(document).on('click','form.update-marks button[type=submit]', function(e){
 		    url : formAction,
 		    data : dataString,
 		    success : function(data){
-		    	data = JSON.parse(data);
 			    btn.html(initial_html);
 			    $(".modal").modal("hide");
-			    alert(data.message);
+			    
 		    }
 		},"json");
     };
