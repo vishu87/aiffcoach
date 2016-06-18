@@ -358,7 +358,7 @@ $(document).on('click','form.update-marks button[type=submit]', function(e){
 		    success : function(data){
 			    btn.html(initial_html);
 			    $(".modal").modal("hide");
-			    
+			    alert('MarkSheet Updated!');
 		    }
 		},"json");
     };
