@@ -328,7 +328,6 @@ $(document).on('click','form.ajax_edit_pop button[type=submit]', function(e){
 		    data : dataString,
 		    success : function(data){
 		    	data = JSON.parse(data);
-		    	alert(data.message);
 		    	if(data.success){
 		    		$("#"+editDiv).replaceWith(data.message);
 			    	$(".modal").modal("hide");
@@ -340,6 +339,7 @@ $(document).on('click','form.ajax_edit_pop button[type=submit]', function(e){
 		},"json");
     }
 });
+
 $(document).on('click','form.update-marks button[type=submit]', function(e){
     e.preventDefault();
     if($(".update-marks").valid()){

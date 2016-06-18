@@ -1,4 +1,4 @@
-{{Form::open(array("url"=>'resultAdmin/result/update/'.$application_id,"method"=>'put',"class"=>"update-marks check_form"))}}
+{{Form::open(array("url"=>'resultAdmin/result/update/'.$application_id,"method"=>'PUT',"class"=>"ajax_edit_pop check_form"))}}
 	<div class="form-body">
 		<!--- my form start -->
 			<div class="row">

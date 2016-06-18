@@ -71,22 +71,28 @@ class resultAdminController extends BaseController {
         if (Input::has('status')) {
             $count = ApplicationResult::where('application_id',$id)->count();
             if ($count<1) {
-                $resultStatus = ApplicationResult::insert(["application_id"=>$id,"status"=>Input::get('status'),"remarks"=>Input::get('remarks')]);
+                $applicationResult = ApplicationResult::insert(["application_id"=>$id,"status"=>Input::get('status'),"remarks"=>Input::get('remarks')]);
             }
             else{
-                $resultStatus = ApplicationResult::where('application_id',$id)->update(["application_id"=>$id,"status"=>Input::get('status'),"remarks"=>Input::get('remarks')]);
+                $applicationResult = ApplicationResult::where('application_id',$id)->update(["application_id"=>$id,"status"=>Input::get('status'),"remarks"=>Input::get('remarks')]);
             }
         }
+
+        $data = Application::applicationsResult()
+            ->where('applications.status',3)
+            ->where('applications.id',$id)
+            ->first(); 
+        $resultStatus = Result::status();    
         $data['success'] = true;
-        $data['message']= 'result updated !';
+        $data['message']= html_entity_decode(View::make('resultAdmin.view',['data'=>$data,'count'=>Input::get('count'),'resultStatus'=>$resultStatus]));
         return json_encode($data);
     }
 
     public function exportExcel($course_id){
         $applicationsResult = Application::applicationsResult()
-                ->where('applications.status',3)
-                ->where('applications.course_id',$course_id)
-                ->get();      
+            ->where('applications.status',3)
+            ->where('applications.course_id',$course_id)
+            ->get();      
         $resultStatus = Result::status();        
         include(app_path().'/libraries/Classes/PHPExcel.php');
         include(app_path().'/libraries/export/coach.php');
