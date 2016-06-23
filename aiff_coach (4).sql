@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 14, 2016 at 03:25 PM
+-- Generation Time: Jun 23, 2016 at 02:33 PM
 -- Server version: 5.6.16
 -- PHP Version: 5.5.11
 
@@ -77,7 +77,7 @@ CREATE TABLE IF NOT EXISTS `applications` (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
 
 --
 -- Dumping data for table `applications`
@@ -87,7 +87,33 @@ INSERT INTO `applications` (`id`, `course_id`, `coach_id`, `status`, `remarks`, 
 (2, 1, 3, 0, 'Applied | Pending', '2016-05-30 07:09:48', '2016-04-30 13:27:41'),
 (4, 2, 3, 3, 'afdsafd', '2016-06-14 13:00:30', '2016-05-02 10:00:09'),
 (5, 6, 3, 3, 'Applied | Pending', '2016-05-09 14:18:18', '2016-05-09 13:04:38'),
-(6, 7, 3, 3, 'Applied | Pending', '2016-06-13 11:34:36', '2016-05-10 12:59:09');
+(6, 7, 3, 3, 'Applied | Pending', '2016-06-13 11:34:36', '2016-05-10 12:59:09'),
+(7, 7, 6, 3, '', '2016-06-16 11:51:13', '0000-00-00 00:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `application_result`
+--
+
+CREATE TABLE IF NOT EXISTS `application_result` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `application_id` int(11) NOT NULL,
+  `status` int(1) NOT NULL,
+  `remarks` text NOT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+
+--
+-- Dumping data for table `application_result`
+--
+
+INSERT INTO `application_result` (`id`, `application_id`, `status`, `remarks`, `updated_at`, `created_at`) VALUES
+(1, 6, 3, 'All Exam Clear', '2016-06-17 14:05:03', '0000-00-00 00:00:00'),
+(3, 7, 2, 'Low score in each subject', '2016-06-18 09:42:10', '0000-00-00 00:00:00'),
+(4, 5, 2, 'Two Subjects Need Rexamination', '2016-06-18 13:15:21', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -532,23 +558,26 @@ CREATE TABLE IF NOT EXISTS `results` (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=118 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=348 ;
 
 --
 -- Dumping data for table `results`
 --
 
 INSERT INTO `results` (`id`, `application_id`, `parameter_id`, `marks`, `updated_at`, `created_at`) VALUES
-(108, 5, 1, '30', '2016-06-14 12:52:21', '2016-06-14 12:52:21'),
-(109, 5, 2, '40', '2016-06-14 12:52:21', '2016-06-14 12:52:21'),
-(110, 5, 7, '50', '2016-06-14 12:52:21', '2016-06-14 12:52:21'),
-(111, 5, 8, '60', '2016-06-14 12:52:21', '2016-06-14 12:52:21'),
-(112, 6, 1, '50', '2016-06-14 13:00:06', '2016-06-14 13:00:06'),
-(113, 6, 7, '55', '2016-06-14 13:00:07', '2016-06-14 13:00:07'),
-(114, 6, 8, '78', '2016-06-14 13:00:07', '2016-06-14 13:00:07'),
 (115, 4, 1, '88', '2016-06-14 13:00:59', '2016-06-14 13:00:59'),
 (116, 4, 7, '99', '2016-06-14 13:00:59', '2016-06-14 13:00:59'),
-(117, 4, 8, '55', '2016-06-14 13:00:59', '2016-06-14 13:00:59');
+(117, 4, 8, '55', '2016-06-14 13:00:59', '2016-06-14 13:00:59'),
+(151, 6, 1, '50', '2016-06-18 09:40:29', '2016-06-18 09:40:29'),
+(152, 6, 7, '55', '2016-06-18 09:40:29', '2016-06-18 09:40:29'),
+(153, 6, 8, '78', '2016-06-18 09:40:29', '2016-06-18 09:40:29'),
+(157, 7, 1, '10', '2016-06-18 09:43:07', '2016-06-18 09:43:07'),
+(158, 7, 7, '20', '2016-06-18 09:43:07', '2016-06-18 09:43:07'),
+(159, 7, 8, '30', '2016-06-18 09:43:07', '2016-06-18 09:43:07'),
+(344, 5, 1, '40', '2016-06-18 13:15:21', '2016-06-18 13:15:21'),
+(345, 5, 2, '50', '2016-06-18 13:15:21', '2016-06-18 13:15:21'),
+(346, 5, 7, '60', '2016-06-18 13:15:21', '2016-06-18 13:15:21'),
+(347, 5, 8, '70', '2016-06-18 13:15:21', '2016-06-18 13:15:21');
 
 -- --------------------------------------------------------
 
@@ -630,8 +659,8 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `coach_id`, `username`, `password`, `password_check`, `hash`, `active`, `privilege`, `remember_token`, `updated_at`, `created_at`) VALUES
-(4, 3, 'vishu@gmail.com', '$2y$10$BoJ.8qC7BfiY1C13m1jg4.yOzfqzr6sZI7/GK8nUVRcXP70b0jHcC', 'sample', '', 0, 1, 'pYXmTB3cx0FvK6kshoDJFtWEikBchzpOJQon1PIWSks2oD45SzmTz9reqBkJ', '2016-05-12 12:14:42', '2016-04-22 13:15:58'),
-(5, 0, 'admin', '$2y$10$QOY2gfuw6v6.oqDB4V30nuXy.y3QVMJxVF26JK3dhHddnR8XF2KwS', 'sample', '', 0, 2, 'EobWIxGkVqEhQ0mX8YS2hFhT8vBgotiYRL20C6eqvwYdpHq2F1NInNOe7UBx', '2016-06-09 11:20:10', '0000-00-00 00:00:00'),
+(4, 3, 'vishu@gmail.com', '$2y$10$BoJ.8qC7BfiY1C13m1jg4.yOzfqzr6sZI7/GK8nUVRcXP70b0jHcC', 'sample', '', 0, 1, 'b26Wk4lxRfAksgijr9NVOyhvr4H5HU3Oe8UaqlGLYDh31gAj6KqyQpo99Wwx', '2016-06-18 10:18:46', '2016-04-22 13:15:58'),
+(5, 0, 'admin', '$2y$10$QOY2gfuw6v6.oqDB4V30nuXy.y3QVMJxVF26JK3dhHddnR8XF2KwS', 'sample', '', 0, 2, 'XZObg9eA3OFYs34kZjTtdeXcX3yAiKCkGhaa8acK0B0Ss1XpWBX8W4MEJvPX', '2016-06-18 10:14:47', '0000-00-00 00:00:00'),
 (6, 8, 'sachin@blasters.com', '$2y$10$5jJBfXXG/yKijR0RDTXp4Oo0Nv.QLD0wQHiZWAz2K42NGnle13QdO', '0D42uMJI', '', 0, 1, '', '2016-05-09 12:43:22', '2016-05-09 12:43:22'),
 (8, 10, 'shubham@gmail.com', '$2y$10$wWMRIknP6GIG7/VRYjv1VOYzOBArH9H1rXQb5KqY.QPl95znjwc.u', 'HCVQX3N4', '', 0, 1, '', '2016-05-10 09:39:54', '2016-05-10 09:39:54'),
 (9, 11, 'avyay@gmail.com', '$2y$10$7CjfQ9JoTUz.Fs4.L1Jkau95TnT6vW.ZIZx5RoBQI2hX/ioRob0am', '80efBswP', '', 0, 1, '', '2016-05-12 12:24:56', '2016-05-12 12:24:56'),
