@@ -408,7 +408,7 @@ $(document).on("click", ".details", function() {
 	    		$(".modal-body").modal("hide");
 	    	}
 	    	else{
-	    		$(".modal-body").html(data.message);
+	    		$(".modal-body").html(data);
 	    	}
 	    }
 	},"json");

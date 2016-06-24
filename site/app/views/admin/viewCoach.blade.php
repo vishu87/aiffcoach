@@ -18,7 +18,6 @@
 			@else
 			<button type="button" class="btn btn-sm green  approve-coach" action="{{'admin/markCoachStatus/3/'.$data->id}}" count="{{$count}}"  div-id="coach_{{$data->id}}">Mark Active</button>	
 			@endif
-
 		</td>
 	</tr>
 @endif

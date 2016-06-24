@@ -41,7 +41,7 @@ class AdminController extends BaseController {
     public function viewCoach($id){
         $coach = Coach::select('coaches.first_name','coaches.status','states.name as state_registation','coaches.middle_name','coaches.last_name','coaches.dob','coaches.gender','coaches.photo','coach_parameters.email','coach_parameters.address1','coach_parameters.address2','coach_parameters.city','coach_parameters.pincode','coach_parameters.mobile')->join('states','coaches.state_registration','=','states.id')->join('coach_parameters','coaches.id','=','coach_parameters.coach_id')->where('coaches.id',$id)->first();
         $employmentDetails = EmploymentDetails::where('coach_id',$id)->get();
-
+        
         return View::make('admin.viewCoach',['coach'=>$coach,'employmentDetails'=>$employmentDetails]);
     }
     public function viewCoachDetails($id){
