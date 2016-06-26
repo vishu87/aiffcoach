@@ -1,9 +1,7 @@
 <?php
 class UserController extends BaseController {
     protected $layout = 'layout';
-
-
-
+    
     public function activeAccount($hash){
         
         $user = User::where('hash',$hash)->update(['active'=>0]);

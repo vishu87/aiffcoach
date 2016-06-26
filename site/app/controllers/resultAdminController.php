@@ -78,13 +78,14 @@ class resultAdminController extends BaseController {
             }
         }
 
-        $data = Application::applicationsResult()
+        $app_data = Application::applicationsResult()
             ->where('applications.status',3)
             ->where('applications.id',$id)
             ->first(); 
+        return $app_data;    
         $resultStatus = Result::status();    
         $data['success'] = true;
-        $data['message']= html_entity_decode(View::make('resultAdmin.view',['data'=>$data,'count'=>Input::get('count'),'resultStatus'=>$resultStatus]));
+        $data['message']= html_entity_decode(View::make('resultAdmin.view',['data'=>$app_data,'count'=>Input::get('count'),'resultStatus'=>$resultStatus]));
         return json_encode($data);
     }
 

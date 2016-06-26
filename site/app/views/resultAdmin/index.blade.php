@@ -53,6 +53,7 @@
 				<?php $count = 1; ?>
 				@foreach($applications as $data)
 					@include('resultAdmin.view')
+					<?php $count++ ?>
 				@endforeach
 			</tbody>
 	</table>
