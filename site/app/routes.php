@@ -8,11 +8,11 @@ Route::get('/', function(){
 Route::get('/registerStep1/{id?}', 'RegistrationController@registration_step1');
 Route::post('/registerStep1/{id?}', 'RegistrationController@post_registration_step1');
 
-Route::get('/registerStep2/{id?}', 'RegistrationController@registration_step2');
-Route::post('/registerStep2/{id?}', 'RegistrationController@post_registration_step2');
+Route::get('/registerStep2/{id}', 'RegistrationController@registration_step2');
+Route::post('/registerStep2/{id}', 'RegistrationController@post_registration_step2');
 
-Route::get('/registerStep3/{id?}', 'RegistrationController@registration_step3');
-Route::post('/registerStep3/{id?}', 'RegistrationController@post_registration_step3');
+Route::get('/registerStep3/{id}', 'RegistrationController@registration_step3');
+Route::post('/registerStep3/{id}', 'RegistrationController@post_registration_step3');
 
 Route::get('/verify/{hash}','UserController@activeAccount');
 Route::get('/reset', function(){

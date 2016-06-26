@@ -7,6 +7,14 @@
     <li style="height:10px">
     </li>
 
+    <li class="@if($sidebar == 'dashboard' ) active @endif" >
+      <a href="{{url('/admin')}}">
+        <i class="fa fa-home"></i>
+        <span class="title">Dashboard</span>
+        <span class="selected"></span>
+      </a>
+    </li>
+
     <li class="@if($sidebar == 'coach' ) active open @endif">
       <a href="javascript:;">
       <i class="fa fa-users"></i>

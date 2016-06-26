@@ -10,7 +10,7 @@ class AdminController extends BaseController {
     protected $layout = 'layout';
 
     public function index(){
-        $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'','subsidebar'=>1]);
+        $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'dashboard','subsidebar'=>1]);
         $this->layout->main = View::make('admin.index',[]);
     }
     

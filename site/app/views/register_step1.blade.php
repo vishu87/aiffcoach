@@ -84,22 +84,23 @@
 				    
 				        <div class="col-md-6">
 				          <div class="form-group"> 
-				            <label class="form-label">Gender</label>   <br>    
-				            {{Form::radio('gender','1',(isset($data["gender"]))?($data["gender"]==1)?$data["gender"]:'':'',['required1'=>'true','placeholder'=>''])}} Male
-				            {{Form::radio('gender','2',(isset($data["gender"]))?($data["gender"]==2)?$data["gender"]:'':'',['required1'=>'true','placeholder'=>''])}} FeMale
+				            <label class="form-label">Gender</label><br>
+				            {{Form::radio('gender','1',(isset($data["gender"]))?($data["gender"]==1)?$data["gender"]:'':'',['required1'=>'true','placeholder'=>''])}} Male &nbsp; &nbsp; &nbsp;
+				            {{Form::radio('gender','2',(isset($data["gender"]))?($data["gender"]==2)?$data["gender"]:'':'',['required1'=>'true','placeholder'=>''])}} Female
 				          </div>
 				        </div>
 				    </div>
 				    <div class="row">
-				        <div class="col-md-6 form-group"><label class="form-label"> DOB</label>
-				           {{Form::text('dob',(isset($data["dob"]))?$data["dob"]:'',['required1'=>'true','class'=>'form-control datepicker',"date"=>'true','placeholder'=>'Birth Place'])}}
+				        <div class="col-md-6 form-group"><label class="form-label" style="width:100%"> DOB</label>
+				           {{Form::select('date',[],'',["class"=>"form-control", "style"=>"width:80px; display:inline"])}}
+				           {{Form::select('date',[],'',["class"=>"form-control", "style"=>"width:80px; display:inline"])}}
+				           {{Form::select('date',[],'',["class"=>"form-control", "style"=>"width:80px; display:inline"])}}
 				        </div>
 					    <div class="col-md-6">
 					        <div class="form-group"> 
 					            <label class="form-label">Place of Birth</label>       
 					            {{Form::text('birth_place',(isset($data["birth_place"]))?$data["birth_place"]:'',['required1'=>'true','class'=>'form-control','placeholder'=>'Birth Place'])}}
 					            <span class="error">{{$errors->first('birth_place')}}</span>
-
 					        </div>
 					    </div>
 				        
@@ -131,7 +132,6 @@
     	</div>
         
     </div>
-</div>
 </div>
 </div>
 </div>

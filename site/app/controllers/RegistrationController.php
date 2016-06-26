@@ -36,7 +36,8 @@ class RegistrationController extends BaseController {
     		"dob_proof"=>'required',
     		"birth_place"=>'required',
     		"photo"=>'required'
-    		];
+    	];
+
     	$validator = Validator::make($cre,$rules);
     	if($validator->passes()){
     		$data = array();
@@ -58,17 +59,18 @@ class RegistrationController extends BaseController {
                 Input::file('dob_proof')->move($destinationPath,$doc);
                 $data["dob_proof"] = $destinationPath.$doc;
             }
+
             $data["first_name"] = Input::get('first_name');
             $data["middle_name"] = Input::get('middle_name');
             $data["last_name"] = Input::get('last_name');
             $data["email"] = Input::get('email');
             $data["gender"] = Input::get('gender');
-            $data["dob"] = Input::get('dob');
+            $data["dob"] = Input::get('year').'-'.Input::get('month').'-'.Input::get('day');
             $data["birth_place"] = Input::get('birth_place');
-
-
-    		$data = serialize($data);
-    		if(Input::get('id') == 0){
+    		
+            $data = serialize($data);
+    		
+            if(Input::get('id') == 0){
     			$insert_id = DB::table('reg_data')->insertGetId(array('data1' => $data));
     			return Redirect::to('registerStep2/'.$insert_id);
     		} else{
@@ -81,7 +83,7 @@ class RegistrationController extends BaseController {
 
     }
 
-    public function registration_step2($id = 0){
+    public function registration_step2($id){
 
         $state = State::states();
         if($id == 0) {
@@ -138,7 +140,7 @@ class RegistrationController extends BaseController {
     	    
     }
 
-    public function registration_step3($id = 0){
+    public function registration_step3($id){
         
         $this->layout->sidebar = '';
         $this->layout->main = View::make('register_step3',["id"=>$id]);
