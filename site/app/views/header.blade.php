@@ -19,7 +19,7 @@
 <!-- {{HTML::style("assets/global/plugins/simple-line-icons/simple-line-icons.min.css")}} -->
 {{HTML::style("assets/global/plugins/bootstrap/css/bootstrap.min.css")}}
 <!-- {{HTML::style("assets/global/plugins/uniform/css/uniform.default.css")}} -->
-{{HTML::style("assets/global/plugins/bootstrap-datepicker/css/datepicker3.css")}}
+<!-- {{HTML::style("assets/global/plugins/bootstrap-datepicker/css/datepicker3.css")}} -->
 <!-- {{HTML::style("assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css")}} -->
 <!-- END GLOBAL MANDATORY STYLES -->
 <!-- BEGIN THEME STYLES -->
@@ -29,6 +29,7 @@
 {{HTML::style("assets/admin/css/themes/light2.css")}}
 {{HTML::style("assets/admin/css/theme.bootstrap.css")}}
 {{HTML::style("assets/admin/css/custom.css")}}
+{{HTML::style("assets/admin/css/jquery-ui.css")}}
 {{HTML::script("assets/global/plugins/jquery.min.js")}}
 <!-- END THEME STYLES -->
 <link rel="shortcut icon" href="favicon.ico"/>

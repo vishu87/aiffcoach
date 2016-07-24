@@ -6,8 +6,15 @@
     </li>
     <li style="height:10px">
     </li>
+    <li class="@if($sidebar == 'dashboard' ) active @endif" >
+      <a href="{{url('/coach/dashboard')}}">
+        <i class="fa fa-home"></i>
+        <span class="title">Dashboard</span>
+        <span class="selected"></span>
+      </a>
+    </li>
     <li class="@if($sidebar == 'profile' ) active @endif" >
-      <a href="{{url('/coach')}}">
+      <a href="{{url('/coach/personalInformation')}}">
         <i class="fa fa-user"></i>
         <span class="title">Profile</span>
         <span class="selected"></span>

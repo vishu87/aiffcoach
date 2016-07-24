@@ -17,7 +17,7 @@
 @endif
 
 <div style="margin-bottom:20px;" class="row">
-	<div class="col-md-8">
+	<div class="col-md-7">
 		@if($flag==1)
 		{{Form::open(array('url'=>'/admin/Payment', 'method'=>'GET', 'class' => 'check_form'))}}
 		@else
@@ -25,7 +25,7 @@
 		@endif
 			Filter by course
 			<div class="row">
-				<div class="col-md-4">
+				<div class="col-md-8">
 					{{Form::select('course',$courses,(Input::has('course'))?Input::get('course'):'',["class"=>"form-control", "required" => "true"])}}
 				</div>
 				<div class="col-md-4">
@@ -34,8 +34,8 @@
 			</div>
 		{{Form::close()}}
 	</div>
-	<div class="col-md-4">
-		<a class="btn green pull-right" href="{{url('/admin/paymentExport/'.$flag.'/'.app('request')->input('course'))}}">Export Excel</a>
+	<div class="col-md-5">
+		<a class="btn green pull-right" href="{{url('/admin/paymentExport/'.$flag.'/'.app('request')->input('course'))}}" style="margin-top:18px;">Export Excel</a>
 	</div>
 </div>
 

@@ -125,9 +125,17 @@ class CourseController extends BaseController {
     }
 
     public function delete($id){
-        Course::find($id)->delete();
-        $data['success'] = true;
-        $data['message'] = 'Item Deleted!';
+        $count = Course::where('id',$id)->count();
+        if($count<1){
+            $data['success'] = false;
+            $data['message'] = "Can Not Delete Course";
+        }
+        else{
+            Course::find($id)->delete();
+            $data['success'] = true;
+            $data['message'] = 'Item Deleted!';
+        }
+        
         return json_encode($data);
     }
 

@@ -24,22 +24,31 @@
 				<th style="width:50px">SN</th>
 				<th>Course Name</th>
 				<th>License Name</th>
-				<th>Authorised By</th>
-				<th>Last Date</th>
-				<th style="width:50px">Fees</th>
-				@if(!isset($value))
-				<th>Remark</th>
-				<th>Application Status</th>
-				@endif
-				<th>Result Status</th>
-				<th style="width:200px">#</th>
+				<th>Start Date</th>
+				<th>Venue</th>
+				<th>#</th>
 				
 				
 			</tr></thead>
-			<tbody id="applications">
+			<tbody id="courses">
 				<?php $count = 1; ?>
-				@foreach($applications as $data)
-					@include('coaches.applications.view')
+				@foreach($courses as $data)
+				<tr id="activity_{{$data->id}}">
+					<td>{{$count}}</td>
+					<td>{{$data->name}}</td>
+					<td>{{$data->license_name}}</td>
+					<td>{{$data->start_date}}</td>
+					<td>{{$data->venue}}</td>
+					<td>
+						@if(!isset($status))
+							@if(in_array($data->id,$check))
+							<a type="button" class="btn blue btn-sm " div-id="activity_{{$data->id}}"  href="{{url('coach/courses/details/'.$data->id.'/3')}}">Already Applied</button>
+							@else
+							<a type="button" class="btn blue btn-sm " div-id="activity_{{$data->id}}"  href="{{url('coach/courses/details/'.$data->id.'/3')}}">Apply</button>
+							@endif
+						@endif	
+					</td>
+				</tr>
 					<?php $count++ ?>
 				@endforeach
 			</tbody>

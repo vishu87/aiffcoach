@@ -5,7 +5,15 @@ class UserController extends BaseController {
     public function activeAccount($hash){
         
         $user = User::where('hash',$hash)->update(['active'=>0]);
+        if($user){
+
         return Redirect::to('/')->with('success','Your Account is Verified Please Login!!');
+        }
+        else{
+
+        return Redirect::to('/')->with('failure','Error While Verifying User Account/ Invalid Verify Link');
+        }
+
         
 
     }
@@ -23,9 +31,9 @@ class UserController extends BaseController {
         if ($validator->passes()) {
             if (Auth::attempt(['username' => Input::get('username'), 'password' => Input::get('password'), 'active' => 0] )){
                 Session::put('privilege', Auth::user()->privilege);
-                if(Auth::user()->privilege == 1 ) return Redirect::to('coach');
+                if(Auth::user()->privilege == 1 ) return Redirect::to('coach/dashboard');
                 if(Auth::user()->privilege == 2 ) return Redirect::to('admin');
-                if(Auth::user()->privilege == 3 ) return Redirect::to('resultAdmin');
+                if(Auth::user()->privilege == 3 ) return Redirect::to('resultAdmin/dashboard');
             }
             else return Redirect::back()->withInput()->with('failure', 'username or password is invalid!');
         } else {

@@ -1,11 +1,11 @@
 <div class="row">
-	<div class="col-md-9">
+	<div class="col-md-6">
 		<h3 class="page-title">{{$title}}</h3>
 	</div>
-	<div class="col-md-3">
-		<a class="btn green" href="{{url('/admin/coursesExport/'.$flag)}}">Export Excel</a>
+	<div class="col-md-6">
+		<a class="btn green pull-right" href="{{url('/admin/coursesExport/'.$flag)}}">Export Excel</a>
 
-		<a type="button" class="btn green pull-right" href="{{url('admin/Courses/add')}}"> <i class="fa fa-plus"></i> Add Course</a>
+		<a type="button" class="btn green pull-right" style="margin-right:10px;" href="{{url('admin/Courses/add')}}"> <i class="fa fa-plus"></i> Add Course</a>
 	</div>
 </div>
 @if(Session::has('success'))

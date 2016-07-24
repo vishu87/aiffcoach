@@ -1,10 +1,10 @@
 
 	<div class="row">
-		<div class="col-md-9">
+		<div class="col-md-6">
 			<h3 class="page-title">License</h3>
 		</div>
-		<div class="col-md-3">
-			<a href="{{URL::previous()}}" class="btn blue pull-right">Go Back</a>
+		<div class="col-md-6">
+			<a href="{{url('admin/License')}}" class="btn blue pull-right">Go Back</a>
 		</div>
 	</div>
 

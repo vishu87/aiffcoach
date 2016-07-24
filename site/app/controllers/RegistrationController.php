@@ -3,16 +3,31 @@ class RegistrationController extends BaseController {
 	protected $layout = 'layout_reg';
 
 	public function registration_step1($id = 0){
+
         $state = State::states();
-        $this->layout->sidebar = '';
         if($id == 0) {
         	$data = [];
         } else {
+            $check = DB::table('reg_data')->where('id',$id)->count();
+            if($check<1){
+                return Redirect::to('/registerStep1');
+            }
         	$data_row = DB::table('reg_data')->where('id',$id)->first();
         	$data = $data_row->data1;
         	$data = unserialize($data);
         }
-        $this->layout->main = View::make('register_step1',['state'=>$state, "data" => $data, "id" => $id]);
+        $day = array();
+        for ($i=1; $i <=31 ; $i++) { 
+            $day[$i] = $i;
+        }
+        $months = array(""=>"select",1 => 'Jan', 2 => 'Feb', 3 => 'Mar', 4 => 'Apr', 5 => 'May', 6 => 'Jun', 7 => 'Jul', 8 => 'Aug', 9 => 'Sep', 10 => 'Oct', 11 => 'Nov', 12 => 'Dec');
+        $years = array();
+        for ($i=1950; $i <2016 ; $i++) { 
+            $years[$i] = $i;
+        }
+        $day = [""=>"select"] + $day;
+        $years = [""=>"select"] + $years;
+        $this->layout->main = View::make('register_step1',['state'=>$state, "data" => $data,"day" => $day,"months" => $months,"years" => $years, "id" => $id,'flag'=>1]);
     }
 
     public function post_registration_step1(){
@@ -21,7 +36,6 @@ class RegistrationController extends BaseController {
     		"last_name"=>Input::get("last_name"),
     		"username"=>Input::get("email"),
     		"gender"=>Input::get("gender"),
-    		"dob"=>Input::get("dob"),
     		"dob_proof"=>Input::file("dob_proof"),
     		"birth_place"=>Input::get("birth_place"),
     		"photo"=>Input::file("photo")
@@ -32,7 +46,6 @@ class RegistrationController extends BaseController {
     		"last_name"=>'required',
     		"username"=>'required|email|unique:users',
     		"gender"=>'required',
-    		"dob"=>'required|date',
     		"dob_proof"=>'required',
     		"birth_place"=>'required',
     		"photo"=>'required'
@@ -46,7 +59,7 @@ class RegistrationController extends BaseController {
             if(Input::hasFile('photo')){
             
                 $extension = Input::file('photo')->getClientOriginalExtension();
-                $doc = "photo_".Auth::id().'_'.str_replace(' ','-',Input::file('photo')->getClientOriginalName());
+                $doc = "photo_".str_replace(' ','-',Input::file('photo')->getClientOriginalName());
                 
                 Input::file('photo')->move($destinationPath,$doc);
                 $data["photo"] = $destinationPath.$doc;
@@ -54,7 +67,7 @@ class RegistrationController extends BaseController {
             if(Input::hasFile('dob_proof')){
             
                 $extension = Input::file('dob_proof')->getClientOriginalExtension();
-                $doc = "dobProof_".Auth::id().'_'.str_replace(' ','-',Input::file('dob_proof')->getClientOriginalName());
+                $doc = "dobProof_".str_replace(' ','-',Input::file('dob_proof')->getClientOriginalName());
                 
                 Input::file('dob_proof')->move($destinationPath,$doc);
                 $data["dob_proof"] = $destinationPath.$doc;
@@ -84,17 +97,19 @@ class RegistrationController extends BaseController {
     }
 
     public function registration_step2($id){
-
-        $state = State::states();
-        if($id == 0) {
-            $data = [];
-        } else {
-            $data_row = DB::table('reg_data')->where('id',$id)->first();
-            $data = $data_row->data2;
-            $data = unserialize($data);
+        $check = DB::table('reg_data')->where('id',$id)->count();
+        if($check<1){
+            return Redirect::to('/registerStep1');
         }
-        $this->layout->sidebar = '';
-        $this->layout->main = View::make('register_step2',['state'=>$state,'data'=>$data,"id"=>$id]);
+        $state = State::states();
+        $data_row = DB::table('reg_data')->where('id',$id)->first();
+        if($data_row->data1==''){
+            return Redirect::to('/registerStep1/'.$id);
+        }
+        $data = $data_row->data2;
+        $data = unserialize($data);
+    
+        $this->layout->main = View::make('register_step2',['state'=>$state,'data'=>$data,"id"=>$id,'flag'=>2]);
     }
 
     public function post_registration_step2(){
@@ -141,9 +156,11 @@ class RegistrationController extends BaseController {
     }
 
     public function registration_step3($id){
-        
-        $this->layout->sidebar = '';
-        $this->layout->main = View::make('register_step3',["id"=>$id]);
+        $check = DB::table('reg_data')->where('id',$id)->count();
+        if($check<1){
+            return Redirect::to('/registerStep1');
+        }
+        $this->layout->main = View::make('register_step3',["id"=>$id,'flag'=>3]);
     }
 
     public function post_registration_step3(){
@@ -159,7 +176,7 @@ class RegistrationController extends BaseController {
             if(Input::hasFile('passport_proof')){
             
                 $extension = Input::file('passport_proof')->getClientOriginalExtension();
-                $doc = "PassportProof_".Auth::id().'_'.str_replace(' ','-',Input::file('passport_proof')->getClientOriginalName());
+                $doc = "PassportProof_".str_replace(' ','-',Input::file('passport_proof')->getClientOriginalName());
                 
                 Input::file('passport_proof')->move($destinationPath,$doc);
                 $data["passport_proof"] = $destinationPath.$doc;
@@ -235,7 +252,7 @@ class RegistrationController extends BaseController {
             $username = $user->username;
 
              
-            return View::make('mail',["type" => 1,'hash'=>$hash,'user_name'=>$username,'name'=>$user->username,"username"=>$user->username, "password"=>$password]);
+            // return View::make('mail',["type" => 1,'hash'=>$hash,'user_name'=>$username,'name'=>$user->username,"username"=>$user->username, "password"=>$password]);
             
 
             require app_path().'/classes/PHPMailerAutoload.php';

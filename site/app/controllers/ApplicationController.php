@@ -32,7 +32,7 @@ class ApplicationController extends BaseController {
             $applications = Application::applications()->where('applications.status','=',0)->get();
         }
         $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'Applications','subsidebar'=>3]);
-        $this->layout->main = View::make('admin.applications.list',['status'=>$status,"courses" => $courses,"applications"=>$applications,'title'=>'Pending Applications','flag'=>0]);
+        $this->layout->main = View::make('admin.applications.list',['status'=>$status,"courses" => $courses,"applications"=>$applications,'title'=>'Pending Applications','flag'=>2]);
     }
 
     public function markApplication($id,$count){
@@ -98,13 +98,49 @@ class ApplicationController extends BaseController {
     }
 
     public function deleteCoachApplication($id){
-        Application::find($id)->delete();
-        $data['success'] = true;
-        $data['message'] = 'Deleted';
+        $count = Application::where('id',$id)->count();
+        if($count<1){
+            $data['success'] = false;
+            $data['message'] = 'This Item does not exist';
+        }
+        else{
+            Application::find($id)->delete();
+            $data['success'] = true;
+            $data['message'] = 'Deleted';
+        }
         return json_encode($data);
     }
     
     /************ Coaches Apply For Courses **********/
+
+    public function details($course_id,$tab_type){
+        $course = Course::select('courses.*','license.name as license_name','license.authorised_by')
+            ->join('license','courses.license_id','=','license.id')->where('courses.id',$course_id)->first();
+        $appliedCourses = Application::where('course_id',$course_id)->where('coach_id',Auth::User()->coach_id)->get();
+        $checkAppliedCourses = array();
+        foreach ($appliedCourses as $value) {
+                $checkAppliedCourses[] =$value->course_id; 
+            }    
+        switch ($tab_type) {
+                case 1:
+                    $tab = 5;
+                    $tab_sub = 1;
+                    break;
+                case 2:
+                    $tab = 5;
+                    $tab_sub = 2;
+                    break;
+                case 3:
+                    $tab = 'dashboard';
+                    $tab_sub = '';
+                default:
+                    $tab = 'dashboard';
+                    $tab_sub = '';
+                    break;
+            }    
+        $this->layout->sidebar = View::make('coaches.sidebar',['sidebar'=>$tab,'subsidebar'=>$tab_sub]);
+        $this->layout->main = View::make('coaches.courses.details',["course"=>$course,'checkAppliedCourses'=>$checkAppliedCourses,'tab_type'=>$tab_type]);
+    } 
 
     public function applyCourse($course_id){
         $application = new Application;
@@ -118,9 +154,7 @@ class ApplicationController extends BaseController {
         $data['remove_class'] = 'apply-course';
         $data['message'] = 'You Have Successfully Applied For This Course';
         return json_encode($data);
-    } 
-
-    
+    }
 }
 
 

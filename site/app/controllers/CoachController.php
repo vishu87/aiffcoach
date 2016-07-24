@@ -2,14 +2,30 @@
 <?php
 class CoachController extends BaseController {
     protected $layout = 'layout';
-    public function index(){
+
+    public function dashboard(){
+        $courses =  Course::Active();
+        $check = [];
+        foreach ($courses as $value) {
+            $count = Application::where('coach_id',Auth::User()->coach_id)->where('course_id',$value->id)->count();
+
+            if($count>=1){
+                $check[] = $value->id;
+            }
+        }
+        // return $check;
+        $this->layout->sidebar = View::make('coaches.sidebar',['sidebar'=>'dashboard']);
+        $this->layout->main = View::make('coaches.dashboard',['courses'=>$courses,'title'=>'Active Courses','check'=>$check]);
+    }
+
+    public function contactInformation(){
         $id = Auth::User()->coach_id;
         $coach = Coach::find($id);
         if($coach->status!=0){
             $state =[""=>'Select'] + State::orderBy('name','asc')->lists('name','id');
             $CoachParameters = CoachParameter::where('coach_id',Auth::User()->coach_id)->first();
-            $this->layout->sidebar = View::make('coaches.sidebar',["sidebar"=>'profile']);
-            $this->layout->main = View::make('coaches.profile',['state'=>$state,'coach'=>$CoachParameters]);
+            $this->layout->sidebar = View::make('coaches.sidebar',["sidebar"=>'profile','subsidebar'=>2]);
+            $this->layout->main = View::make('coaches.profile',['state'=>$state,'coach'=>$CoachParameters,"profileType"=>2,'title'=>'Contact Information']);
 
         }
         else{
@@ -18,7 +34,215 @@ class CoachController extends BaseController {
         }
     }
 
+    public function passportDetails(){
+        $id = Auth::User()->coach_id;
+        $coach = Coach::find($id);
+        if($coach->status!=0){
+            
+            $CoachParameters = CoachParameter::where('coach_id',Auth::User()->coach_id)->first();
+            $this->layout->sidebar = View::make('coaches.sidebar',["sidebar"=>'profile','subsidebar'=>3]);
+            $this->layout->main = View::make('coaches.profile',['coach'=>$CoachParameters,"profileType"=>3,'title'=>'Passport Details']);
 
+        }
+        else{
+            $this->layout->sidebar = '';
+            $this->layout->main = View::make('coaches.index');
+        }
+    }
+    public function personalInformation(){
+        $id = Auth::User()->coach_id;
+        $coach = Coach::find($id);
+        if($coach->status!=0){
+            
+            $CoachParameter = CoachParameter::where('coach_id',Auth::User()->coach_id)->first();
+            $this->layout->sidebar = View::make('coaches.sidebar',["sidebar"=>'profile','subsidebar'=>1]);
+            $this->layout->main = View::make('coaches.profile',['coach'=>$coach,'CoachParameter'=>$CoachParameter,"profileType"=>1,'title'=>'Personal Details']);
+
+        }
+        else{
+            $this->layout->sidebar = '';
+            $this->layout->main = View::make('coaches.index');
+        }
+    }
+
+    public function updatePersonalInformation(){
+        $id = Auth::User()->coach_id;
+        $coach = Coach::find($id);
+        $cre = ["dob"=>Input::get('dob'),"gender"=>Input::get("gender")];
+        $rules = ["dob"=>'required',"gender"=>'required'];
+        $validator = Validator::make($cre,$rules);
+        if($coach->status!=0 && $validator->passes()){
+            $coach = Coach::find($id);
+            $coach->dob = date('Y-m-d',strtotime(Input::get('dob')));
+            $coach->gender = Input::get('gender');
+            $destinationPath = 'coaches-doc/';//folder in root for all uploaded documents
+
+            if(Input::hasFile('photo')){
+            
+                $extension = Input::file('photo')->getClientOriginalExtension();
+                $doc = "photo_".Auth::id().'_'.str_replace(' ','-',Input::file('photo')->getClientOriginalName());
+                
+                Input::file('photo')->move($destinationPath,$doc);
+                $coach->photo = $destinationPath.$doc;
+            }
+            $coach->save();
+            return Redirect::back()->with('success','Details Updated Successfully');
+
+        }
+        else{
+            $this->layout->sidebar = '';
+            $this->layout->main = View::make('coaches.index');
+        }
+    }
+
+    public function measurements(){
+        $id = Auth::User()->coach_id;
+        $coach = Coach::find($id);
+        if($coach->status!=0){
+            
+            $measurements = Measurement::where('coach_id',Auth::User()->coach_id)->count();
+            if($measurements<1){
+                $measurement = array();
+            }
+            else{
+                $measurement = Measurement::where('coach_id',Auth::User()->coach_id)->first();
+
+            }
+
+            $this->layout->sidebar = View::make('coaches.sidebar',["sidebar"=>'profile','subsidebar'=>1]);
+            $this->layout->main = View::make('coaches.profile',['coach'=>$coach,'measurement'=>$measurement,"profileType"=>4,'title'=>'Measurements']);
+
+        }
+        else{
+            $this->layout->sidebar = '';
+            $this->layout->main = View::make('coaches.index');
+        }
+    }
+
+    public function updateMeasurements(){
+        $id = Auth::User()->coach_id;
+        $coach = Coach::find($id);
+        $cre = [
+                'height'=>Input::get('height'),
+                'weight'=>Input::get('weight'),
+                'shoes'=>Input::get('shoes'),
+                'boots'=>Input::get('boots'),
+                'sliper'=>Input::get('sliper'),
+                'tracksuit'=>Input::get('tracksuit'),
+                'jersey'=>Input::get('jersey'),
+                'shorts'=>Input::get('shorts'),
+                'shirts'=>Input::get('shirts'),
+                
+                ];
+        $rules=[
+                'height'=>'required',
+                'weight'=>'required',
+                'shoes'=>'required',
+                'boots'=>'required',
+                'sliper'=>'required',
+                'tracksuit'=>'required',
+                'jersey'=>'required',
+                'shorts'=>'required',
+                'shirts'=>'required',
+                
+            
+                ];  
+        $validator = Validator::make($cre,$rules);
+        if($validator->passes()){
+            $check = Measurement::where('coach_id',$id)->count();
+            if($check<1){
+                $measurement = new Measurement;
+                $measurement->coach_id = $id;
+            }
+            else{
+                $measurement_id = Measurement::select('id')->where('coach_id',$id)->first();
+                $measurement = Measurement::find($measurement_id->id);
+            }
+            $measurement->height=Input::get('height');
+            $measurement->weight=Input::get('weight');
+            $measurement->shoes=Input::get('shoes');
+            $measurement->boots=Input::get('boots');
+            $measurement->sliper=Input::get('sliper');
+            $measurement->tracksuit=Input::get('tracksuit');
+            $measurement->jersey=Input::get('jersey');
+            $measurement->shorts=Input::get('shorts');
+            $measurement->shirts=Input::get('shirts');
+            $measurement->save();
+
+            return Redirect::back()->with('success','Measurement Parameters Updated Successfully');
+            
+        }
+        else{
+            return Redirect::back()->withErrors($validator)->withInput();
+        }
+    }
+
+    public function documents(){
+        $id = Auth::User()->coach_id;
+        $coach = Coach::find($id);
+        if($coach->status!=0){
+            $documents = CoachDocument::where('coach_id',$id)->get();
+            $document_types = CoachDocument::DocTypes();
+            $this->layout->sidebar = View::make('coaches.sidebar',["sidebar"=>'profile','subsidebar'=>1]);
+            $this->layout->main = View::make('coaches.profile',['documents'=>$documents,'document_types'=>$document_types,"profileType"=>5,'title'=>'Add Documents']);
+
+        }
+        else{
+            $this->layout->sidebar = '';
+            $this->layout->main = View::make('coaches.index');
+        }
+    }
+
+    public function addDocument(){
+        $id = Auth::User()->coach_id;
+        $cre = [
+            "document"=>Input::get('document'),
+            "file"=>Input::file('file'),
+            "remarks"=>Input::get('remarks'),
+        ];
+        $rules = [
+            "document"=>'required',
+            "file"=>'required',
+            "remarks"=>'required',
+        ];
+        $validator = Validator::make($cre,$rules);
+        if($validator->passes()){
+            
+            $document = new CoachDocument;
+            $document->coach_id = $id;
+            $document->document_id = Input::get('document');
+            $document->remarks = Input::get('remarks');
+            if(Input::has('name')){
+                $document->name = Input::get('name');
+            }
+            $destinationPath= 'coaches-doc/';
+            if(Input::hasFile('file')){
+            
+                $extension = Input::file('file')->getClientOriginalExtension();
+                $doc = "file_".Auth::id().'_'.str_replace(' ','-',Input::file('file')->getClientOriginalName());
+                
+                Input::file('file')->move($destinationPath,$doc);
+                $document->file = $destinationPath.$doc;
+            }
+            $document->save();
+            return Redirect::back()->with('success','New Documents Added Successfully');
+        }
+        return Redirect::back()->withErrors($validator)->withInput();
+    }  
+
+    public function deleteDocument($id){
+        $count = CoachDocument::where('id',$id)->count();
+        if($count<1){
+            $data['success'] = false;
+            $data['message'] = "Can't delete this document or document does not exist !";
+        }
+        else{
+            $delete = CoachDocument::find($id)->delete();
+            $data['success'] = true;
+        }
+        
+        return json_encode($data);
+    }  
     public function addNewEmployment(){
         $this->layout->sidebar = View::make('coaches.sidebar',['sidebar'=>2]);
         $this->layout->main = View::make('coaches.addEmployment');
@@ -246,8 +470,9 @@ class CoachController extends BaseController {
         $rules = ['passport_no'=>'required','passport_expiry'=>'required|date'];
         $validator = Validator::make($cre,$rules);
         if($validator->passes()){
+            $coach_parameter_id = CoachParameter::select('id')->where('coach_id',Auth::User()->coach_id)->first();
             $destinationPath = 'coaches-doc/';
-            $updatePassport = CoachParameter::find(Auth::User()->coach_id);
+            $updatePassport = CoachParameter::find($coach_parameter_id->id);
             $updatePassport->passport_no= Input::get('passport_no');
             $updatePassport->passport_expiry = Input::get('passport_expiry');
 
@@ -271,7 +496,7 @@ class CoachController extends BaseController {
             'address1'=>Input::get('address1'),
             'city'=>Input::get('city'),
             'pincode'=>Input::get('pincode'),
-            'address_state_id'=>Input::get('address_state_id'),
+            'address_state_id'=>Input::get('state'),
             'mobile'=>Input::get('mobile'),
             ];
         $rules =  [
@@ -372,8 +597,16 @@ class CoachController extends BaseController {
     }
 
     public function deleteEmployment($id){
-        EmploymentDetails::find($id)->delete();
-        $data['success'] = 'true';
+        $count = EmploymentDetails::where('id',$id)->count();
+        if($count<1){
+            $data['success'] = false;
+            $data['message'] = "Can Not Delete Employment";
+        }
+        else{
+            $delete = EmploymentDetails::find($id)->delete();
+            $data['success'] = true;
+        }
+        
         return json_encode($data);
     }
 }

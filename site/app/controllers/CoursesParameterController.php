@@ -11,8 +11,9 @@ class CoursesParameterController extends BaseController {
 
     public function index(){
     	$licenses = License::licenseList();
-        $parameters = Parameter::where('active',0)->lists('parameter','id');
-    	$coursesParameter = CourseParameter::select('courses_parameter.id','parameters.parameter','license.name as license_name')->join('parameters','courses_parameter.parameter_id','=','parameters.id')->join('license','courses_parameter.license_id','=','license.id')->where('courses_parameter.active',0)->get();
+        $parameters = Parameter::where('active',0)->get();
+    	$coursesParameter = CourseParameter::select('courses_parameter.id','parameters.parameter','license.name as license_name','courses_parameter.license_id')->join('parameters','courses_parameter.parameter_id','=','parameters.id')->join('license','courses_parameter.license_id','=','license.id')->where('courses_parameter.active',0)->orderBy('courses_parameter.license_id','asc')->get();
+        
     	$this->layout->sidebar = View::make('resultAdmin.sidebar',['sidebar'=>3]);
     	$this->layout->main = View::make('resultAdmin.coursesParameter.list',['coursesParameter'=>$coursesParameter,'licenses'=>$licenses,'parameters'=>$parameters]);
     } 
@@ -31,7 +32,6 @@ class CoursesParameterController extends BaseController {
                     $parameter->save();
                 }
             }
-            
             return Redirect::back()->with('success','Parameter Added Successully .');
         }
         return Redirect::back()->withErrors($validator)->withInput();
@@ -39,11 +39,11 @@ class CoursesParameterController extends BaseController {
 
     public function edit($id){
         $licenses = License::licenseList();
-        $parameters = Parameter::where('active',0)->lists('parameter','id');
-        $coursesParameter  = CourseParameter::select('courses_parameter.id','parameters.parameter','license.name as license_name')->join('parameters','courses_parameter.parameter_id','=','parameters.id')->join('license','courses_parameter.license_id','=','license.id')->where('courses_parameter.active',0)->get();
+        $parameters = Parameter::where('active',0)->get();
+        $coursesParameter  = CourseParameter::select('courses_parameter.id','parameters.parameter','license.name as license_name','courses_parameter.license_id')->join('parameters','courses_parameter.parameter_id','=','parameters.id')->join('license','courses_parameter.license_id','=','license.id')->where('courses_parameter.active',0)->get();
 
         $parameter = CourseParameter::find($id);
-        $parameterArray = CourseParameter::where('license_id',$parameter->license_id)->get();
+        $parameterArray = CourseParameter::where('license_id',$parameter->license_id)->where('active',0)->get();
         $selectedParameters = array();
         foreach ($parameterArray as $value) {
             $selectedParameters[] = $value->parameter_id;
@@ -79,6 +79,11 @@ class CoursesParameterController extends BaseController {
 
    
     public function delete($id){
+        $count = CourseParameter::where('id',$id)->count();
+        if($count<1){
+            $data['success'] = false;
+            $data['message'] = "Can Not Delete Course";
+        }
         CourseParameter::where('id',$id)->update(["active"=>1]);
         $data['success'] = true;
         $data['message'] ="Unit Deleted Successully";

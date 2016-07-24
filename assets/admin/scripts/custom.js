@@ -53,9 +53,28 @@ var count = '';
 
 
 $(document).ready(function(e){
-	$(".datepicker").datepicker({'format':'yyyy-mm-dd'});
+	// $(".datepicker").datepicker({'format':'dd-mm-yyyy'});
 	$(".check_form").validate();
 	$(".check_form_2").validate();
+	$(".datepicker").datepicker({
+		changeMonth:true,
+		changeYear:true,
+		dateFormat: "dd-mm-yy",
+		yearRange: "1970:2000"
+	})
+	$(".dob-validate").validate({
+	  groups: {
+	    dob: "day month year"
+	  },
+	  errorPlacement: function(error, element) {
+	     if (element.attr("name") == "day" 
+	                 || element.attr("name") == "month"|| element.attr("name") == "year" )
+	       error.insertAfter("#year");
+	     else
+	       error.insertAfter(element);
+	   },
+	   debug:true
+	 });
 	$( "#sortable1" ).sortable();
 	$( "#sortable1" ).disableSelection();
 
@@ -137,7 +156,17 @@ $(document).on("click", ".approve-coach", function() {
       }
     });
 });
-
+$(document).on("change", "#document_id", function() {
+    var btn = $(this);
+    if(btn.val()==6){
+    	var htmlelement = '<div class="col-md-4 form-group" id="added-div"><label>Document Name</label><input type="text" name="name" class="form-control" required="true"></div>';
+    	$('#document-div').after(htmlelement);
+    	
+    }
+    else{
+    	$('#added-div').remove();
+    }
+});
 
 $(document).on("click", ".apply-course", function() {
     var btn = $(this);
@@ -145,8 +174,6 @@ $(document).on("click", ".apply-course", function() {
       if(result) {
     	var initial_html = btn.html();
     	btn.html(initial_html+' <i class="fa fa-spin fa-spinner"></i>');
-		var deleteDiv = btn.attr('div-id');
-		
 		var formAction = base_url+'/'+btn.attr('action');
 		$.ajax({
 		    type: "GET",
@@ -185,13 +212,14 @@ $(document).on("click", ".delete-div", function() {
 		    url : formAction,
 		    success : function(data){
 		    	data = JSON.parse(data);
-		    	if(!data.success) bootbox.alert(data.message);
+		    	if(data.success==false){
+		    		bootbox.alert(data.message);
+		    	}
 		    	else {
 		    		$("#"+deleteDiv).hide('500', function(){
 		    			$("#"+deleteDiv).remove();
 			    	});
-			    	// $("#"+editDiv).html(data.message);
-			    	// $("#"+showDiv).show();
+			    	
 		    	}
 
 		    }
@@ -419,7 +447,12 @@ $(document).on("click", ".details", function() {
 function initialize(){
 	$(".check_form").validate();
 
-	$(".datepicker").datepicker({'format':'yyyy-mm-dd'});
+	$(".datepicker").datepicker({
+		changeMonth:true,
+		changeYear:true,
+		dateFormat: "dd-mm-yy",
+		yearRange: "1970:2018"
+	})
 	tablesorter();
 
 }

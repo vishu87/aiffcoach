@@ -25,7 +25,7 @@
 {{HTML::script("assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js")}}
 <!-- {{HTML::script("assets/global/plugins/jquery.blockui.min.js")}} -->
 <!-- {{HTML::script("assets/global/plugins/jquery.cokie.min.js")}} -->
-{{HTML::script("assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js")}}
+<!-- {{HTML::script("assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js")}} -->
 {{HTML::script("assets/global/plugins/bootbox/bootbox.min.js")}}
 <!-- END CORE PLUGINS -->
 {{HTML::script("assets/global/scripts/metronic.js")}}
@@ -38,6 +38,7 @@
 {{HTML::script("assets/admin/scripts/additional-methods.min.js")}}
 {{HTML::script("assets/admin/scripts/jquery.floatThead.min.js")}}
 {{HTML::script("assets/admin/scripts/dropzone.js")}}{{HTML::script("assets/global/plugins/select2/select2.min.js")}}
+{{HTML::script("assets/admin/scripts/jquery-ui-1.11.4.js")}}
 {{HTML::script("assets/admin/scripts/custom.js")}}
 <script>
 jQuery(document).ready(function() {   

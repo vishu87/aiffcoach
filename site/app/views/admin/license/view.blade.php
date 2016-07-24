@@ -4,7 +4,7 @@
 	<td>{{$data->description}}</td>
 	<td>{{($data->authorised_by==1)?'AFC':'AIFF'}}</td>
 	<td>
-		<a type="button" class="btn yellow "  href="{{url('admin/License/edit/'.$data->id)}}" count = "{{$count}}"> <i class="fa fa-edit"></i> Edit</a>
-		<button type="button" class="btn red delete-div" div-id="license_{{$data->id}}"  action="{{'admin/License/delete/'.$data->id}}"> <i class="fa fa-remove"></i> Delete</button>
+		<a type="button" class="btn yellow btn-sm "  href="{{url('admin/License/edit/'.$data->id)}}" count = "{{$count}}"> <i class="fa fa-edit"></i> Edit</a>
+		<button type="button" class="btn red delete-div btn-sm" div-id="license_{{$data->id}}"  action="{{'admin/License/delete/'.$data->id}}"> <i class="fa fa-remove"></i> Delete</button>
 	</td>
 </tr>

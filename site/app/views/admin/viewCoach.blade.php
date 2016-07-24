@@ -4,7 +4,6 @@
 		<td>{{$data->first_name}} {{$data->middle_name}} {{$data->last_name}}</td>
 		<td>{{$data->email}} / {{$data->mobile}}</td>
 		<td>{{$data->state_reference}}</td>
-		<td></td>
 		<td>{{(isset($status[$data->status]))?$status[$data->status]:''}}</td>
 		<td id="emp_{{$data->id}}" style="width:250px">		
 			<button action="{{url('admin/viewCoach/'.$data->id)}}" class="btn btn-sm yellow details" modal-title="{{$data->first_name.' '.$data->middle_name.' '.$data->last_name}}">View</button>

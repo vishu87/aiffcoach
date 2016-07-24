@@ -1,10 +1,10 @@
 <div class="row">
-	<div class="col-md-8">
+	<div class="col-md-7">
 		<h3 class="page-title">
 			{{$title}}
 		</h3>
 	</div>
-	<div class="col-md-4">
+	<div class="col-md-5">
 		<a class="btn green pull-right" href="{{url('/admin/coachExport/'.$flag)}}">Export Excel</a>
 	</div>
 </div>
@@ -29,7 +29,6 @@
 					<th data-placeholder="Search..">Name</th>
 					<th data-placeholder="Search..">Contact Details</th>
 					<th data-placeholder="Search..">State</th>
-					<th data-placeholder="Search..">License</th>
 					<th data-placeholder="Search..">Status</th>
 					<th >#</th>
 				</tr>

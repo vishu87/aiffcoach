@@ -1,5 +1,5 @@
 <div class="row">
-	<div class="col-md-9">
+	<div class="col-md-7">
 		<h3 class="page-title">
 			@if(!isset($employment))
 				Add New Employment
@@ -8,7 +8,7 @@
 			@endif
 		</h3>
 	</div>
-	<div class="col-md-3">
+	<div class="col-md-5">
 		<a href="{{url('coach/employmentDetails	')}}" class="btn blue pull-right">Go Back</a>
 	</div>
 </div>

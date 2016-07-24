@@ -14,19 +14,19 @@
 	<td>
 		@if(!isset($value))
 			@if(strtotime($data->end_date)>strtotime('now'))
-				<button type="button" class="btn red delete-div" div-id="activity_{{$data->application_id}}"  action="{{'coach/applications/delete/'.$data->application_id}}"> <i class="fa fa-remove"></i> Cancel</button>
+				<button type="button" class="btn red btn-xs delete-div" div-id="activity_{{$data->application_id}}"  action="{{'coach/applications/delete/'.$data->application_id}}"> <i class="fa fa-remove"></i> Cancel</button>
 			@endif	
 		@else
 			@if($value==1)
-				<button type="button" class="btn blue approve-coach" div-id="activity_{{$data->application_id}}"  action="{{'coach/activity/delete/'.$data->application_id}}">Apply <i class="fa fa-arrow-right"></i></button>
+				<button type="button" class="btn green btn-xs approve-coach" div-id="activity_{{$data->application_id}}"  action="{{'coach/activity/delete/'.$data->application_id}}">Apply <i class="fa fa-arrow-right"></i></button>
 			@endif	
 		@endif
 
 		@if($data->status==1 || $data->status==0)
-			<button type="button" class="btn blue add-div" div-id="activity_{{$data->application_id}}" count="{{$count}}" modal-title="Select Payment Option"  action="{{'coach/Payment/'.$data->application_id}}">Pay Fee </button>
+			<button type="button" class="btn blue btn-xs add-div" div-id="activity_{{$data->application_id}}" count="{{$count}}" modal-title="Select Payment Option"  action="{{'coach/Payment/'.$data->application_id}}">Pay Fee </button>
 		@endif	
 		@if($data->finalResult!='')	
-		<button type="button" class="btn blue edit-div"  modal-title="MarksSheet for {{$data->course_name}}" action="{{('coach/applications/viewMarks/'.$data->application_id)}}"> View Marks</button>
+		<button type="button" class="btn yellow btn-xs edit-div"  modal-title="MarksSheet for {{$data->course_name}}" action="{{('coach/applications/viewMarks/'.$data->application_id)}}"> View Marks</button>
 		@endif
 	</td>
 </tr>

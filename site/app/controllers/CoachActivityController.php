@@ -96,9 +96,16 @@ class CoachActivityController extends BaseController {
 
     }
     public function delete($id){
+        $count = CoachActivity::where('id',$id)->count();
+        if($count<1){
+            $data['success'] = false;
+            $data['message'] = 'This Item does not exist';
+        }
+        else{
         CoachActivity::find($id)->delete();
         $data["success"] = true;
         $data["message"] = "";
+        }   
         return json_encode($data);
     }
 

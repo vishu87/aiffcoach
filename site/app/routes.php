@@ -9,10 +9,10 @@ Route::get('/registerStep1/{id?}', 'RegistrationController@registration_step1');
 Route::post('/registerStep1/{id?}', 'RegistrationController@post_registration_step1');
 
 Route::get('/registerStep2/{id}', 'RegistrationController@registration_step2');
-Route::post('/registerStep2/{id}', 'RegistrationController@post_registration_step2');
+Route::post('/registerStep2', 'RegistrationController@post_registration_step2');
 
 Route::get('/registerStep3/{id}', 'RegistrationController@registration_step3');
-Route::post('/registerStep3/{id}', 'RegistrationController@post_registration_step3');
+Route::post('/registerStep3', 'RegistrationController@post_registration_step3');
 
 Route::get('/verify/{hash}','UserController@activeAccount');
 Route::get('/reset', function(){
@@ -33,25 +33,47 @@ Route::get('/logout', function(){
 Route::post('/register', 'CoachController@register');
 
 Route::group(['prefix'=>'coach','before'=>['auth','coach']], function () {
-	Route::get('/','CoachController@index');
-	Route::post('/postEmployment','CoachController@postEmployment');
+	Route::get('/contactInformation','CoachController@contactInformation');
+	Route::post('updateContact','CoachController@updateContact');
 
+	Route::post('/postEmployment','CoachController@postEmployment');
 	Route::post('updateProfile','CoachController@updateProfile');
 
+	Route::get('/personalInformation','CoachController@personalInformation');
+	Route::post('/updatePersonalInformation','CoachController@updatePersonalInformation');
+
+	Route::group(["prefix"=>"measurements"],function(){
+		Route::get('/','CoachController@measurements');
+		Route::post('/update','CoachController@updateMeasurements');
+	});
+
+	Route::group(["prefix"=>"addDocument"],function(){
+		Route::get('/','CoachController@documents');
+		Route::post('/add','CoachController@addDocument');
+		Route::delete('/delete/{id}','CoachController@deleteDocument');
+	});
+
+	Route::get('/passportDetails','CoachController@passportDetails');
 	Route::post('updatePassport','CoachController@updatePassport');
-	Route::post('updateContact','CoachController@updateContact');
+	
 	Route::get('/employmentDetails','CoachController@employmentDetails');
 	Route::get('/editEmployment/{id}','CoachController@editEmployment');
 	Route::post('addEmployment','CoachController@addEmployment');
 	Route::get('addNewEmployment','CoachController@addNewEmployment');
 	Route::post('updateEmployment/{id}','CoachController@updateEmployment');
-	Route::delete('/deleteEmployment/{id}','CoachController@deleteEmployment');
+	Route::get('/deleteEmployment/{id}','CoachController@deleteEmployment');
 
 	Route::group(["prefix"=>'Payment',"before"=>['auth']],function(){
 		Route::get('/{id}','PaymentController@Payment');
 		Route::post('option/{id}','PaymentController@paymentOption');
 		
 	});
+
+	Route::group(['prefix'=>'dashboard','before'=>'auth'],function(){
+		Route::get('/','CoachController@dashboard');
+		
+	});
+
 	Route::group(['prefix'=>'activity','before'=>'auth'],function(){
 		Route::get('/','CoachActivityController@index');
 		Route::get('/add','CoachActivityController@add');
@@ -64,6 +86,7 @@ Route::group(['prefix'=>'coach','before'=>['auth','coach']], function () {
 		Route::get('/','CourseController@allCourses');
 		Route::get('/active','CourseController@activeCourse');
 		Route::get('/inactive','CourseController@inactiveCourse');
+		Route::get('/details/{course_id}/{tab_type}','ApplicationController@details');
 		Route::get('/apply/{course_id}','ApplicationController@applyCourse');
 	});
 	Route::group(["prefix"=>'applications'],function(){
@@ -136,6 +159,7 @@ Route::group(["before"=>['auth']],function(){
 });
 
 Route::group(["prefix"=>'resultAdmin','before'=>["auth","resultAdmin"]],function(){
+	Route::get('/dashboard','resultAdminController@dashboard');
 	Route::get('/','resultAdminController@index');
 	Route::get('/exportApplications/{course_id}','resultAdminController@exportExcel');
 

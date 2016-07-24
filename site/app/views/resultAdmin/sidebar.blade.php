@@ -6,9 +6,16 @@
     </li>
     <li style="height:10px">
     </li>
+    <li class="@if($sidebar == 11 ) active @endif" >
+      <a href="{{url('/resultAdmin/dashboard')}}">
+        <i class="fa fa-home"></i>
+        <span class="title">Dashboard</span>
+        <span class="selected"></span>
+      </a>
+    </li>
     <li class="@if($sidebar == 1 ) active @endif" >
       <a href="{{url('/resultAdmin')}}">
-        <i class="fa fa-lock"></i>
+        <i class="fa fa-cube"></i>
         <span class="title">Applications Scores</span>
         <span class="selected"></span>
       </a>

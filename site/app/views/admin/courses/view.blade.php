@@ -6,8 +6,8 @@
 	<td>{{$data->license_name}} - {{($data->authorised_by==1)?'AFC':'AIFF'}}</td>
 
 	<td>
-		<a type="button" class="btn yellow "  href="{{url('admin/Courses/edit/'.$data->id)}}" count = "{{$count}}"> <i class="fa fa-edit"></i> Edit</a>
+		<a type="button" class="btn yellow btn-sm "  href="{{url('admin/Courses/edit/'.$data->id)}}" count = "{{$count}}"> <i class="fa fa-edit"></i> Edit</a>
 
-		<button type="button" class="btn red delete-div" div-id="course_{{$data->id}}"  action="{{'admin/Courses/delete/'.$data->id}}"> <i class="fa fa-remove"></i> Delete</button>
+		<button type="button" class="btn btn-sm red delete-div" div-id="course_{{$data->id}}"  action="{{'admin/Courses/delete/'.$data->id}}"> <i class="fa fa-remove"></i> Delete</button>
 	</td>
 </tr>

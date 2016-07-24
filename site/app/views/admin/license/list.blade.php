@@ -1,10 +1,10 @@
 <div class="row">
-	<div class="col-md-9">
+	<div class="col-md-6">
 		<h3 class="page-title">Licenses</h3>
 	</div>
-	<div class="col-md-3">
-		<a class="btn green " href="{{url('/admin/exportLicence')}}">Export Excel</a>
-		<a type="button" class="btn green pull-right" href="{{url('admin/License/add')}}"> <i class="fa fa-plus"></i> Add License</a>
+	<div class="col-md-6" >
+		<a class="btn green pull-right " href="{{url('/admin/exportLicence')}}">Export Excel</a>
+		<a type="button" class="btn green pull-right" href="{{url('admin/License/add')}}" style="margin-right:10px;"> <i class="fa fa-plus"></i> Add License</a>
 	</div>
 </div>
 @if(Session::has('success'))

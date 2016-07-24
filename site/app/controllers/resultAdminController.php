@@ -3,6 +3,10 @@
 class resultAdminController extends BaseController {
     protected $layout = 'layout';
 
+    public function dashboard(){
+        $this->layout->sidebar = View::make('resultAdmin.sidebar',['sidebar'=>11]);
+        $this->layout->main = View::make('resultAdmin.dashboard',[]);
+    }
     public function index(){
         $status = Application::status();
         $courses = ["" => "Select Course"] + Course::lists('name','id');

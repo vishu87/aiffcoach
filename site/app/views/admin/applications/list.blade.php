@@ -17,8 +17,8 @@
 @endif
 
 <div style="margin-bottom:20px;" class="row">
-	<div class="col-md-9">
-		@if(isset($flag))
+	<div class="col-md-7">
+		@if($flag==1)
 	{{Form::open(array('url'=>'/admin/Applications/approved', 'method'=>'GET', 'class' => 'check_form'))}}
 	@else
 	{{Form::open(array('url'=>'/admin/Applications/pending', 'method'=>'GET', 'class' => 'check_form'))}}
@@ -35,8 +35,8 @@
 	{{Form::close()}}
 
 	</div>
-	<div class="col-md-3">
-		<a class="btn green pull-right" href="{{url('/admin/applicationExport/'.$flag.'/'.app('request')->input('course'))}}">Export Excel</a>
+	<div class="col-md-5">
+		<a class="btn green pull-right" style="margin-top:18px;" href="{{url('/admin/applicationExport/'.$flag.'/'.app('request')->input('course'))}}">Export Excel</a>
 
 	</div>
 </div>

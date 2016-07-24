@@ -1,8 +1,8 @@
 <div class="row">
-	<div class="col-md-8">
+	<div class="col-md-6">
 		<h3 class="page-title">Courses Parameters</h3>
 	</div>
-	<div class="col-md-4">
+	<div class="col-md-6">
 		<a class="btn green pull-right" href="{{url('/resultAdmin/Parameter/exportExcel')}}">Export Excel</a>
 
 	</div>

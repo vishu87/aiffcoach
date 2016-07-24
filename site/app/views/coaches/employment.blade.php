@@ -1,8 +1,8 @@
 <div class="row">
-	<div class="col-md-9">
+	<div class="col-md-7">
 		<h3 class="page-title">Employment Details</h3>
 	</div>
-	<div class="col-md-3">
+	<div class="col-md-5">
 		<a href="{{url('/coach/addNewEmployment')}}" class="btn blue pull-right">Add Employment</a>
 	</div>
 </div>

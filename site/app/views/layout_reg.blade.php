@@ -23,11 +23,8 @@
     <div class="top-menu pull-right">
      
       <span class="username username-hide-on-mobile">
-        {{(isset(Auth::User()->username))?'Welcome '.Auth::User()->username:''}}
-       @if(isset(Auth::User()->id))
-       <a class="blue" style="color:#fff;margin:20px;" href="{{url('/logout')}}"><i class="fa fa-sign-out"></i> Logout</a>
-       @endif
-     </span>
+        
+      </span>
           
     </div>
     <!-- END TOP NAVIGATION MENU -->
