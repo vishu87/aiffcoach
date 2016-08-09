@@ -37,8 +37,11 @@
 {{HTML::script("assets/admin/scripts/jquery.validate.js")}}
 {{HTML::script("assets/admin/scripts/additional-methods.min.js")}}
 {{HTML::script("assets/admin/scripts/jquery.floatThead.min.js")}}
-{{HTML::script("assets/admin/scripts/dropzone.js")}}{{HTML::script("assets/global/plugins/select2/select2.min.js")}}
+{{HTML::script("assets/admin/scripts/dropzone.js")}}
+{{HTML::script("assets/global/plugins/select2/select2.min.js")}}
 {{HTML::script("assets/admin/scripts/jquery-ui-1.11.4.js")}}
+
+
 {{HTML::script("assets/admin/scripts/custom.js")}}
 <script>
 jQuery(document).ready(function() {   

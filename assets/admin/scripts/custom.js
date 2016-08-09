@@ -454,6 +454,11 @@ function initialize(){
 		yearRange: "1970:2018"
 	})
 	tablesorter();
+	$('.dropzone').dropzone({
+		addRemoveLinks: true, 
+	});
+
+	
 
 }
 
@@ -473,3 +478,4 @@ $(document).on("click", ".payment-radio", function() {
 $(document).on('click','#cash',function(){
 	$('.payment_details').removeAttr('required');
 })
+$('.dropzone').dropzone();

@@ -101,4 +101,30 @@ class resultAdminController extends BaseController {
         include(app_path().'/libraries/Classes/PHPExcel.php');
         include(app_path().'/libraries/export/coach.php');
     }
+
+
+    public function uploadMarks(){
+        $input = Input::all();
+        $rules = array(
+            'file' => 'image|max:3000',
+        );
+
+        $validation = Validator::make($input, $rules);
+
+        if ($validation->fails())
+        {
+            return Response::make($validation->errors->first(), 400);
+        }
+
+        $file = Input::file('file');
+
+        $extension = File::extension($file['name']);
+        $directory = 'coaches-doc/'.sha1(time());
+        $filename = sha1(time().time()).".{$extension}";
+
+        $upload_success = Input::upload('file', $directory, $filename);
+
+        return $upload_success;
+    
+    }
 }

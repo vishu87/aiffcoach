@@ -41,6 +41,13 @@
 
 {{Form::close()}} 
 
+<div id="dropzone" class="row">
+	{{Form::open(["class"=>"dropzone","url"=>"","method"=>"post","files"=>"required","id"=>"my-awesome-dropzone"])}}
+		
+
+	{{Form::close()}}
+</div>
+
 <!-- 
 <div class="form-body">
 		
