@@ -17,42 +17,30 @@ class CoachController extends BaseController {
     public function contactInformation(){
         $id = Auth::User()->coach_id;
         $coach = Coach::find($id);
-        if($coach->status!=0){
-            $state =[""=>'Select'] + State::orderBy('name','asc')->lists('name','id');
-            $CoachParameters = CoachParameter::where('coach_id',Auth::User()->coach_id)->first();
-            $this->layout->sidebar = View::make('coaches.sidebar',["sidebar"=>'profile','subsidebar'=>2]);
-            $this->layout->main = View::make('coaches.profile',['state'=>$state,'coach'=>$CoachParameters,"profileType"=>2,'title'=>'Contact Information']);
-        }
-        else{
-            $this->layout->sidebar = '';
-            $this->layout->main = View::make('coaches.index');
-        }
+        $state =[""=>'Select'] + State::orderBy('name','asc')->lists('name','id');
+        $CoachParameters = CoachParameter::where('coach_id',Auth::User()->coach_id)->first();
+        $this->layout->sidebar = View::make('coaches.sidebar',["sidebar"=>'profile','subsidebar'=>2]);
+        $this->layout->main = View::make('coaches.profile',['state'=>$state,'coach'=>$CoachParameters,"profileType"=>2,'title'=>'Contact Information']);
     }
-    public function passportDetails(){
-        $id = Auth::User()->coach_id;
-        $coach = Coach::find($id);
-        if($coach->status!=0){   
-            $CoachParameters = CoachParameter::where('coach_id',Auth::User()->coach_id)->first();
-            $this->layout->sidebar = View::make('coaches.sidebar',["sidebar"=>'profile','subsidebar'=>3]);
-            $this->layout->main = View::make('coaches.profile',['coach'=>$CoachParameters,"profileType"=>3,'title'=>'Passport Details']);
-        }
-        else{
-            $this->layout->sidebar = '';
-            $this->layout->main = View::make('coaches.index');
-        }
-    }
+    // public function passportDetails(){
+    //     $id = Auth::User()->coach_id;
+    //     $coach = Coach::find($id);
+    //     if($coach->status!=0){   
+    //         $CoachParameters = CoachParameter::where('coach_id',Auth::User()->coach_id)->first();
+    //         $this->layout->sidebar = View::make('coaches.sidebar',["sidebar"=>'profile','subsidebar'=>3]);
+    //         $this->layout->main = View::make('coaches.profile',['coach'=>$CoachParameters,"profileType"=>3,'title'=>'Passport Details']);
+    //     }
+    //     else{
+    //         $this->layout->sidebar = '';
+    //         $this->layout->main = View::make('coaches.index');
+    //     }
+    // }
     public function personalInformation(){
         $id = Auth::User()->coach_id;
         $coach = Coach::find($id);
-        if($coach->status!=0){
-            $CoachParameter = CoachParameter::where('coach_id',Auth::User()->coach_id)->first();
-            $this->layout->sidebar = View::make('coaches.sidebar',["sidebar"=>'profile','subsidebar'=>1]);
-            $this->layout->main = View::make('coaches.profile',['coach'=>$coach,'CoachParameter'=>$CoachParameter,"profileType"=>1,'title'=>'Personal Details']);
-        }
-        else{
-            $this->layout->sidebar = '';
-            $this->layout->main = View::make('coaches.index');
-        }
+        $CoachParameter = CoachParameter::where('coach_id',Auth::User()->coach_id)->first();
+        $this->layout->sidebar = View::make('coaches.sidebar',["sidebar"=>'profile','subsidebar'=>1]);
+        $this->layout->main = View::make('coaches.profile',['coach'=>$coach,'CoachParameter'=>$CoachParameter,"profileType"=>1,'title'=>'Personal Details']);
     }
     public function updatePersonalInformation(){
         $id = Auth::User()->coach_id;
@@ -82,21 +70,15 @@ class CoachController extends BaseController {
     public function measurements(){
         $id = Auth::User()->coach_id;
         $coach = Coach::find($id);
-        if($coach->status!=0){ 
-            $measurements = Measurement::where('coach_id',Auth::User()->coach_id)->count();
-            if($measurements<1){
-                $measurement = array();
-            }
-            else{
-                $measurement = Measurement::where('coach_id',Auth::User()->coach_id)->first();
-            }
-            $this->layout->sidebar = View::make('coaches.sidebar',["sidebar"=>'profile','subsidebar'=>1]);
-            $this->layout->main = View::make('coaches.profile',['coach'=>$coach,'measurement'=>$measurement,"profileType"=>4,'title'=>'Measurements']);
+        $measurements = Measurement::where('coach_id',Auth::User()->coach_id)->count();
+        if($measurements<1){
+            $measurement = array();
         }
         else{
-            $this->layout->sidebar = '';
-            $this->layout->main = View::make('coaches.index');
+            $measurement = Measurement::where('coach_id',Auth::User()->coach_id)->first();
         }
+        $this->layout->sidebar = View::make('coaches.sidebar',["sidebar"=>'profile','subsidebar'=>1]);
+        $this->layout->main = View::make('coaches.profile',['coach'=>$coach,'measurement'=>$measurement,"profileType"=>4,'title'=>'Measurements']);
     }
 
     public function updateMeasurements(){
@@ -154,17 +136,12 @@ class CoachController extends BaseController {
     public function documents(){
         $id = Auth::User()->coach_id;
         $coach = Coach::find($id);
-        if($coach->status!=0){
-            $documents = CoachDocument::where('coach_id',$id)->get();
-            $document_types = CoachDocument::DocTypes();
-            $this->layout->sidebar = View::make('coaches.sidebar',["sidebar"=>'profile','subsidebar'=>1]);
-            $this->layout->main = View::make('coaches.profile',['documents'=>$documents,'document_types'=>$document_types,"profileType"=>5,'title'=>'Add Documents']);
-        }
-        else{
-            $this->layout->sidebar = '';
-            $this->layout->main = View::make('coaches.index');
-        }
+        $documents = CoachDocument::where('coach_id',$id)->get();
+        $document_types = CoachDocument::DocTypes();
+        $this->layout->sidebar = View::make('coaches.sidebar',["sidebar"=>'profile','subsidebar'=>1]);
+        $this->layout->main = View::make('coaches.profile',['documents'=>$documents,'document_types'=>$document_types,"profileType"=>5,'title'=>'Add Documents']);
     }
+
     public function addDocument(){
         $id = Auth::User()->coach_id;
         $cre = [
@@ -210,10 +187,12 @@ class CoachController extends BaseController {
         }
         return json_encode($data);
     }  
+    
     public function addNewEmployment(){
         $this->layout->sidebar = View::make('coaches.sidebar',['sidebar'=>2]);
         $this->layout->main = View::make('coaches.addEmployment');
     }
+
     public function register(){
      	$cre = [
  			'photo'=>Input::file('photo'),
