@@ -8,12 +8,12 @@
 	<td>
 		@if(!isset($status))
 			@if(in_array($data->id,$check))
-			<a type="button" class="btn yellow btn-sm " div-id="activity_{{$data->id}}"  href="{{url('coach/courses/details/'.$data->id.'/1')}}">Already Applied <i class="fa fa-arrow-right"></i></a>
+			<a type="button" class="btn btn-primary btn-sm " div-id="activity_{{$data->id}}"  href="{{url('coach/courses/details/'.$data->id.'/1')}}">Already Applied </a>
 			@else
-			<a type="button" class="btn blue btn-sm " div-id="activity_{{$data->id}}"  href="{{url('coach/courses/details/'.$data->id.'/1')}}">Apply</button>
+			<a type="button" class="btn blue btn-sm " div-id="activity_{{$data->id}}"  href="{{url('coach/courses/details/'.$data->id.'/1')}}">Apply</a>
 			@endif
 		@else
-			<a type="button" class="btn blue btn-sm " div-id="activity_{{$data->id}}"  href="{{url('coach/courses/details/'.$data->id.'/2')}}">View</button>
+			<a type="button" class="btn blue btn-sm " div-id="activity_{{$data->id}}"  href="{{url('coach/courses/details/'.$data->id.'/2')}}">View</a>
 		@endif	
 	</td>
 </tr>

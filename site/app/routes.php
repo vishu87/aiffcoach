@@ -29,51 +29,38 @@ Route::get('/logout', function(){
     Auth::logout();
     return Redirect::to('/');
 });
-
 Route::post('/register', 'CoachController@register');
-
 Route::group(['prefix'=>'coach','before'=>['auth','coach']], function () {
 	Route::get('/contactInformation','CoachController@contactInformation');
 	Route::post('updateContact','CoachController@updateContact');
-
 	Route::post('/postEmployment','CoachController@postEmployment');
 	Route::post('updateProfile','CoachController@updateProfile');
-
 	Route::get('/personalInformation','CoachController@personalInformation');
 	Route::post('/updatePersonalInformation','CoachController@updatePersonalInformation');
-
 	Route::group(["prefix"=>"measurements"],function(){
 		Route::get('/','CoachController@measurements');
 		Route::post('/update','CoachController@updateMeasurements');
 	});
-
 	Route::group(["prefix"=>"addDocument"],function(){
 		Route::get('/','CoachController@documents');
 		Route::post('/add','CoachController@addDocument');
 		Route::delete('/delete/{id}','CoachController@deleteDocument');
 	});
-
 	Route::get('/passportDetails','CoachController@passportDetails');
 	Route::post('updatePassport','CoachController@updatePassport');
-	
 	Route::get('/employmentDetails','CoachController@employmentDetails');
 	Route::get('/editEmployment/{id}','CoachController@editEmployment');
 	Route::post('addEmployment','CoachController@addEmployment');
 	Route::get('addNewEmployment','CoachController@addNewEmployment');
 	Route::post('updateEmployment/{id}','CoachController@updateEmployment');
 	Route::get('/deleteEmployment/{id}','CoachController@deleteEmployment');
-
 	Route::group(["prefix"=>'Payment',"before"=>['auth']],function(){
-		Route::get('/{id}','PaymentController@Payment');
-		Route::post('option/{id}','PaymentController@paymentOption');
-		
+		Route::get('/{application_id}','PaymentController@Payment');
+		Route::post('option/{application_id}','PaymentController@paymentOption');
 	});
-
 	Route::group(['prefix'=>'dashboard','before'=>'auth'],function(){
 		Route::get('/','CoachController@dashboard');
-		
 	});
-
 	Route::group(['prefix'=>'activity','before'=>'auth'],function(){
 		Route::get('/','CoachActivityController@index');
 		Route::get('/add','CoachActivityController@add');
@@ -97,10 +84,7 @@ Route::group(['prefix'=>'coach','before'=>['auth','coach']], function () {
 		Route::get('/viewMarks/{application_id}','ApplicationController@viewMarks');
 		Route::delete('/delete/{id}','ApplicationController@deleteCoachApplication');
 	});
-
 });
-
-
 Route::group(["before"=>['auth']],function(){
 	Route::group(["before"=>['admin']],function(){
 		Route::group(["prefix"=>'admin'],function(){
@@ -117,7 +101,6 @@ Route::group(["before"=>['auth']],function(){
 			Route::get('/coursesExport/{flag}','ExcelExportController@coursesExport');
 			Route::get('applicationExport/{flag}/{course_id?}','ExcelExportController@applicationExport');
 			Route::get('paymentExport/{flag}/{course_id?}','ExcelExportController@paymentExport');
-
 			Route::group(["prefix"=>'Courses'],function(){
 				Route::get('/','CourseController@index');
 				Route::get('/active','CourseController@active');
@@ -128,15 +111,12 @@ Route::group(["before"=>['auth']],function(){
 				Route::put('/update/{id}','CourseController@update');
 				Route::delete('/delete/{id}','CourseController@delete');
 			});
-
 			Route::group(["prefix"=>'Payment',"before"=>['auth']],function(){
 				Route::get('/','PaymentController@index');
 				Route::get('/pending','PaymentController@pendingPayments');
 				Route::get('/disapprovePaymentStatus/{id}/{remarks?}/{count?}','PaymentController@disapprovePaymentStatus');
 				Route::get('/approvePaymentStatus/{id}/{remarks?}/{count?}','PaymentController@approvePaymentStatus');
-				
 			});
-
 			Route::group(["prefix"=>'License'],function(){
 				Route::get('/','LicenseController@index');
 				Route::get('/add','LicenseController@add');
@@ -145,24 +125,19 @@ Route::group(["before"=>['auth']],function(){
 				Route::put('/update/{id}','LicenseController@update');
 				Route::delete('/delete/{id}','LicenseController@delete');
 			});
-
 			Route::group(["prefix"=>'Applications'],function(){
 				Route::get('/','ApplicationController@ApprovedApplications');
 				Route::get('/approved','ApplicationController@ApprovedApplications');
 				Route::get('/pending','ApplicationController@PendingApplications');
 				Route::get('/markApplication/{id}/{count}','ApplicationController@markApplication');
-				
 			});
-			
 		});
 	});
 });
-
 Route::group(["prefix"=>'resultAdmin','before'=>["auth","resultAdmin"]],function(){
 	Route::get('/dashboard','resultAdminController@dashboard');
 	Route::get('/','resultAdminController@index');
 	Route::get('/exportApplications/{course_id}','resultAdminController@exportExcel');
-
 	Route::group(["prefix"=>"Parameter"],function(){
 		Route::get('/','ParameterController@index');
 		Route::post('/insert','ParameterController@insert');
@@ -170,8 +145,6 @@ Route::group(["prefix"=>'resultAdmin','before'=>["auth","resultAdmin"]],function
 		Route::put('/update/{id}','ParameterController@update');
 		Route::delete('/delete/{id}','ParameterController@delete');
 		Route::get('/exportExcel','ParameterController@exportExcel');
-
-
 	});
 	Route::group(["prefix"=>"coursesParameter"],function(){
 		Route::get('/','CoursesParameterController@index');
@@ -180,7 +153,6 @@ Route::group(["prefix"=>'resultAdmin','before'=>["auth","resultAdmin"]],function
 		Route::put('/update/{id}','CoursesParameterController@update');
 		Route::delete('/delete/{id}','CoursesParameterController@delete');
 		Route::get('/exportExcel','CoursesParameterController@exportExcel');
-
 	});
 	Route::group(["prefix"=>"result"],function(){
 		Route::get('/','resultAdminController@indexResult');
@@ -191,6 +163,5 @@ Route::group(["prefix"=>'resultAdmin','before'=>["auth","resultAdmin"]],function
 		Route::put('/update/{id}','resultAdminController@update');
 		Route::delete('/delete/{id}','resultAdminController@delete');
 		Route::post('/uploadMarks','resultAdminController@uploadMarks');
-
 	});
 });

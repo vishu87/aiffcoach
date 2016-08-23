@@ -37,12 +37,12 @@
 		<!--- my form start -->
 			<div class="row">
 				<div class="col-md-6 form-group">
-					{{Form::label('Name')}}
+					{{Form::label('Name')}} <span class="error"> *</span>
 					{{Form::text('name',(isset($license))?$license->name:'',["class"=>"form-control ","required"=>"true"])}}
 					<span class="error">{{$errors->first('name')}}</span>
 				</div>
 				<div class="col-md-6 form-group">
-					{{Form::label('Description')}}
+					{{Form::label('Description')}} <span class="error"> *</span>
 					{{Form::text('description',(isset($license))?$license->description:'',["class"=>"form-control","required"=>"true"])}}
 					<span class="error">{{$errors->first('description')}}</span>
 				</div>
@@ -50,7 +50,7 @@
 			
 			<div class="row">	
 				<div class="col-md-6 form-group">
-					{{Form::label('Authorised By')}}
+					{{Form::label('Authorised By')}} <span class="error"> *</span>
 					{{Form::select('authorised_by',$authority,(isset($license))?$license->authorised_by:'',["class"=>"form-control","required"=>"true"])}}
 					<span class="error">{{$errors->first('authorised_by')}}</span>
 				</div>

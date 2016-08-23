@@ -20,8 +20,14 @@ class resultAdminController extends BaseController {
                 ->where('applications.course_id',Input::get('course'))
                 ->get();
             $resultStatus = Result::status();
-        } else {
-            $applications = [];
+        }else{
+            $applications = Application::select('courses.name as course_name','courses.id as course_id','applications.id','applications.status','coaches.first_name','coaches.last_name','coaches.middle_name','license.name as license_name','application_result.status as finalResult','application_result.remarks')
+                ->join('coaches','applications.coach_id','=','coaches.id')
+                ->join('courses','applications.course_id','=','courses.id')
+                ->leftJoin('license','courses.license_id','=','license.id')
+                ->leftJoin('application_result','applications.id','=','application_result.application_id')
+                ->where('applications.status',3)
+                ->get();
             $resultStatus = Result::status();
             // $applications = Application::applications()->where('applications.status',3)->get();
         }
@@ -43,9 +49,7 @@ class resultAdminController extends BaseController {
             ->get();
         $results = Result::where('application_id',$id)->get();   
         return View::make('resultAdmin.result.list',['parameters'=>$parameters,'application_id'=>$id,"results"=>$results]);
-
     }
-
 
     public function editParameterMarks($id){
         $course = Application::select('license.id as license_id')->join('courses','applications.course_id','=','courses.id')->join('license','courses.license_id','=','license.id')->where('applications.id',$id)->first();
@@ -71,7 +75,6 @@ class resultAdminController extends BaseController {
                 $result->save(); 
             }
         }
-
         if (Input::has('status')) {
             $count = ApplicationResult::where('application_id',$id)->count();
             if ($count<1) {
@@ -81,7 +84,6 @@ class resultAdminController extends BaseController {
                 $applicationResult = ApplicationResult::where('application_id',$id)->update(["application_id"=>$id,"status"=>Input::get('status'),"remarks"=>Input::get('remarks')]);
             }
         }
-
         $app_data = Application::applicationsResult()
             ->where('applications.status',3)
             ->where('applications.id',$id)
@@ -102,29 +104,21 @@ class resultAdminController extends BaseController {
         include(app_path().'/libraries/export/coach.php');
     }
 
-
     public function uploadMarks(){
         $input = Input::all();
         $rules = array(
             'file' => 'image|max:3000',
         );
-
         $validation = Validator::make($input, $rules);
-
         if ($validation->fails())
         {
             return Response::make($validation->errors->first(), 400);
         }
-
         $file = Input::file('file');
-
         $extension = File::extension($file['name']);
         $directory = 'coaches-doc/'.sha1(time());
         $filename = sha1(time().time()).".{$extension}";
-
         $upload_success = Input::upload('file', $directory, $filename);
-
         return $upload_success;
-    
     }
 }
