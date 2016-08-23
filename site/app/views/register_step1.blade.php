@@ -13,7 +13,7 @@
 				          		<div class="row">
 							        <div class="col-md-4">
 								        <div class="form-group">
-								            <label class="control-label">First Name</label>
+								            <label class="control-label">First Name <span class="error"> *</span></label>
 								              {{Form::text('first_name',(isset($data["first_name"]))?$data["first_name"]:'',['required'=>'true','placeholder'=>"First Name",'class'=>"form-control placeholder-no-fix"])}}
 								              <span class="error">{{$errors->first('first_name')}}</span>
 								        </div>
@@ -27,7 +27,7 @@
 							        </div>
 							        <div class="col-md-4">
 							          <div class="form-group">
-							            <label class="control-label ">Last Name</label>
+							            <label class="control-label ">Last Name <span class="error"> *</span></label>
 							              {{Form::text('last_name',(isset($data["last_name"]))?$data["last_name"]:'',['required'=>'true','placeholder'=>"Last Name",'class'=>"form-control placeholder-no-fix"])}}
 							              <span class="error">{{$errors->first('last_name')}}</span>
 							          </div>
@@ -36,14 +36,14 @@
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
-										    <label class="control-label ">Email Id</label>
+										    <label class="control-label ">Email Id <span class="error"> *</span></label>
 										    {{Form::text('email',(isset($data["email"]))?$data["email"]:'',['required'=>'true','placeholder'=>"Email Id",'class'=>"form-control placeholder-no-fix"])}}
 										    <span class="error">{{$errors->first('username')}}</span>
 										</div>
 									</div>
 									<div class="col-md-6">
 							          <div class="form-group"> 
-							            <label class="form-label">Gender</label><br>
+							            <label class="form-label">Gender <span class="error"> *</span></label><br>
 							            {{Form::radio('gender','1',(isset($data["gender"]))?($data["gender"]==1)?$data["gender"]:'':'',['required'=>'true','placeholder'=>''])}} Male &nbsp; &nbsp; &nbsp;
 							            {{Form::radio('gender','2',(isset($data["gender"]))?($data["gender"]==2)?$data["gender"]:'':'',['required'=>'true','placeholder'=>''])}} Female
 							            <span class="error">{{$errors->first('gender')}}</span>
@@ -51,15 +51,14 @@
 							        </div>
 							    </div>
 							    <div class="row">
-							        <div class="col-md-6 form-group"><label class="form-label" style="width:100%"> DOB</label>
-							           {{Form::select('day',$day,'',["class"=>"form-control","required"=>"true", "style"=>"width:90px; display:inline"])}}
-							           {{Form::select('month',$months,'',["class"=>"form-control","required"=>"true", "style"=>"width:90px; display:inline"])}}
-							           {{Form::select('year',$years,'',["class"=>"form-control","required"=>"true","id"=>"year", "style"=>"width:90px; display:inline"])}}
-							           <span class="dob-error"></span>
-							        </div>
+						        <div class="col-md-6 form-group">
+						        	<label class="form-label" style="width:100%"> DOB <span class="error"> *</span></label>
+						        	{{Form::text('dob',(isset($data["dob"]))?date('d-m-Y',strtotime($data["dob"])):'',["class"=>"form-control datepicker","date_en"=>"true"])}}
+						          <span class="dob-error"></span>
+						        </div>
 								    <div class="col-md-6">
 								        <div class="form-group"> 
-								            <label class="form-label">Place of Birth</label>       
+								            <label class="form-label">Place of Birth <span class="error"> *</span></label>       
 								            {{Form::text('birth_place',(isset($data["birth_place"]))?$data["birth_place"]:'',['required'=>'true','class'=>'form-control','placeholder'=>'Birth Place'])}}
 								            <span class="error">{{$errors->first('birth_place')}}</span>
 								        </div>
@@ -69,18 +68,24 @@
 							    <div class="row">
 							        <div class="col-md-6">
 							          <div class="form-group"> 
-							            <label class="form-label">Attach DOB Proof</label>       
-							            {{Form::file('dob_proof',['required'=>'true','class'=>'form-control','placeholder'=>'Attach Proof','pdf'=>'true'])}}
+							            <label class="form-label">Attach DOB Proof @if(!isset($data["dob_proof"]))<span class="error"> *</span>@endif</label>       
+							            {{Form::file('dob_proof',['class'=>'form-control','placeholder'=>'Attach Proof','pdf'=>'true'])}}
 							              <span class="error">{{$errors->first('dob_proof')}}</span>
+								          @if(isset($data["dob_proof"]))
+								          	<div><a target="_blank" href="{{url($data['dob_proof'])}}">view current</a></div>
+								          @endif
 							          </div>
 							        </div>
 							        <div class="col-md-6">
 							          <div class="form-group">
-							            <label class="control-label ">Upload Photograph</label>
-							              {{Form::file('photo',['required'=>'true','placeholder'=>"Upload Photograph",'filesize_img'=>'true','jpg'=>'true','class'=>"form-control placeholder-no-fix"])}}
+							            <label class="control-label ">Upload Photograph @if(!isset($data["photo"]))<span class="error"> *</span>@endif</label>
+							              {{Form::file('photo',['placeholder'=>"Upload Photograph",'filesize_img'=>'true','jpg'=>'true','class'=>"form-control placeholder-no-fix"])}}
 							              <span class="error">{{$errors->first('photo')}}</span>
-
+													@if(isset($data["photo"]))
+								          	<div><a target="_blank" href="{{url($data['photo'])}}">view current</a></div>
+								          @endif
 							          </div>
+							          
 							        </div>
 							    </div>
 				          	</div>      

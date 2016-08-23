@@ -16,18 +16,7 @@ class RegistrationController extends BaseController {
         	$data = $data_row->data1;
         	$data = unserialize($data);
         }
-        $day = array();
-        for ($i=1; $i <=31 ; $i++) { 
-            $day[$i] = $i;
-        }
-        $months = array(""=>"select",1 => 'Jan', 2 => 'Feb', 3 => 'Mar', 4 => 'Apr', 5 => 'May', 6 => 'Jun', 7 => 'Jul', 8 => 'Aug', 9 => 'Sep', 10 => 'Oct', 11 => 'Nov', 12 => 'Dec');
-        $years = array();
-        for ($i=1950; $i <2016 ; $i++) { 
-            $years[$i] = $i;
-        }
-        $day = [""=>"select"] + $day;
-        $years = [""=>"select"] + $years;
-        $this->layout->main = View::make('register_step1',['state'=>$state, "data" => $data,"day" => $day,"months" => $months,"years" => $years, "id" => $id,'flag'=>1]);
+        $this->layout->main = View::make('register_step1',['state'=>$state, "data" => $data,"id" => $id,'flag'=>1]);
     }
 
     public function post_registration_step1(){
@@ -36,9 +25,8 @@ class RegistrationController extends BaseController {
     		"last_name"=>Input::get("last_name"),
     		"username"=>Input::get("email"),
     		"gender"=>Input::get("gender"),
-    		"dob_proof"=>Input::file("dob_proof"),
     		"birth_place"=>Input::get("birth_place"),
-    		"photo"=>Input::file("photo")
+            "dob"=>Input::get("dob")
     	];
 
     	$rules = [
@@ -46,11 +34,13 @@ class RegistrationController extends BaseController {
     		"last_name"=>'required',
     		"username"=>'required|email|unique:users',
     		"gender"=>'required',
-    		"dob_proof"=>'required',
     		"birth_place"=>'required',
-    		"photo"=>'required'
+            "dob"=>"required"
     	];
-
+        if(Input::get('id')==0){
+            $rules = $rules + ["dob_proof"=>'required',"photo"=>'required'];
+            $cre = $cre + ["dob_proof"=>Input::file('dob_proof'),"photo"=>Input::file('photo')] ;
+        }
     	$validator = Validator::make($cre,$rules);
     	if($validator->passes()){
     		$data = array();
@@ -78,11 +68,9 @@ class RegistrationController extends BaseController {
             $data["last_name"] = Input::get('last_name');
             $data["email"] = Input::get('email');
             $data["gender"] = Input::get('gender');
-            $data["dob"] = Input::get('year').'-'.Input::get('month').'-'.Input::get('day');
+            $data["dob"] = date('Y-m-d',strtotime(Input::get('dob')));
             $data["birth_place"] = Input::get('birth_place');
-    		
             $data = serialize($data);
-    		
             if(Input::get('id') == 0){
     			$insert_id = DB::table('reg_data')->insertGetId(array('data1' => $data));
     			return Redirect::to('registerStep2/'.$insert_id);

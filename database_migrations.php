@@ -16,6 +16,6 @@ ALTER TABLE `documents` MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `coach_documents`  ADD `approved` INT(1) NOT NULL  AFTER `remarks`;
 
 ALTER TABLE `coach_documents`  ADD `number` VARCHAR(100) NOT NULL  AFTER `name`;
-
+//updated on chirag server
 
 ?>

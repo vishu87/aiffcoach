@@ -15,7 +15,7 @@
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group"> 
-                  <label class="form-label">State of Domicile*</label>       
+                  <label class="form-label">State of Domicile <span class="error"> *</span></label>       
                   {{Form::select('state_id',$state,(isset($data["state_id"]))?$data["state_id"]:'',['required'=>'true','class'=>'form-control','placeholder'=>'State of Registration'])}}
                   <span class="error">{{$errors->first('state_id')}}</span>
                 </div>
@@ -26,7 +26,7 @@
                 <div class="form-group"> 
                   <div class="row">
                     <div class="col-md-6 form-group">
-                      <label class="form-label">Address Line 1*</label>                      
+                      <label class="form-label">Address Line 1 <span class="error"> *</span></label>                      
                       {{Form::text('address1',(isset($data["address1"]))?$data["address1"]:'',['required'=>'true','class'=>'form-control','placeholder'=>'Address line 1'])}}
                       <span class="error">{{$errors->first('address1')}}</span>
                     </div>
@@ -37,17 +37,17 @@
                     </div>
                     
                     <div class="col-md-6 form-group clear">
-                      <label class="form-label">City* </label>
+                      <label class="form-label">City <span class="error"> *</span> </label>
                       {{Form::text('city',(isset($data["city"]))?$data["city"]:'',['class'=>'form-control','placeholder'=>'City Name'])}}
                     </div>
                     
                     <div class="col-md-6 form-group">
-                      <label class="form-label">Pincode* </label>
+                      <label class="form-label">Pincode <span class="error"> *</span> </label>
                       {{Form::text('pincode',(isset($data["pincode"]))?$data["pincode"]:'',['class'=>'form-control','placeholder'=>'Pin Code'])}}
                     </div>
                     
                     <div class="col-md-6 form-group">
-                      <label class="form-label">State* </label>
+                      <label class="form-label">State <span class="error"> *</span> </label>
                       {{Form::select('state',$state,(isset($data["state"]))?$data["state"]:'',['class'=>'form-control'])}}
                     </div>
 
@@ -61,7 +61,7 @@
                      
                   <div class="row">
                     <div class="col-md-6">
-                      <label class="form-label">Mobile/Phone*</label>
+                      <label class="form-label">Mobile/Phone <span class="error"> *</span></label>
                       {{Form::text('mobile',(isset($data["mobile"]))?$data["mobile"]:'',['required'=>'true','class'=>'form-control','placeholder'=>'Mobile'])}}
                     <span class="error">{{$errors->first('mobile')}}</span>
                     </div>
