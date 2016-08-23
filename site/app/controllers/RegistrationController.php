@@ -185,6 +185,8 @@ class RegistrationController extends BaseController {
             $data["passport_expiry"] = Input::get('passport_expiry');
             $data["passport"] = Input::get('passport');
 
+            $data["official_types"] = Input::get('official_types');
+
             $data = serialize($data);
             if(Input::get('id') == 0){
                 $insert_id = DB::table('reg_data')->insertGetId(array('data3' => $data));

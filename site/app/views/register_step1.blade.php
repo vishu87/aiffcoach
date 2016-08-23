@@ -13,7 +13,7 @@
 				          		<div class="row">
 							        <div class="col-md-4">
 								        <div class="form-group">
-								            <label class="control-label ">First Name</label>
+								            <label class="control-label">First Name</label>
 								              {{Form::text('first_name',(isset($data["first_name"]))?$data["first_name"]:'',['required'=>'true','placeholder'=>"First Name",'class'=>"form-control placeholder-no-fix"])}}
 								              <span class="error">{{$errors->first('first_name')}}</span>
 								        </div>
