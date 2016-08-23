@@ -1,8 +1,8 @@
 <tr id="course_{{$data->id}}">
 	<td>{{$count}}</td>
 	<td>{{$data->name}}</td>
-	<td>{{$data->start_date}}</td>
-	<td>{{$data->end_date}}</td>
+	<td>{{date('d-m-Y',strtotime($data->start_date))}}</td>
+	<td>{{date('d-m-Y',strtotime($data->end_date))}}</td>
 	<td>{{$data->license_name}} - {{($data->authorised_by==1)?'AFC':'AIFF'}}</td>
 
 	<td>

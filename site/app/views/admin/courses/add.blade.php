@@ -36,19 +36,19 @@
 		<!--- my form start -->
 			<div class="row">
 				<div class="col-md-6 form-group">
-					{{Form::label('Course Name')}}
+					{{Form::label('Course Name')}} <span class="error"> *</span>
 					{{Form::text('name',(isset($course))?$course->name:'',["class"=>"form-control ","required"=>"true"])}}
 					<span class="error">{{$errors->first('name')}}</span>
 				</div>
 				
 				<div class="col-md-3 form-group">
-					{{Form::label('Start Date')}}
-					{{Form::text('start_date',(isset($course))?$course->start_date:'',["class"=>"form-control datepicker","required"=>"true","date"=>'true'])}}
+					{{Form::label('Start Date')}} <span class="error"> *</span>
+					{{Form::text('start_date',(isset($course))?date('d-m-Y',strtotime($course->start_date)):'',["class"=>"form-control datepicker","required"=>"true","date_en"=>'true'])}}
 					<span class="error">{{$errors->first('start_date')}}</span>
 				</div>
 				<div class="col-md-3 form-group">
-					{{Form::label('End Date')}}
-					{{Form::text('end_date',(isset($course))?$course->end_date:'',["class"=>"form-control datepicker","required"=>"true","date"=>'true'])}}
+					{{Form::label('End Date')}} <span class="error"> *</span>
+					{{Form::text('end_date',(isset($course))?date('d-m-Y',strtotime($course->end_date)):'',["class"=>"form-control datepicker","required"=>"true","date_en"=>'true'])}}
 					<span class="error">{{$errors->first('end_date')}}</span>
 				</div>
 			</div>
@@ -56,17 +56,17 @@
 			<div class="row">	
 				
 				<div class="col-md-3 form-group">
-					{{Form::label('License Type')}}
+					{{Form::label('License Type')}} <span class="error"> *</span>
 					{{Form::select('license_id',$licenses,(isset($course))?$course->license_id:'',["class"=>"form-control","required"=>"true"])}}
 					<span class="error">{{$errors->first('license_id')}}</span>
 				</div>
 				<div class="col-md-3 form-group">
-					{{Form::label('Fee')}}
+					{{Form::label('Fee')}} <span class="error"> *</span>
 					{{Form::text('fee',(isset($course))?$course->fees:'',["class"=>"form-control","required"=>"true"])}}
 					<span class="error">{{$errors->first('fee')}}</span>
 				</div>
 				<div class="col-md-6 form-group">
-					{{Form::label('Venue')}}
+					{{Form::label('Venue')}} <span class="error"> *</span>
 					{{Form::text('venue',(isset($course))?$course->venue:'',["class"=>"form-control","required"=>"true"])}}
 					<span class="error">{{$errors->first('venue')}}</span>
 				</div>
@@ -76,7 +76,7 @@
 				
 				
 				<div class="col-md-12 form-group">
-					{{Form::label('Description')}}
+					{{Form::label('Description')}} <span class="error"> *</span>
 					{{Form::textarea('description',(isset($course))?$course->description:'',["class"=>"form-control","required"=>"true"])}}
 					<span class="error">{{$errors->first('description')}}</span>
 				</div>

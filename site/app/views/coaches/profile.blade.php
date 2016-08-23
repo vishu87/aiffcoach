@@ -11,7 +11,6 @@
         	<i class="fa fa-ban-circle"></i><strong>Failure!</strong> {{Session::get('failure')}}
        	</div>
 @endif
-
 <ul class="nav nav-tabs">
 	<li class="{{($profileType==1)?'active':''}}">
 		<a href="{{url('coach/personalInformation')}}" >
@@ -34,7 +33,6 @@
 		Add Documents</a>
 	</li>
 </ul>
-
 @if($profileType==1)
 <div class="portlet box blue">
     <div class="portlet-title"><div class="caption">Personal Details</div>
@@ -42,7 +40,7 @@
     <div class="portlet-body form">
       	<div class="form-body">
             <div class="">
-                {{ Form::open(array('url' =>'coach/updatePersonalInformation',"method"=>"POST","files"=>'true','class'=>'form check_form')) }}			        
+                {{ Form::open(array('url' =>'coach/updatePersonalInformation',"method"=>"POST","files"=>'true','class'=>'form check_form')) }}
 	            <div class="row">
 			        <div class="col-md-6 form-group">
 			        	<label>Name</label>
@@ -52,11 +50,10 @@
 			        	<label>Email</label>
 			        	<span class="form-control">{{$CoachParameter->email}} </span>
 			        </div>
-			        
 		        </div>
 		        <div class="row">
 		        	<div class="col-md-6 form-group"><label class="form-label" style="width:100%"> DOB</label>
-			           {{Form::text('dob',date('d-m-Y',strtotime($coach->dob)),["class"=>"form-control datepicker","id"=>"datepicker1","required"=>"true","date"=>"true"])}}
+			           {{Form::text('dob',date('d-m-Y',strtotime($coach->dob)),["class"=>"form-control datepicker","id"=>"datepicker1","required"=>"true","date_en"=>"true"])}}
 			           <span class="dob-error"></span>
 			        </div>
 		        	<div class="col-md-6">
@@ -77,9 +74,7 @@
 	            		<label class="form-label">Current Photograph</label><br>
 	            		<img src="{{url($coach->photo)}}" style="width:100%">
 	            	</div>	
-
 	            </div>
-	            
             </div>
         </div>
         <div class="form-actions">
@@ -88,7 +83,6 @@
 	</div>
 </div>
 @endif
-
 @if($profileType==2)
 <div class="portlet box blue">
     <div class="portlet-title"><div class="caption">Contact Details</div>
@@ -98,7 +92,6 @@
             <div class="">
                 {{ Form::open(array('url' =>'coach/updateContact',"method"=>"POST","files"=>'true','class'=>'form check_form')) }}			        
 	            <div class="row">
-		        	
 			        <div class="col-md-6 form-group">
 			        	<label>Mobile<span class="error">*</span></label>
 			        	{{Form::text('mobile',$coach->mobile,['required'=>'true','class'=>'form-control','placeholder'=>'Mobile'])}}
@@ -127,10 +120,7 @@
 	              		<label>Address Line 2</label>
 	              		{{Form::text('address2',$coach->address2,['class'=>'form-control','placeholder'=>'Address line 2'])}}
 	             	</div>
-	    
-	              	
 	            </div>  
-
 	            <div class="row">
 	            	<div class="col-md-4 form-group">
 	            		<label>City<span class="error">*</span></label>
@@ -153,7 +143,6 @@
 	</div>
 </div>
 @endif	
-	
 @if($profileType==3)	
 <div class="portlet box blue ">
     <div class="portlet-title">
@@ -164,21 +153,20 @@
     <div class="portlet-body form">
       	<div class="form-body">
             <div class="">
-
                 {{ Form::open(array('url' =>'coach/updatePassport',"method"=>"POST","files"=>'true','class'=>'form check_form check_form_2')) }}
 	            <div class="row">
 					<div class="col-md-6 form-group">
-						<label>Passport No</label>
+						<label>Passport No</label><span class="error"> *</span>
 						{{Form::text('passport_no',$coach->passport_no,["class"=>"form-control",'required'=>'true'])}}
 					</div>
 				    <div class="col-md-6 form-group">
-				    	<label>Passport Expiry</label>
+				    	<label>Passport Expiry</label> <span class="error"> *</span>
 				    	{{Form::text('passport_expiry',$coach->passport_expiry,["class"=>"form-control datepicker",'placeholder'=>'Passport Expiry','required'=>'true', 'date'=>'true'])}}
 				    </div>
 				</div>
 				<div class="row">
 				    <div class="col-md-6 form-group"> 
-				        <label class="form-label">Attach Passport Copy</label>       
+				        <label class="form-label">Attach Passport Copy</label>  <span class="error"> *</span>      
 				        {{Form::file('passport_proof',['class'=>'form-control','placeholder'=>'Attach Passport Copy','pdf'=>'true'])}}
 				        <span class="error">{{$errors->first('passport_proof')}}</span>
 				    </div>
@@ -192,7 +180,6 @@
 	</div>
 </div>
 @endif
-
 @if($profileType==4)	
 <div class="portlet box blue ">
     <div class="portlet-title">
@@ -203,7 +190,6 @@
     <div class="portlet-body form">
       	<div class="form-body">
             <div class="">
-
                 {{ Form::open(array('url' =>'coach/measurements/update',"method"=>"POST","files"=>'true','class'=>'form check_form check_form_2')) }}
 	            <div class="row">
 					<div class="col-md-4 form-group">
@@ -211,7 +197,6 @@
 						<div class="input-group">
 							{{Form::text('height',(!empty($measurement))?$measurement->height:'',["class"=>"form-control",'required'=>'true'])}}
 							<span class="input-group-addon" id="basic-addon1">(ft)</span>
-
 							<span class="error">{{$errors->first('height')}}</span>
 						</div>	
 					</div>
@@ -221,14 +206,12 @@
 							{{Form::text('weight',(!empty($measurement))?$measurement->weight:'',["class"=>"form-control",'required'=>'true'])}}<span class="input-group-addon" id="basic-addon1">(kg)</span>
 							<span class="error">{{$errors->first('weight')}}</span>
 						</div>
-						
 					</div>
 					<div class="col-md-4 form-group">
 						<label>Shoes</label>
 						{{Form::text('shoes',(!empty($measurement))?$measurement->shoes:'',["class"=>"form-control",'required'=>'true'])}}
 						<span class="error">{{$errors->first('shoes')}}</span>
 					</div>
-
 				</div>
 				<div class="row">
 					<div class="col-md-4 form-group">
@@ -246,9 +229,7 @@
 						{{Form::text('tracksuit',(!empty($measurement))?$measurement->tracksuit:'',["class"=>"form-control",'required'=>'true'])}}
 						<span class="error">{{$errors->first('tracksuit')}}</span>
 					</div>
-
 				</div>
-
 				<div class="row">
 					<div class="col-md-4 form-group">
 						<label>Jersey</label>
@@ -265,10 +246,7 @@
 						{{Form::text('shirts',(!empty($measurement))?$measurement->shirts:'',["class"=>"form-control",'required'=>'true'])}}
 						<span class="error">{{$errors->first('shirts')}}</span>
 					</div>
-
 				</div>
-				
-				
             </div>
         </div>
         <div class="form-actions">
@@ -278,9 +256,7 @@
 	</div>
 </div>
 @endif
-
 @if($profileType==5)	
-
 <div class="portlet box blue ">
     <div class="portlet-title">
     	<div class="caption">
@@ -290,7 +266,6 @@
     <div class="portlet-body form">
       	<div class="form-body">
             <div class="">
-
                 {{ Form::open(array('url' =>'coach/addDocument/add',"method"=>"POST","files"=>'true','class'=>'form check_form check_form_2')) }}
 	            <div class="row" >
 					<div class="col-md-4 form-group" id="document-div">
@@ -306,7 +281,6 @@
 				    	<label>Remarks</label>
 				    	{{Form::text('remarks','',["class"=>"form-control",'required'=>'true'])}}
 				    </div>
-				    
 				</div>
             </div>
         </div>
@@ -316,7 +290,6 @@
         {{Form::close()}}
 	</div>
 </div>
-
 <div style="overflow-y:auto;margin-top:40px;">
 	<table class="table table-bordered table-hover tablesorter">
 		<thead>
@@ -325,8 +298,6 @@
 				<th>Document Name</th>
 				<th>Remarks</th>
 				<th>#</th>
-				
-				
 			</tr></thead>
 			<tbody id="documents">
 				<?php $count = 1; ?>
