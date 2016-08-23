@@ -2,11 +2,10 @@
 	<div clas="row">
 		<div class="col-md-8 col-md-offset-2">
 			<div class="row form-wizard">
-        @include('register_status')
-			  
+        		@include('register_status')
 			</div>
 			<div class="portlet box blue">
-			    <div class="portlet-title"><div class="caption">Register Now</div></div>
+			    <div class="portlet-title"><div class="caption">Step 1</div></div>
 			        <div class="portlet-body form">
 				        {{ Form::open(array('url' =>'registerStep1',"method"=>"POST","files"=>'true','class'=>'form check_form dob-validate')) }}
 				        {{Form::text('id',$id,["class"=>'hidden'])}}

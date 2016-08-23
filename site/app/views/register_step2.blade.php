@@ -6,7 +6,7 @@
       </div>
       <div class="portlet box blue">
         <div class="portlet-title">
-          <div class="caption">Registration & Contact Details</div>
+          <div class="caption">Step 2</div>
         </div>
         <div class="portlet-body form">
           <div class="form-body">

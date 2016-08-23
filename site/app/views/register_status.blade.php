@@ -12,11 +12,10 @@
 <div class="col-md-12">
   	<ul class="nav  nav-justified steps">
       <li <?php if($flag==1):echo 'class="active"'; endif;?>>
-        
         <span class="number">
         1 </span>
         <span class="desc">
-         Registration Details</span>
+         Personal Details</span>
         
       </li>
       <li <?php if($flag==2):echo 'class="active"'; endif;?>>
