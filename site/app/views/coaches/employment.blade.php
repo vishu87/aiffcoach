@@ -6,18 +6,22 @@
 		<a href="{{url('/coach/addNewEmployment')}}" class="btn blue pull-right">Add Employment</a>
 	</div>
 </div>
+
 @if(Session::has('success'))
-<div class="alert alert-success alert-dismissable">
-	<button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>
-	{{Session::get('success')}}
-</div>
+	<div class="alert alert-success alert-dismissable">
+		<button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>
+		{{Session::get('success')}}
+	</div>
 @endif
+
 @if(Session::has('failure'))
-    	<div class="alert alert-danger">
-        	<button type="button" class="close" data-dismiss="alert">×</button>
-        	<i class="fa fa-ban-circle"></i><strong>Failure!</strong> {{Session::get('failure')}}
-       	</div>
+	<div class="alert alert-danger">
+    	<button type="button" class="close" data-dismiss="alert">×</button>
+    	<i class="fa fa-ban-circle"></i><strong>Failure!</strong> {{Session::get('failure')}}
+   	</div>
 @endif
+
+@if(sizeof($employment) > 0)
 <div class="row">
 	<div class="col-md-12">
 		<table class="table table-bordered table-hover tablesorter">
@@ -38,3 +42,8 @@
 		</table>
 	</div>
 </div>
+@else
+	<div class="alert alert-danger">
+    	There are no entries in this section
+   	</div>
+@endif

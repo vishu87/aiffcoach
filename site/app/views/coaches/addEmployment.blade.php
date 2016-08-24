@@ -44,7 +44,7 @@
 				    <div class="col-md-6">
 				      	<div class="form-group">
 				        	<label>Date Since Employed</label><span class="error"> *</span>
-				            {{Form::text('date_since_emp',(isset($employment))?date('d-m-Y',strtotime($employment->start_date)):'',['required'=>'true','class'=>"form-control datepicker ","date_en"=>'true'])}}
+				            {{Form::text('date_since_emp',(isset($employment))?date('d-m-Y',strtotime($employment->start_date)):'',['required'=>'true','placeholder'=>"Date Since Employed",'class'=>"form-control datepicker ","date_en"=>'true'])}}
 				            <span class="error">{{$errors->first('date_since_emp')}}</span>
 				      	</div>
 				    </div>
@@ -53,7 +53,7 @@
 					<div class="col-md-6">
 				      	<div class="form-group ">
 				        	<label>End Date</label><span class="error">*</span>
-				            {{Form::text('end_date',(isset($employment))?date('d-m-Y',strtotime($employment->end_date)):'',['required'=>'true','class'=>"form-control datepicker ","date_en"=>'true'])}}
+				            {{Form::text('end_date',(isset($employment))?date('d-m-Y',strtotime($employment->end_date)):'',['required'=>'true','placeholder'=>"Date Since Employed",'class'=>"form-control datepicker ","date_en"=>'true'])}}
 				            <span class="error">{{$errors->first('date_since_emp')}}</span>
 				      	</div>
 				    </div>

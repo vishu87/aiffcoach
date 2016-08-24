@@ -23,11 +23,6 @@
    	</div>
 @endif
 
-<div class="portlet box blue">
-	<div class="portlet-title"><div class="caption">@if(!isset($activity))Add Activity @else Edit Activity Details @endif</div></div>
-
-<div class="portlet-body form">
-
 
 @if(isset($activity))
 {{Form::open(array("url"=>'coach/activity/update/'.$activity->id,"method"=>'PUT',"class"=>"check_form"))}}
@@ -38,46 +33,41 @@
 		<!--- my form start -->
 			<div class="row">
 				<div class="col-md-6 form-group">
-					{{Form::label('Event')}}<span class="error">*</span>
+					{{Form::label('Event Name')}}<span class="error">*</span>
 					{{Form::text('event',(isset($activity))?$activity->event:'',["class"=>"form-control ","required"=>"true"])}}
 					<span class="error">{{$errors->first('event')}}</span>
 				</div>
-				<div class="col-md-6 form-group">
-					{{Form::label('From')}}<span class="error">*</span>
+				<div class="col-md-3 form-group">
+					{{Form::label('Start Date')}}<span class="error">*</span>
 					{{Form::text('from_date',(isset($activity))?date('d-m-Y',strtotime($activity->from_date)):'',["class"=>"form-control datepicker","required"=>"true","date_en"=>'true'])}}
 					<span class="error">{{$errors->first('from_date')}}</span>
 				</div>
-			</div>
-			<div class="row">	
-				<div class="col-md-6 form-group">
-					{{Form::label('To')}}<span class="error">*</span>
+				
+				<div class="col-md-3 form-group">
+					{{Form::label('End Date')}}
 					{{Form::text('to_date',(isset($activity))?date('d-m-Y',strtotime($activity->to_date)):'',["class"=>"form-control datepicker","required"=>"true","date_en"=>'true'])}}
 					<span class="error">{{$errors->first('to_date')}}</span>
 				</div>
-				<div class="col-md-6 form-group">
-					{{Form::label('Place')}}<span class="error">*</span>
+				<div class="col-md-6 form-group clear">
+					{{Form::label('Place/City')}}<span class="error">*</span>
 					{{Form::text('place',(isset($activity))?$activity->place:'',["class"=>"form-control","required"=>"true"])}}
 					<span class="error">{{$errors->first('place')}}</span>
-				</div>
-			</div>
-			<div class="row">	
-				<div class="col-md-6 form-group">
-					{{Form::label('No of Participants')}}<span class="error">*</span>
-					{{Form::text('participants',(isset($activity))?$activity->participants:'',["class"=>"form-control","required"=>"true"])}}
-					<span class="error">{{$errors->first('participants')}}</span>
 				</div>
 				<div class="col-md-6 form-group">
 					{{Form::label('Position / Role')}}<span class="error">*</span>
 					{{Form::text('position_role',(isset($activity))?$activity->position_role:'',["class"=>"form-control","required"=>"true"])}}
 					<span class="error">{{$errors->first('position_role')}}</span>
 				</div>
+				<div class="col-md-3 form-group">
+					<label>No of Participants</label>
+					{{Form::text('participants',(isset($activity))?$activity->participants:'',["class"=>"form-control","required"=>"true"])}}
+					<span class="error">{{$errors->first('participants')}}</span>
+				</div>
 			</div>
 		<!---my form end-->
-	</div>
-	<div class="form-actions" style="margin-top:40px;">
+	
+	<div class="form-actions" >
 		<button type="submit" class="btn blue">{{(isset($activity))?'Update':'Add'}}</button>
 	</div>
+	</div>
 {{Form::close()}}
-
-</div>
-</div>
