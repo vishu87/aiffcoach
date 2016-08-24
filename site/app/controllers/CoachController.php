@@ -119,12 +119,10 @@ class CoachController extends BaseController {
         $cre = [
             "document"=>Input::get('document'),
             "file"=>Input::file('file'),
-            "remarks"=>Input::get('remarks'),
         ];
         $rules = [
             "document"=>'required',
             "file"=>'required',
-            "remarks"=>'required',
         ];
         $validator = Validator::make($cre,$rules);
         if($validator->passes()){

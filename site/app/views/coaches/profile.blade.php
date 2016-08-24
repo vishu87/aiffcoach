@@ -97,7 +97,7 @@
 	        <div class="row">
 	        	<div class="col-md-6 form-group">
 		        	<label>Alternate Email</label>
-		        	{{Form::text('aemail',$coach->alternate_email,["class"=>"form-control","placeholder"=>"Alternate Email Id"])}}
+		        	{{Form::email('aemail',$coach->alternate_email,["class"=>"form-control","placeholder"=>"Alternate Email Id"])}}
 		        </div>
             </div>
             <h3>Address</h3>
@@ -249,22 +249,22 @@
                 {{ Form::open(array('url' =>'coach/addDocument/add',"method"=>"POST","files"=>'true','class'=>'form check_form check_form_2')) }}
 	            <div class="row" >
 					<div class="col-md-4 form-group" id="document-div">
-						<label>Select Document</label>
+						<label>Select Document</label><span class="error">*</span>
 						{{Form::select('document',$document_types,'',["class"=>"form-control",'required'=>'true',"id"=>"document_id"])}}
 					</div>
 					<div class="col-md-4 form-group"> 
-				        <label class="form-label">Attach Document</label>       
+				        <label class="form-label">Attach Document</label> <span class="error">*</span>      
 				        {{Form::file('file',['class'=>'form-control','placeholder'=>'Attach Passport Copy','pdf'=>'true','required'=>'true'])}}
 				        <span class="error">{{$errors->first('passport_proof')}}</span>
 				    </div>
 				    <div class="col-md-4 form-group"> 
-				        <label class="form-label">Expiry Date</label>       
+				        <label class="form-label">Expiry Date</label>   <span class="error">*</span>    
 				        {{Form::text('expiry','',['class'=>'form-control datepicker','date_en'=>'true'])}}
 				        <span class="error">{{$errors->first('passport_proof')}}</span>
 				    </div>
 				    <div class="col-md-4 form-group">
 				    	<label>Remarks</label>
-				    	{{Form::text('remarks','',["class"=>"form-control",'required'=>'true'])}}
+				    	{{Form::text('remarks','',["class"=>"form-control"])}}
 				    </div>
 				</div>
             </div>
@@ -281,7 +281,7 @@
 			<tr>
 				<th style="width:50px">SN</th>
 				<th>Document Name</th>
-				<th>Remarks</th>
+				<th>Expiry Date</th>
 				<th>#</th>
 			</tr></thead>
 			<tbody id="documents">
@@ -290,7 +290,7 @@
 					<tr id="document_{{$data->id}}">
 						<td>{{$count}}</td>
 						<td>{{($data->document_id==0)?$data->name:$document_types[$data->document_id]}}</td>
-						<td>{{$data->remarks}}</td>
+						<td>{{date('d-m-Y',strtotime($data->expiry_date))}}</td>
 						<td>
 							<a type="button" class="btn yellow btn-sm "  href="{{url($data->file)}}" target="_blank"> <i class="fa fa-cube"></i> View</a>
 
