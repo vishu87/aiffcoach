@@ -63,7 +63,7 @@
 		        		{{Form::file('present_emp_copy',["class"=>"form-control","id"=>"contract","pdf"=>'true'])}}
 			            <span class="error">{{$errors->first('present_emp_copy')}}</span>
 			            <div class="col-md-4 form-group">
-        					<a href="{{url($employment->contract)}}" target="_blank">view current</a>
+        					@if($employment->contract!='')<a href="{{url($employment->contract)}}" target="_blank">view current</a>@endif
         				</div>
         			</div>
 		        @else

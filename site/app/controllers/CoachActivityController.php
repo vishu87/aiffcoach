@@ -24,14 +24,12 @@ class CoachActivityController extends BaseController {
         $cre = [
             'event'=>Input::get('event'),
             'start_date'=>Input::get('from_date'),
-            'end_date'=>Input::get('to_date'),
             'place'=>Input::get('place'),
             'position_role'=>Input::get('position_role')
             ];
         $rules = [
             'event'=>'required',
             'start_date'=>'required|date',
-            'end_date'=>'required|date|after:start_date',
             'place'=>'required',
             'position_role'=>'required'
             ];
@@ -62,14 +60,12 @@ class CoachActivityController extends BaseController {
         $cre = [
             'event'=>Input::get('event'),
             'start_date'=>Input::get('from_date'),
-            'end_date'=>Input::get('to_date'),
             'place'=>Input::get('place'),
             'position_role'=>Input::get('position_role')
             ];
         $rules = [
             'event'=>'required',
             'start_date'=>'required|date',
-            'end_date'=>'required|date|after:start_date',
             'place'=>'required',
             'position_role'=>'required'
             ];

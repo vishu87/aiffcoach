@@ -45,7 +45,7 @@
 				
 				<div class="col-md-3 form-group">
 					{{Form::label('End Date')}}
-					{{Form::text('to_date',(isset($activity))?date('d-m-Y',strtotime($activity->to_date)):'',["class"=>"form-control datepicker","required"=>"true","date_en"=>'true'])}}
+					{{Form::text('to_date',(isset($activity))?date('d-m-Y',strtotime($activity->to_date)):'',["class"=>"form-control datepicker","date_en"=>'true'])}}
 					<span class="error">{{$errors->first('end_date')}}</span>
 				</div>
 				<div class="col-md-6 form-group clear">
