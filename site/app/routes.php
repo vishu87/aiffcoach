@@ -53,7 +53,7 @@ Route::group(['prefix'=>'coach','before'=>['auth','coach']], function () {
 	Route::post('addEmployment','CoachController@addEmployment');
 	Route::get('addNewEmployment','CoachController@addNewEmployment');
 	Route::post('updateEmployment/{id}','CoachController@updateEmployment');
-	Route::get('/deleteEmployment/{id}','CoachController@deleteEmployment');
+	Route::delete('/deleteEmployment/{id}','CoachController@deleteEmployment');
 	Route::group(["prefix"=>'Payment',"before"=>['auth']],function(){
 		Route::get('/{application_id}','PaymentController@Payment');
 		Route::post('option/{application_id}','PaymentController@paymentOption');

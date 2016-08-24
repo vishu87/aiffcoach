@@ -3,7 +3,6 @@ class RegistrationController extends BaseController {
 	protected $layout = 'layout_reg';
 
 	public function registration_step1($id = 0){
-
         $state = State::states();
         if($id == 0) {
         	$data = [];
@@ -28,7 +27,6 @@ class RegistrationController extends BaseController {
     		"birth_place"=>Input::get("birth_place"),
             "dob"=>Input::get("dob")
     	];
-
     	$rules = [
     		"first_name"=>'required',
     		"last_name"=>'required',
@@ -37,7 +35,7 @@ class RegistrationController extends BaseController {
     		"birth_place"=>'required',
             "dob"=>"required"
     	];
-        if(Input::get('id')==0){
+        if(Input::get('id') == 0){
             $rules = $rules + ["dob_proof"=>'required',"photo"=>'required'];
             $cre = $cre + ["dob_proof"=>Input::file('dob_proof'),"photo"=>Input::file('photo')] ;
         }
@@ -46,6 +44,14 @@ class RegistrationController extends BaseController {
     		$data = array();
     		$destinationPath = 'coaches-doc/';
 
+            if(Input::get('id') != 0){
+               $data_old = DB::table('reg_data')->where('id',Input::get('id'))->first();
+               $data_old = $data_old->data1;
+               if($data_old != ''){
+                $data_old = unserialize($data_old);
+               }
+            }
+
             if(Input::hasFile('photo')){
             
                 $extension = Input::file('photo')->getClientOriginalExtension();
@@ -53,6 +59,12 @@ class RegistrationController extends BaseController {
                 
                 Input::file('photo')->move($destinationPath,$doc);
                 $data["photo"] = $destinationPath.$doc;
+            } else {
+                if(isset($data_old)){
+                    if(isset($data_old["photo"])){
+                        $data["photo"] = $data_old["photo"];
+                    }
+                }
             }
             if(Input::hasFile('dob_proof')){
             
@@ -61,6 +73,12 @@ class RegistrationController extends BaseController {
                 
                 Input::file('dob_proof')->move($destinationPath,$doc);
                 $data["dob_proof"] = $destinationPath.$doc;
+            } else {
+                if(isset($data_old)){
+                    if(isset($data_old["dob_proof"])){
+                        $data["dob_proof"] = $data_old["dob_proof"];
+                    }
+                }
             }
 
             $data["first_name"] = Input::get('first_name');
@@ -78,10 +96,8 @@ class RegistrationController extends BaseController {
     			DB::table('reg_data')->where('id',Input::get('id'))->update(array('data1' => $data));
     			return Redirect::to('registerStep2/'.Input::get('id'));
     		}
-    		
     	}
         return Redirect::back()->withErrors($validator)->withInput()->with('failure','All Fields Are Not Field!');
-
     }
 
     public function registration_step2($id){
@@ -108,9 +124,7 @@ class RegistrationController extends BaseController {
                 "pincode"=>Input::get('pincode'),
                 "state"=>Input::get('state'),
                 "mobile"=>Input::get('mobile'),
-                
                 ];
-
         $rules= [
                 "state_id"=>'required',
                 "address1"=>'required',
@@ -118,7 +132,6 @@ class RegistrationController extends BaseController {
                 "pincode"=>'required',
                 "state"=>'required',
                 "mobile"=>'required',
-                
                 ];        
         $validator = Validator::make($cre,$rules);
         if($validator->passes()){
@@ -137,8 +150,7 @@ class RegistrationController extends BaseController {
                 return Redirect::to('registerStep3/'.Input::get('id'));
             }
         }  
-        return Redirect::back()->withErrors($validator)->withInput()->with('failure','All Fields Are Not Field!');
-    	    
+        return Redirect::back()->withErrors($validator)->withInput()->with('failure','All Fields Are Not Field!'); 
     }
 
     public function registration_step3($id){
@@ -148,8 +160,6 @@ class RegistrationController extends BaseController {
         }
         $official_types = [""=>"Select"] + User::OfficialTypes();
         $this->layout->main = View::make('register_step3',["id"=>$id,'flag'=>3, 'official_types' => $official_types]);
-
-
     }
 
     public function post_registration_step3(){
@@ -161,7 +171,6 @@ class RegistrationController extends BaseController {
         if($validator->passes()){
             $data = array();
             $destinationPath = 'coaches-doc/';
-
             if(Input::hasFile('passport_proof')){
                 $extension = Input::file('passport_proof')->getClientOriginalExtension();
                 $doc = "PassportProof_".str_replace(' ','-',Input::file('passport_proof')->getClientOriginalName());
@@ -169,12 +178,9 @@ class RegistrationController extends BaseController {
                 Input::file('passport_proof')->move($destinationPath,$doc);
                 $data["passport_proof"] = $destinationPath.$doc;
             }
-            
             $data["passport_expiry"] = Input::get('passport_expiry');
             $data["passport"] = Input::get('passport');
-
             $data["official_types"] = Input::get('official_types');
-
             $data = serialize($data);
             if(Input::get('id') == 0){
                 $insert_id = DB::table('reg_data')->insertGetId(array('data3' => $data));
@@ -182,17 +188,13 @@ class RegistrationController extends BaseController {
             else{
                 DB::table('reg_data')->where('id',Input::get('id'))->update(array('data3' => $data));
             }
-
             $data_row = DB::table('reg_data')->where('id',$id)->first();
             $data1 = $data_row->data1;
             $data1 = unserialize($data1);
-
             $data2 = $data_row->data2;
             $data2 = unserialize($data2); 
-
             $data3 = $data_row->data3;
             $data3 = unserialize($data3);
-
             $coach = new Coach;
             $coach->first_name = $data1['first_name'];
             $coach->middle_name = $data1['middle_name'];
@@ -203,10 +205,8 @@ class RegistrationController extends BaseController {
             $coach->state_id = $data2['state_id'];
             $coach->gender = $data1['gender'];
             $coach->save();
-
             $coach->registration_id = date("YM").$coach->id;
             $coach->save();
-
             $coach_parameter = new CoachParameter;
             $coach_parameter->coach_id = $coach->id;
             $coach_parameter->birth_place = $data1['birth_place'];
@@ -220,7 +220,6 @@ class RegistrationController extends BaseController {
             $coach_parameter->mobile = $data2['mobile'];
             $coach_parameter->landline = $data2['landline'];
             $coach_parameter->save();
-
             $password = str_random(8);
             $hash = Hash::make(str_random(6));
             $user = new User;
@@ -233,7 +232,6 @@ class RegistrationController extends BaseController {
             $user->password_check = $password;
             $user->official_types = $data3["official_types"];
             $user->save();
-
             if($data3['passport'] != ''){
                 $document = new CoachDocument;
                 $document->coach_id = $coach->id;
@@ -243,7 +241,6 @@ class RegistrationController extends BaseController {
                 $document->number = $data3['passport'];
                 $document->expiry_date = $data3["passport_expiry"];
             }
-
             // $coach_parameter->passport_no = $data3['passport'];
             // $coach_parameter->passport_expiry = $data3['passport_expiry'];
             // $coach_parameter->passport_copy = $data3["passport_proof"];
@@ -259,9 +256,7 @@ class RegistrationController extends BaseController {
             // $mail->Subject = "AIFF - CMS";
             // $mail->Body = View::make('mail',["type" => 1,'hash'=>$hash,'user_name'=>$username,'name'=>$user->username,"username"=>$user->username, "password"=>$password]);
             // $mail->send();
-
             $delete_temp_row = DB::table('reg_data')->where('id',$id)->delete();
-            
             return Redirect::to('/')->with('success','Registration Completed Successfully An Email is Sent to Your Registered Mail Id With Login Details!');
         } else {
             return Redirect::back()->withErrors($validator)->withInput()->with('failure','All Fields Are Not Field!');

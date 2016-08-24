@@ -158,8 +158,8 @@ $(document).on("click", ".approve-coach", function() {
 });
 $(document).on("change", "#document_id", function() {
     var btn = $(this);
-    if(btn.val()==6){
-    	var htmlelement = '<div class="col-md-4 form-group" id="added-div"><label>Document Name</label><input type="text" name="name" class="form-control" required="true"></div>';
+    if(btn.val()==0){
+    	var htmlelement = '<div class="col-md-4 form-group" id="added-div"><label>Document Name</label><input type="text" name="doc_name" class="form-control" required="true"></div>';
     	$('#document-div').after(htmlelement);
     	
     }

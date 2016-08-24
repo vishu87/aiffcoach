@@ -48,7 +48,7 @@ class CoachController extends BaseController {
         $cre = ["dob"=>Input::get('dob'),"gender"=>Input::get("gender")];
         $rules = ["dob"=>'required',"gender"=>'required'];
         $validator = Validator::make($cre,$rules);
-        if($coach->status!=0 && $validator->passes()){
+        if($validator->passes()){
             $coach = Coach::find($id);
             $coach->dob = date('Y-m-d',strtotime(Input::get('dob')));
             $coach->gender = Input::get('gender');
@@ -84,60 +84,32 @@ class CoachController extends BaseController {
     public function updateMeasurements(){
         $id = Auth::User()->coach_id;
         $coach = Coach::find($id);
-        $cre = [
-                'height'=>Input::get('height'),
-                'weight'=>Input::get('weight'),
-                'shoes'=>Input::get('shoes'),
-                'boots'=>Input::get('boots'),
-                'sliper'=>Input::get('sliper'),
-                'tracksuit'=>Input::get('tracksuit'),
-                'jersey'=>Input::get('jersey'),
-                'shorts'=>Input::get('shorts'),
-                'shirts'=>Input::get('shirts'),
-                ];
-        $rules=[
-                'height'=>'required',
-                'weight'=>'required',
-                'shoes'=>'required',
-                'boots'=>'required',
-                'sliper'=>'required',
-                'tracksuit'=>'required',
-                'jersey'=>'required',
-                'shorts'=>'required',
-                'shirts'=>'required',
-                ];  
-        $validator = Validator::make($cre,$rules);
-        if($validator->passes()){
-            $check = Measurement::where('coach_id',$id)->count();
-            if($check<1){
-                $measurement = new Measurement;
-                $measurement->coach_id = $id;
-            }
-            else{
-                $measurement_id = Measurement::select('id')->where('coach_id',$id)->first();
-                $measurement = Measurement::find($measurement_id->id);
-            }
-            $measurement->height=Input::get('height');
-            $measurement->weight=Input::get('weight');
-            $measurement->shoes=Input::get('shoes');
-            $measurement->boots=Input::get('boots');
-            $measurement->sliper=Input::get('sliper');
-            $measurement->tracksuit=Input::get('tracksuit');
-            $measurement->jersey=Input::get('jersey');
-            $measurement->shorts=Input::get('shorts');
-            $measurement->shirts=Input::get('shirts');
-            $measurement->save();
-            return Redirect::back()->with('success','Measurement Parameters Updated Successfully');
+        $check = Measurement::where('coach_id',$id)->count();
+        if($check<1){
+            $measurement = new Measurement;
+            $measurement->coach_id = $id;
         }
         else{
-            return Redirect::back()->withErrors($validator)->withInput();
+            $measurement_id = Measurement::select('id')->where('coach_id',$id)->first();
+            $measurement = Measurement::find($measurement_id->id);
         }
+        $measurement->height=Input::get('height');
+        $measurement->weight=Input::get('weight');
+        $measurement->shoes=Input::get('shoes');
+        $measurement->boots=Input::get('boots');
+        $measurement->sliper=Input::get('sliper');
+        $measurement->tracksuit=Input::get('tracksuit');
+        $measurement->jersey=Input::get('jersey');
+        $measurement->shorts=Input::get('shorts');
+        $measurement->shirts=Input::get('shirts');
+        $measurement->save();
+        return Redirect::back()->with('success','Measurement Parameters Updated Successfully');
     }
     public function documents(){
         $id = Auth::User()->coach_id;
         $coach = Coach::find($id);
         $documents = CoachDocument::where('coach_id',$id)->get();
-        $document_types = CoachDocument::DocTypes();
+        $document_types = [''=>"select"]+CoachDocument::DocTypes();
         $this->layout->sidebar = View::make('coaches.sidebar',["sidebar"=>'profile','subsidebar'=>1]);
         $this->layout->main = View::make('coaches.profile',['documents'=>$documents,'document_types'=>$document_types,"profileType"=>5,'title'=>'Add Documents']);
     }
@@ -160,8 +132,8 @@ class CoachController extends BaseController {
             $document->coach_id = $id;
             $document->document_id = Input::get('document');
             $document->remarks = Input::get('remarks');
-            if(Input::has('name')){
-                $document->name = Input::get('name');
+            if(Input::has('doc_name')){
+                $document->name = Input::get('doc_name');
             }
             $destinationPath= 'coaches-doc/';
             if(Input::hasFile('file')){
@@ -422,21 +394,21 @@ class CoachController extends BaseController {
         $cre = [
             'present_emp'=>Input::get('present_emp'),
             'start_date'=>Input::get('date_since_emp'),
-            
+            'end_date'=>Input::get('end_date')
             ];
         $rules = [
             'present_emp'=>'required',
             'start_date'=>'required',
-            
-            ];    
+            'end_date'=>'required'
+            ];        
         $validator = Validator::make($cre,$rules);
         if($validator->passes()){
             $destinationPath = 'coaches-doc/';
             $employment = new EmploymentDetails;
             $employment->coach_id = Auth::User()->coach_id;
             $employment->employment = Input::get('present_emp');
-            $employment->start_date = Input::get('date_since_emp');
-            $employment->end_date = Input::get('end_date');
+            $employment->start_date = date('Y-m-d',strtotime(Input::get('date_since_emp')));
+            $employment->end_date = date('Y-m-d',strtotime(Input::get('end_date')));
             if(Input::hasFile('present_emp_copy')){
                 $extension = Input::file('present_emp_copy')->getClientOriginalExtension();
                 $doc = "presentemp_".Auth::id().'_'.str_replace(' ','-',Input::file('present_emp_copy')->getClientOriginalName());
@@ -459,20 +431,20 @@ class CoachController extends BaseController {
         $cre = [
             'present_emp'=>Input::get('present_emp'),
             'start_date'=>Input::get('date_since_emp'),
-            
+            'end_date'=>Input::get('end_date')
             ];
         $rules = [
             'present_emp'=>'required',
             'start_date'=>'required',
-            
+            'end_date'=>'required'
             ];    
         $validator = Validator::make($cre,$rules);
         if($validator->passes()){
             $destinationPath = 'coaches-doc/';
             $updateEmployment = EmploymentDetails::find($id);
             $updateEmployment->employment = Input::get('present_emp');
-            $updateEmployment->start_date = Input::get('date_since_emp');
-            $updateEmployment->end_date = Input::get('end_date');
+            $updateEmployment->start_date = date('Y-m-d',strtotime(Input::get('date_since_emp')));
+            $updateEmployment->end_date = date('Y-m-d',strtotime(Input::get('end_date')));
             if(Input::hasFile('present_emp_copy')){
                 $extension = Input::file('present_emp_copy')->getClientOriginalExtension();
                 $doc = "presentemp_".Auth::id().'_'.str_replace(' ','-',Input::file('present_emp_copy')->getClientOriginalName());

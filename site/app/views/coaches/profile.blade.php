@@ -122,7 +122,7 @@
               		{{Form::text('pincode',$coach->pincode,['class'=>'form-control','placeholder'=>'Pin Code', 'required'=>'true'])}}
               	</div>
             	<div class="col-md-4 form-group">
-	              	<label>State</label>
+	              	<label>State <span class="error">*</span></label>
 	              	{{Form::select('state',$state,$coach->address_state_id,['class'=>'form-control','required'=>"true"])}}
 	            </div>
             </div>  
@@ -177,7 +177,7 @@
 				<div class="col-md-4 form-group">
 					<label>Height</label>
 					<div class="input-group">
-						{{Form::text('height',(!empty($measurement))?$measurement->height:'',["class"=>"form-control",'required'=>'true'])}}
+						{{Form::text('height',(!empty($measurement))?$measurement->height:'',["class"=>"form-control"])}}
 						<span class="input-group-addon" id="basic-addon1">(cm)</span>
 						<span class="error">{{$errors->first('height')}}</span>
 					</div>	
@@ -185,47 +185,47 @@
 				<div class="col-md-4 form-group">
 					<label>Weight</label>
 					<div class="input-group">
-						{{Form::text('weight',(!empty($measurement))?$measurement->weight:'',["class"=>"form-control",'required'=>'true'])}}<span class="input-group-addon" id="basic-addon1">(Kg)</span>
+						{{Form::text('weight',(!empty($measurement))?$measurement->weight:'',["class"=>"form-control"])}}<span class="input-group-addon" id="basic-addon1">(Kg)</span>
 						<span class="error">{{$errors->first('weight')}}</span>
 					</div>
 				</div>
 				<div class="col-md-4 form-group">
 					<label>Shoes</label>
-					{{Form::text('shoes',(!empty($measurement))?$measurement->shoes:'',["class"=>"form-control",'required'=>'true'])}}
+					{{Form::text('shoes',(!empty($measurement))?$measurement->shoes:'',["class"=>"form-control"])}}
 					<span class="error">{{$errors->first('shoes')}}</span>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-md-4 form-group">
 					<label>Boots</label>
-					{{Form::text('boots',(!empty($measurement))?$measurement->boots:'',["class"=>"form-control",'required'=>'true'])}}
+					{{Form::text('boots',(!empty($measurement))?$measurement->boots:'',["class"=>"form-control"])}}
 					<span class="error">{{$errors->first('boots')}}</span>
 				</div>
 				<div class="col-md-4 form-group">
 					<label>Sliper</label>
-					{{Form::text('sliper',(!empty($measurement))?$measurement->sliper:'',["class"=>"form-control",'required'=>'true'])}}
+					{{Form::text('sliper',(!empty($measurement))?$measurement->sliper:'',["class"=>"form-control"])}}
 					<span class="error">{{$errors->first('sliper')}}</span>
 				</div>
 				<div class="col-md-4 form-group">
 					<label>Tracksuit</label>
-					{{Form::text('tracksuit',(!empty($measurement))?$measurement->tracksuit:'',["class"=>"form-control",'required'=>'true'])}}
+					{{Form::text('tracksuit',(!empty($measurement))?$measurement->tracksuit:'',["class"=>"form-control"])}}
 					<span class="error">{{$errors->first('tracksuit')}}</span>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-md-4 form-group">
 					<label>Jersey</label>
-					{{Form::text('jersey',(!empty($measurement))?$measurement->jersey:'',["class"=>"form-control",'required'=>'true'])}}
+					{{Form::text('jersey',(!empty($measurement))?$measurement->jersey:'',["class"=>"form-control"])}}
 					<span class="error">{{$errors->first('jersey')}}</span>
 				</div>
 				<div class="col-md-4 form-group">
 					<label>Shorts</label>
-					{{Form::text('shorts',(!empty($measurement))?$measurement->shorts:'',["class"=>"form-control",'required'=>'true'])}}
+					{{Form::text('shorts',(!empty($measurement))?$measurement->shorts:'',["class"=>"form-control"])}}
 					<span class="error">{{$errors->first('shorts')}}</span>
 				</div>
 				<div class="col-md-4 form-group">
 					<label>Shirts</label>
-					{{Form::text('shirts',(!empty($measurement))?$measurement->shirts:'',["class"=>"form-control",'required'=>'true'])}}
+					{{Form::text('shirts',(!empty($measurement))?$measurement->shirts:'',["class"=>"form-control"])}}
 					<span class="error">{{$errors->first('shirts')}}</span>
 				</div>
 			</div>
@@ -284,7 +284,7 @@
 				@foreach($documents as $data)
 					<tr id="document_{{$data->id}}">
 						<td>{{$count}}</td>
-						<td>{{($data->document_id==6)?$data->name:$document_types[$data->document_id]}}</td>
+						<td>{{($data->document_id==0)?$data->name:$document_types[$data->document_id]}}</td>
 						<td>{{$data->remarks}}</td>
 						<td>
 							<a type="button" class="btn yellow btn-sm "  href="{{url($data->file)}}" target="_blank"> <i class="fa fa-cube"></i> View</a>

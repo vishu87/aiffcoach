@@ -1,8 +1,8 @@
 <tr id="activity_{{$data->id}}">
 	<td>{{$count}}</td>
 	<td>{{$data->event}}</td>
-	<td>{{$data->from_date}}</td>
-	<td>{{$data->to_date}}</td>
+	<td>{{date('d-m-Y',strtotime($data->from_date))}}</td>
+	<td>{{date('d-m-Y',strtotime($data->to_date))}}</td>
 	<td>{{$data->participants}}</td>
 	<td>{{$data->position_role}}</td>
 

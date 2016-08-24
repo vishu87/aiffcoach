@@ -41,8 +41,8 @@ class CoachActivityController extends BaseController {
         if($validator->passes()){
             $activity = new CoachActivity;
             $activity->event = Input::get('event');
-            $activity->from_date = Input::get('from_date');
-            $activity->to_date = Input::get('to_date');
+            $activity->from_date = date('Y-m-d',strtotime(Input::get('from_date')));
+            $activity->to_date = date('Y-m-d',strtotime(Input::get('to_date')));
             $activity->place = Input::get('place');
             $activity->position_role = Input::get('position_role');
             $activity->participants = Input::get('participants');
@@ -55,8 +55,7 @@ class CoachActivityController extends BaseController {
 
     }
     public function edit($id){
-        $activity = CoachActivity::find($id);
-
+        $activity = CoachActivity::where('coach_id',Auth::User()->coach_id)->find($id);
         $this->layout->sidebar = View::make('coaches.sidebar',['sidebar'=>3]);
         $this->layout->main = View::make('coaches.activity.add',['activity'=>$activity]);
         
@@ -82,8 +81,8 @@ class CoachActivityController extends BaseController {
         if($validator->passes()){
             $activity = CoachActivity::find($id);
             $activity->event = Input::get('event');
-            $activity->from_date = Input::get('from_date');
-            $activity->to_date = Input::get('to_date');
+            $activity->from_date = date('Y-m-d',strtotime(Input::get('from_date')));
+            $activity->to_date = date('Y-m-d',strtotime(Input::get('to_date')));
             $activity->place = Input::get('place');
             $activity->position_role = Input::get('position_role');
             $activity->participants = Input::get('participants');
@@ -108,9 +107,4 @@ class CoachActivityController extends BaseController {
         }   
         return json_encode($data);
     }
-
-   
-
 }
-
-

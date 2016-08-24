@@ -4,7 +4,7 @@
 		<h3 class="page-title">Details of {{$course->name}}</h3>
 	</div>
 	<div class="col-md-6 ">
-		<a href="{{url('/coach/'.$link)}}" class="btn blue pull-right">Back</a>
+		<a href="{{url('/coach/'.$link)}}" class="btn btn-sm blue pull-right">Back</a>
 	</div>
 </div>
 
