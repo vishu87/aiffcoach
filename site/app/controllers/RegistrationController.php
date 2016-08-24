@@ -15,7 +15,7 @@ class RegistrationController extends BaseController {
         	$data = $data_row->data1;
         	$data = unserialize($data);
         }
-        $this->layout->main = View::make('register_step1',['state'=>$state, "data" => $data,"id" => $id,'flag'=>1]);
+        $this->layout->main = View::make('registration.register_step1',['state'=>$state, "data" => $data,"id" => $id,'flag'=>1]);
     }
 
     public function post_registration_step1(){
@@ -113,7 +113,7 @@ class RegistrationController extends BaseController {
         $data = $data_row->data2;
         $data = unserialize($data);
     
-        $this->layout->main = View::make('register_step2',['state'=>$state,'data'=>$data,"id"=>$id,'flag'=>2]);
+        $this->layout->main = View::make('registration.register_step2',['state'=>$state,'data'=>$data,"id"=>$id,'flag'=>2]);
     }
 
     public function post_registration_step2(){
@@ -159,7 +159,7 @@ class RegistrationController extends BaseController {
             return Redirect::to('/registerStep1');
         }
         $official_types = [""=>"Select"] + User::OfficialTypes();
-        $this->layout->main = View::make('register_step3',["id"=>$id,'flag'=>3, 'official_types' => $official_types]);
+        $this->layout->main = View::make('registration.register_step3',["id"=>$id,'flag'=>3, 'official_types' => $official_types]);
     }
 
     public function post_registration_step3(){

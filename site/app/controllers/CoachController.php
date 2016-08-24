@@ -159,11 +159,6 @@ class CoachController extends BaseController {
         return json_encode($data);
     }  
     
-    public function addNewEmployment(){
-        $this->layout->sidebar = View::make('coaches.sidebar',['sidebar'=>2]);
-        $this->layout->main = View::make('coaches.addEmployment');
-    }
-
     public function register(){
      	$cre = [
  			'photo'=>Input::file('photo'),
@@ -387,18 +382,20 @@ class CoachController extends BaseController {
     public function employmentDetails(){
         $employment = EmploymentDetails::where('coach_id',Auth::User()->coach_id)->get();
         $this->layout->sidebar = View::make('coaches.sidebar',["sidebar"=>'2']);
-        $this->layout->main = View::make('coaches.employment',['employment'=>$employment]);
+        $this->layout->main = View::make('coaches.employments.employment',['employment'=>$employment]);
+    }
+    public function addNewEmployment(){
+        $this->layout->sidebar = View::make('coaches.sidebar',['sidebar'=>2]);
+        $this->layout->main = View::make('coaches.employments.addEmployment');
     }
     public function addEmployment(){
         $cre = [
             'present_emp'=>Input::get('present_emp'),
             'start_date'=>Input::get('date_since_emp'),
-            'end_date'=>Input::get('end_date')
             ];
         $rules = [
             'present_emp'=>'required',
             'start_date'=>'required',
-            'end_date'=>'required'
             ];        
         $validator = Validator::make($cre,$rules);
         if($validator->passes()){
@@ -424,7 +421,7 @@ class CoachController extends BaseController {
     public function editEmployment($id){
         $employment = EmploymentDetails::find($id);
         $this->layout->sidebar = View::make('coaches.sidebar',["sidebar"=>"2"]);
-        $this->layout->main =  View::make('coaches.addEmployment',['employment'=>$employment]);
+        $this->layout->main =  View::make('coaches.employments.addEmployment',['employment'=>$employment]);
     }
     public function updateEmployment($id){
         $cre = [

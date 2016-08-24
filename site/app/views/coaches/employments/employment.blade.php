@@ -3,7 +3,7 @@
 		<h3 class="page-title">Employment Details</h3>
 	</div>
 	<div class="col-md-5">
-		<a href="{{url('/coach/addNewEmployment')}}" class="btn blue pull-right">Add Employment</a>
+		<a href="{{url('/coach/addNewEmployment')}}" class="btn green pull-right">Add Employment</a>
 	</div>
 </div>
 
@@ -31,12 +31,13 @@
 					<th>Employment</th>
 					<th>Start Date</th>
 					<th>End Date</th>
+					<th>Contract</th>
 					<th>#</th>
 				</tr>
 			</thead>
 			<?php $count = 1;?>
 			@foreach($employment as $data)
-				@include('coaches.view')
+				@include('coaches.employments.view')
 			<?php $count++;?>
 			@endforeach
 		</table>

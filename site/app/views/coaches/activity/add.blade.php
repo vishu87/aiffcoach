@@ -40,13 +40,13 @@
 				<div class="col-md-3 form-group">
 					{{Form::label('Start Date')}}<span class="error">*</span>
 					{{Form::text('from_date',(isset($activity))?date('d-m-Y',strtotime($activity->from_date)):'',["class"=>"form-control datepicker","required"=>"true","date_en"=>'true'])}}
-					<span class="error">{{$errors->first('from_date')}}</span>
+					<span class="error">{{$errors->first('start_date')}}</span>
 				</div>
 				
 				<div class="col-md-3 form-group">
 					{{Form::label('End Date')}}
 					{{Form::text('to_date',(isset($activity))?date('d-m-Y',strtotime($activity->to_date)):'',["class"=>"form-control datepicker","required"=>"true","date_en"=>'true'])}}
-					<span class="error">{{$errors->first('to_date')}}</span>
+					<span class="error">{{$errors->first('end_date')}}</span>
 				</div>
 				<div class="col-md-6 form-group clear">
 					{{Form::label('Place/City')}}<span class="error">*</span>
@@ -60,7 +60,7 @@
 				</div>
 				<div class="col-md-3 form-group">
 					<label>No of Participants</label>
-					{{Form::text('participants',(isset($activity))?$activity->participants:'',["class"=>"form-control","required"=>"true"])}}
+					{{Form::text('participants',(isset($activity))?$activity->participants:'',["class"=>"form-control"])}}
 					<span class="error">{{$errors->first('participants')}}</span>
 				</div>
 			</div>

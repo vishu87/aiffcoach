@@ -19,6 +19,7 @@
         	<i class="fa fa-ban-circle"></i><strong>Failure!</strong> {{Session::get('failure')}}
        	</div>
 @endif
+@if(sizeof($activities)>0)
 <div style="overflow-y:auto">
 	<table class="table table-bordered table-hover tablesorter">
 		<thead>
@@ -42,3 +43,8 @@
 			</tbody>
 	</table>
 </div>
+@else
+<div class="alert alert-danger">
+	There are no entries in this section
+</div>
+@endif

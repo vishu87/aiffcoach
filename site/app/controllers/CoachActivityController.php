@@ -23,18 +23,16 @@ class CoachActivityController extends BaseController {
     public function insert(){
         $cre = [
             'event'=>Input::get('event'),
-            'to_date'=>Input::get('to_date'),
-            'from_date'=>Input::get('from_date'),
+            'start_date'=>Input::get('from_date'),
+            'end_date'=>Input::get('to_date'),
             'place'=>Input::get('place'),
-            'participants'=>Input::get('participants'),
             'position_role'=>Input::get('position_role')
             ];
         $rules = [
             'event'=>'required',
-            'to_date'=>'required',
-            'from_date'=>'required',
+            'start_date'=>'required|date',
+            'end_date'=>'required|date|after:start_date',
             'place'=>'required',
-            'participants'=>'required',
             'position_role'=>'required'
             ];
         $validator = Validator::make($cre,$rules);
@@ -63,18 +61,16 @@ class CoachActivityController extends BaseController {
     public function update($id){
         $cre = [
             'event'=>Input::get('event'),
-            'from_date'=>Input::get('from_date'),
-            'to_date'=>Input::get('to_date'),
+            'start_date'=>Input::get('from_date'),
+            'end_date'=>Input::get('to_date'),
             'place'=>Input::get('place'),
-            'participants'=>Input::get('participants'),
             'position_role'=>Input::get('position_role')
             ];
         $rules = [
             'event'=>'required',
-            'from_date'=>'required|date',
-            'to_date'=>'required|date|after:from_date',
+            'start_date'=>'required|date',
+            'end_date'=>'required|date|after:start_date',
             'place'=>'required',
-            'participants'=>'required',
             'position_role'=>'required'
             ];
         $validator = Validator::make($cre,$rules);
