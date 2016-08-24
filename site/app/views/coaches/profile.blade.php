@@ -257,6 +257,11 @@
 				        {{Form::file('file',['class'=>'form-control','placeholder'=>'Attach Passport Copy','pdf'=>'true','required'=>'true'])}}
 				        <span class="error">{{$errors->first('passport_proof')}}</span>
 				    </div>
+				    <div class="col-md-4 form-group"> 
+				        <label class="form-label">Expiry Date</label>       
+				        {{Form::text('expiry','',['class'=>'form-control datepicker','date_en'=>'true'])}}
+				        <span class="error">{{$errors->first('passport_proof')}}</span>
+				    </div>
 				    <div class="col-md-4 form-group">
 				    	<label>Remarks</label>
 				    	{{Form::text('remarks','',["class"=>"form-control",'required'=>'true'])}}

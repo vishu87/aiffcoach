@@ -132,6 +132,7 @@ class CoachController extends BaseController {
             $document->coach_id = $id;
             $document->document_id = Input::get('document');
             $document->remarks = Input::get('remarks');
+            $document->expiry_date = date('Y-m-d',strtotime(Input::get('expiry')));
             if(Input::has('doc_name')){
                 $document->name = Input::get('doc_name');
             }

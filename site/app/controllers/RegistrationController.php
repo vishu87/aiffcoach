@@ -239,7 +239,8 @@ class RegistrationController extends BaseController {
                 $document->name = '';
                 $document->file = $data3["passport_proof"];
                 $document->number = $data3['passport'];
-                $document->expiry_date = $data3["passport_expiry"];
+                $document->expiry_date = date('Y-m-d',strtotime($data3["passport_expiry"]));
+                $document->save();
             }
             // $coach_parameter->passport_no = $data3['passport'];
             // $coach_parameter->passport_expiry = $data3['passport_expiry'];
