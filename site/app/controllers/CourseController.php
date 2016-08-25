@@ -41,7 +41,6 @@ class CourseController extends BaseController {
             'start_date'=>'required|date',
             'end_date'=>'required|date|after:start_date',
             'license_id'=>'required',
-            
             'fee'=>'required',
             ];
         $validator = Validator::make($cre,$rules);
@@ -52,13 +51,14 @@ class CourseController extends BaseController {
             $course->start_date = date('y-m-d',strtotime(Input::get('start_date')));
             $course->end_date = date('y-m-d',strtotime(Input::get('end_date')));
             $course->license_id = Input::get('license_id');
-            
+            if(Input::has('prerequisite_id')){
+                $course->prerequisite_id = implode(',',Input::get('prerequisite_id'));
+            }
             $course->venue = Input::get('venue');
             $course->description = Input::get('description');
             $course->fees = Input::get('fee');
 
             $destinationPath = 'coaches-doc/';
-
             if(Input::hasFile('documents')){
                 $extension = Input::file('documents')->getClientOriginalExtension();
                 $doc = "Document_".Auth::id().'_'.str_replace(' ','-',Input::file('documents')->getClientOriginalName());
@@ -104,6 +104,9 @@ class CourseController extends BaseController {
             $course->start_date = date('y-m-d',strtotime(Input::get('start_date')));
             $course->end_date = date('y-m-d',strtotime(Input::get('end_date')));
             $course->venue = Input::get('venue');
+            if(Input::has('prerequisite_id')){
+                $course->prerequisite_id = implode(',',Input::get('prerequisite_id'));
+            }
             $course->description = Input::get('description');
             $course->license_id = Input::get('license_id');
             

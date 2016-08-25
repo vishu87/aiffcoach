@@ -160,7 +160,7 @@ Route::group(["prefix"=>'resultAdmin','before'=>["auth","resultAdmin"]],function
 		Route::get('/details/{id}','resultAdminController@details');
 		Route::get('/view/{id}','resultAdminController@view');
 		Route::get('/editParameterMarks/{id}','resultAdminController@editParameterMarks');
-		Route::put('/update/{id}','resultAdminController@update');
+		Route::POST('/update/{id}','resultAdminController@update');
 		Route::delete('/delete/{id}','resultAdminController@delete');
 		Route::post('/uploadMarks','resultAdminController@uploadMarks');
 	});

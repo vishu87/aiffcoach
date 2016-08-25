@@ -4,7 +4,7 @@
 		<h3 class="page-title">Details of {{$course->name}}</h3>
 	</div>
 	<div class="col-md-6 ">
-		<a href="{{url('/coach/'.$link)}}" class="btn btn-sm blue pull-right">Back</a>
+		<a href="{{url('/coach/'.$link)}}" class="btn  blue pull-right">Back</a>
 	</div>
 </div>
 
@@ -36,11 +36,18 @@
 			
 		</tr>
 		<tr>
-			<td colspan="2"><b>Description</b><br><br>
+			<td><b>Prerequisites</b><br><br>
+				@foreach($prerequisites as $prerequisite)
+					{{$license[$prerequisite]}} , &nbsp;
+				@endforeach	
+			</td>
+			<td><b>Description</b><br><br>
 				{{$course->description}}
 			</td>
 			<td>
+				@if(!empty($course->documents))
 				<a href="{{url($course->documents)}}" target="_blank" style="font-size:16px;">View ocument</a>
+				@endif
 			</td>
 		</tr>
 		
@@ -50,7 +57,7 @@
 <div class="row">
 	<div class=" col-offset-4 col-md-4">
 		@if($tab_type!=2)
-		<button class="btn btn-sm blue {{(in_array($course->id,$checkAppliedCourses))?'':'apply-course'}}" action = "{{'coach/courses/apply/'.$course->id}}">{{(in_array($course->id,$checkAppliedCourses))?'Alredy Applied':'Apply'}}</button>
+		<button class="btn  blue {{(in_array($course->id,$checkAppliedCourses))?'':'apply-course'}}" action = "{{'coach/courses/apply/'.$course->id}}">{{(in_array($course->id,$checkAppliedCourses))?'Alredy Applied':'Apply'}}</button>
 		@else
 			<button class="btn btn-sm red">Not open</button>
 		@endif

@@ -12,10 +12,18 @@ class CoursesParameterController extends BaseController {
     public function index(){
     	$licenses = License::licenseList();
         $parameters = Parameter::where('active',0)->get();
-    	$coursesParameter = CourseParameter::select('courses_parameter.id','parameters.parameter','license.name as license_name','courses_parameter.license_id')->join('parameters','courses_parameter.parameter_id','=','parameters.id')->join('license','courses_parameter.license_id','=','license.id')->where('courses_parameter.active',0)->orderBy('courses_parameter.license_id','asc')->get();
-        
+    	$coursesParameter = CourseParameter::select('courses_parameter.id','parameters.parameter','license.name as license_name','courses_parameter.license_id','courses_parameter.parameter_id')->leftJoin('parameters','courses_parameter.parameter_id','=','parameters.id')->leftJoin('license','courses_parameter.license_id','=','license.id')->where('courses_parameter.active',0)->orderBy('courses_parameter.license_id','asc')->get();
+        $parameter = [];
+        foreach ($coursesParameter as $courseParameter) {
+           if(!isset($parameter[$courseParameter->license_id]))$parameter[$courseParameter->license_id]=array();
+           
+           array_push($parameter[$courseParameter->license_id],$courseParameter->parameter);
+           $parameter_string[$courseParameter->license_id] = implode(',',$parameter[$courseParameter->license_id]);
+            
+        }
+
     	$this->layout->sidebar = View::make('resultAdmin.sidebar',['sidebar'=>3]);
-    	$this->layout->main = View::make('resultAdmin.coursesParameter.list',['coursesParameter'=>$coursesParameter,'licenses'=>$licenses,'parameters'=>$parameters]);
+    	$this->layout->main = View::make('resultAdmin.coursesParameter.list',['coursesParameter'=>$coursesParameter,'licenses'=>$licenses,'parameters'=>$parameters,"parameter_string"=>$parameter_string]);
     } 
 
     public function insert(){
@@ -40,7 +48,7 @@ class CoursesParameterController extends BaseController {
     public function edit($id){
         $licenses = License::licenseList();
         $parameters = Parameter::where('active',0)->get();
-        $coursesParameter  = CourseParameter::select('courses_parameter.id','parameters.parameter','license.name as license_name','courses_parameter.license_id')->join('parameters','courses_parameter.parameter_id','=','parameters.id')->join('license','courses_parameter.license_id','=','license.id')->where('courses_parameter.active',0)->get();
+        $coursesParameter  = CourseParameter::select('courses_parameter.id','parameters.parameter','license.name as license_name','courses_parameter.license_id')->leftJoin('parameters','courses_parameter.parameter_id','=','parameters.id')->leftJoin('license','courses_parameter.license_id','=','license.id')->where('courses_parameter.active',0)->orderBy('courses_parameter.license_id','asc')->get();
 
         $parameter = CourseParameter::find($id);
         $parameterArray = CourseParameter::where('license_id',$parameter->license_id)->where('active',0)->get();
@@ -49,9 +57,16 @@ class CoursesParameterController extends BaseController {
             $selectedParameters[] = $value->parameter_id;
         }
         
-        
+        $licenseParameter = [];
+        foreach ($coursesParameter as $courseParameter) {
+           if(!isset($licenseParameter[$courseParameter->license_id]))$licenseParameter[$courseParameter->license_id]=array();
+           
+           array_push($licenseParameter[$courseParameter->license_id],$courseParameter->parameter);
+           $parameter_string[$courseParameter->license_id] = implode(',',$licenseParameter[$courseParameter->license_id]);
+            
+        }
         $this->layout->sidebar = View::make('resultAdmin.sidebar',['sidebar'=>3]);
-        $this->layout->main = View::make('resultAdmin.coursesParameter.list',['parameter'=>$parameter,'coursesParameter'=>$coursesParameter,'licenses'=>$licenses,'parameters'=>$parameters,'selectedParameters'=>$selectedParameters]);
+        $this->layout->main = View::make('resultAdmin.coursesParameter.list',['parameter'=>$parameter,'coursesParameter'=>$coursesParameter,'licenses'=>$licenses,'parameters'=>$parameters,'selectedParameters'=>$selectedParameters,"parameter_string"=>$parameter_string]);
     }
 
     
@@ -91,7 +106,7 @@ class CoursesParameterController extends BaseController {
     }
 
     public function exportExcel(){
-        $licenseParameter = CourseParameter::select('courses_parameter.id','parameters.parameter','license.name as license_name')->join('parameters','courses_parameter.parameter_id','=','parameters.id')->join('license','courses_parameter.license_id','=','license.id')->where('courses_parameter.active',0)->get();
+        $licenseParameter = CourseParameter::select('courses_parameter.id','parameters.parameter','license.name as license_name')->leftJoin('parameters','courses_parameter.parameter_id','=','parameters.id')->leftJoin('license','courses_parameter.license_id','=','license.id')->where('courses_parameter.active',0)->get();
         include(app_path().'/libraries/Classes/PHPExcel.php');
         include(app_path().'/libraries/export/coach.php');
     }

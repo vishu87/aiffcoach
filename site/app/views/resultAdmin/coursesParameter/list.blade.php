@@ -62,17 +62,25 @@
 		</thead>
 		<tbody id="society">
 			<?php $count = 1; ?>
+			<?php $old_license = 0?>
 			@foreach($coursesParameter as $data)
-				<tr id="parameter_{{$data->id}}">
+				@if($old_license!=$data->license_id)
+					<tr id="parameter_{{$data->id}}">
 					<td style="width:50px">{{$count}}</td>
 					<td>{{$data->license_name}}</td>
-					<td>{{$data->parameter}}</td>
+					<td>
+						@if(isset($parameter_string[$data->license_id]))
+							{{$parameter_string[$data->license_id]}}
+						@endif	
+					</td>
 					<td>
 						<a type="button" class="btn btn-sm yellow " href="{{url('resultAdmin/coursesParameter/edit/'.$data->id)}}" ><i class="fa fa-edit"></i> Edit</a>
 						<button type="button" class="btn btn-sm red delete-div" div-id="parameter_{{$data->id}}"  action="{{'resultAdmin/coursesParameter/delete/'.$data->id}}"> <i class="fa fa-remove"></i></button>
 					</td>
 				</tr>
+				@endif
 				<?php $count++ ?>
+				<?php $old_license = $data->license_id?>
 			@endforeach
 		</tbody>
 	</table>

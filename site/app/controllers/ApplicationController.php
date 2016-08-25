@@ -119,6 +119,8 @@ class ApplicationController extends BaseController {
             ->join('license','courses.license_id','=','license.id')->where('courses.id',$course_id)->first();
         $appliedCourses = Application::where('course_id',$course_id)->where('coach_id',Auth::User()->coach_id)->get();
         $checkAppliedCourses = array();
+        $prerequisites = explode(',',$course->prerequisite_id);
+        $license = License::licenseList();
         foreach ($appliedCourses as $value) {
                 $checkAppliedCourses[] =$value->course_id; 
             }    
@@ -140,7 +142,7 @@ class ApplicationController extends BaseController {
                     break;
             }    
         $this->layout->sidebar = View::make('coaches.sidebar',['sidebar'=>$tab,'subsidebar'=>$tab_sub]);
-        $this->layout->main = View::make('coaches.courses.details',["course"=>$course,'checkAppliedCourses'=>$checkAppliedCourses,'tab_type'=>$tab_type]);
+        $this->layout->main = View::make('coaches.courses.details',["course"=>$course,'checkAppliedCourses'=>$checkAppliedCourses,'tab_type'=>$tab_type,"prerequisites"=>$prerequisites,"license"=>$license]);
     } 
     public function applyCourse($course_id){
         $application = new Application;

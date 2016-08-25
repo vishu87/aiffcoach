@@ -13,7 +13,7 @@ class resultAdminController extends BaseController {
         if(Input::has('course')){
             $applications = Application::select('courses.name as course_name','courses.id as course_id','applications.id','applications.status','coaches.first_name','coaches.last_name','coaches.middle_name','license.name as license_name','application_result.status as finalResult','application_result.remarks')
                 ->join('coaches','applications.coach_id','=','coaches.id')
-                ->join('courses','applications.course_id','=','courses.id')
+                ->leftJoin('courses','applications.course_id','=','courses.id')
                 ->leftJoin('license','courses.license_id','=','license.id')
                 ->leftJoin('application_result','applications.id','=','application_result.application_id')
                 ->where('applications.status',3)
@@ -61,7 +61,8 @@ class resultAdminController extends BaseController {
         $results = Result::where('application_id',$id)->lists('marks','parameter_id');
         $status = Result::status();
         $finalResult = ApplicationResult::where('application_id',$id)->first();
-        return View::make('resultAdmin.result.view',["application_id"=>$id,'parameters'=>$parameters,"results"=>$results,'application_id'=>$id,'status'=>$status,"finalResult"=>$finalResult]);
+        $this->layout->sidebar = View::make('resultAdmin.sidebar',['sidebar'=>1]);
+        $this->layout->main = View::make('resultAdmin.result.view',["application_id"=>$id,'parameters'=>$parameters,"results"=>$results,'application_id'=>$id,'status'=>$status,"finalResult"=>$finalResult]);
     }
 
     public function update($id){ // here $id is application id
@@ -75,13 +76,24 @@ class resultAdminController extends BaseController {
                 $result->save(); 
             }
         }
+        $sql_data = array();
+        $destinationPath = 'marksFiles/';
+        if(Input::hasFile('upload_marks')){
+            $extension = Input::file('upload_marks')->getClientOriginalExtension();
+            $doc = "upload_marks_".str_replace(' ','-',Input::file('upload_marks')->getClientOriginalName());
+            Input::file('upload_marks')->move($destinationPath,$doc);
+            $upload_address = $destinationPath.$doc;
+            $sql_data = $sql_data + ["upload_marks"=>$upload_address];
+        }
         if (Input::has('status')) {
             $count = ApplicationResult::where('application_id',$id)->count();
             if ($count<1) {
-                $applicationResult = ApplicationResult::insert(["application_id"=>$id,"status"=>Input::get('status'),"remarks"=>Input::get('remarks')]);
+                $sql_data = $sql_data + ["application_id"=>$id,"status"=>Input::get('status'),"remarks"=>Input::get('remarks')];
+                $applicationResult = ApplicationResult::insert($sql_data);
             }
             else{
-                $applicationResult = ApplicationResult::where('application_id',$id)->update(["application_id"=>$id,"status"=>Input::get('status'),"remarks"=>Input::get('remarks')]);
+                $sql_data = $sql_data + ["application_id"=>$id,"status"=>Input::get('status'),"remarks"=>Input::get('remarks')];
+                $applicationResult = ApplicationResult::where('application_id',$id)->update($sql_data);
             }
         }
         $app_data = Application::applicationsResult()
@@ -89,9 +101,9 @@ class resultAdminController extends BaseController {
             ->where('applications.id',$id)
             ->first();     
         $resultStatus = Result::status();    
-        $data['success'] = true;
-        $data['message']= html_entity_decode(View::make('resultAdmin.view',['data'=>$app_data,'count'=>Input::get('count'),'resultStatus'=>$resultStatus]));
-        return json_encode($data);
+        // $data['success'] = true;
+        // $data['message']= html_entity_decode(View::make('resultAdmin.view',['data'=>$app_data,'count'=>Input::get('count'),'resultStatus'=>$resultStatus]));
+        return Redirect::Back()->with('success','Marks Updated Successfully');
     }
 
     public function exportExcel($course_id){

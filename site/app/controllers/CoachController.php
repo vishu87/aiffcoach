@@ -1,4 +1,4 @@
-
+    
 <?php
 class CoachController extends BaseController {
     protected $layout = 'layout';
