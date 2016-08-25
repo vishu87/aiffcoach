@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col-md-8">
-		<h3 class="page-title">Activity Area</h3>
+		<h3 class="page-title">Activities</h3>
 	</div>
 	<div class="col-md-4">
 		<a type="button" class="btn green pull-right" href="{{url('coach/activity/add')}}"> <i class="fa fa-plus"></i> Add New Activity</a>
@@ -14,10 +14,10 @@
 @endif
 
 @if(Session::has('failure'))
-    	<div class="alert alert-danger">
-        	<button type="button" class="close" data-dismiss="alert">×</button>
-        	<i class="fa fa-ban-circle"></i><strong>Failure!</strong> {{Session::get('failure')}}
-       	</div>
+	<div class="alert alert-danger">
+    	<button type="button" class="close" data-dismiss="alert">×</button>
+    	<i class="fa fa-ban-circle"></i><strong>Failure!</strong> {{Session::get('failure')}}
+   	</div>
 @endif
 @if(sizeof($activities)>0)
 <div style="overflow-y:auto">
@@ -31,16 +31,15 @@
 				<th>Participants</th>
 				<th>Postion / Role</th>
 				<th>#</th>
-				
-				
-			</tr></thead>
-			<tbody id="activities">
-				<?php $count = 1; ?>
-				@foreach($activities as $data)
-					@include('coaches.activity.view')
-					<?php $count++ ?>
-				@endforeach
-			</tbody>
+			</tr>
+		</thead>
+		<tbody id="activities">
+			<?php $count = 1; ?>
+			@foreach($activities as $data)
+				@include('coaches.activity.view')
+				<?php $count++ ?>
+			@endforeach
+		</tbody>
 	</table>
 </div>
 @else

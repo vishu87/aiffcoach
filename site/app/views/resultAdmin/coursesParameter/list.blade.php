@@ -1,13 +1,11 @@
 <div class="row">
 	<div class="col-md-6">
 		<h3 class="page-title">License Parameters</h3>
-		
 	</div>
 	<div class="col-md-6">
 		<a class="btn green pull-right" href="{{url('/resultAdmin/coursesParameter/exportExcel')}}">Export Excel</a>
 
 	</div>
-	
 </div>
 @if(Session::has('success'))
 	<div class="alert alert-success alert-dismissable">
@@ -65,15 +63,15 @@
 		<tbody id="society">
 			<?php $count = 1; ?>
 			@foreach($coursesParameter as $data)
-			<tr id="parameter_{{$data->id}}">
-				<td style="widtd:50px">{{$count}}</td>
-				<td>{{$data->license_name}}</td>
-				<td>{{$data->parameter}}</td>
-				<td>
-					<a type="button" class="btn btn-sm yellow " href="{{url('resultAdmin/coursesParameter/edit/'.$data->id)}}" ><i class="fa fa-edit"></i> Edit</a>
-					<button type="button" class="btn btn-sm red delete-div" div-id="parameter_{{$data->id}}"  action="{{'resultAdmin/coursesParameter/delete/'.$data->id}}"> <i class="fa fa-remove"></i></button>
-				</td>
-			</tr>
+				<tr id="parameter_{{$data->id}}">
+					<td style="width:50px">{{$count}}</td>
+					<td>{{$data->license_name}}</td>
+					<td>{{$data->parameter}}</td>
+					<td>
+						<a type="button" class="btn btn-sm yellow " href="{{url('resultAdmin/coursesParameter/edit/'.$data->id)}}" ><i class="fa fa-edit"></i> Edit</a>
+						<button type="button" class="btn btn-sm red delete-div" div-id="parameter_{{$data->id}}"  action="{{'resultAdmin/coursesParameter/delete/'.$data->id}}"> <i class="fa fa-remove"></i></button>
+					</td>
+				</tr>
 				<?php $count++ ?>
 			@endforeach
 		</tbody>
