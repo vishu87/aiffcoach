@@ -199,13 +199,14 @@ class RegistrationController extends BaseController {
             $coach->first_name = $data1['first_name'];
             $coach->middle_name = $data1['middle_name'];
             $coach->last_name = $data1['last_name'];
+            $coach->full_name = $data1['first_name'].' '.$data1['middle_name'].' '.$data1['last_name'];
             $coach->dob = $data1['dob'];
             $coach->state_id = $data2['state_id'];
             $coach->photo = $data1['photo'];
             $coach->state_id = $data2['state_id'];
             $coach->gender = $data1['gender'];
             $coach->save();
-            $coach->registration_id = date("YM").$coach->id;
+            $coach->registration_id = strtoupper(date("YM")).$coach->id;
             $coach->save();
             $coach_parameter = new CoachParameter;
             $coach_parameter->coach_id = $coach->id;

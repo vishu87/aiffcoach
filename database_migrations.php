@@ -21,4 +21,6 @@ ALTER TABLE `coach_documents`  ADD `number` VARCHAR(100) NOT NULL  AFTER `name`;
 //25/08/2016 
 ALTER TABLE `application_result` ADD `upload_marks` TEXT NOT NULL AFTER `status`;
 ALTER TABLE `courses` ADD `prerequisite_id` VARCHAR(20) NOT NULL AFTER `license_id`;
+
+ALTER TABLE `coaches`  ADD `full_name` VARCHAR(500) NOT NULL  AFTER `last_name`;
 ?>

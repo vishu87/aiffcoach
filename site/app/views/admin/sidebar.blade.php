@@ -22,11 +22,11 @@
       <span class="arrow @if($sidebar == 'coach' ) open @endif"></span>
       </a>
       <ul class="sub-menu">
-        <!-- <li class="@if($sidebar == 'coach' && $subsidebar == 1 ) active @endif" style="display:inherit">
+        <li class="@if($sidebar == 'coach' && $subsidebar == 1 ) active @endif" style="display:inherit">
           <a href="{{url('admin/approvedCoach')}}">
           <i class="fa fa-chevron-right"></i>
           Approved</a>
-        </li> -->
+        </li>
         
          <li class="@if($sidebar == 'coach' && $subsidebar == 2 ) active @endif">
           <a href="{{url('admin/pendingCoach')}}">
@@ -34,11 +34,6 @@
           Pending</a>
         </li>
 
-        <li class="@if($sidebar == 'coach' && $subsidebar == 3 ) active @endif">
-          <a href="{{url('admin/all')}}">
-          <i class="fa fa-chevron-right"></i>
-          All </a>
-        </li>
       </ul>
     </li>
     <li class="@if($sidebar == 'license' ) active @endif" >
