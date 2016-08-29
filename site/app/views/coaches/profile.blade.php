@@ -266,7 +266,7 @@
 				        {{Form::text('expiry','',['class'=>'form-control datepicker','date_en'=>'true'])}}
 				        <span class="error">{{$errors->first('passport_proof')}}</span>
 				    </div>
-				    <div class="col-md-4 form-group">
+				    <div class="col-md-4 form-group clear">
 				    	<label>Remarks</label>
 				    	{{Form::text('remarks','',["class"=>"form-control"])}}
 				    </div>
@@ -308,25 +308,24 @@
 </div>
 @endif
 @if($profileType==6)
-
   	<div class="form-body">
         <div class="">
             {{ Form::open(array('url' =>'coach/coachLicense/add',"method"=>"POST","files"=>'true','class'=>'form check_form')) }}
 	        <div class="row">
-	        	<div class="col-md-6 form-group"><label class="form-label">License Name</label>
+	        	<div class="col-md-6 form-group"><label class="form-label">License Name <span class="error">*</span></label>
 		           {{Form::select('license_id',$licenses,'',["class"=>"form-control","required"=>"true"])}}
 		           <span class="dob-error">{{$errors->first('license_id')}}</span>
 		        </div>
 	        	<div class="col-md-6">
 		          <div class="form-group"> 
-		            <label class="form-label">License Number</label><br>
+		            <label class="form-label">License Number <span class="error">*</span></label><br>
 		            {{Form::text('number','',["class"=>"form-control",'required'=>'true'])}}
 		            <span class="error">{{$errors->first('number')}}</span>
 		          </div>
 		        </div>
 		        <div class="col-md-6 clear">
 		          <div class="form-group"> 
-		            <label class="form-label">Start Date</label><br>
+		            <label class="form-label">Start Date <span class="error">*</span></label><br>
 		            {{Form::text('start_date','',["class"=>"form-control datepicker",'required'=>'true',"date_en"=>"true"])}}
 		            <span class="error">{{$errors->first('start_date')}}</span>
 		          </div>
@@ -360,29 +359,30 @@
 					<th>Start Date</th>
 					<th>End Date</th>
 					<th>#</th>
-				</tr></thead>
-				<tbody id="licenses">
-					<?php $count = 1; ?>
-					@foreach($coachLicense as $data)
-						<tr id="document_{{$data->id}}">
-							<td>{{$count}}</td>
-							<td>{{$data->license_name}}</td>
-							<td>{{$data->number}}</td>
-							<td>{{date('d-m-Y',strtotime($data->start_date))}}</td>
-							<td>{{date('d-m-Y',strtotime($data->end_date))}}</td>
-							<td>
-								@if($data->document!='')
-									<a type="button" class="btn yellow btn-sm "  href="{{url($data->document)}}" target="_blank"> <i class="fa fa-cube"></i> View</a>
-								@else
-								
-								@endif	
-								
-								<button type="button" class="btn red btn-sm delete-div" div-id="document_{{$data->id}}"  action="{{'coach/coachLicense/delete/'.$data->id}}"> <i class="fa fa-remove"></i> Delete</button>
-							</td>
-						</tr>
-						<?php $count++ ?>
-					@endforeach
-				</tbody>
+				</tr>
+			</thead>
+			<tbody id="licenses">
+				<?php $count = 1; ?>
+				@foreach($coachLicense as $data)
+				<tr id="document_{{$data->id}}">
+					<td>{{$count}}</td>
+					<td>{{$data->license_name}}</td>
+					<td>{{$data->number}}</td>
+					<td>{{date('d-m-Y',strtotime($data->start_date))}}</td>
+					<td>{{date('d-m-Y',strtotime($data->end_date))}}</td>
+					<td>
+						@if($data->document!='')
+							<a type="button" class="btn yellow btn-sm "  href="{{url($data->document)}}" target="_blank"> <i class="fa fa-cube"></i> View</a>
+						@else
+						
+						@endif	
+
+						<button type="button" class="btn red btn-sm delete-div" div-id="document_{{$data->id}}"  action="{{'coach/coachLicense/delete/'.$data->id}}"> <i class="fa fa-remove"></i> Delete</button>
+					</td>
+				</tr>
+				<?php $count++ ?>
+				@endforeach
+			</tbody>
 		</table>
 	</div>  
 	@else

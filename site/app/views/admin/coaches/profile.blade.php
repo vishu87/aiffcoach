@@ -3,7 +3,7 @@
 		<h2 class="page-title">{{strtoupper($coach->full_name)}}<br>{{strtoupper($coach->registration_id)}}</h2>
 	</div>
 	<div class="col-md-6">
-		<a href="#" class="btn yellow pull-right">Edit</a>
+		<a href="#" class="btn yellow pull-right" style="margin-top:20px">Edit</a>
 	</div>
 </div>
 <div class="row">
@@ -115,8 +115,13 @@
 	No employment details found
 </div>
 @endif
-<div>
-	<h3>Employment Details</h3>
+<div class="row">
+	<div class="col-md-6">
+		<h3>Employment Details</h3>
+	</div>
+	<div class="col-md-6">
+		<a href="#" class="btn yellow pull-right" style="margin-top:20px">Edit</a>
+	</div>
 </div>
 @if(sizeof($employmentDetails) > 0)
 <div class="row" style="padding:20px;">
@@ -179,8 +184,14 @@
 	No Activity found
 </div>
 @endif
-<div>
-	<h3>Courses Enrolled</h3>
+
+<div class="row">
+	<div class="col-md-6">
+		<h3>Courses Enrolled</h3>
+	</div>
+	<div class="col-md-6">
+		<a href="#" class="btn yellow pull-right" style="margin-top:20px">Edit</a>
+	</div>
 </div>
 @if(sizeof($courses) > 0)
 <div class="row" style="padding:20px;">
@@ -219,6 +230,6 @@
 </div>
 @else
 <div class="alert alert-warning">
-	No Course found
+	No Courses found
 </div>
 @endif
