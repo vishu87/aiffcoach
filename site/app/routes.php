@@ -46,6 +46,11 @@ Route::group(['prefix'=>'coach','before'=>['auth','coach']], function () {
 		Route::post('/add','CoachController@addDocument');
 		Route::delete('/delete/{id}','CoachController@deleteDocument');
 	});
+	Route::group(["prefix"=>"coachLicense"],function(){
+		Route::get('/','CoachController@coachLicense');
+		Route::post('/add','CoachController@addLicense');
+		Route::delete('/delete/{coach_license_id}','CoachController@deleteLicense');
+	});
 	Route::get('/passportDetails','CoachController@passportDetails');
 	Route::post('updatePassport','CoachController@updatePassport');
 	Route::get('/employmentDetails','CoachController@employmentDetails');

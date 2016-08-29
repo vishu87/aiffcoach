@@ -23,7 +23,11 @@
    	</div>
 @endif
 
+@if($flag==1)
+{{ Form::open(array('url' => 'admin/approvedCoach', 'method' => 'GET','role' => 'form','class'=>"")) }}
+@else
 {{ Form::open(array('url' => 'admin/pendingCoach', 'method' => 'GET','role' => 'form','class'=>"")) }}
+@endif
 <div class="row">
 	<div class="form-group col-md-3">
 		<label>Registration ID</label>

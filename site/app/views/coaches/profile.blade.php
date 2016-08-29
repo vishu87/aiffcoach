@@ -28,6 +28,10 @@
 		<a href="{{url('coach/addDocument')}}" >
 		Documents</a>
 	</li>
+	<li class="{{($profileType==6)?'active':''}}">
+		<a href="{{url('coach/coachLicense')}}" >
+		Licenses</a>
+	</li>
 	<li class="{{($profileType==4)?'active':''}}">
 		<a href="{{url('coach/measurements')}}" >
 		Measurements</a>
@@ -302,4 +306,88 @@
 			</tbody>
 	</table>
 </div>
+@endif
+@if($profileType==6)
+
+  	<div class="form-body">
+        <div class="">
+            {{ Form::open(array('url' =>'coach/coachLicense/add',"method"=>"POST","files"=>'true','class'=>'form check_form')) }}
+	        <div class="row">
+	        	<div class="col-md-6 form-group"><label class="form-label">License Name</label>
+		           {{Form::select('license_id',$licenses,'',["class"=>"form-control","required"=>"true"])}}
+		           <span class="dob-error">{{$errors->first('license_id')}}</span>
+		        </div>
+	        	<div class="col-md-6">
+		          <div class="form-group"> 
+		            <label class="form-label">License Number</label><br>
+		            {{Form::text('number','',["class"=>"form-control",'required'=>'true'])}}
+		            <span class="error">{{$errors->first('number')}}</span>
+		          </div>
+		        </div>
+		        <div class="col-md-6 clear">
+		          <div class="form-group"> 
+		            <label class="form-label">Start Date</label><br>
+		            {{Form::text('start_date','',["class"=>"form-control datepicker",'required'=>'true',"date_en"=>"true"])}}
+		            <span class="error">{{$errors->first('start_date')}}</span>
+		          </div>
+		        </div>
+		        <div class="col-md-6">
+		          <div class="form-group"> 
+		            <label class="form-label">End Date</label><br>
+		            {{Form::text('end_date','',["class"=>"form-control datepicker","date_en"=>"true"])}}
+		            <span class="error">{{$errors->first('end_date')}}</span>
+		          </div>
+		        </div>
+            	<div class="col-md-6 form-group clear">
+            		<label class="form-label">Document Copy</label><br>
+            		{{Form::file('document',["class"=>"form-control"])}}
+            	</div>	
+            </div>
+        </div>
+    </div>
+    <div class="form-actions">
+    	<button type="submit" class="btn green">Submit</button>{{Form::close()}}
+    </div>
+
+    @if(sizeof($coachLicense)>0)
+    <div style="overflow-y:auto;margin-top:40px;">
+		<table class="table table-bordered table-hover tablesorter">
+			<thead>
+				<tr>
+					<th style="width:50px">SN</th>
+					<th>License Name</th>
+					<th>License Number</th>
+					<th>Start Date</th>
+					<th>End Date</th>
+					<th>#</th>
+				</tr></thead>
+				<tbody id="licenses">
+					<?php $count = 1; ?>
+					@foreach($coachLicense as $data)
+						<tr id="document_{{$data->id}}">
+							<td>{{$count}}</td>
+							<td>{{$data->license_name}}</td>
+							<td>{{$data->number}}</td>
+							<td>{{date('d-m-Y',strtotime($data->start_date))}}</td>
+							<td>{{date('d-m-Y',strtotime($data->end_date))}}</td>
+							<td>
+								@if($data->document!='')
+									<a type="button" class="btn yellow btn-sm "  href="{{url($data->document)}}" target="_blank"> <i class="fa fa-cube"></i> View</a>
+								@else
+								
+								@endif	
+								
+								<button type="button" class="btn red btn-sm delete-div" div-id="document_{{$data->id}}"  action="{{'coach/coachLicense/delete/'.$data->id}}"> <i class="fa fa-remove"></i> Delete</button>
+							</td>
+						</tr>
+						<?php $count++ ?>
+					@endforeach
+				</tbody>
+		</table>
+	</div>  
+	@else
+	<div class="alert alert-warning" style="margin-top:20px;">
+		No License found
+	</div>
+	@endif  
 @endif

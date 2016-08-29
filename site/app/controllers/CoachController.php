@@ -464,4 +464,52 @@ class CoachController extends BaseController {
         }
         return json_encode($data);
     }
+
+    public function coachLicense(){
+        $id = Auth::User()->coach_id;
+        $coachLicense = CoachLicense::listing()->where('coach_id',$id)->get();
+        $licenses = License::licenseList();
+        $this->layout->sidebar = View::make('coaches.sidebar',["sidebar"=>'profile','subsidebar'=>2]);
+        $this->layout->main = View::make('coaches.profile',['coachLicense'=>$coachLicense,"profileType"=>6,'title'=>'Coach Licenses',"licenses"=>$licenses]);
+    }
+
+    public function addLicense(){
+        $cre = ["license_id"=>Input::get("license_id"),"start_date"=>Input::get("start_date"),"number"=>Input::get("number"),"end_date"=>Input::get("end_date")];
+        $rules = ["license_id"=>'required',"start_date"=>"required|date","end_date"=>"date|after:start_date","number"=>"required"];
+        $validator = Validator::make($cre,$rules);
+        if($validator->passes()){
+            $coachLicense = new CoachLicense;
+            $coachLicense->coach_id = Auth::User()->coach_id;
+            $coachLicense->license_id = Input::get("license_id");
+            $coachLicense->number = Input::get("number");
+            $coachLicense->start_date = date("Y-m-d",strtotime(Input::get("start_date")));
+            $coachLicense->end_date = date("Y-m-d",strtotime(Input::get("end_date")));
+            $destinationPath = "coach-licenses/";
+            if(Input::hasFile('document')){
+                $extension = Input::file('document')->getClientOriginalExtension();
+                $doc = "dobProof_".Auth::id().'_'.str_replace(' ','-',Input::file('document')->getClientOriginalName());
+                Input::file('document')->move($destinationPath,$doc);
+                $coachLicense->document = $destinationPath.$doc;
+            }
+            $coachLicense->save();
+            return Redirect::back()->with('success','New license added successfully');
+
+        }
+        else{
+            return Redirect::back()->withErrors($validator)->withInput()->with('failure','All fields are not properly field');
+        }
+    }
+
+    public function deleteLicense($coach_license_id){
+        $count = CoachLicense::where('coach_id',Auth::User()->coach_id)->where('id',$coach_license_id)->count();
+        if($count>0){
+            CoachLicense::find($coach_license_id)->delete();
+            $data["success"] = true;
+            $data["message"] = "License deleted successfully";
+        }
+        else{
+            $data["message"] = "Invalid requerst made || Authentication Problem";
+        }
+        return json_encode($data);
+    }   
 }

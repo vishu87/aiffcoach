@@ -23,4 +23,20 @@ ALTER TABLE `application_result` ADD `upload_marks` TEXT NOT NULL AFTER `status`
 ALTER TABLE `courses` ADD `prerequisite_id` VARCHAR(20) NOT NULL AFTER `license_id`;
 
 ALTER TABLE `coaches`  ADD `full_name` VARCHAR(500) NOT NULL  AFTER `last_name`;
+//updated on chirag server
+
+//29/08/2016
+
+CREATE TABLE IF NOT EXISTS `coach_licenses` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `coach_id` int(11) NOT NULL,
+  `license_id` int(11) NOT NULL,
+  `document` text NOT NULL,
+  `number` varchar(100) NOT NULL,
+  `start_date` date NOT NULL,
+  `end_date` date NOT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 ?>

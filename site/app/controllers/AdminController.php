@@ -9,10 +9,17 @@ class AdminController extends BaseController {
     }
 
     public function approvedCoach(){
-    	$sql = Coach::listing()->approved()->where('coaches.official_types',Auth::user()->manage_official_type);
+    	$sql = Coach::listing()->approved()->where('users.official_types',Auth::user()->manage_official_type);
+
+        if(Input::get("registration_id") != ''){
+            $sql = $sql->where('coaches.registration_id','LIKE','%'.Input::get('registration_id').'%');
+        }
+        if(Input::get("official_name") != ''){
+            $sql = $sql->where('coaches.full_name','LIKE','%'.Input::get('official_name').'%');
+        }
 
         $total = $sql->count();
-        $max_per_page = 25;
+        $max_per_page = 1;
         $total_pages = ceil($total/$max_per_page);
         if(Input::has('page')){
             $page_id = Input::get('page');
@@ -20,10 +27,21 @@ class AdminController extends BaseController {
             $page_id = 1;
         }
 
+        $input_string = 'admin/approvedCoach?';
+        $count_string = 0;
+        foreach (Input::all() as $key => $value) {
+            if($key != 'page'){
+                $input_string .= ($count_string == 0)?'':'&';
+                $input_string .= $key.'='.$value;
+                $count_string++;
+            }
+        }
+
         $coaches = $sql->skip(($page_id-1)*$max_per_page)->take($max_per_page)->get();
         $status = Coach::Status();
+
         $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'coach','subsidebar'=>1]);
-    	$this->layout->main = View::make('admin.coaches.list',['coaches'=>$coaches,"title"=>'Approved Officials', "status" => $status,'flag'=>1,"total" => $total, "page_id"=>$page_id, "max_per_page" => $max_per_page, "total_pages" => $total_pages,'url_link'=>'admin/approvedCoach?page=']);
+        $this->layout->main = View::make('admin.coaches.list',['coaches'=>$coaches,"title"=>'Approved Officials', "status" => $status,'flag'=>1,"total" => $total, "page_id"=>$page_id, "max_per_page" => $max_per_page, "total_pages" => $total_pages,'input_string'=>$input_string]);
     }
 
     public function pendingCoach(){
@@ -89,10 +107,15 @@ class AdminController extends BaseController {
     // }
     public function viewCoachDetails($id){
         $coach = Coach::select('coaches.full_name','coaches.first_name','coaches.status','states.name as state_registation','coaches.middle_name','coaches.last_name','coaches.dob','coaches.gender','coaches.photo','coach_parameters.email','coach_parameters.address1','coach_parameters.address2','coach_parameters.city','coach_parameters.pincode','coach_parameters.mobile','coaches.registration_id')->join('states','coaches.state_id','=','states.id')->join('coach_parameters','coaches.id','=','coach_parameters.coach_id')->where('coaches.id',$id)->first();
-
+        $documents = CoachDocument::select('coach_documents.*','documents.name as document_name')->join('documents','coach_documents.document_id','=','documents.id')->where('coach_id',$id)->get();
+        $coachLicense = CoachLicense::listing()->where('coach_id',$id)->get();
         $employmentDetails = EmploymentDetails::where('coach_id',$id)->get();
+        $activities = CoachActivity::where('coach_id',$id)->get();
+        $courses = Application::select('applications.*','courses.name as course_name','courses.prerequisite_id','courses.end_date','courses.documents','license.name as license_name')->join('courses','applications.course_id','=','courses.id')->leftJoin('license','license.id','=','courses.license_id')->where('coach_id',$id)->get();
+        $coachStatus = Coach::status();
+        $licenseList = License::lists('name','id');
         $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'coach','subsidebar'=>3]);
-        $this->layout->main = View::make('admin.coaches.profile',['coach'=>$coach,'employmentDetails'=>$employmentDetails]);
+        $this->layout->main = View::make('admin.coaches.profile',['coach'=>$coach,'employmentDetails'=>$employmentDetails,"documents"=>$documents,"activities"=>$activities,"courses"=>$courses,"licenseList"=>$licenseList,"coachStatus"=>$coachStatus,"coachLicense"=>$coachLicense]);
     }
 
    //  public function markCoachStatus($flag,$id,$remarks,$count){
