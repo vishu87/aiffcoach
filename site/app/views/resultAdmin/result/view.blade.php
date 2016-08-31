@@ -27,8 +27,12 @@
 					@foreach($parameters as $parameter)				
 						<div class="col-md-4 form-group">
 							{{Form::label($parameter->parameter)}}
-							{{Form::hidden('parameters[]',$parameter->parameter_id)}}
-							{{Form::text('marks_'.$parameter->parameter_id,(isset($results[$parameter->parameter_id]))?$results[$parameter->parameter_id]:'',["class"=>"form-control"])}}
+							<div class="input-group">
+								{{Form::hidden('parameters[]',$parameter->parameter_id)}}
+								{{Form::text('marks_'.$parameter->parameter_id,(isset($results[$parameter->parameter_id]))?$results[$parameter->parameter_id]:'',["class"=>"form-control"])}}
+								<span class="input-group-addon">/ {{$parameter->max_marks}}</span>
+							</div>
+							
 							<span class="error">{{$errors->first('event')}}</span>
 						</div>
 					@endforeach

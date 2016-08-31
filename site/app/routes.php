@@ -100,6 +100,8 @@ Route::group(["before"=>['auth']],function(){
 			Route::get('/pendingCoach','AdminController@pendingCoach');
 			Route::get('/inactiveCoach','AdminController@inactiveCoach');
 			Route::get('viewCoach/{id}','AdminController@viewCoach');
+			Route::get('editCoachProfile/{coach_id}','AdminController@editCoachProfile');
+			Route::post('updateCoachProfile/{coach_id}','AdminController@updateCoachProfile');
 			Route::get('viewCoachDetails/{id}','AdminController@viewCoachDetails');
 			Route::get('all','AdminController@allCoach');
 			Route::get('markCoachStatus/{flag}/{id}/{remarks}/{count}','AdminController@markCoachStatus');
@@ -124,6 +126,15 @@ Route::group(["before"=>['auth']],function(){
 				Route::get('/disapprovePaymentStatus/{id}/{remarks?}/{count?}','PaymentController@disapprovePaymentStatus');
 				Route::get('/approvePaymentStatus/{id}/{remarks?}/{count?}','PaymentController@approvePaymentStatus');
 			});
+			Route::group(["prefix"=>'ApplicationResults',"before"=>['auth']],function(){
+				Route::get('/','AdminController@ApplicationsResults');
+				Route::get('/view/{application_id}','AdminController@ViewApplicationsResult');
+				Route::get('/editParameterMarks/{application_id}','AdminController@editParameterMarks');
+				Route::get('/uploadLicense/{application_id}','AdminController@uploadLicense');
+				Route::post('/storeLicense/{coach_id}','AdminController@storeLicense');
+				Route::get('/exportApplications','resultAdminController@exportExcel');
+				Route::delete('/delete/{license_id}','AdminController@deleteLicense');
+			});
 			Route::group(["prefix"=>'License'],function(){
 				Route::get('/','LicenseController@index');
 				Route::get('/add','LicenseController@add');
@@ -144,7 +155,7 @@ Route::group(["before"=>['auth']],function(){
 Route::group(["prefix"=>'resultAdmin','before'=>["auth","resultAdmin"]],function(){
 	Route::get('/dashboard','resultAdminController@dashboard');
 	Route::get('/','resultAdminController@index');
-	Route::get('/exportApplications/{course_id}','resultAdminController@exportExcel');
+	Route::get('/exportApplications','resultAdminController@exportExcel');
 	Route::group(["prefix"=>"Parameter"],function(){
 		Route::get('/','ParameterController@index');
 		Route::post('/insert','ParameterController@insert');

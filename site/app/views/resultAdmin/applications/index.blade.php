@@ -17,8 +17,11 @@
 @endif
 <div style="margin-bottom:20px;" class="row">
 	<div class="col-md-9">
-	
+	@if(Auth::User()->privilege==2)
+	{{Form::open(array('url'=>'admin/ApplicationResults', 'method'=>'GET', 'class' => 'check_form'))}}
+	@else
 	{{Form::open(array('url'=>'/resultAdmin', 'method'=>'GET', 'class' => 'check_form'))}}
+	@endif
 	
 		Filter by course
 		<div class="row">
@@ -33,10 +36,15 @@
 
 	</div>
 	<div class="col-md-3">
-		<a class="btn green pull-right" href="{{url('/resultAdmin/exportApplications/'.app('request')->input('course'))}}">Export Results</a>
+		@if(Auth::User()->privilege==2)
+			<a class="btn green pull-right" href="{{url('/admin/ApplicationResults/exportApplications?course='.Input::get('course'))}}">Export Results</a>
+		@else
+			<a class="btn green pull-right" href="{{url('/resultAdmin/exportApplications?course='.Input::get('course'))}}">Export Results</a>
+		@endif
 	</div>
 </div>
 
+@if(sizeof($applications)>0)
 <div style="overflow-y:auto">
 	<table class="table table-bordered table-hover tablesorter">
 		<thead>
@@ -47,14 +55,19 @@
 				<th>Coach Name</th>
 				<th>Remark</th>
 				<th>Status</th>
-				<th>#</th>
+				<th style="width:210px">#</th>
 			</tr></thead>
 			<tbody id="applications">
 				<?php $count = 1; ?>
 				@foreach($applications as $data)
-					@include('resultAdmin.view')
+					@include('resultAdmin.applications.view')
 					<?php $count++ ?>
 				@endforeach
 			</tbody>
 	</table>
 </div>
+@else
+<div class="alert alert-warning">
+	There is no records found
+</div>
+@endif

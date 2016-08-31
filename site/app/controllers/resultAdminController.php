@@ -32,7 +32,7 @@ class resultAdminController extends BaseController {
             // $applications = Application::applications()->where('applications.status',3)->get();
         }
         $this->layout->sidebar = View::make('resultAdmin.sidebar',['sidebar'=>1]);
-        $this->layout->main = View::make('resultAdmin.index',['status'=>$status,"applications"=>$applications,'title'=>'Applications Results','flag'=>1, "courses" => $courses,'resultStatus'=>$resultStatus]);
+        $this->layout->main = View::make('resultAdmin.applications.index',['status'=>$status,"applications"=>$applications,'title'=>'Applications Results','flag'=>1, "courses" => $courses,'resultStatus'=>$resultStatus]);
     }
 
     public function indexResult(){
@@ -41,14 +41,22 @@ class resultAdminController extends BaseController {
     }
     
     public function view($id){ // here $id is application id
-        $course = Application::select('license.id as license_id')->join('courses','applications.course_id','=','courses.id')->join('license','courses.license_id','=','license.id')->where('applications.id',$id)->first();
-        $parameters = CourseParameter::select('parameters.parameter','parameters.max_marks','courses_parameter.parameter_id')
-            ->join('parameters','courses_parameter.parameter_id','=','parameters.id')
-            ->where('license_id',$course->license_id)
-            ->where('courses_parameter.active',0)
-            ->get();
-        $results = Result::where('application_id',$id)->get();   
-        return View::make('resultAdmin.result.list',['parameters'=>$parameters,'application_id'=>$id,"results"=>$results]);
+        $checkApp = ApplicationResult::where('application_id',$id)->count();
+        if ($checkApp>0) {
+            $course = Application::select('license.id as license_id')->join('courses','applications.course_id','=','courses.id')->join('license','courses.license_id','=','license.id')->where('applications.id',$id)->first();
+            $parameters = CourseParameter::select('parameters.parameter','parameters.max_marks','courses_parameter.parameter_id')
+                ->join('parameters','courses_parameter.parameter_id','=','parameters.id')
+                ->where('license_id',$course->license_id)
+                ->where('courses_parameter.active',0)
+                ->get();
+            $resultStatus = Result::status();
+            $results = Result::where('application_id',$id)->get();
+            $applicationStatus = ApplicationResult::where('application_id',$id)->first();
+            return View::make('resultAdmin.result.list',['parameters'=>$parameters,'application_id'=>$id,"results"=>$results,"applicationStatus"=>$applicationStatus,"resultStatus"=>$resultStatus]);
+        }
+        else{
+            return "Result for this application is pending / Result Not found";
+        }    
     }
 
     public function editParameterMarks($id){
@@ -106,14 +114,22 @@ class resultAdminController extends BaseController {
         return Redirect::Back()->with('success','Marks Updated Successfully');
     }
 
-    public function exportExcel($course_id){
-        $applicationsResult = Application::applicationsResult()
-            ->where('applications.status',3)
-            ->where('applications.course_id',$course_id)
-            ->get();      
-        $resultStatus = Result::status();        
-        include(app_path().'/libraries/Classes/PHPExcel.php');
-        include(app_path().'/libraries/export/coach.php');
+    public function exportExcel(){
+
+        $sql = Application::applicationsResult()->where('applications.status',3);
+        if(Input::has('course')){
+            $sql = $sql->where('applications.course_id',Input::get('course'));
+        }
+        $applicationsResult = $sql->get();
+        if(sizeof($applicationsResult)>0){
+            $resultStatus = Result::status();        
+            include(app_path().'/libraries/Classes/PHPExcel.php');
+            include(app_path().'/libraries/export/coach.php');
+        } 
+        else{
+            return Redirect::back()->with('failure','No Application found to export');
+        }  
+        
     }
 
     public function uploadMarks(){

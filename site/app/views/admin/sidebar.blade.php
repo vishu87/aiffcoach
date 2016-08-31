@@ -6,7 +6,6 @@
     </li>
     <li style="height:10px">
     </li>
-
     <li class="@if($sidebar == 'dashboard' ) active @endif" >
       <a href="{{url('/admin')}}">
         <i class="fa fa-home"></i>
@@ -14,7 +13,6 @@
         <span class="selected"></span>
       </a>
     </li>
-
     <li class="@if($sidebar == 'coach' ) active open @endif">
       <a href="javascript:;">
       <i class="fa fa-users"></i>
@@ -27,13 +25,11 @@
           <i class="fa fa-chevron-right"></i>
           Approved</a>
         </li>
-        
          <li class="@if($sidebar == 'coach' && $subsidebar == 2 ) active @endif">
           <a href="{{url('admin/pendingCoach')}}">
           <i class="fa fa-chevron-right"></i>
           Pending</a>
         </li>
-
       </ul>
     </li>
     <li class="@if($sidebar == 'license' ) active @endif" >
@@ -50,19 +46,16 @@
       <span class="arrow @if($sidebar == 'courses' ) open @endif"></span>
       </a>
       <ul class="sub-menu">
-
-         <li class="@if($sidebar == 'courses' && $subsidebar == 2 ) active @endif">
+        <li class="@if($sidebar == 'courses' && $subsidebar == 2 ) active @endif">
           <a href="{{url('admin/Courses/active')}}">
           <i class="fa fa-chevron-right"></i>
           Active</a>
         </li>
-
         <!-- <li class="@if($sidebar == 'courses' && $subsidebar == 3 ) active @endif">
           <a href="{{url('admin/Courses/inactive')}}">
           <i class="fa fa-group"></i>
           Inactive</a>
         </li> -->
-
         <li class="@if($sidebar == 'courses' && $subsidebar == 1 ) active @endif" style="display:inherit">
           <a href="{{url('admin/Courses')}}">
           <i class="fa fa-chevron-right"></i>
@@ -82,7 +75,6 @@
           <i class="fa fa-chevron-right"></i>
           Approved</a>
         </li>
-
         <li class="@if($sidebar == 'Applications' && $subsidebar == 3 ) active @endif">
           <a href="{{url('admin/Applications/pending')}}">
           <i class="fa fa-chevron-right"></i>
@@ -90,7 +82,13 @@
         </li>
       </ul>
     </li>
-    
+    <li class="@if($sidebar == 'results' ) active @endif" >
+      <a href="{{url('/admin/ApplicationResults')}}">
+        <i class="fa fa-key"></i>
+        <span class="title">Results</span>
+        <span class="selected"></span>
+      </a>
+    </li>
     <li class="@if($sidebar == 'payment' ) active open @endif">
       <a href="javascript:;">
       <i class="fa fa-credit-card"></i>
@@ -103,7 +101,6 @@
           <i class="fa fa-chevron-right"></i>
           All</a>
         </li>
-
         <li class="@if($sidebar == 'payment' && $subsidebar == 2 ) active @endif">
           <a href="{{url('admin/Payment/pending')}}">
           <i class="fa fa-chevron-right"></i>
@@ -111,7 +108,6 @@
         </li>
       </ul>
     </li>
-    
     <li class="@if($sidebar == 'profile' ) active @endif" >
       <a href="{{url('/changePassword')}}">
         <i class="fa fa-lock"></i>
@@ -121,5 +117,3 @@
     </li>
   </ul>
 </div>
-
-

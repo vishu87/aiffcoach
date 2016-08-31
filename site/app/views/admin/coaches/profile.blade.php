@@ -3,7 +3,7 @@
 		<h2 class="page-title">{{strtoupper($coach->full_name)}}<br>{{strtoupper($coach->registration_id)}}</h2>
 	</div>
 	<div class="col-md-6">
-		<a href="#" class="btn yellow pull-right" style="margin-top:20px">Edit</a>
+		<a href="{{url('admin/editCoachProfile/'.$coach->id)}}" class="btn yellow pull-right" style="margin-top:10px">Edit</a>
 	</div>
 </div>
 <div class="row">
@@ -120,7 +120,7 @@
 		<h3>Employment Details</h3>
 	</div>
 	<div class="col-md-6">
-		<a href="#" class="btn yellow pull-right" style="margin-top:20px">Edit</a>
+		<!-- <a href="#" class="btn yellow pull-right" style="margin-top:20px">Edit</a> -->
 	</div>
 </div>
 @if(sizeof($employmentDetails) > 0)
@@ -190,7 +190,7 @@
 		<h3>Courses Enrolled</h3>
 	</div>
 	<div class="col-md-6">
-		<a href="#" class="btn yellow pull-right" style="margin-top:20px">Edit</a>
+		<!-- <a href="#" class="btn yellow pull-right" style="margin-top:20px">Edit</a> -->
 	</div>
 </div>
 @if(sizeof($courses) > 0)

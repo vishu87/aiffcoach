@@ -39,4 +39,8 @@ CREATE TABLE IF NOT EXISTS `coach_licenses` (
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+// 30/08/2016
+
+ALTER TABLE `coach_licenses` ADD `course_id` INT NOT NULL AFTER `coach_id`;
 ?>

@@ -9,16 +9,17 @@
 	<tr>
 		<td>{{$data->parameter}}</td>
 		<td>
-			
 			@foreach($results as $result)
 				@if($result->parameter_id==$data->parameter_id)
 					{{$result->marks}}
 				@endif	
 			@endforeach
-
 		</td>
 		<td>{{$data->max_marks}}</td>
 	</tr>
 	<?php $count++;?>
 	@endforeach
 </table>
+<div>
+	<h3>Result Status - {{$resultStatus[$applicationStatus->status]}}</h3>
+</div>

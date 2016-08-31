@@ -1,123 +1,155 @@
 <?php
 
 class AdminController extends BaseController {
-    protected $layout = 'layout';
-    
-    public function index(){
-        $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'dashboard','subsidebar'=>1]);
-        $this->layout->main = View::make('admin.index',[]);
+  protected $layout = 'layout';
+  
+  public function index(){
+      $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'dashboard','subsidebar'=>1]);
+      $this->layout->main = View::make('admin.index',[]);
+  }
+
+  public function approvedCoach(){
+  	$sql = Coach::listing()->approved()->where('users.official_types',Auth::user()->manage_official_type);
+
+      if(Input::get("registration_id") != ''){
+          $sql = $sql->where('coaches.registration_id','LIKE','%'.Input::get('registration_id').'%');
+      }
+      if(Input::get("official_name") != ''){
+          $sql = $sql->where('coaches.full_name','LIKE','%'.Input::get('official_name').'%');
+      }
+
+      $total = $sql->count();
+      $max_per_page = 1;
+      $total_pages = ceil($total/$max_per_page);
+      if(Input::has('page')){
+          $page_id = Input::get('page');
+      } else {
+          $page_id = 1;
+      }
+
+      $input_string = 'admin/approvedCoach?';
+      $count_string = 0;
+      foreach (Input::all() as $key => $value) {
+          if($key != 'page'){
+              $input_string .= ($count_string == 0)?'':'&';
+              $input_string .= $key.'='.$value;
+              $count_string++;
+          }
+      }
+
+      $coaches = $sql->skip(($page_id-1)*$max_per_page)->take($max_per_page)->get();
+      $status = Coach::Status();
+
+      $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'coach','subsidebar'=>1]);
+      $this->layout->main = View::make('admin.coaches.list',['coaches'=>$coaches,"title"=>'Approved Officials', "status" => $status,'flag'=>1,"total" => $total, "page_id"=>$page_id, "max_per_page" => $max_per_page, "total_pages" => $total_pages,'input_string'=>$input_string]);
+  }
+
+  public function pendingCoach(){
+  	$sql = Coach::listing()->pending()->where('users.official_types','LIKE','%'.Auth::user()->manage_official_type.'%');
+
+      if(Input::get("registration_id") != ''){
+          $sql = $sql->where('coaches.registration_id','LIKE','%'.Input::get('registration_id').'%');
+      }
+      if(Input::get("official_name") != ''){
+          $sql = $sql->where('coaches.full_name','LIKE','%'.Input::get('official_name').'%');
+      }
+
+      $total = $sql->count();
+      $max_per_page = 1;
+      $total_pages = ceil($total/$max_per_page);
+      if(Input::has('page')){
+          $page_id = Input::get('page');
+      } else {
+          $page_id = 1;
+      }
+
+      $input_string = 'admin/pendingCoach?';
+      $count_string = 0;
+      foreach (Input::all() as $key => $value) {
+          if($key != 'page'){
+              $input_string .= ($count_string == 0)?'':'&';
+              $input_string .= $key.'='.$value;
+              $count_string++;
+          }
+      }
+
+      $coaches = $sql->skip(($page_id-1)*$max_per_page)->take($max_per_page)->get();
+      $status = Coach::Status();
+
+      $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'coach','subsidebar'=>2]);
+      $this->layout->main = View::make('admin.coaches.list',['coaches'=>$coaches,"title"=>'Pending for Approval', "status" => $status,'flag'=>2,"total" => $total, "page_id"=>$page_id, "max_per_page" => $max_per_page, "total_pages" => $total_pages,'input_string'=>$input_string]);
+  }
+  // public function inactiveCoach(){
+  // 	$coaches = Coach::listing()->disapproved()->get();
+  //     $status = Coach::Status();
+  // 	$this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'coach','subsidebar'=>3]);
+  // 	$this->layout->main = View::make('admin.coaches.list',['coaches'=>$coaches,"title"=>'Inactive Coaches', "status" => $status]);
+  // }
+  // public function allCoach(){
+  //     $sql = Coach::listing();
+  //     $total = $sql->count();
+  //     $max_per_page = 25;
+  //     $total_pages = ceil($total/$max_per_page);
+  //     if(Input::has('page')){
+  //         $page_id = Input::get('page');
+  //     } else {
+  //         $page_id = 1;
+  //     }
+  //     $coaches = $sql->skip(($page_id-1)*$max_per_page)->take($max_per_page)->get();
+  //     $status = Coach::Status();
+  //     $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'coach','subsidebar'=>3]);
+  //     $this->layout->main = View::make('admin.coaches.list',['coaches'=>$coaches,"title"=>'All Officials', "status" => $status,'flag'=>3,"total" => $total, "page_id"=>$page_id, "max_per_page" => $max_per_page, "total_pages" => $total_pages,'url_link'=>'admin/all?page=']);
+  // }
+  // public function viewCoach($id){
+  //     $coach = Coach::select('coaches.first_name','coaches.status','states.name as state_registation','coaches.middle_name','coaches.last_name','coaches.dob','coaches.gender','coaches.photo','coach_parameters.email','coach_parameters.address1','coach_parameters.address2','coach_parameters.city','coach_parameters.pincode','coach_parameters.mobile')->join('states','coaches.state_id','=','states.id')->join('coach_parameters','coaches.id','=','coach_parameters.coach_id')->where('coaches.id',$id)->first();
+  //     $employmentDetails = EmploymentDetails::where('coach_id',$id)->get();
+  //     return View::make('admin.coaches.view',['coach'=>$coach,'employmentDetails'=>$employmentDetails]);
+  // }
+  public function viewCoachDetails($id){
+    $coach = Coach::select('coaches.*','states.name as state_registation','coach_parameters.email','coach_parameters.address1','coach_parameters.address2','coach_parameters.city','coach_parameters.pincode','coach_parameters.mobile')->join('states','coaches.state_id','=','states.id')->join('coach_parameters','coaches.id','=','coach_parameters.coach_id')->where('coaches.id',$id)->first();
+    $documents = CoachDocument::select('coach_documents.*','documents.name as document_name')->join('documents','coach_documents.document_id','=','documents.id')->where('coach_id',$id)->get();
+    $coachLicense = CoachLicense::listing()->where('coach_id',$id)->get();
+    $employmentDetails = EmploymentDetails::where('coach_id',$id)->get();
+    $activities = CoachActivity::where('coach_id',$id)->get();
+    $courses = Application::select('applications.*','courses.name as course_name','courses.prerequisite_id','courses.end_date','courses.documents','license.name as license_name')->join('courses','applications.course_id','=','courses.id')->leftJoin('license','license.id','=','courses.license_id')->where('coach_id',$id)->get();
+    $coachStatus = Coach::status();
+    $licenseList = License::lists('name','id');
+    $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'coach','subsidebar'=>3]);
+    $this->layout->main = View::make('admin.coaches.profile',['coach'=>$coach,'employmentDetails'=>$employmentDetails,"documents"=>$documents,"activities"=>$activities,"courses"=>$courses,"licenseList"=>$licenseList,"coachStatus"=>$coachStatus,"coachLicense"=>$coachLicense]);
+  }
+
+  public function editCoachProfile($coach_id){
+    $coach = Coach::select('coaches.*','states.name as state_registation','coach_parameters.email','coach_parameters.address1','coach_parameters.address2','coach_parameters.city','coach_parameters.pincode','coach_parameters.mobile')->join('states','coaches.state_id','=','states.id')->join('coach_parameters','coaches.id','=','coach_parameters.coach_id')->where('coaches.id',$coach_id)->first();
+    $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'coach','subsidebar'=>3]);
+    $this->layout->main = View::make('admin.coaches.editProfile',["coach"=>$coach]);
+  }
+
+  public function updateCoachProfile($coach_id){
+    $coach = User::select('id as user_id')->where('coach_id',$coach_id)->first();
+    $cre = ["full_name"=>Input::get('full_name'),'email'=>Input::get('email'),'gender'=>Input::get('gender'),'dob'=>Input::get('dob')];
+    $rules = ["full_name"=>'required','email'=>'required|email|unique:users,username,'.$coach->user_id,'gender'=>'required','dob'=>'required'];
+    $validator = Validator::make($cre,$rules);
+    if($validator->passes()){
+      $coach = Coach::find($coach_id);
+      $coach->full_name = Input::get('full_name');
+      $coach->dob = date('Y-m-d',strtotime(Input::get('dob')));
+      $coach->gender = Input::get('gender');
+      $destinationPath = 'coaches-doc/';
+      if(Input::hasFile('photo')){
+        $extension = Input::file('photo')->getClientOriginalExtension();
+        $doc = "photo_".str_replace(' ','-',Input::file('photo')->getClientOriginalName());
+        Input::file('photo')->move($destinationPath,$doc);
+        $coach->photo = $destinationPath.$doc;
+      }
+      $coach->save();
+      $coach_parameters = CoachParameter::where('coach_id',$coach_id)->update(["email"=>Input::get('email'),'mobile'=>Input::get('mobile')]);
+      return Redirect::to('admin/viewCoachDetails/'.$coach_id)->with('success','profile updated successfully');
+
     }
-
-    public function approvedCoach(){
-    	$sql = Coach::listing()->approved()->where('users.official_types',Auth::user()->manage_official_type);
-
-        if(Input::get("registration_id") != ''){
-            $sql = $sql->where('coaches.registration_id','LIKE','%'.Input::get('registration_id').'%');
-        }
-        if(Input::get("official_name") != ''){
-            $sql = $sql->where('coaches.full_name','LIKE','%'.Input::get('official_name').'%');
-        }
-
-        $total = $sql->count();
-        $max_per_page = 1;
-        $total_pages = ceil($total/$max_per_page);
-        if(Input::has('page')){
-            $page_id = Input::get('page');
-        } else {
-            $page_id = 1;
-        }
-
-        $input_string = 'admin/approvedCoach?';
-        $count_string = 0;
-        foreach (Input::all() as $key => $value) {
-            if($key != 'page'){
-                $input_string .= ($count_string == 0)?'':'&';
-                $input_string .= $key.'='.$value;
-                $count_string++;
-            }
-        }
-
-        $coaches = $sql->skip(($page_id-1)*$max_per_page)->take($max_per_page)->get();
-        $status = Coach::Status();
-
-        $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'coach','subsidebar'=>1]);
-        $this->layout->main = View::make('admin.coaches.list',['coaches'=>$coaches,"title"=>'Approved Officials', "status" => $status,'flag'=>1,"total" => $total, "page_id"=>$page_id, "max_per_page" => $max_per_page, "total_pages" => $total_pages,'input_string'=>$input_string]);
+    else{
+      return Redirect::back()->withErrors($validator)->withInput()->with('failure','All fields are not field');
     }
-
-    public function pendingCoach(){
-    	$sql = Coach::listing()->pending()->where('users.official_types','LIKE','%'.Auth::user()->manage_official_type.'%');
-
-        if(Input::get("registration_id") != ''){
-            $sql = $sql->where('coaches.registration_id','LIKE','%'.Input::get('registration_id').'%');
-        }
-        if(Input::get("official_name") != ''){
-            $sql = $sql->where('coaches.full_name','LIKE','%'.Input::get('official_name').'%');
-        }
-
-        $total = $sql->count();
-        $max_per_page = 1;
-        $total_pages = ceil($total/$max_per_page);
-        if(Input::has('page')){
-            $page_id = Input::get('page');
-        } else {
-            $page_id = 1;
-        }
-
-        $input_string = 'admin/pendingCoach?';
-        $count_string = 0;
-        foreach (Input::all() as $key => $value) {
-            if($key != 'page'){
-                $input_string .= ($count_string == 0)?'':'&';
-                $input_string .= $key.'='.$value;
-                $count_string++;
-            }
-        }
-
-        $coaches = $sql->skip(($page_id-1)*$max_per_page)->take($max_per_page)->get();
-        $status = Coach::Status();
-
-        $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'coach','subsidebar'=>2]);
-        $this->layout->main = View::make('admin.coaches.list',['coaches'=>$coaches,"title"=>'Pending for Approval', "status" => $status,'flag'=>2,"total" => $total, "page_id"=>$page_id, "max_per_page" => $max_per_page, "total_pages" => $total_pages,'input_string'=>$input_string]);
-    }
-    // public function inactiveCoach(){
-    // 	$coaches = Coach::listing()->disapproved()->get();
-    //     $status = Coach::Status();
-    // 	$this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'coach','subsidebar'=>3]);
-    // 	$this->layout->main = View::make('admin.coaches.list',['coaches'=>$coaches,"title"=>'Inactive Coaches', "status" => $status]);
-    // }
-    // public function allCoach(){
-    //     $sql = Coach::listing();
-    //     $total = $sql->count();
-    //     $max_per_page = 25;
-    //     $total_pages = ceil($total/$max_per_page);
-    //     if(Input::has('page')){
-    //         $page_id = Input::get('page');
-    //     } else {
-    //         $page_id = 1;
-    //     }
-    //     $coaches = $sql->skip(($page_id-1)*$max_per_page)->take($max_per_page)->get();
-    //     $status = Coach::Status();
-    //     $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'coach','subsidebar'=>3]);
-    //     $this->layout->main = View::make('admin.coaches.list',['coaches'=>$coaches,"title"=>'All Officials', "status" => $status,'flag'=>3,"total" => $total, "page_id"=>$page_id, "max_per_page" => $max_per_page, "total_pages" => $total_pages,'url_link'=>'admin/all?page=']);
-    // }
-    // public function viewCoach($id){
-    //     $coach = Coach::select('coaches.first_name','coaches.status','states.name as state_registation','coaches.middle_name','coaches.last_name','coaches.dob','coaches.gender','coaches.photo','coach_parameters.email','coach_parameters.address1','coach_parameters.address2','coach_parameters.city','coach_parameters.pincode','coach_parameters.mobile')->join('states','coaches.state_id','=','states.id')->join('coach_parameters','coaches.id','=','coach_parameters.coach_id')->where('coaches.id',$id)->first();
-    //     $employmentDetails = EmploymentDetails::where('coach_id',$id)->get();
-    //     return View::make('admin.coaches.view',['coach'=>$coach,'employmentDetails'=>$employmentDetails]);
-    // }
-    public function viewCoachDetails($id){
-        $coach = Coach::select('coaches.full_name','coaches.first_name','coaches.status','states.name as state_registation','coaches.middle_name','coaches.last_name','coaches.dob','coaches.gender','coaches.photo','coach_parameters.email','coach_parameters.address1','coach_parameters.address2','coach_parameters.city','coach_parameters.pincode','coach_parameters.mobile','coaches.registration_id')->join('states','coaches.state_id','=','states.id')->join('coach_parameters','coaches.id','=','coach_parameters.coach_id')->where('coaches.id',$id)->first();
-        $documents = CoachDocument::select('coach_documents.*','documents.name as document_name')->join('documents','coach_documents.document_id','=','documents.id')->where('coach_id',$id)->get();
-        $coachLicense = CoachLicense::listing()->where('coach_id',$id)->get();
-        $employmentDetails = EmploymentDetails::where('coach_id',$id)->get();
-        $activities = CoachActivity::where('coach_id',$id)->get();
-        $courses = Application::select('applications.*','courses.name as course_name','courses.prerequisite_id','courses.end_date','courses.documents','license.name as license_name')->join('courses','applications.course_id','=','courses.id')->leftJoin('license','license.id','=','courses.license_id')->where('coach_id',$id)->get();
-        $coachStatus = Coach::status();
-        $licenseList = License::lists('name','id');
-        $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'coach','subsidebar'=>3]);
-        $this->layout->main = View::make('admin.coaches.profile',['coach'=>$coach,'employmentDetails'=>$employmentDetails,"documents"=>$documents,"activities"=>$activities,"courses"=>$courses,"licenseList"=>$licenseList,"coachStatus"=>$coachStatus,"coachLicense"=>$coachLicense]);
-    }
-
+  }  
    //  public function markCoachStatus($flag,$id,$remarks,$count){
    //      $approval = new Approval;
    //      $approval->entity_type = 1;
@@ -156,6 +188,131 @@ class AdminController extends BaseController {
    //      return json_encode($data);
    // }
 
+
+  public function ApplicationsResults(){
+    $status = Application::status();
+    $courses = ["" => "Select Course"] + Course::lists('name','id');
+    if(Input::has('course')){
+      $applications = Application::select('courses.name as course_name','courses.id as course_id','applications.id','applications.status','coaches.first_name','coaches.last_name','coaches.middle_name','license.name as license_name','application_result.status as finalResult','application_result.remarks')
+        ->join('coaches','applications.coach_id','=','coaches.id')
+        ->leftJoin('courses','applications.course_id','=','courses.id')
+        ->leftJoin('license','courses.license_id','=','license.id')
+        ->leftJoin('application_result','applications.id','=','application_result.application_id')
+        ->where('applications.status',3)
+        ->where('applications.course_id',Input::get('course'))
+        ->get();
+      $resultStatus = Result::status();
+    }else{
+      $applications = Application::select('courses.name as course_name','courses.id as course_id','applications.id','applications.status','coaches.first_name','coaches.last_name','coaches.middle_name','license.name as license_name','application_result.status as finalResult','application_result.remarks')
+        ->join('coaches','applications.coach_id','=','coaches.id')
+        ->join('courses','applications.course_id','=','courses.id')
+        ->leftJoin('license','courses.license_id','=','license.id')
+        ->leftJoin('application_result','applications.id','=','application_result.application_id')
+        ->where('applications.status',3)
+        ->get();
+      $resultStatus = Result::status();
+      // $applications = Application::applications()->where('applications.status',3)->get();
+    }
+    $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'results']);
+    $this->layout->main = View::make('resultAdmin.applications.index',['status'=>$status,"applications"=>$applications,'title'=>'Applications Results','flag'=>1, "courses" => $courses,'resultStatus'=>$resultStatus]);
+  }  
+
+  public function editParameterMarks($application_id){
+    $course = Application::select('license.id as license_id')->join('courses','applications.course_id','=','courses.id')->join('license','courses.license_id','=','license.id')->where('applications.id',$application_id)->first();
+    $parameters = CourseParameter::select('parameters.parameter','parameters.max_marks','courses_parameter.parameter_id')
+      ->join('parameters','courses_parameter.parameter_id','=','parameters.id')
+      ->where('license_id',$course->license_id)
+      ->where('courses_parameter.active',0)
+      ->get();
+    $results = Result::where('application_id',$application_id)->lists('marks','parameter_id');
+    $status = Result::status();
+    $finalResult = ApplicationResult::where('application_id',$application_id)->first();
+    $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'results']);
+    $this->layout->main = View::make('resultAdmin.result.view',["application_id"=>$application_id,'parameters'=>$parameters,"results"=>$results,'application_id'=>$application_id,'status'=>$status,"finalResult"=>$finalResult]);
+  }
+
+  public function ViewApplicationsResult($application_id){
+    $checkApp = ApplicationResult::where('application_id',$application_id)->count();
+    if ($checkApp>0) {
+      $course = Application::select('license.id as license_id')->join('courses','applications.course_id','=','courses.id')->join('license','courses.license_id','=','license.id')->where('applications.id',$application_id)->first();
+      $parameters = CourseParameter::select('parameters.parameter','parameters.max_marks','courses_parameter.parameter_id')
+        ->join('parameters','courses_parameter.parameter_id','=','parameters.id')
+        ->where('license_id',$course->license_id)
+        ->where('courses_parameter.active',0)
+        ->get();
+      $resultStatus = Result::status();
+      $results = Result::where('application_id',$application_id)->get();
+      $applicationStatus = ApplicationResult::where('application_id',$application_id)->first();
+      return View::make('resultAdmin.result.list',['parameters'=>$parameters,'application_id'=>$application_id,"results"=>$results,"applicationStatus"=>$applicationStatus,"resultStatus"=>$resultStatus]);
+    }
+    else{
+      return "<span style='color:red'>Result for this application is pending / Result Not found</span>";
+    }  
+  }
+
+  public function uploadLicense($application_id){
+    $coach = Application::select('applications.coach_id','applications.course_id','coaches.full_name','coaches.id')->join('coaches','applications.coach_id','=','coaches.id')->where('applications.id',$application_id)->first();
+    $checkLicense = CoachLicense::where('coach_id',$coach->id)->where('course_id',$coach->course_id)->count();
+    $coachLicense = CoachLicense::listing()->where('coach_id',$coach->coach_id)->get();
+    $licenseList = License::licenseList(); 
+    if($checkLicense>0){
+      $editLicense = CoachLicense::where('coach_id',$coach->id)->where('course_id',$coach->course_id)->first();
+      $parameters = ['licenses'=>$licenseList,"coach"=>$coach,"coachLicense"=>$coachLicense,"editLicense"=>$editLicense];
+    }
+    else{
+      $parameters = ['licenses'=>$licenseList,"coach"=>$coach,"coachLicense"=>$coachLicense];
+    }
+    $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'results']);
+    $this->layout->main = View::make('resultAdmin.result.uploadLicense',$parameters);
+  }
+
+  public function storeLicense($coach_id){
+    $cre = ["license_id"=>Input::get("license_id"),"start_date"=>Input::get("start_date"),"number"=>Input::get("number"),"end_date"=>Input::get("end_date")];
+    $rules = ["license_id"=>'required',"start_date"=>"required|date","end_date"=>"date|after:start_date","number"=>"required"];
+    $validator = Validator::make($cre,$rules);
+    if($validator->passes()){
+      $checkLicense = CoachLicense::where('coach_id',$coach_id)->where('course_id',Input::get('course_id'))->count();
+      if($checkLicense>0){
+        $editLicense = CoachLicense::where('coach_id',$coach_id)->where('course_id',Input::get('course_id'))->first();
+        $coachLicense = CoachLicense::find($editLicense->id);
+      }
+      else{
+        $coachLicense = new CoachLicense;
+      }
+      
+      $coachLicense->coach_id = $coach_id;
+      if(Input::has('course_id')){
+        $coachLicense->course_id = Input::get('course_id');
+      }
+      $coachLicense->license_id = Input::get("license_id");
+      $coachLicense->number = Input::get("number");
+      $coachLicense->start_date = date("Y-m-d",strtotime(Input::get("start_date")));
+      $coachLicense->end_date = date("Y-m-d",strtotime(Input::get("end_date")));
+      $destinationPath = "coach-licenses/";
+      if(Input::hasFile('document')){
+        $extension = Input::file('document')->getClientOriginalExtension();
+        $doc = "dobProof_".Auth::id().'_'.str_replace(' ','-',Input::file('document')->getClientOriginalName());
+        Input::file('document')->move($destinationPath,$doc);
+        $coachLicense->document = $destinationPath.$doc;
+      }
+      $coachLicense->save();
+      return Redirect::back()->with('success','License added successfully');
+    }
+    else{
+      return Redirect::back()->withErrors($validator)->withInput()->with('failure','All fields are not properly field');
+    }
+  }
+
+  public function deleteLicense($license_id){
+    $check = CoachLicense::where('id',$license_id)->count();
+    if($check>0){
+      CoachLicense::find($license_id)->delete();
+      $data["success"] = true;
+      $data["message"] = "License deleted successfully";
+    }
+    else{
+      $data["message"] = "No license found to delete";
+    }
+    return json_encode($data);
+  }
 }
-
-
