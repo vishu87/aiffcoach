@@ -46,7 +46,12 @@
 	</div>
 	<div class="col-md-6">
 		<div style="margin:10px;">
-			<h3 class="page-title">Status - {{$coachStatus[$coach->status]}}</h3>
+			<h3>Status - {{$coachStatus[$coach->status]}}</h3>
+			@if($coach->check_admin())
+				@include('approve_box')
+			@endif
+
+			{{Approval::approval_html(1, $coach->id)}}
 		</div>
 	</div>
 </div>
@@ -93,6 +98,8 @@
 			<th>License Number</th>
 			<th>Start Date</th>
 			<th>End Date</th>
+			<th>Document</th>
+			<th>Status</th>
 			<th>#</th>
 		</tr>
 		<?php $count=1;?>
@@ -104,6 +111,16 @@
 				<td>{{date('d-m-Y',strtotime($license->start_date))}}</td>
 				<td>{{date('d-m-Y',strtotime($license->end_date))}}</td>
 				<td>@if($license->document!='')<a href="{{url($license->document)}}" target="_blank">View </a>@endif</td>
+				<td></td>
+				<td><a href="javascript:;" class="btn btn-xs blue"><i class="fa fa-angle-double-right"></i> Details</a></td>
+			</t>
+			<tr>
+				<td colspan="8">
+					@if(true)
+						@include('approve_box')
+					@endif
+					{{Approval::approval_html(1, $coach->id)}}
+				</td>
 			</tr>
 			<?php $count++?>
 		@endforeach

@@ -43,4 +43,7 @@ CREATE TABLE IF NOT EXISTS `coach_licenses` (
 // 30/08/2016
 
 ALTER TABLE `coach_licenses` ADD `course_id` INT NOT NULL AFTER `coach_id`;
+
+// 01-09
+ALTER TABLE `users`  ADD `name` VARCHAR(200) NOT NULL  AFTER `coach_id`;
 ?>

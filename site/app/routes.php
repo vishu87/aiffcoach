@@ -30,6 +30,11 @@ Route::get('/logout', function(){
     return Redirect::to('/');
 });
 Route::post('/register', 'CoachController@register');
+
+Route::group(['before' => 'auth'], function () {
+    Route::post('/approve/{entity_type}/{etity_id}','ApprovalController@postApprove');
+});
+
 Route::group(['prefix'=>'coach','before'=>['auth','coach']], function () {
 
 	Route::post('/postEmployment','CoachController@postEmployment');

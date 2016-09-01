@@ -9,7 +9,7 @@ class AdminController extends BaseController {
   }
 
   public function approvedCoach(){
-  	$sql = Coach::listing()->approved()->where('users.official_types',Auth::user()->manage_official_type);
+  	$sql = Coach::listing()->approved()->where('users.official_types','LIKE','%'.Auth::user()->manage_official_type.'%');
 
       if(Input::get("registration_id") != ''){
           $sql = $sql->where('coaches.registration_id','LIKE','%'.Input::get('registration_id').'%');
@@ -19,7 +19,7 @@ class AdminController extends BaseController {
       }
 
       $total = $sql->count();
-      $max_per_page = 1;
+      $max_per_page = 100;
       $total_pages = ceil($total/$max_per_page);
       if(Input::has('page')){
           $page_id = Input::get('page');
@@ -114,6 +114,7 @@ class AdminController extends BaseController {
     $courses = Application::select('applications.*','courses.name as course_name','courses.prerequisite_id','courses.end_date','courses.documents','license.name as license_name')->join('courses','applications.course_id','=','courses.id')->leftJoin('license','license.id','=','courses.license_id')->where('coach_id',$id)->get();
     $coachStatus = Coach::status();
     $licenseList = License::lists('name','id');
+
     $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'coach','subsidebar'=>3]);
     $this->layout->main = View::make('admin.coaches.profile',['coach'=>$coach,'employmentDetails'=>$employmentDetails,"documents"=>$documents,"activities"=>$activities,"courses"=>$courses,"licenseList"=>$licenseList,"coachStatus"=>$coachStatus,"coachLicense"=>$coachLicense]);
   }
