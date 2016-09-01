@@ -32,7 +32,6 @@
 				{{Form::text('name',(isset($course))?$course->name:'',["class"=>"form-control ","required"=>"true"])}}
 				<span class="error">{{$errors->first('name')}}</span>
 			</div>
-			
 			<div class="col-md-3 form-group">
 				{{Form::label('Start Date')}} <span class="error"> *</span>
 				{{Form::text('start_date',(isset($course))?date('d-m-Y',strtotime($course->start_date)):'',["class"=>"form-control datepicker","required"=>"true","date_en"=>'true'])}}
@@ -44,9 +43,7 @@
 				<span class="error">{{$errors->first('end_date')}}</span>
 			</div>
 		</div>
-		
 		<div class="row">	
-			
 			<div class="col-md-3 form-group">
 				{{Form::label('License Type')}} <span class="error"> *</span>
 				{{Form::select('license_id',$licenses,(isset($course))?$course->license_id:'',["class"=>"form-control","required"=>"true"])}}
@@ -62,16 +59,13 @@
 				{{Form::text('fee',(isset($course))?$course->fees:'',["class"=>"form-control","required"=>"true"])}}
 				<span class="error">{{$errors->first('fee')}}</span>
 			</div>
-			<div class="col-md-4 form-group">
+			<div class="col-md-3 form-group">
 				{{Form::label('Venue')}} <span class="error"> *</span>
 				{{Form::text('venue',(isset($course))?$course->venue:'',["class"=>"form-control","required"=>"true"])}}
 				<span class="error">{{$errors->first('venue')}}</span>
 			</div>
 		</div>
-
 		<div class="row">	
-			
-			
 			<div class="col-md-12 form-group">
 				{{Form::label('Description')}} <span class="error"> *</span>
 				{{Form::textarea('description',(isset($course))?$course->description:'',["class"=>"form-control","required"=>"true"])}}
@@ -79,14 +73,12 @@
 			</div>
 		</div>
 		<div class="row">	
-			
 			<div class="col-md-6 form-group">
 				<div class="row">
 					<div class="col-md-8">
 						{{Form::label('Documents')}}
 						{{Form::file('documents',["class"=>"form-control","pdf"=>'true'])}}
 						<span class="error">{{$errors->first('documents')}}</span>
-
 					</div>
 					@if(isset($course))
 

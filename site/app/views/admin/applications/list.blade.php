@@ -40,7 +40,7 @@
 
 	</div>
 </div>
-
+@if(sizeof($applications)>0)
 @if(isset($total))
 <div class="row" style="margin-top:20px;">
 	<div class="col-md-3">
@@ -97,6 +97,7 @@
 	</div>
 </div>
 @endif
+
 <div style="overflow-y:auto">
 	<table class="table table-bordered table-hover tablesorter">
 		<thead>
@@ -119,3 +120,6 @@
 			</tbody>
 	</table>
 </div>
+@else
+<div class="alert alert-warning">No records found !</div>
+@endif

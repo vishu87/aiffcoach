@@ -48,7 +48,6 @@
 		<div style="margin:10px;">
 			<h3 class="page-title">Status - {{$coachStatus[$coach->status]}}</h3>
 		</div>
-
 	</div>
 </div>
 <div>
