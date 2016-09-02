@@ -68,6 +68,8 @@
 			<th>Document Name</th>
 			<th>Document Number</th>
 			<th>Expiry Date</th>
+			<th>Document</th>
+			<th>Status</th>
 			<th>#</th>
 		</tr>
 		<?php $count=1;?>
@@ -77,8 +79,9 @@
 				<td>{{$document->document_name}}</td>
 				<td>{{$document->number}}</td>
 				<td>{{date('d-m-Y',strtotime($document->expiry_date))}}</td>
-				<td>@if($document->file!='')<a href="{{url($document->file)}}" target="_blank">View </a>@endif</td>
-				<td></td>
+				<td>@if($document->file!='')<a href="{{url($document->file)}}" target="_blank">View </a>@endif
+				</td>
+				<td>{{$ApprovalStatus[$document->status]}}</td>
 				<td><button  div-id="{{'approve_list_'.$count_main}}" class="btn btn-xs blue showApprovals"><i class="fa fa-angle-double-right"></i> Details</button></td>
 			</tr>
 			<tr id="{{'approve_list_'.$count_main++}}" style="display:none;">
@@ -131,9 +134,9 @@
 				<td>{{date('d-m-Y',strtotime($license->start_date))}}</td>
 				<td>{{date('d-m-Y',strtotime($license->end_date))}}</td>
 				<td>@if($license->document!='')<a href="{{url($license->document)}}" target="_blank">View </a>@endif</td>
-				<td></td>
+				<td>{{$ApprovalStatus[$license->status]}}</td>
 				<td><button  div-id="{{'approve_list_'.$count_main}}" class="btn btn-xs blue showApprovals"><i class="fa fa-angle-double-right"></i> Details</button></td>
-			</t>
+			</tr>
 			<tr id="{{'approve_list_'.$count_main++}}" style="display:none;">
 				<td colspan="8">
 					<div class="row" style="">
@@ -169,6 +172,7 @@
 	</div>
 </div>
 @if(sizeof($employmentDetails) > 0)
+<?php $entity_type=4; ?>
 <div class="row" style="padding:20px;">
 	<table class="table table-bordered table-hover">
 		<tr>
@@ -176,6 +180,8 @@
 			<th>Employment</th>
 			<th>Start Date</th>
 			<th>End Date</th>
+			<th>Status</th>
+			<th>Document</th>
 			<th>#</th>
 		</tr>
 		<?php $count=1;?>
@@ -185,7 +191,28 @@
 				<td>{{$employment->employment}}</td>
 				<td>{{date('d-m-Y',strtotime($employment->start_date))}}</td>
 				<td>{{date('d-m-Y',strtotime($employment->end_date))}}</td>
+				<td>{{$ApprovalStatus[$employment->status]}}</td>
 				<td>@if($employment->contract!='')<a href="{{url($employment->contract)}}" target="_blank">View </a>@endif</td>
+				<td>
+					<button  div-id="{{'approve_list_'.$count_main}}" class="btn btn-xs blue showApprovals"><i class="fa fa-angle-double-right"></i> Details</button></td>
+				</td>
+			</tr>
+			<tr id="{{'approve_list_'.$count_main++}}" style="display:none;">
+				<td colspan="8">
+					<div class="row" style="">
+						
+						@if($employment->check_admin())
+						<div class="col-md-6">
+							<?php $entity_id = $employment->id;?>
+							@include('approve_box')
+						</div>
+						@endif
+
+						<div class="col-md-6">
+							{{Approval::approval_html($entity_type, $employment->id)}}
+						</div>
+					</div>
+				</td>
 			</tr>
 			<?php $count++?>
 		@endforeach
@@ -200,6 +227,7 @@
 	<h3>Activity Details</h3>
 </div>
 @if(sizeof($activities) > 0)
+<?php $entity_type=5; ?>
 <div class="row" style="padding:20px;">
 	<table class="table table-bordered table-hover">
 		<tr>
@@ -208,6 +236,7 @@
 			<th>Place</th>
 			<th>Start Date</th>
 			<th>End Date</th>
+			<th>Status</th>
 			<th>#</th>
 		</tr>
 		<?php $count=1;?>
@@ -218,7 +247,27 @@
 				<td>{{$activity->place}}</td>
 				<td>{{date('d-m-Y',strtotime($activity->from_date))}}</td>
 				<td>{{date('d-m-Y',strtotime($activity->to_date))}}</td>
-				<td></td>
+				<td>{{$ApprovalStatus[$activity->status]}}</td>
+				<td>
+					<button  div-id="{{'approve_list_'.$count_main}}" class="btn btn-xs blue showApprovals"><i class="fa fa-angle-double-right"></i> Details</button></td>
+				</td>
+			</tr>
+			<tr id="{{'approve_list_'.$count_main++}}" style="display:none;">
+				<td colspan="8">
+					<div class="row" style="">
+						
+						@if($activity->check_admin())
+						<div class="col-md-6">
+							<?php $entity_id = $activity->id;?>
+							@include('approve_box')
+						</div>
+						@endif
+
+						<div class="col-md-6">
+							{{Approval::approval_html($entity_type, $activity->id)}}
+						</div>
+					</div>
+				</td>
 			</tr>
 			<?php $count++?>
 		@endforeach

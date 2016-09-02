@@ -8,8 +8,22 @@ class Approval extends Eloquent {
 		return array(
 			"1" => "Coach",
 			"2" => "Coach Document",
-			"3" => "Coach License"
+			"3" => "Coach License",
+			"4" => "Coach Employment",
+			"5" => "Coach Activity"
 		);
+	}
+
+	public static function status(){
+		return  array('0'=>'Pending','1' =>'Approved','2'=>'Referred Back','3'=>'Rejected' );
+	}
+
+	public static function get_status($status_id){
+		if(isset(Approval::status()[$status_id])){
+			return Approval::status()[$status_id];
+		} else {
+			return '';
+		}
 	}
 
 	public static function approval_html($entity_type, $entity_id){
@@ -25,6 +39,7 @@ class Approval extends Eloquent {
 							<th>SN</th>
 							<th>Remarks</th>
 							<th>Document</th>
+							<th>Status<th>
 							<th>Created by</th>
 							<th>Date</th>
 						</tr>
@@ -41,6 +56,7 @@ class Approval extends Eloquent {
 							<th>'.$count_log++.'</th>
 							<th>'.$log->remarks.'</th>
 							<th>'.$url.'</th>
+							<th>'.Approval::get_status($log->status).'</th>
 							<th>'.$log->user_name.'</th>
 							<th>'.date('d-m-Y',strtotime($log->created_at)).'</th>
 						</tr>';

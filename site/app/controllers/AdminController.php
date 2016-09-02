@@ -114,9 +114,9 @@ class AdminController extends BaseController {
     $courses = Application::select('applications.*','courses.name as course_name','courses.prerequisite_id','courses.end_date','courses.documents','license.name as license_name')->join('courses','applications.course_id','=','courses.id')->leftJoin('license','license.id','=','courses.license_id')->where('coach_id',$id)->get();
     $coachStatus = Coach::status();
     $licenseList = License::lists('name','id');
-
+    $ApprovalStatus = Approval::status();
     $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'coach','subsidebar'=>3]);
-    $this->layout->main = View::make('admin.coaches.profile',['coach'=>$coach,'employmentDetails'=>$employmentDetails,"documents"=>$documents,"activities"=>$activities,"courses"=>$courses,"licenseList"=>$licenseList,"coachStatus"=>$coachStatus,"coachLicense"=>$coachLicense]);
+    $this->layout->main = View::make('admin.coaches.profile',['coach'=>$coach,'employmentDetails'=>$employmentDetails,"documents"=>$documents,"activities"=>$activities,"courses"=>$courses,"licenseList"=>$licenseList,"coachStatus"=>$coachStatus,"coachLicense"=>$coachLicense,'ApprovalStatus'=>$ApprovalStatus]);
   }
 
   public function editCoachProfile($coach_id){
