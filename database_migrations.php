@@ -46,4 +46,10 @@ ALTER TABLE `coach_licenses` ADD `course_id` INT NOT NULL AFTER `coach_id`;
 
 // 01-09
 ALTER TABLE `users`  ADD `name` VARCHAR(200) NOT NULL  AFTER `coach_id`;
+
+//02-09
+ALTER TABLE `coach_licenses` ADD `status` INT(2) NOT NULL AFTER `document`;
+ALTER TABLE `employment_details` ADD `status` INT(2) NOT NULL AFTER `contract`;
+ALTER TABLE `coach_activity` ADD `status` INT(2) NOT NULL AFTER `position_role`;
+ALTER TABLE `approval` ADD `document` TEXT NOT NULL AFTER `user_id`;
 ?>

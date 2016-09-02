@@ -1,5 +1,5 @@
 <?php
-
+// status 0=>Not approved , 1=>"Approved"
 class CoachLicense extends Eloquent {
 	protected $table = 'coach_licenses';
 

@@ -11,3 +11,15 @@
 		</td>
 	</tr>
 @endif
+
+@if(isset($coach))
+	<tr>
+		<td colspan="8">
+			@if($coach->status!=1)
+				<?php $entity_type=3?>
+				@include('approve_box')
+			@endif
+			{{Approval::approval_html(3, $coach->id)}}
+		</td>
+	</tr>
+@endif

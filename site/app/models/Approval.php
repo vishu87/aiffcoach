@@ -8,7 +8,7 @@ class Approval extends Eloquent {
 		return array(
 			"1" => "Coach",
 			"2" => "Coach Document",
-			"3" => ""
+			"3" => "Coach License"
 		);
 	}
 
@@ -17,7 +17,7 @@ class Approval extends Eloquent {
 		$str = '';
 		if(isset($logs)){
 			if(sizeof($logs) > 0){
-				$count_log = 0;
+				$count_log = 1;
 				$str .='
 				<table class="table">
 					<thead>
@@ -30,12 +30,19 @@ class Approval extends Eloquent {
 						</tr>
 					</thead>';
 					foreach($logs as $log){
+						if(!empty($log->document)){
+							$url = '<a href='.url($log->document).' target=_blank>view</a>';
+						}
+						else{
+							$url='';
+						}
+
 						$str .= '<tr>
 							<th>'.$count_log++.'</th>
 							<th>'.$log->remarks.'</th>
-							<th>Document</th>
+							<th>'.$url.'</th>
 							<th>'.$log->user_name.'</th>
-							<th>Date</th>
+							<th>'.date('d-m-Y',strtotime($log->created_at)).'</th>
 						</tr>';
 					}
 				$str .= '</table>';

@@ -108,6 +108,7 @@ Route::group(["before"=>['auth']],function(){
 			Route::get('editCoachProfile/{coach_id}','AdminController@editCoachProfile');
 			Route::post('updateCoachProfile/{coach_id}','AdminController@updateCoachProfile');
 			Route::get('viewCoachDetails/{id}','AdminController@viewCoachDetails');
+			Route::get('viewApproveList/{coach_license_id}','ApprovalController@viewApproveList');
 			Route::get('all','AdminController@allCoach');
 			Route::get('markCoachStatus/{flag}/{id}/{remarks}/{count}','AdminController@markCoachStatus');
 			Route::get('/coachExport/{flag}','ExcelExportController@coachExport');
