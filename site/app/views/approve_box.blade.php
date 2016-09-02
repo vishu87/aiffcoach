@@ -6,7 +6,7 @@
   </div>
   <div class="portlet-body log-body">
     <div class="row">
-      {{Form::open(array('url'=>'approve/'.$entity_type.'/'.$coach->id,'method'=>'post','files'=>'true','class'=>"check_form"))}}
+      {{Form::open(array('url'=>'approve/'.$entity_type.'/'.$entity_id,'method'=>'post','files'=>'true','class'=>"check_form"))}}
         <div class="col-md-4">
           <label>Status</label><br>
           {{Form::radio('type',1, true)}} Approve <br>

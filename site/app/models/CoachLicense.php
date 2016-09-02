@@ -7,4 +7,11 @@ class CoachLicense extends Eloquent {
     	return CoachLicense::select('coach_licenses.*','license.name as license_name')->join('license','coach_licenses.license_id','=','license.id');
     }
 
+    public function check_admin(){
+    	if(Session::get('privilege') == 2 && $this->status == 0){
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

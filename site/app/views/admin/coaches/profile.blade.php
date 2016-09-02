@@ -1,3 +1,4 @@
+<?php $count_main = 1; ?>
 <div class="row">
 	<div class="col-md-6">
 		<h2 class="page-title">{{strtoupper($coach->full_name)}}<br>{{strtoupper($coach->registration_id)}}</h2>
@@ -48,7 +49,7 @@
 		<div style="margin:10px;">
 			<h3>Status - {{$coachStatus[$coach->status]}}</h3>
 			@if($coach->check_admin())
-				<?php $entity_type=1;?>
+				<?php $entity_type=1; $entity_id = $coach->id;?>
 				@include('approve_box')
 			@endif
 			{{Approval::approval_html(1, $coach->id)}}
@@ -59,6 +60,7 @@
 	<h3>Documents</h3>
 </div>
 @if(sizeof($documents) > 0)
+<?php $entity_type=2; ?>
 <div class="row" style="padding:20px;">
 	<table class="table table-bordered table-hover">
 		<tr>
@@ -76,6 +78,23 @@
 				<td>{{$document->number}}</td>
 				<td>{{date('d-m-Y',strtotime($document->expiry_date))}}</td>
 				<td>@if($document->file!='')<a href="{{url($document->file)}}" target="_blank">View </a>@endif</td>
+				<td></td>
+				<td><button  div-id="{{'approve_list_'.$count_main}}" class="btn btn-xs blue showApprovals"><i class="fa fa-angle-double-right"></i> Details</button></td>
+			</tr>
+			<tr id="{{'approve_list_'.$count_main++}}" style="display:none;">
+				<td colspan="7">
+					<div class="row" style="">
+						@if($document->check_admin())
+						<div class="col-md-6">
+							<?php $entity_id = $document->id;?>
+							@include('approve_box')
+						</div>
+						@endif
+						<div class="col-md-6">
+							{{Approval::approval_html($entity_type, $document->id)}}
+						</div>
+					</div>
+				</td>
 			</tr>
 			<?php $count++?>
 		@endforeach
@@ -90,6 +109,7 @@
 	<h3>Licenses</h3>
 </div>
 @if(sizeof($coachLicense) > 0)
+<?php $entity_type=3; ?>
 <div class="row" style="padding:20px;">
 	<table class="table table-bordered table-hover">
 		<tr>
@@ -112,15 +132,23 @@
 				<td>{{date('d-m-Y',strtotime($license->end_date))}}</td>
 				<td>@if($license->document!='')<a href="{{url($license->document)}}" target="_blank">View </a>@endif</td>
 				<td></td>
-				<td><button  div-id="{{'approve_list_'.$license->id}}" class="btn btn-xs blue showApprovals"><i class="fa fa-angle-double-right"></i> Details</button></td>
+				<td><button  div-id="{{'approve_list_'.$count_main}}" class="btn btn-xs blue showApprovals"><i class="fa fa-angle-double-right"></i> Details</button></td>
 			</t>
-			<tr id="{{'approve_list_'.$license->id}}" style="display:none">
+			<tr id="{{'approve_list_'.$count_main++}}" style="display:none;">
 				<td colspan="8">
-					@if($license->status!=1)
-						<?php $entity_type=3;?>
-						@include('approve_box')
-					@endif
-					{{Approval::approval_html(3, $license->id)}}
+					<div class="row" style="">
+						
+						@if($license->check_admin())
+						<div class="col-md-6">
+							<?php $entity_id = $license->id;?>
+							@include('approve_box')
+						</div>
+						@endif
+
+						<div class="col-md-6">
+							{{Approval::approval_html($entity_type, $license->id)}}
+						</div>
+					</div>
 				</td>
 			</tr>
 			<?php $count++?>

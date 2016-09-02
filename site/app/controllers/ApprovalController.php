@@ -27,6 +27,11 @@ class ApprovalController extends BaseController {
                     $coach->status = Input::get('type');
                     $coach->save();
                     break;
+                case 2:
+                    $coach = CoachDocument::find($entity_id);
+                    $coach->status = Input::get('type');
+                    $coach->save();
+                    break;
                 case 3:
                     $coach_license = CoachLicense::find($entity_id);
                     $coach_license->status = Input::get('type');
