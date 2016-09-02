@@ -50,15 +50,4 @@ class ApprovalController extends BaseController {
         }
     }
 
-    public function viewApproveList($coach_license_id){
-        $coach = CoachLicense::where('coach_licenses.id',$coach_license_id)->first();
-        if(sizeof($coach)>0){
-            $data['success'] = true;
-            $data['message'] = html_entity_decode(View::make('admin.coaches.view',["coach"=>$coach]));
-        }
-        else{
-            $data["message"] = "No record found";
-        }
-        return json_encode($data);
-    }
 }

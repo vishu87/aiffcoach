@@ -104,7 +104,7 @@ class AdminController extends BaseController {
   //     $coach = Coach::select('coaches.first_name','coaches.status','states.name as state_registation','coaches.middle_name','coaches.last_name','coaches.dob','coaches.gender','coaches.photo','coach_parameters.email','coach_parameters.address1','coach_parameters.address2','coach_parameters.city','coach_parameters.pincode','coach_parameters.mobile')->join('states','coaches.state_id','=','states.id')->join('coach_parameters','coaches.id','=','coach_parameters.coach_id')->where('coaches.id',$id)->first();
   //     $employmentDetails = EmploymentDetails::where('coach_id',$id)->get();
   //     return View::make('admin.coaches.view',['coach'=>$coach,'employmentDetails'=>$employmentDetails]);
-  // }
+  // } 
   public function viewCoachDetails($id){
     $coach = Coach::select('coaches.*','states.name as state_registation','coach_parameters.email','coach_parameters.address1','coach_parameters.address2','coach_parameters.city','coach_parameters.pincode','coach_parameters.mobile')->join('states','coaches.state_id','=','states.id')->join('coach_parameters','coaches.id','=','coach_parameters.coach_id')->where('coaches.id',$id)->first();
     $documents = CoachDocument::select('coach_documents.*','documents.name as document_name')->join('documents','coach_documents.document_id','=','documents.id')->where('coach_id',$id)->get();

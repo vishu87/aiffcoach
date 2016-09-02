@@ -284,22 +284,9 @@ $(document).on('click','form.ajax_add_pop button[type=submit]', function(e){
 $(document).on('click','.showApprovals',function(e){
 	e.preventDefault();
 	var btn = $(this);
-	var showDiv = btn.attr('div-id');
-	var formAction = btn.attr('action');
-	$.ajax({
-		    type: "GET",
-		    url : formAction,
-		    success : function(data){
-		    	data = JSON.parse(data);
-		    	if(data.success){
-		    		$(data.message).insertAfter("#"+showDiv);
-
-			    		
-		    	} else {
-		    		bootbox.alert(data.message);
-		    	}
-		    }
-		},"json");
+	var toggleDiv = btn.attr('div-id');
+	$('#'+toggleDiv).toggle();
+	
 });
 $(document).on('click','form.ajax_add_payment button[type=submit]', function(e){
     e.preventDefault();

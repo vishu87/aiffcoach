@@ -48,9 +48,9 @@
 		<div style="margin:10px;">
 			<h3>Status - {{$coachStatus[$coach->status]}}</h3>
 			@if($coach->check_admin())
+				<?php $entity_type=1;?>
 				@include('approve_box')
 			@endif
-
 			{{Approval::approval_html(1, $coach->id)}}
 		</div>
 	</div>
@@ -112,14 +112,15 @@
 				<td>{{date('d-m-Y',strtotime($license->end_date))}}</td>
 				<td>@if($license->document!='')<a href="{{url($license->document)}}" target="_blank">View </a>@endif</td>
 				<td></td>
-				<td><a href="javascript:;" class="btn btn-xs blue"><i class="fa fa-angle-double-right"></i> Details</a></td>
+				<td><button  div-id="{{'approve_list_'.$license->id}}" class="btn btn-xs blue showApprovals"><i class="fa fa-angle-double-right"></i> Details</button></td>
 			</t>
-			<tr>
+			<tr id="{{'approve_list_'.$license->id}}" style="display:none">
 				<td colspan="8">
-					@if(true)
+					@if($license->status!=1)
+						<?php $entity_type=3;?>
 						@include('approve_box')
 					@endif
-					{{Approval::approval_html(1, $coach->id)}}
+					{{Approval::approval_html(3, $license->id)}}
 				</td>
 			</tr>
 			<?php $count++?>

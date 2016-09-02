@@ -23,7 +23,6 @@
             {{Form::file('document',["class"=>'form-control'])}}
           </div>
         </div>
-        
         <div class="col-md-12">
           {{Form::submit('Submit',["class"=>"btn green btn-sm","style"=>"margin-top:20px"])}}
         </div>
