@@ -189,3 +189,15 @@ Route::group(["prefix"=>'resultAdmin','before'=>["auth","resultAdmin"]],function
 		Route::post('/uploadMarks','resultAdminController@uploadMarks');
 	});
 });
+Route::group(["prefix"=>'superAdmin','before'=>["auth","superAdmin"]],function(){
+	Route::get('/dashboard','SuperAdminController@dashboard');
+
+	Route::group(["prefix"=>'manage_logins'],function(){
+		Route::get('/','SuperAdminController@manage_logins');
+		Route::get('/add','SuperAdminController@addUser');
+		Route::post('/store','SuperAdminController@storeUser');
+		Route::get('/edit/{user_id}','SuperAdminController@editUser');
+		Route::post('/update/{user_id}','SuperAdminController@updateUser');
+		Route::delete('/delete/{user_id}','SuperAdminController@deleteUser');
+	});
+});

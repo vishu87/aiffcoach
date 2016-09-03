@@ -69,6 +69,12 @@ Route::filter('resultAdmin', function()
 		return Redirect::to('/');
 	}
 });
+Route::filter('superAdmin', function()
+{
+	if(Auth::user()->privilege != 4){
+		return Redirect::to('/');
+	}
+});
 
 Route::filter('auth.basic', function()
 {

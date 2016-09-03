@@ -9,6 +9,7 @@ use Illuminate\Auth\Reminders\RemindableInterface;
 	1 - official
 	2 - admin
 	3 - result admin
+	4 - Super Admin
 
 	official types
 	1 - coach
@@ -40,6 +41,14 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 			"1" => "Coach",
 			"2" => "Team Official",
 			"3" => "Club Official",
+		);
+	}
+
+	public static function UserTypes(){
+		return array(
+			"1" => "Coach",
+			"2" => "Admin",
+			"3" => "Result Admin",
 		);
 	}
 

@@ -52,4 +52,8 @@ ALTER TABLE `coach_licenses` ADD `status` INT(2) NOT NULL AFTER `document`;
 ALTER TABLE `employment_details` ADD `status` INT(2) NOT NULL AFTER `contract`;
 ALTER TABLE `coach_activity` ADD `status` INT(2) NOT NULL AFTER `position_role`;
 ALTER TABLE `approval` ADD `document` TEXT NOT NULL AFTER `user_id`;
+
+//03-09
+ALTER TABLE `users` ADD `mobile` VARCHAR(11) NOT NULL AFTER `password_check`;
+
 ?>

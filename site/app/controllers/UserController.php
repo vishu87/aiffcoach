@@ -34,6 +34,7 @@ class UserController extends BaseController {
                 if(Auth::user()->privilege == 1 ) return Redirect::to('coach/dashboard');
                 if(Auth::user()->privilege == 2 ) return Redirect::to('admin');
                 if(Auth::user()->privilege == 3 ) return Redirect::to('resultAdmin/dashboard');
+                if(Auth::user()->privilege == 4 ) return Redirect::to('superAdmin/dashboard');
             }
             else return Redirect::back()->withInput()->with('failure', 'username or password is invalid!');
         } else {
