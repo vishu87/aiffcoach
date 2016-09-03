@@ -3,7 +3,7 @@
 		<h3 class="page-title">Manage Logins</h3>
 	</div>
 	<div class="col-md-6">
-		<a class="btn green pull-right" href="{{url('superAdmin/manage_logins/add')}}">Add</a>
+		<a class="btn green pull-right" href="{{url('superAdmin/manage_logins/add')}}">Add User</a>
 
 	</div>
 </div>
@@ -42,14 +42,7 @@
 				<td>{{$user->name}}</td>
 				<td>{{$user->username}}</td>
 				<td>
-					@if($user->privilege==1 && $user->official_types != '')
-						<?php $official_type = explode(',',$user->official_types);?>	
-						@foreach($official_type as $key=>$value)
-							{{$officialTypes[$value]}} ,
-						@endforeach 
-					@else
-						{{$UserTypes[$user->privilege]}} 
-					@endif
+					{{$UserTypes[$user->privilege]}}
 				</td>
 				<td>{{$user->email}}</td>
 				<td>{{$user->mobile}}</td>
