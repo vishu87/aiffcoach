@@ -252,24 +252,23 @@ class AdminController extends BaseController {
   }
 
   public function uploadLicense($application_id){
-    $coach = Application::select('applications.coach_id','applications.course_id','coaches.full_name','coaches.id')->join('coaches','applications.coach_id','=','coaches.id')->where('applications.id',$application_id)->first();
+    $coach = Application::select('applications.coach_id','applications.course_id','coaches.full_name','coaches.id','license.name as license_name','courses.license_id')->join('courses','courses.id','=','applications.course_id')->leftJoin('license','courses.license_id','=','license.id')->join('coaches','applications.coach_id','=','coaches.id')->where('applications.id',$application_id)->first();
     $checkLicense = CoachLicense::where('coach_id',$coach->id)->where('course_id',$coach->course_id)->count();
-    $coachLicense = CoachLicense::listing()->where('coach_id',$coach->coach_id)->get();
-    $licenseList = License::licenseList(); 
+    $coachLicense = CoachLicense::listing()->where('coach_id',$coach->coach_id)->get(); 
     if($checkLicense>0){
       $editLicense = CoachLicense::where('coach_id',$coach->id)->where('course_id',$coach->course_id)->first();
-      $parameters = ['licenses'=>$licenseList,"coach"=>$coach,"coachLicense"=>$coachLicense,"editLicense"=>$editLicense];
+      $parameters = ["coach"=>$coach,"coachLicense"=>$coachLicense,"editLicense"=>$editLicense];
     }
     else{
-      $parameters = ['licenses'=>$licenseList,"coach"=>$coach,"coachLicense"=>$coachLicense];
+      $parameters = ["coach"=>$coach,"coachLicense"=>$coachLicense];
     }
     $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'results']);
     $this->layout->main = View::make('resultAdmin.result.uploadLicense',$parameters);
   }
 
   public function storeLicense($coach_id){
-    $cre = ["license_id"=>Input::get("license_id"),"start_date"=>Input::get("start_date"),"number"=>Input::get("number"),"end_date"=>Input::get("end_date")];
-    $rules = ["license_id"=>'required',"start_date"=>"required|date","end_date"=>"date|after:start_date","number"=>"required"];
+    $cre = ["start_date"=>Input::get("start_date"),"number"=>Input::get("number"),"end_date"=>Input::get("end_date")];
+    $rules = ["start_date"=>"required|date","end_date"=>"date|after:start_date","number"=>"required"];
     $validator = Validator::make($cre,$rules);
     if($validator->passes()){
       $checkLicense = CoachLicense::where('coach_id',$coach_id)->where('course_id',Input::get('course_id'))->count();

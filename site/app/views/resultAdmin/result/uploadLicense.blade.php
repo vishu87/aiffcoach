@@ -24,11 +24,10 @@
 		<!--- my form start -->
 			<div class="row">
 	        	<div class="col-md-6 form-group">
-	        		<label class="form-label">License Name <span class="error">*</span></label>
-		            {{Form::select('license_id',$licenses,(isset($editLicense))?$editLicense->license_id:'',["class"=>"form-control","required"=>"true"])}}
-		            <span class="dob-error">{{$errors->first('license_id')}}</span>
+	        		<h3 class="caption">License Name - 	{{$coach->license_name}}</h3>
+	        		{{Form::hidden('license_id',$coach->license_id)}}
 		        </div>
-	        	<div class="col-md-6">
+	        	<div class="col-md-6 clear">
 			        <div class="form-group"> 
 			            <label class="form-label">License Number <span class="error">*</span></label><br>
 			            {{Form::text('number',(isset($editLicense))?$editLicense->number:'',["class"=>"form-control",'required'=>'true'])}}
@@ -36,7 +35,7 @@
 			            <span class="error">{{$errors->first('number')}}</span>
 			        </div>
 		        </div>
-		        <div class="col-md-6 clear">
+		        <div class="col-md-6 ">
 		          <div class="form-group"> 
 		            <label class="form-label">Start Date <span class="error">*</span></label><br>
 		            {{Form::text('start_date',(isset($editLicense))?date('d-m-Y',strtotime($editLicense->start_date)):'',["class"=>"form-control datepicker",'required'=>'true',"date_en"=>"true"])}}
@@ -50,7 +49,7 @@
 		            <span class="error">{{$errors->first('end_date')}}</span>
 		          </div>
 		        </div>
-            	<div class="col-md-6 form-group clear">
+            	<div class="col-md-6 form-group ">
             		<label class="form-label">Document Copy</label><br>
             		{{Form::file('document',["class"=>"form-control"])}}
             		@if(isset($editLicense))
