@@ -25,7 +25,7 @@ class SuperAdminController extends BaseController {
 
     public function storeUser(){
         $cre = ["name"=>Input::get('name'),"email"=>Input::get('email'),"user_type"=>Input::get('user_type')];
-        $rules = ["name"=>"required",'email'=>'required|email|unique:users,username','user_type'=>'required'];
+        $rules = ["name"=>"required",'email'=>'required|unique:users,username','user_type'=>'required'];
         $validator = Validator::make($cre,$rules);
         if($validator->passes()){
             $password = str_random(8);
@@ -58,7 +58,7 @@ class SuperAdminController extends BaseController {
 
     public function updateUser($user_id){
         $cre = ["name"=>Input::get('name'),"email"=>Input::get('email'),"user_type"=>Input::get('user_type')];
-        $rules = ["name"=>"required",'email'=>'required|email|unique:users,username,'.$user_id,'user_type'=>'required'];
+        $rules = ["name"=>"required",'email'=>'required|unique:users,username,'.$user_id,'user_type'=>'required'];
         $validator = Validator::make($cre,$rules);
         if($validator->passes()){
             $user = User::find($user_id);

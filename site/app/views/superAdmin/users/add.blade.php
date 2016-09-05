@@ -27,17 +27,17 @@
 @endif
 <div class="row">
 	<div class="form-group col-md-6">
-		<label>Name</label>
+		<label>Name</label><span class="error"> *</span>
 		{{Form::text('name',(isset($user))?$user->name:'',["class"=>"form-control","required"=>"true"])}}
 		<span class="error"><?php echo $errors->first('name'); ?></span>
 	</div>
 	<div class="form-group col-md-6">
-		<label>Email</label>
-		{{Form::email('email',(isset($user))?$user->username:'',["class"=>"form-control","required"=>"true"])}}
+		<label>Email</label><span class="error"> *</span>
+		{{Form::text('email',(isset($user))?$user->username:'',["class"=>"form-control","required"=>"true"])}}
 		<span class="error"><?php echo $errors->first('email'); ?></span>
 	</div>
 	<div class="form-group col-md-6 clear">
-		<label>Role</label>
+		<label>Role</label><span class="error"> *</span>
 		{{Form::select('user_type',$UserTypes,(isset($user))?$user->privilege:'',["class"=>"form-control","required"=>"true","id"=>"UserType"])}}
 		<span class="error"><?php echo $errors->first('user_type'); ?></span>
 	</div>

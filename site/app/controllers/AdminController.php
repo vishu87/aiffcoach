@@ -31,12 +31,11 @@ class AdminController extends BaseController {
       $count_string = 0;
       foreach (Input::all() as $key => $value) {
           if($key != 'page'){
-              $input_string .= ($count_string == 0)?'':'&';
-              $input_string .= $key.'='.$value;
-              $count_string++;
+            $input_string .= ($count_string == 0)?'':'&';
+            $input_string .= $key.'='.$value;
+            $count_string++;
           }
       }
-
       $coaches = $sql->skip(($page_id-1)*$max_per_page)->take($max_per_page)->get();
       $status = Coach::Status();
 
@@ -46,30 +45,28 @@ class AdminController extends BaseController {
 
   public function pendingCoach(){
   	$sql = Coach::listing()->pending()->where('users.official_types','LIKE','%'.Auth::user()->manage_official_type.'%');
-
       if(Input::get("registration_id") != ''){
-          $sql = $sql->where('coaches.registration_id','LIKE','%'.Input::get('registration_id').'%');
+        $sql = $sql->where('coaches.registration_id','LIKE','%'.Input::get('registration_id').'%');
       }
       if(Input::get("official_name") != ''){
-          $sql = $sql->where('coaches.full_name','LIKE','%'.Input::get('official_name').'%');
+        $sql = $sql->where('coaches.full_name','LIKE','%'.Input::get('official_name').'%');
       }
-
       $total = $sql->count();
-      $max_per_page = 1;
+      $max_per_page = 100;
       $total_pages = ceil($total/$max_per_page);
       if(Input::has('page')){
-          $page_id = Input::get('page');
+        $page_id = Input::get('page');
       } else {
-          $page_id = 1;
+        $page_id = 1;
       }
 
       $input_string = 'admin/pendingCoach?';
       $count_string = 0;
       foreach (Input::all() as $key => $value) {
           if($key != 'page'){
-              $input_string .= ($count_string == 0)?'':'&';
-              $input_string .= $key.'='.$value;
-              $count_string++;
+            $input_string .= ($count_string == 0)?'':'&';
+            $input_string .= $key.'='.$value;
+            $count_string++;
           }
       }
 
