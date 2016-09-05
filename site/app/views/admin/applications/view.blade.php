@@ -6,9 +6,9 @@
 	<td>{{(isset($status[$data->status]))?$status[$data->status]:''}}</td>
 	<td>
 		@if($flag==0)
-		<button type="button" class="btn blue btn-sm mark-application" div-id="activity_{{$data->id}}" count="{{$count}}"  action="{{'admin/Applications/markApplication/'.$data->id}}">Approve <i class="fa fa-arrow-right"></i></button>
+		<button type="button" class="btn blue btn-sm mark-application" div-id="activity_{{$data->id}}" count="{{$count}}"  action="{{'admin/Applications/markApplication/'.$data->id}}">Approve </button>
 		@elseif($flag==1)
-			<button type="button" class="btn btn-sm red mark-application" div-id="activity_{{$data->id}}" count="{{$count}}" action="{{'admin/Applications/markApplication/'.$data->id}}">Disaprove <i class="fa fa-arrow-right"></i></button>
+			<button type="button" class="btn btn-sm red mark-application" div-id="activity_{{$data->id}}" count="{{$count}}" action="{{'admin/Applications/markApplication/'.$data->id}}">Disaprove </button>
 		@else
 			{{(isset($status[$data->status]))?$status[$data->status]:''}}	
 		@endif			

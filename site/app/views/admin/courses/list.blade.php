@@ -29,10 +29,9 @@
 				<th>Start Date</th>
 				<th>End Date</th>
 				<th>License Type</th>
-				<th>#</th>
-				
-				
-			</tr></thead>
+				<th>#</th>		
+			</tr>
+		</thead>
 			<tbody id="courses">
 				<?php $count = 1; ?>
 				@foreach($courses as $data)
