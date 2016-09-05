@@ -55,5 +55,5 @@ ALTER TABLE `approval` ADD `document` TEXT NOT NULL AFTER `user_id`;
 
 //03-09
 ALTER TABLE `users` ADD `mobile` VARCHAR(11) NOT NULL AFTER `password_check`;
-
+ALTER TABLE `courses` ADD `registration_start` DATE NOT NULL AFTER `end_date`, ADD `registration_end` DATE NOT NULL AFTER `registration_start`;
 ?>

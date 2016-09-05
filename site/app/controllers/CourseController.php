@@ -32,6 +32,8 @@ class CourseController extends BaseController {
             'name'=>Input::get('name'),
             'start_date'=>Input::get('start_date'),
             'end_date'=>Input::get('end_date'),
+            'registration_start'=>Input::get('registration_start'),
+            'registration_end'=>Input::get('registration_end'),
             'license_id'=>Input::get('license_id'),
             'fee'=>Input::get('fee'),
             
@@ -40,6 +42,8 @@ class CourseController extends BaseController {
             'name'=>'required',
             'start_date'=>'required|date',
             'end_date'=>'required|date|after:start_date',
+            'registration_start'=>'required|date',
+            'registration_end'=>'required|date|after:registration_start',
             'license_id'=>'required',
             'fee'=>'required',
             ];
@@ -50,6 +54,8 @@ class CourseController extends BaseController {
             $course->name= Input::get('name');
             $course->start_date = date('y-m-d',strtotime(Input::get('start_date')));
             $course->end_date = date('y-m-d',strtotime(Input::get('end_date')));
+            $course->registration_start = date('y-m-d',strtotime(Input::get('registration_start')));
+            $course->registration_end = date('y-m-d',strtotime(Input::get('registration_end')));
             $course->license_id = Input::get('license_id');
             if(Input::has('prerequisite_id')){
                 $course->prerequisite_id = implode(',',Input::get('prerequisite_id'));
@@ -84,6 +90,8 @@ class CourseController extends BaseController {
             'name'=>Input::get('name'),
             'start_date'=>Input::get('start_date'),
             'end_date'=>Input::get('end_date'),
+            'registration_start'=>Input::get('registration_start'),
+            'registration_end'=>Input::get('registration_end'),
             'license_id'=>Input::get('license_id'),
             'fee'=>Input::get('fee'),
             
@@ -92,8 +100,9 @@ class CourseController extends BaseController {
             'name'=>'required',
             'start_date'=>'required|date',
             'end_date'=>'required|date|after:start_date',
+            'registration_start'=>'required|date',
+            'registration_end'=>'required|date|after:registration_start',
             'license_id'=>'required',
-            
             'fee'=>'required',
             ];
         $validator = Validator::make($cre,$rules);
@@ -103,6 +112,8 @@ class CourseController extends BaseController {
             $course->name= Input::get('name');
             $course->start_date = date('y-m-d',strtotime(Input::get('start_date')));
             $course->end_date = date('y-m-d',strtotime(Input::get('end_date')));
+            $course->registration_start = date('y-m-d',strtotime(Input::get('registration_start')));
+            $course->registration_end = date('y-m-d',strtotime(Input::get('registration_end')));
             $course->venue = Input::get('venue');
             if(Input::has('prerequisite_id')){
                 $course->prerequisite_id = implode(',',Input::get('prerequisite_id'));

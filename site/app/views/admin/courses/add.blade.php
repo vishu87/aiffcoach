@@ -42,33 +42,41 @@
 				{{Form::text('end_date',(isset($course))?date('d-m-Y',strtotime($course->end_date)):'',["class"=>"form-control datepicker","required"=>"true","date_en"=>'true'])}}
 				<span class="error">{{$errors->first('end_date')}}</span>
 			</div>
-		</div>
-		<div class="row">	
+			<div class="col-md-3 form-group clear">
+				{{Form::label('Registration Start Date')}} <span class="error"> *</span>
+				{{Form::text('registration_start',(isset($course))?date('d-m-Y',strtotime($course->registration_start)):'',["class"=>"form-control datepicker","required"=>"true","date_en"=>'true'])}}
+				<span class="error">{{$errors->first('registration_start')}}</span>
+			</div>
+			<div class="col-md-3 form-group">
+				{{Form::label('Registration End Date')}} <span class="error"> *</span>
+				{{Form::text('registration_end',(isset($course))?date('d-m-Y',strtotime($course->registration_end)):'',["class"=>"form-control datepicker","required"=>"true","date_en"=>'true'])}}
+				<span class="error">{{$errors->first('registration_end')}}</span>
+			</div>	
 			<div class="col-md-3 form-group">
 				{{Form::label('License Type')}} <span class="error"> *</span>
 				{{Form::select('license_id',$licenses,(isset($course))?$course->license_id:'',["class"=>"form-control","required"=>"true"])}}
 				<span class="error">{{$errors->first('license_id')}}</span>
 			</div>
 			<div class="col-md-3 form-group">
-				{{Form::label('Prerequisites')}}
-				{{Form::select('prerequisite_id[]',$licenses,(isset($course))?$course->prerequisite_id:'',["class"=>"form-control","multiple"=>"true"])}}
-				<span class="error">{{$errors->first('prerequisite_id')}}</span>
-			</div>
-			<div class="col-md-3 form-group">
 				{{Form::label('Fee')}} <span class="error"> *</span>
 				{{Form::text('fee',(isset($course))?$course->fees:'',["class"=>"form-control","required"=>"true"])}}
 				<span class="error">{{$errors->first('fee')}}</span>
 			</div>
-			<div class="col-md-3 form-group">
-				{{Form::label('Venue')}} <span class="error"> *</span>
-				{{Form::text('venue',(isset($course))?$course->venue:'',["class"=>"form-control","required"=>"true"])}}
+			<div class="col-md-3 form-group clear">
+				{{Form::label('Venue')}}
+				{{Form::text('venue',(isset($course))?$course->venue:'',["class"=>"form-control"])}}
 				<span class="error">{{$errors->first('venue')}}</span>
+			</div>
+			<div class="col-md-3 form-group">
+				{{Form::label('Prerequisites')}}
+				{{Form::select('prerequisite_id[]',$licenses,(isset($course))?$course->prerequisite_id:'',["class"=>"form-control","multiple"=>"true"])}}
+				<span class="error">{{$errors->first('prerequisite_id')}}</span>
 			</div>
 		</div>
 		<div class="row">	
 			<div class="col-md-12 form-group">
-				{{Form::label('Description')}} <span class="error"> *</span>
-				{{Form::textarea('description',(isset($course))?$course->description:'',["class"=>"form-control","required"=>"true"])}}
+				{{Form::label('Description')}} 
+				{{Form::textarea('description',(isset($course))?$course->description:'',["class"=>"form-control"])}}
 				<span class="error">{{$errors->first('description')}}</span>
 			</div>
 		</div>
@@ -81,7 +89,6 @@
 						<span class="error">{{$errors->first('documents')}}</span>
 					</div>
 					@if(isset($course))
-
 						<div class="col-md-4" style="margin-top:25px;">
 	        				@if($course->documents!='')<a href="{{url($course->documents)}}" class="btn yellow" target="_blank">View Old Document</a>@endif
 	        			</div>
