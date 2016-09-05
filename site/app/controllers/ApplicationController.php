@@ -63,6 +63,7 @@ class ApplicationController extends BaseController {
         $data['message'] = html_entity_decode(View::make('admin.applications.view',['status'=>$status,'data'=>$applications,'count'=>$count,'flag'=>$flag]));
         return json_encode($data);
     }
+
     /************* Coaches methods return here********/
     public function applied(){
         $applications =  Application::select('applications.status','application_result.status as finalResult','applications.remarks','applications.id as application_id','courses.fees','courses.name as course_name','courses.end_date','license.id as license_id','license.name as license_name','license.authorised_by','license.description')
@@ -115,35 +116,54 @@ class ApplicationController extends BaseController {
     }
     /************ Coaches Apply For Courses **********/
     public function details($course_id,$tab_type){
+
         $course = Course::select('courses.*','license.name as license_name','license.authorised_by')
             ->join('license','courses.license_id','=','license.id')->where('courses.id',$course_id)->first();
-        $appliedCourses = Application::where('course_id',$course_id)->where('coach_id',Auth::User()->coach_id)->get();
-        $checkAppliedCourses = array();
+
+        $is_applied = Application::where('course_id',$course_id)->where('coach_id',Auth::user()->coach_id)->count();
+
+        if($course->prerequisite_id != '')
         $prerequisites = explode(',',$course->prerequisite_id);
-        $license = License::licenseList();
-        foreach ($appliedCourses as $value) {
-                $checkAppliedCourses[] =$value->course_id; 
-            }    
+        else $prerequisites = array();
+
+        $coach_licenses = array();
+
+        if($course->prerequisite_id != ''){
+            $coach_licenses_fetch = CoachLicense::where('coach_id', Auth::user()->coach_id)->whereIn('license_id',$prerequisites)->where('status',1)->get();
+            foreach ($coach_licenses_fetch as $license) {
+                $coach_licenses[$license->license_id] = array("start_date"=>$license->start_date);
+            } 
+        }
+
+        $licenses = License::licenseList();
+
         switch ($tab_type) {
-                case 1:
-                    $tab = 5;
-                    $tab_sub = 1;
-                    break;
-                case 2:
-                    $tab = 5;
-                    $tab_sub = 2;
-                    break;
-                case 3:
-                    $tab = 'dashboard';
-                    $tab_sub = '';
-                default:
-                    $tab = 'dashboard';
-                    $tab_sub = '';
-                    break;
-            }    
+            case 1:
+                $tab = 5;
+                $tab_sub = 1;
+                break;
+            case 2:
+                $tab = 5;
+                $tab_sub = 2;
+                break;
+            case 3:
+                $tab = 'dashboard';
+                $tab_sub = '';
+            default:
+                $tab = 'dashboard';
+                $tab_sub = '';
+                break;
+        }
+
+        $check_date_year = date("Y",strtotime($course->start_date));
+        $check_date_year = $check_date_year - 2;
+        $check_date = $check_date_year.'-'.date("m",strtotime($course->start_date)).'-'.date("d",strtotime($course->start_date));
+
         $this->layout->sidebar = View::make('coaches.sidebar',['sidebar'=>$tab,'subsidebar'=>$tab_sub]);
-        $this->layout->main = View::make('coaches.courses.details',["course"=>$course,'checkAppliedCourses'=>$checkAppliedCourses,'tab_type'=>$tab_type,"prerequisites"=>$prerequisites,"license"=>$license]);
-    } 
+
+        $this->layout->main = View::make('coaches.courses.details',["course"=>$course, 'is_applied'=>$is_applied, 'tab_type'=>$tab_type, "prerequisites"=>$prerequisites, "licenses"=>$licenses, "coach_licenses" => $coach_licenses, "check_date" => $check_date]);
+    }
+
     public function applyCourse($course_id){
         $application = new Application;
         $application->course_id = $course_id;

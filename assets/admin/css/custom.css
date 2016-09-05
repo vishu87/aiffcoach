@@ -132,3 +132,24 @@ label.error{
 	font-size:16px;
 	font-weight: 300
 }
+.course-details{
+
+}
+.course-details .detail{
+	font-size: 16px;
+	margin-bottom: 20px;
+}
+
+.course-details .detail span{
+	font-size: 14px;
+	font-weight: bold;
+	display: block;
+}
+
+.color-red{
+	color: #f00;
+}
+
+.color-green{
+	color: #3c763d;
+}

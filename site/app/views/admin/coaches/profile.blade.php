@@ -81,7 +81,7 @@
 				<td>{{date('d-m-Y',strtotime($document->expiry_date))}}</td>
 				<td>@if($document->file!='')<a href="{{url($document->file)}}" target="_blank">View </a>@endif
 				</td>
-				<td>{{$ApprovalStatus[$document->status]}}</td>
+				<td>{{isset($ApprovalStatus[$document->status])?$ApprovalStatus[$document->status]:''}}</td>
 				<td><button  div-id="{{'approve_list_'.$count_main}}" class="btn btn-xs blue showApprovals"><i class="fa fa-angle-double-right"></i> Details</button></td>
 			</tr>
 			<tr id="{{'approve_list_'.$count_main++}}" style="display:none;">
