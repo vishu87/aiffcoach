@@ -10,9 +10,9 @@
 
 	<td>
 		@if($data->status_app==3)
-			<button type="button" class="btn red approve-coach btn-sm" count="{{$count}}" div-id="payment_{{$data->id}}"  action="{{'admin/Payment/disapprovePaymentStatus/'.$data->id}}">Disapprove <i class="fa fa-arrow-right"></i></button>
+			<button type="button" class="btn red approve-coach btn-sm" count="{{$count}}" div-id="payment_{{$data->id}}"  action="{{'admin/Payment/disapprovePaymentStatus/'.$data->id}}">Disapprove </button>
 		@elseif($data->status_app==2)
-			<button type="button" class="btn blue approve-coach btn-sm" count="{{$count}}" div-id="payment_{{$data->id}}"  action="{{'admin/Payment/approvePaymentStatus/'.$data->id}}">Approve <i class="fa fa-arrow-right"></i></button>
+			<button type="button" class="btn blue approve-coach btn-sm" count="{{$count}}" div-id="payment_{{$data->id}}"  action="{{'admin/Payment/approvePaymentStatus/'.$data->id}}">Approve </button>
 		@elseif($data->status_app==1)
 			Payment Pending
 		@elseif($data->status_app==0)

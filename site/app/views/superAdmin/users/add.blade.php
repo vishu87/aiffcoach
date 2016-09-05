@@ -4,7 +4,6 @@
 	</div>
 	<div class="col-md-6">
 		<a class="btn green pull-right" href="{{url('superAdmin/manage_logins')}}">Back</a>
-
 	</div>
 </div>
 @if(Session::has('success'))

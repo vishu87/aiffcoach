@@ -39,7 +39,7 @@ class Approval extends Eloquent {
 							<th>SN</th>
 							<th>Remarks</th>
 							<th>Document</th>
-							<th>Status<th>
+							<th>Status</th>
 							<th>Created by</th>
 							<th>Date</th>
 						</tr>
@@ -51,7 +51,6 @@ class Approval extends Eloquent {
 						else{
 							$url='';
 						}
-
 						$str .= '<tr>
 							<th>'.$count_log++.'</th>
 							<th>'.$log->remarks.'</th>
