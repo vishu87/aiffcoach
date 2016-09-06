@@ -79,14 +79,9 @@
       </a>
       <ul class="sub-menu">
         <li class="@if($sidebar == 'Applications' && $subsidebar == 2 ) active @endif">
-          <a href="{{url('admin/Applications/approved')}}">
+          <a href="{{url('admin/Applications/all')}}">
           <i class="fa fa-chevron-right"></i>
           All Applications</a>
-        </li>
-        <li class="@if($sidebar == 'Applications' && $subsidebar == 3 ) active @endif">
-          <a href="{{url('admin/Applications/pending')}}">
-          <i class="fa fa-chevron-right"></i>
-          Pending</a>
         </li>
       </ul>
     </li>

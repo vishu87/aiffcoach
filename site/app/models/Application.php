@@ -7,11 +7,12 @@ class Application extends Eloquent {
 
 	public static function Status(){
 		return array(
-			"0" => "Applied",
-			"1" => "Payment Pending",
-			"2" => "Payment Approval Pending",
-			"3" => "Approved",
-			"4" =>"Rejected"
+			"0" => "Pending for Approval",
+			"1" => "Approved",
+			"2" => "Payment under Approval",
+			"3" => "Selected for Course",
+			"4" => "Referred Back",
+			"5" => "Rejected"
 		);
 	}
 
