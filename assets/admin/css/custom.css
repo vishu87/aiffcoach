@@ -153,3 +153,14 @@ label.error{
 .color-green{
 	color: #3c763d;
 }
+.log-status{
+	font-size: 20px;
+}
+.arrow-up{
+	text-align: center;
+	margin: 10px;
+}
+.arrow-up img{
+	width: 20px;
+	height: auto;
+}

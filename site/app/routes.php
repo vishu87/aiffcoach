@@ -42,6 +42,12 @@ Route::group(['before' => 'auth',"prefix"=>'pendingApprovals'], function () {
     Route::get('/pendingActivities','ApprovalController@pendingActivities');
 });
 
+Route::group(['before' => 'auth',"prefix"=>'control'], function () {
+    Route::get('/applications/details/{application_id}','ApplicationController@detailsApplication');
+    Route::post('/applications/log/{application_id}','ApplicationController@postLog');
+    Route::put('/payments/{payment_id}','PaymentController@putPayment');
+});
+
 Route::group(['prefix'=>'coach','before'=>['auth','coach']], function () {
 
 	Route::post('/postEmployment','CoachController@postEmployment');
@@ -106,6 +112,7 @@ Route::group(['prefix'=>'coach','before'=>['auth','coach']], function () {
 		Route::delete('/delete/{id}','ApplicationController@deleteCoachApplication');
 	});
 });
+
 Route::group(["before"=>['auth']],function(){
 	Route::group(["before"=>['admin']],function(){
 		Route::group(["prefix"=>'admin'],function(){
@@ -161,13 +168,11 @@ Route::group(["before"=>['auth']],function(){
 			Route::group(["prefix"=>'Applications'],function(){
 				Route::get('/','ApplicationController@ApprovedApplications');
 				Route::get('/all','ApplicationController@ApprovedApplications');
-				Route::get('/approved','ApplicationController@ApprovedApplications');
-				Route::get('/pending','ApplicationController@PendingApplications');
-				Route::get('/markApplication/{id}/{count}','ApplicationController@markApplication');
 			});
 		});
 	});
 });
+
 Route::group(["prefix"=>'resultAdmin','before'=>["auth","resultAdmin"]],function(){
 	Route::get('/dashboard','resultAdminController@dashboard');
 	Route::get('/','resultAdminController@index');
@@ -199,6 +204,7 @@ Route::group(["prefix"=>'resultAdmin','before'=>["auth","resultAdmin"]],function
 		Route::post('/uploadMarks','resultAdminController@uploadMarks');
 	});
 });
+
 Route::group(["prefix"=>'superAdmin','before'=>["auth","superAdmin"]],function(){
 	Route::get('/dashboard','SuperAdminController@dashboard');
 

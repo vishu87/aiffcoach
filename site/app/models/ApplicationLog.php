@@ -4,6 +4,54 @@ class ApplicationLog extends Eloquent {
 
 	protected $table = 'application_log';
 
+	public function closed_status(){
+		$var = '';
+		switch ($this->type) {
+			case 1:
+				$var = "<i class='fa fa-check'></i>"; // approved
+				break;
+			case 4:
+				$var = "<i class='fa fa-question-circle'></i>"; // referred back
+				break;
+			case 5:
+				$var = "<i class='fa fa-remove'></i>";
+				break;
+			default:
+				$var = "<i class='fa fa-angle-left'></i><i class='fa fa-angle-right'></i>";
+				break;
+		}
+		return $var;
+	}
+
+	public function get_status_name($coach_name){
+		$var = '';
+		switch ($this->status) {
+			case 0:
+				$var = 'AIFF';
+				break;
+			case 1:
+				$var = $coach_name;
+				break;
+			case 2:
+				$var = 'AIFF';
+				break;
+			default:
+				$var = $coach_name;
+				break;
+		}
+		return $var;
+	}
+
+	public function checkAuth($application){
+		$var = false;
+		if($application->status == 0 || $application->status == 2){
+			if(Session::get('privilege') == 2) $var = true;
+		}
+		else {
+			if(Session::get('privilege') == 1 && $application->coach_id = Auth::user()->coach_id) $var = true;
+		}
+		return $var;
+	}
 
 	public static function status(){
 		return  array('0'=>'Pending','1' =>'Approved','2'=>'Referred Back','3'=>'Rejected' );

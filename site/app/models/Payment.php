@@ -12,4 +12,25 @@ class Payment extends Eloquent {
 	public function scopePendingPayments($query){
 		return $query->where('applications.status','!=',3);
 	}
+
+	public static function covertDate($date){
+		$parts = explode('-', $date);
+		if(checkdate($parts[1], $parts[2], $parts[0])){
+			return date("d-m-Y",strtotime($date));
+		} else {
+			return '';
+		}
+	}
+
+	public function check_status(){
+		$var = false;
+		if(Session::get('privilege') == 2){
+			$var = true;
+		} else {
+			if( ($this->status == 1 || $this->status == 2) ){
+				$var = true;
+			}
+		}
+		return $var;
+	}
 }

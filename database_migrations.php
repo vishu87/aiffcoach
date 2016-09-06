@@ -60,4 +60,5 @@ ALTER TABLE `courses` ADD `registration_start` DATE NOT NULL AFTER `end_date`, A
 //06-09
 ALTER TABLE `license`  ADD `user_type` INT NOT NULL  AFTER `authorised_by`;
 ALTER TABLE `courses`  ADD `user_type` INT NOT NULL  AFTER `documents`;
+ALTER TABLE `payment`  ADD `amount_paid` INT NOT NULL  AFTER `fees`;
 ?>
