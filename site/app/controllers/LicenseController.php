@@ -3,7 +3,7 @@ class LicenseController extends BaseController {
     protected $layout = 'layout';
 
     public function index(){
-        $licenses =  License::get();
+        $licenses =  License::where('user_type',Auth::user()->manage_official_type)->get();
 
         $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'license','subsidebar'=>1]);
         $this->layout->main = View::make('admin.license.list',['licenses'=>$licenses]);
@@ -25,6 +25,7 @@ class LicenseController extends BaseController {
             $license->name= Input::get('name');
             $license->description = Input::get('description');
             $license->authorised_by = Input::get('authorised_by');
+            $license->user_type = Auth::user()->manage_official_type;
             $license->save();
             return Redirect::back()->with('success','New License  Added!!');
         }

@@ -81,7 +81,7 @@
         <li class="@if($sidebar == 'Applications' && $subsidebar == 2 ) active @endif">
           <a href="{{url('admin/Applications/approved')}}">
           <i class="fa fa-chevron-right"></i>
-          Approved</a>
+          All Applications</a>
         </li>
         <li class="@if($sidebar == 'Applications' && $subsidebar == 3 ) active @endif">
           <a href="{{url('admin/Applications/pending')}}">

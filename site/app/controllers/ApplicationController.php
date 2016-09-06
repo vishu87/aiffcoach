@@ -1,8 +1,9 @@
 <?php
 class ApplicationController extends BaseController {
     protected $layout = 'layout';
+
     public function ApprovedApplications(){
-        $courses = ["" => "Select Course"] + Course::lists('name','id');
+        $courses = ["" => "Select Course"] + Course::where('user_type',Auth::user()->manage_official_type)->lists('name','id');
         $status = Application::status();
         if(Input::has('course')){
             $sql = Application::applications()->where('applications.status','!=',0)->where('applications.course_id',Input::get('course'));
@@ -11,6 +12,7 @@ class ApplicationController extends BaseController {
             $sql = Application::applications()->where('applications.status','!=',0);
             $url_link = 'admin/Applications/approved?page=';
         }
+        
         $total = $sql->count();
         $max_per_page = 25;
         $total_pages = ceil($total/$max_per_page);

@@ -8,18 +8,18 @@ class Course extends Eloquent {
 	public static function Active(){
 		$currentDate = date('y-m-d',strtotime('now'));
 		$query = DB::table('courses')->select('courses.*','license.name as license_name','license.authorised_by')
-            ->join('license','courses.license_id','=','license.id')->where('end_date','>=',$currentDate)->get();
+            ->join('license','courses.license_id','=','license.id')->where('end_date','>=',$currentDate);
 		return $query;
 	}
 	public static function Inactive(){
 		$currentDate = date('y-m-d',strtotime('now'));
 		$query = DB::table('courses')->select('courses.*','license.name as license_name','license.authorised_by')
-            ->join('license','courses.license_id','=','license.id')->where('end_date','<',$currentDate)->get();
+            ->join('license','courses.license_id','=','license.id')->where('end_date','<',$currentDate);
 		return $query;
 	}
 	public static function allCourses(){
 		$query = DB::table('courses')->select('courses.*','license.name as license_name','license.authorised_by')
-            ->join('license','courses.license_id','=','license.id')->get();
+            ->join('license','courses.license_id','=','license.id');
 		return $query;
 	}
 

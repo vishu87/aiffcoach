@@ -2,27 +2,29 @@
 class CourseController extends BaseController {
     protected $layout = 'layout';
     //*********methods for admin panel*********
+
     public function index(){
-        $courses =  Course::select('courses.*','license.name as license_name','license.authorised_by')
+        $courses = Course::select('courses.*','license.name as license_name','license.authorised_by')
             ->join('license','courses.license_id','=','license.id')
+            ->where('courses.user_type',Auth::user()->manage_official_type)
             ->get();
         $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'courses','subsidebar'=>1]);
         $this->layout->main = View::make('admin.courses.list',['courses'=>$courses,'title'=>'Courses','flag'=>1]);
     }
 
     public function active(){
-        $courses =  Course::Active();
+        $courses =  Course::Active()->where('courses.user_type',Auth::user()->manage_official_type)->get();
         $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'courses','subsidebar'=>2]);
         $this->layout->main = View::make('admin.courses.list',['courses'=>$courses,'title'=>'Active Courses','flag'=>2]);
     }
     public function inactive(){
-        $courses =  Course::Inactive();
+        $courses =  Course::Inactive()->where('courses.user_type',Auth::user()->manage_official_type)->get();
         $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'courses','subsidebar'=>3]);
         $this->layout->main = View::make('admin.courses.list',['courses'=>$courses,'title'=>'Inactive Courses']);
     }
 
     public function add(){
-        $licenses = [''=>'Select']+License::lists('name','id');
+        $licenses = [''=>'Select'] + License::where('user_type',Auth::user()->manage_official_type)->lists('name','id');
         $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'courses','subsidebar'=>1]);
         $this->layout->main = View::make('admin.courses.add',['licenses'=>$licenses]);
     }
@@ -63,7 +65,7 @@ class CourseController extends BaseController {
             $course->venue = Input::get('venue');
             $course->description = Input::get('description');
             $course->fees = Input::get('fee');
-
+            $course->user_type = Auth::user()->manage_official_type;
             $destinationPath = 'coaches-doc/';
             if(Input::hasFile('documents')){
                 $extension = Input::file('documents')->getClientOriginalExtension();
