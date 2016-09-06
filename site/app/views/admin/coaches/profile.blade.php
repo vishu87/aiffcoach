@@ -160,7 +160,7 @@
 </div>
 @else
 <div class="alert alert-warning">
-	No employment details found
+	No License found
 </div>
 @endif
 <div class="row">

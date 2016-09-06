@@ -35,6 +35,13 @@ Route::group(['before' => 'auth'], function () {
     Route::post('/approve/{entity_type}/{etity_id}','ApprovalController@postApprove');
 });
 
+Route::group(['before' => 'auth',"prefix"=>'pendingApprovals'], function () {
+    Route::get('/pendingDocument','ApprovalController@pendingDocument');
+    Route::get('/pendingLicenses','ApprovalController@pendingLicenses');
+    Route::get('/pendingEmploymentDetails','ApprovalController@pendingEmploymentDetails');
+    Route::get('/pendingActivities','ApprovalController@pendingActivities');
+});
+
 Route::group(['prefix'=>'coach','before'=>['auth','coach']], function () {
 
 	Route::post('/postEmployment','CoachController@postEmployment');

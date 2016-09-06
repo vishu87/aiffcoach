@@ -2,6 +2,112 @@
 class ApprovalController extends BaseController {
     protected $layout = 'layout';
 
+    public function pendingDocument(){
+        $sql = CoachDocument::select('coach_documents.*','documents.name as document_name','coaches.full_name')->join('documents','coach_documents.document_id','=','documents.id')->leftJoin('coaches','coach_documents.coach_id','=','coaches.id')->where('coach_documents.status','!=',1);
+
+        $total = $sql->count();
+        $max_per_page = 20;
+        $total_pages = ceil($total/$max_per_page);
+        if(Input::has('page')){
+          $page_id = Input::get('page');
+        } else {
+          $page_id = 1;
+        }
+
+        $input_string = 'pendingApprovals/pendingDocument?page=';
+        $count_string = 0;
+        foreach (Input::all() as $key => $value) {
+          if($key != 'page'){
+            $input_string .= ($count_string == 0)?'':'&';
+            $input_string .= $key.'='.$value;
+            $count_string++;
+          }
+        }
+
+        $documents = $sql->skip(($page_id-1)*$max_per_page)->take($max_per_page)->get();
+        $ApprovalStatus = Approval::status();
+        $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'pendingDocument','subsidebar'=>0]);
+        $this->layout->main = View::make('admin.pendingDocuments.list',["docType"=>'pendingDocument' , "documents"=>$documents , 'ApprovalStatus'=>$ApprovalStatus ,"total" => $total, "page_id"=>$page_id, "max_per_page" => $max_per_page, "total_pages" => $total_pages,'input_string'=>$input_string]);
+    }
+    public function pendingLicenses(){
+        $sql = CoachLicense::listing()->where('coach_licenses.status','!=',1);
+        $total = $sql->count();
+        $max_per_page = 20;
+        $total_pages = ceil($total/$max_per_page);
+        if(Input::has('page')){
+          $page_id = Input::get('page');
+        } else {
+          $page_id = 1;
+        }
+
+        $input_string = 'pendingApprovals/pendingLicenses?page=';
+        $count_string = 0;
+        foreach (Input::all() as $key => $value) {
+          if($key != 'page'){
+            $input_string .= ($count_string == 0)?'':'&';
+            $input_string .= $key.'='.$value;
+            $count_string++;
+          }
+        }
+
+        $coachLicense = $sql->skip(($page_id-1)*$max_per_page)->take($max_per_page)->get();
+        $ApprovalStatus = Approval::status();
+        $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'pendingDocument','subsidebar'=>0]);
+        $this->layout->main = View::make('admin.pendingDocuments.list',["docType"=>'pendingLicenses', "coachLicense"=>$coachLicense, 'ApprovalStatus'=>$ApprovalStatus ,"total" => $total, "page_id"=>$page_id, "max_per_page" => $max_per_page, "total_pages" => $total_pages,'input_string'=>$input_string]);
+    }
+    public function pendingEmploymentDetails(){
+        $sql = EmploymentDetails::select('employment_details.*','coaches.full_name')->leftJoin('coaches','employment_details.coach_id','=','coaches.id')->where('employment_details.status','!=',1);
+        $total = $sql->count();
+        $max_per_page = 20;
+        $total_pages = ceil($total/$max_per_page);
+        if(Input::has('page')){
+          $page_id = Input::get('page');
+        } else {
+          $page_id = 1;
+        }
+
+        $input_string = 'pendingApprovals/pendingEmploymentDetails?page=';
+        $count_string = 0;
+        foreach (Input::all() as $key => $value) {
+          if($key != 'page'){
+            $input_string .= ($count_string == 0)?'':'&';
+            $input_string .= $key.'='.$value;
+            $count_string++;
+          }
+        }
+
+        $employmentDetails = $sql->skip(($page_id-1)*$max_per_page)->take($max_per_page)->get();
+        $ApprovalStatus = Approval::status();
+        $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'pendingDocument','subsidebar'=>0]);
+        $this->layout->main = View::make('admin.pendingDocuments.list',["docType"=>'pendingEmploymentDetails', 'employmentDetails'=>$employmentDetails, 'ApprovalStatus'=>$ApprovalStatus ,"total" => $total, "page_id"=>$page_id, "max_per_page" => $max_per_page, "total_pages" => $total_pages,'input_string'=>$input_string]);
+    }
+    public function pendingActivities(){
+        $sql = CoachActivity::select('coach_activity.*','coaches.full_name')->leftJoin('coaches','coach_activity.coach_id','=','coaches.id')->where('coach_activity.status','!=',1);
+        $total = $sql->count();
+        $max_per_page = 20;
+        $total_pages = ceil($total/$max_per_page);
+        if(Input::has('page')){
+          $page_id = Input::get('page');
+        } else {
+          $page_id = 1;
+        }
+
+        $input_string = 'pendingApprovals/pendingActivities?page=';
+        $count_string = 0;
+        foreach (Input::all() as $key => $value) {
+          if($key != 'page'){
+            $input_string .= ($count_string == 0)?'':'&';
+            $input_string .= $key.'='.$value;
+            $count_string++;
+          }
+        }
+
+        $activities = $sql->skip(($page_id-1)*$max_per_page)->take($max_per_page)->get();
+        $ApprovalStatus = Approval::status();
+        $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'pendingDocument','subsidebar'=>0]);
+        $this->layout->main = View::make('admin.pendingDocuments.list',["docType"=>'pendingActivities' , "activities"=>$activities, 'ApprovalStatus'=>$ApprovalStatus ,"total" => $total, "page_id"=>$page_id, "max_per_page" => $max_per_page, "total_pages" => $total_pages,'input_string'=>$input_string]);
+    }
+
     public function postApprove($entity_type,$entity_id){
         $cre=[
             "remarks"=>Input::get('remarks'),
@@ -70,7 +176,7 @@ class ApprovalController extends BaseController {
                 $log->document = $destinationPath.$filename;
             }
             $log->save();
-            return Redirect::Back();
+            return Redirect::Back()->with('success','Status updated');
  
         } else {
             return Redirect::Back()->with('failure','Please fill all the required fields');

@@ -39,6 +39,13 @@
         <span class="selected"></span>
       </a>
     </li>
+    <li class="@if($sidebar == 'pendingDocument' ) active @endif" >
+      <a href="{{url('pendingApprovals/pendingDocument')}}">
+        <i class="fa fa-edit"></i>
+        <span class="title">Pending Documents</span>
+        <span class="selected"></span>
+      </a>
+    </li>
     <li class="@if($sidebar == 'courses' ) active open @endif">
       <a href="javascript:;">
       <i class="fa fa-book"></i>
