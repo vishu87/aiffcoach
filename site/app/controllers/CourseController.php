@@ -159,12 +159,12 @@ class CourseController extends BaseController {
     /**********courses for coach panel*******/
 
     public function activeCourse(){
-        $courses =  Course::Active();
+        $courses =  Course::Active()->get();
         $this->layout->sidebar = View::make('coaches.sidebar',['sidebar'=>5,'subsidebar'=>1]);
         $this->layout->main = View::make('coaches.courses.list',['courses'=>$courses,'title'=>'Active Courses']);
     }
     public function inactiveCourse(){
-        $courses =  Course::Inactive();
+        $courses =  Course::Inactive()->get();
         $this->layout->sidebar = View::make('coaches.sidebar',['sidebar'=>5,'subsidebar'=>2]);
         $this->layout->main = View::make('coaches.courses.list',['courses'=>$courses,'title'=>'Inactive Courses','status'=>'inactive']);
     }

@@ -1,4 +1,5 @@
 <h3 class="page-title">Profile - {{$title}}</h3>
+<?php $count_main =1;?>
 @if(Session::has('success'))
 <div class="alert alert-success alert-dismissable">
 	<button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>
@@ -241,6 +242,7 @@
     </div>
 @endif
 @if($profileType==5)	
+<?php $entity_type = 2;?>
 <div class="portlet box blue ">
     <div class="portlet-title">
     	<div class="caption">
@@ -286,6 +288,7 @@
 				<th style="width:50px">SN</th>
 				<th>Document Name</th>
 				<th>Expiry Date</th>
+				<th>Status</th>
 				<th>#</th>
 			</tr></thead>
 			<tbody id="documents">
@@ -295,10 +298,30 @@
 						<td>{{$count}}</td>
 						<td>{{($data->document_id==0)?$data->name:$document_types[$data->document_id]}}</td>
 						<td>{{date('d-m-Y',strtotime($data->expiry_date))}}</td>
+						<td>{{$ApprovalStatus[$data->status]}}</td>
 						<td>
 							<a type="button" class="btn yellow btn-sm "  href="{{url($data->file)}}" target="_blank"> <i class="fa fa-cube"></i> View</a>
 
-							<button type="button" class="btn red btn-sm delete-div" div-id="document_{{$data->id}}"  action="{{'coach/addDocument/delete/'.$data->id}}"> <i class="fa fa-remove"></i> Delete</button>
+							<button  div-id="{{'approve_list_'.$count_main}}" class="btn btn-xs blue showApprovals"><i class="fa fa-angle-double-right"></i> Details</button>
+
+							@if($data->status != 1)
+								<button type="button" class="btn red btn-sm delete-div" div-id="document_{{$data->id}}"  action="{{'coach/addDocument/delete/'.$data->id}}"> <i class="fa fa-remove"></i> Delete</button>
+							@endif
+						</td>
+					</tr>
+					<tr id="{{'approve_list_'.$count_main++}}" style="display:none;">
+						<td colspan="5">
+							<div class="row" style="">
+								@if($data->check_admin())
+								<div class="col-md-6">
+									<?php $entity_id = $data->id;?>
+									@include('approve_box')
+								</div>
+								@endif
+								<div class="col-md-6">
+									{{Approval::approval_html($entity_type, $data->id)}}
+								</div>
+							</div>
 						</td>
 					</tr>
 					<?php $count++ ?>

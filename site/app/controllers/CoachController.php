@@ -3,12 +3,12 @@
 class CoachController extends BaseController {
     protected $layout = 'layout';
     public function dashboard(){
-        $courses =  Course::Active();
+        $courses =  Course::Active()->get();
         $check = [];
-        foreach ($courses as $value) {
-            $count = Application::where('coach_id',Auth::User()->coach_id)->where('course_id',$value->id)->count();
+        foreach ($courses as $course) {
+            $count = Application::where('coach_id',Auth::User()->coach_id)->where('course_id',$course->id)->count();
             if($count>=1){
-                $check[] = $value->id;
+                $check[] = $course->id;
             }
         }
         $this->layout->sidebar = View::make('coaches.sidebar',['sidebar'=>'dashboard']);
@@ -108,10 +108,11 @@ class CoachController extends BaseController {
     public function documents(){
         $id = Auth::User()->coach_id;
         $coach = Coach::find($id);
+        $ApprovalStatus = Approval::status();
         $documents = CoachDocument::where('coach_id',$id)->get();
         $document_types = [''=>"select"]+CoachDocument::DocTypes();
         $this->layout->sidebar = View::make('coaches.sidebar',["sidebar"=>'profile','subsidebar'=>1]);
-        $this->layout->main = View::make('coaches.profile',['documents'=>$documents,'document_types'=>$document_types,"profileType"=>5,'title'=>'Add Documents']);
+        $this->layout->main = View::make('coaches.profile',['documents'=>$documents,'document_types'=>$document_types,"profileType"=>5,'title'=>'Add Documents' , "ApprovalStatus"=>$ApprovalStatus]);
     }
 
     public function addDocument(){

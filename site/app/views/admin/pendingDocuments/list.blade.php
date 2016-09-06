@@ -163,7 +163,7 @@
 						<td><button  div-id="{{'approve_list_'.$count_main}}" class="btn btn-xs blue showApprovals"><i class="fa fa-angle-double-right"></i> Details</button></td>
 					</tr>
 					<tr id="{{'approve_list_'.$count_main++}}" style="display:none;">
-						<td colspan="7">
+						<td colspan="8">
 							<div class="row" style="">
 								@if($document->check_admin())
 								<div class="col-md-6">
@@ -221,7 +221,7 @@
 					<td><button  div-id="{{'approve_list_'.$count_main}}" class="btn btn-xs blue showApprovals"><i class="fa fa-angle-double-right"></i> Details</button></td>
 				</tr>
 				<tr id="{{'approve_list_'.$count_main++}}" style="display:none;">
-					<td colspan="8">
+					<td colspan="9">
 						<div class="row" style="">
 							
 							@if($license->check_admin())
