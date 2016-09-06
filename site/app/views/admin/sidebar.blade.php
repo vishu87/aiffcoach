@@ -32,13 +32,6 @@
         </li>
       </ul>
     </li>
-    <li class="@if($sidebar == 'license' ) active @endif" >
-      <a href="{{url('/admin/License')}}">
-        <i class="fa fa-key"></i>
-        <span class="title">Licenses</span>
-        <span class="selected"></span>
-      </a>
-    </li>
     <li class="@if($sidebar == 'pendingDocument' ) active @endif" >
       <a href="{{url('pendingApprovals/pendingDocument')}}">
         <i class="fa fa-edit"></i>
@@ -46,6 +39,14 @@
         <span class="selected"></span>
       </a>
     </li>
+    <li class="@if($sidebar == 'license' ) active @endif" >
+      <a href="{{url('/admin/License')}}">
+        <i class="fa fa-key"></i>
+        <span class="title">Licenses</span>
+        <span class="selected"></span>
+      </a>
+    </li>
+    
     <li class="@if($sidebar == 'courses' ) active open @endif">
       <a href="javascript:;">
       <i class="fa fa-book"></i>
