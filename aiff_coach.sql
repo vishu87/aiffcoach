@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost:8889
--- Generation Time: Sep 06, 2016 at 03:25 AM
+-- Generation Time: Sep 06, 2016 at 07:17 PM
 -- Server version: 5.5.38
 -- PHP Version: 5.6.2
 
@@ -74,23 +74,15 @@ CREATE TABLE `applications` (
   `remarks` text NOT NULL,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `applications`
 --
 
 INSERT INTO `applications` (`id`, `course_id`, `coach_id`, `status`, `remarks`, `updated_at`, `created_at`) VALUES
-(2, 1, 3, 0, 'Applied | Pending', '2016-05-30 07:09:48', '2016-04-30 13:27:41'),
-(4, 2, 3, 3, 'afdsafd', '2016-06-14 13:00:30', '2016-05-02 10:00:09'),
-(5, 6, 3, 3, 'Applied | Pending', '2016-05-09 14:18:18', '2016-05-09 13:04:38'),
-(6, 7, 3, 0, 'Applied | Pending', '2016-06-28 08:12:16', '2016-05-10 12:59:09'),
-(7, 7, 6, 0, '', '2016-08-22 12:40:42', '0000-00-00 00:00:00'),
-(12, 1, 27, 1, 'Applied | Pending', '2016-08-02 08:40:26', '2016-07-11 10:19:46'),
-(13, 5, 8, 3, 'ok', '2016-09-05 14:54:08', '2016-08-23 09:56:16'),
-(15, 10, 8, 2, 'Applied | Pending', '2016-08-23 11:06:56', '2016-08-23 10:42:02'),
-(16, 11, 8, 0, '', '2016-09-05 13:50:00', '2016-09-05 13:50:00'),
-(17, 11, 8, 0, '', '2016-09-05 13:50:24', '2016-09-05 13:50:24');
+(1, 11, 30, 3, '', '2016-09-06 15:10:39', '2016-09-06 14:31:57'),
+(2, 12, 30, 5, '', '2016-09-06 17:09:00', '2016-09-06 17:04:42');
 
 -- --------------------------------------------------------
 
@@ -101,13 +93,29 @@ INSERT INTO `applications` (`id`, `course_id`, `coach_id`, `status`, `remarks`, 
 CREATE TABLE `application_log` (
 `id` int(11) NOT NULL,
   `entity_id` int(11) NOT NULL,
+  `type` int(1) NOT NULL,
+  `closed` int(1) NOT NULL,
   `status` int(3) NOT NULL,
   `user_id` int(11) NOT NULL,
   `document` text NOT NULL,
   `remarks` text NOT NULL,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `application_log`
+--
+
+INSERT INTO `application_log` (`id`, `entity_id`, `type`, `closed`, `status`, `user_id`, `document`, `remarks`, `updated_at`, `created_at`) VALUES
+(1, 1, 1, 1, 0, 5, '', 'found ok', '2016-09-06 15:04:18', '2016-09-06 14:31:57'),
+(2, 1, 1, 1, 1, 27, '', 'OK', '2016-09-06 15:09:46', '2016-09-06 15:04:18'),
+(3, 1, 1, 1, 2, 5, '', 'OK', '2016-09-06 15:10:39', '2016-09-06 15:09:46'),
+(4, 2, 4, 1, 0, 5, '', 'OK', '2016-09-06 17:04:58', '2016-09-06 17:04:42'),
+(5, 2, 1, 1, 4, 27, '', 'hjvjhvvhjhvj', '2016-09-06 17:06:23', '2016-09-06 17:04:58'),
+(6, 2, 4, 1, 0, 5, '', 'none', '2016-09-06 17:08:34', '2016-09-06 17:06:23'),
+(7, 2, 1, 1, 4, 27, '', 'Ok', '2016-09-06 17:08:43', '2016-09-06 17:08:34'),
+(8, 2, 5, 1, 0, 5, '', 'rejected', '2016-09-06 17:09:00', '2016-09-06 17:08:43');
 
 -- --------------------------------------------------------
 
@@ -151,7 +159,7 @@ CREATE TABLE `approval` (
   `remarks` text NOT NULL,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
-) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `approval`
@@ -203,7 +211,10 @@ INSERT INTO `approval` (`id`, `entity_type`, `entity_id`, `status`, `user_id`, `
 (43, 3, 1, 1, 5, '', 'assadassda', '2016-09-02 13:39:12', '2016-09-02 13:39:12'),
 (44, 2, 8, 1, 5, '', 'Ok document', '2016-09-02 13:48:32', '2016-09-02 13:48:32'),
 (45, 3, 2, 1, 5, '', 'OK', '2016-09-05 13:09:54', '2016-09-05 13:09:54'),
-(46, 3, 3, 1, 5, '', 'Ok', '2016-09-05 13:18:29', '2016-09-05 13:18:29');
+(46, 3, 3, 1, 5, '', 'Ok', '2016-09-05 13:18:29', '2016-09-05 13:18:29'),
+(47, 2, 2, 1, 5, '', 'OK', '2016-09-06 12:03:48', '2016-09-06 12:03:48'),
+(48, 2, 8, 1, 5, '', 'OK', '2016-09-06 12:04:26', '2016-09-06 12:04:26'),
+(49, 2, 9, 1, 5, '', 'OK', '2016-09-06 12:04:43', '2016-09-06 12:04:43');
 
 -- --------------------------------------------------------
 
@@ -236,9 +247,9 @@ INSERT INTO `coaches` (`id`, `registration_id`, `first_name`, `middle_name`, `la
 (3, '0', 'vishu', '', 'agg', '', 'coaches-doc/6-CHIRAG---WIN_20151003_143525.JPG', '1964-04-13', 32, 2, 1, '2016-08-23 08:34:40', '2016-04-22 13:15:57'),
 (4, '', 'ankit ', 'kumar', 'gupta', '', 'coaches-doc/2-CHIRAG---WIN_20151003_143431.JPG', '2016-05-10', 36, 0, 1, '2016-05-09 12:29:12', '2016-05-09 12:29:12'),
 (5, '', 'ankit ', 'kumar', 'gupta', '', 'coaches-doc/2-CHIRAG---WIN_20151003_143431.JPG', '2016-05-10', 36, 0, 1, '2016-05-09 12:30:34', '2016-05-09 12:30:34'),
-(6, '', 'Sachin', 'Ramesh', 'Tendulkar', '', 'coaches-doc/2-CHIRAG---WIN_20151003_143457.JPG', '2016-05-26', 36, 0, 1, '2016-05-09 12:38:05', '2016-05-09 12:38:05'),
-(7, '', 'Sachin', 'Ramesh', 'Tendulkar', '', 'coaches-doc/2-CHIRAG---WIN_20151003_143457.JPG', '2016-05-26', 36, 0, 1, '2016-05-09 12:39:40', '2016-05-09 12:39:40'),
-(8, '', 'Sachin', 'Ramesh', 'Tendulkar', '', 'coaches-doc/13-CHIRAG---WIN_20151003_143525.JPG', '2016-05-04', 32, 1, 1, '2016-09-05 13:00:36', '2016-05-09 12:43:21'),
+(6, '', 'Sachin', 'Ramesh', 'Tendulkar', 'SRT', 'coaches-doc/2-CHIRAG---WIN_20151003_143457.JPG', '2016-05-26', 36, 0, 1, '2016-09-06 12:42:20', '2016-05-09 12:38:05'),
+(7, '', 'Sachin', 'Ramesh', 'Tendulkar', 'SRT', 'coaches-doc/2-CHIRAG---WIN_20151003_143457.JPG', '2016-05-26', 36, 0, 1, '2016-09-06 12:42:23', '2016-05-09 12:39:40'),
+(8, '', 'Sachin', 'Ramesh', 'Tendulkar', 'SRT', 'coaches-doc/13-CHIRAG---WIN_20151003_143525.JPG', '2016-05-04', 32, 1, 1, '2016-09-06 12:42:25', '2016-05-09 12:43:21'),
 (9, '', 'ankit ', 'kumar', 'gupta', '', 'coaches-doc/3-CHIRAG---WIN_20151003_143457.JPG', '2016-05-10', 36, 0, 1, '2016-05-09 12:47:19', '2016-05-09 12:47:19'),
 (10, '', 'shubham', '', 'bhatt', '', 'coaches-doc/4-CHIRAG---WIN_20151003_143431.JPG', '2016-05-25', 23, 0, 1, '2016-05-10 09:39:54', '2016-05-10 09:39:54'),
 (11, '', 'Avyay', 'kumar', 'Aggarwal', '', 'coaches-doc/photo__CHIRAG---WIN_20151003_143525.JPG', '2016-05-19', 36, 0, 1, '2016-05-12 12:24:55', '2016-05-12 12:24:55'),
@@ -308,7 +319,7 @@ CREATE TABLE `coach_documents` (
   `file` varchar(100) NOT NULL,
   `expiry_date` date NOT NULL,
   `remarks` text NOT NULL,
-  `approved` int(1) NOT NULL,
+  `status` int(1) NOT NULL,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
@@ -317,11 +328,11 @@ CREATE TABLE `coach_documents` (
 -- Dumping data for table `coach_documents`
 --
 
-INSERT INTO `coach_documents` (`id`, `coach_id`, `document_id`, `name`, `number`, `file`, `expiry_date`, `remarks`, `approved`, `updated_at`, `created_at`) VALUES
-(2, 27, 2, NULL, '', 'coaches-doc/file_25_OR-Details.pdf', '0000-00-00', 'voter card', 0, '2016-07-11 08:57:28', '2016-07-11 08:57:28'),
+INSERT INTO `coach_documents` (`id`, `coach_id`, `document_id`, `name`, `number`, `file`, `expiry_date`, `remarks`, `status`, `updated_at`, `created_at`) VALUES
+(2, 27, 2, NULL, '', 'coaches-doc/file_25_OR-Details.pdf', '0000-00-00', 'voter card', 1, '2016-09-06 12:03:48', '2016-07-11 08:57:28'),
 (7, 27, 6, 'Aiff Certifiacte', '', 'coaches-doc/file_25_OR-Details.pdf', '0000-00-00', 'other doucemnt', 0, '2016-07-11 09:30:44', '2016-07-11 09:30:44'),
-(8, 30, 1, NULL, '', 'coaches-doc/file_27_vas0001-(1).pdf', '0000-00-00', 'Auto Approve', 0, '2016-08-23 12:50:53', '2016-08-23 12:50:53'),
-(9, 32, 1, NULL, '', 'coaches-doc/file_29_ADDRESS_PROOF.pdf', '2016-08-02', 'NA', 0, '2016-08-24 12:57:37', '2016-08-24 12:57:37'),
+(8, 30, 1, NULL, '', 'coaches-doc/file_27_vas0001-(1).pdf', '0000-00-00', 'Auto Approve', 1, '2016-09-06 12:04:26', '2016-08-23 12:50:53'),
+(9, 32, 1, NULL, '', 'coaches-doc/file_29_ADDRESS_PROOF.pdf', '2016-08-02', 'NA', 1, '2016-09-06 12:04:43', '2016-08-24 12:57:37'),
 (10, 32, 0, 'DOB Proof', '', 'coaches-doc/file_29_vas0003.pdf', '2016-08-24', 'sasasadsa', 0, '2016-08-24 12:57:59', '2016-08-24 12:57:59');
 
 -- --------------------------------------------------------
@@ -408,28 +419,32 @@ CREATE TABLE `courses` (
   `prerequisite_id` varchar(20) NOT NULL,
   `start_date` date NOT NULL,
   `end_date` date NOT NULL,
+  `registration_start` date NOT NULL,
+  `registration_end` date NOT NULL,
   `fees` int(10) NOT NULL,
   `venue` text NOT NULL,
   `active` int(1) NOT NULL,
   `description` text NOT NULL,
   `documents` varchar(100) NOT NULL,
+  `user_type` int(11) NOT NULL,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `courses`
 --
 
-INSERT INTO `courses` (`id`, `name`, `license_id`, `prerequisite_id`, `start_date`, `end_date`, `fees`, `venue`, `active`, `description`, `documents`, `updated_at`, `created_at`) VALUES
-(4, 'past course', 1, '', '2016-03-27', '2016-04-02', 500, '', 0, '', 'coaches-doc/10-CHIRAG---WIN_20151003_143540.JPG', '2016-04-29 13:05:59', '2016-04-29 13:05:59'),
-(5, 'B-grade', 2, '', '2016-04-12', '2016-08-25', 500, 'dsafsdfasd', 0, 'dsafsdad', 'coaches-doc/11-CHIRAG---WIN_20151003_143540.JPG', '2016-08-23 08:54:59', '2016-04-30 10:45:14'),
-(6, 'license bc', 2, '', '2016-05-12', '2016-05-28', 100, '', 0, '', '', '2016-06-13 10:58:44', '2016-05-05 09:27:49'),
-(7, 'LLB', 1, '', '2016-05-02', '2016-05-28', 500, 'delhi', 0, 'kdfajlsdjfla', 'coaches-doc/Document_5_Table-of-Contents.pdf', '2016-06-14 09:56:39', '2016-05-10 12:47:30'),
-(8, 'new course', 2, '', '2016-06-17', '2016-06-22', 1500, 'Delhi', 0, 'A test course', 'coaches-doc/Document_5_OR.pdf', '2016-06-09 10:33:25', '2016-06-09 10:33:25'),
-(9, 'Test item', 2, '', '2016-08-07', '2016-08-11', 1500, 'delhi', 0, 'fdsfasdfasdfasdfa', '', '2016-08-22 12:25:16', '2016-08-22 12:25:16'),
-(10, 'National Training', 2, '', '2016-08-11', '2016-08-31', 500, 'delhi', 0, 'dafdsfadsfasd', '', '2016-08-23 10:38:38', '2016-08-23 10:38:38'),
-(11, 'New course check', 2, '3', '2016-09-01', '2016-09-30', 1500, 'nainital', 0, 'no descrptsadasd asd', '', '2016-09-05 12:13:37', '2016-09-05 12:13:37');
+INSERT INTO `courses` (`id`, `name`, `license_id`, `prerequisite_id`, `start_date`, `end_date`, `registration_start`, `registration_end`, `fees`, `venue`, `active`, `description`, `documents`, `user_type`, `updated_at`, `created_at`) VALUES
+(4, 'past course', 1, '', '2016-03-27', '2016-04-02', '0000-00-00', '0000-00-00', 500, '', 0, '', 'coaches-doc/10-CHIRAG---WIN_20151003_143540.JPG', 0, '2016-04-29 13:05:59', '2016-04-29 13:05:59'),
+(5, 'B-grade', 2, '', '2016-04-12', '2016-08-25', '0000-00-00', '0000-00-00', 500, 'dsafsdfasd', 0, 'dsafsdad', 'coaches-doc/11-CHIRAG---WIN_20151003_143540.JPG', 0, '2016-08-23 08:54:59', '2016-04-30 10:45:14'),
+(6, 'license bc', 2, '', '2016-05-12', '2016-05-28', '0000-00-00', '0000-00-00', 100, '', 0, '', '', 0, '2016-06-13 10:58:44', '2016-05-05 09:27:49'),
+(7, 'LLB', 1, '', '2016-05-02', '2016-05-28', '0000-00-00', '0000-00-00', 500, 'delhi', 0, 'kdfajlsdjfla', 'coaches-doc/Document_5_Table-of-Contents.pdf', 0, '2016-06-14 09:56:39', '2016-05-10 12:47:30'),
+(8, 'new course', 2, '', '2016-06-17', '2016-06-22', '0000-00-00', '0000-00-00', 1500, 'Delhi', 0, 'A test course', 'coaches-doc/Document_5_OR.pdf', 1, '2016-09-06 11:16:14', '2016-06-09 10:33:25'),
+(9, 'Test item', 2, '', '2016-08-07', '2016-08-11', '0000-00-00', '0000-00-00', 1500, 'delhi', 0, 'fdsfasdfasdfasdfa', '', 1, '2016-09-06 11:16:12', '2016-08-22 12:25:16'),
+(10, 'National Training', 2, '', '2016-08-11', '2016-08-31', '0000-00-00', '0000-00-00', 500, 'delhi', 0, 'dafdsfadsfasd', '', 0, '2016-08-23 10:38:38', '2016-08-23 10:38:38'),
+(11, 'New course check', 2, '3', '2016-09-01', '2016-09-30', '0000-00-00', '0000-00-00', 1500, 'nainital', 0, 'no descrptsadasd asd', '', 1, '2016-09-06 11:16:09', '2016-09-05 12:13:37'),
+(12, 'MUKESH  KUMAR', 3, '2,3', '2016-09-01', '2016-09-20', '2016-09-01', '2016-09-08', 1500, 'nainital', 0, 'sasdsda', '', 1, '2016-09-06 11:17:22', '2016-09-06 11:17:22');
 
 -- --------------------------------------------------------
 
@@ -523,19 +538,21 @@ CREATE TABLE `license` (
   `name` varchar(50) NOT NULL,
   `description` varchar(200) NOT NULL,
   `authorised_by` int(5) NOT NULL,
+  `user_type` int(11) NOT NULL,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `license`
 --
 
-INSERT INTO `license` (`id`, `name`, `description`, `authorised_by`, `updated_at`, `created_at`) VALUES
-(1, 'chirag 1 ', 'this is for senior coaches', 1, '2016-04-28 13:37:46', '2016-04-28 13:37:35'),
-(2, 'licensce B', 'junior coches can apply', 2, '2016-04-30 10:44:32', '2016-04-30 10:44:32'),
-(3, 'Test license 1', 'for football', 1, '2016-09-05 12:12:46', '2016-09-05 12:12:46'),
-(4, 'Test license 2', 'for football', 2, '2016-09-05 12:13:02', '2016-09-05 12:13:02');
+INSERT INTO `license` (`id`, `name`, `description`, `authorised_by`, `user_type`, `updated_at`, `created_at`) VALUES
+(1, 'chirag 1 ', 'this is for senior coaches', 1, 1, '2016-09-06 11:12:14', '2016-04-28 13:37:35'),
+(2, 'licensce B', 'junior coches can apply', 2, 1, '2016-09-06 11:12:20', '2016-04-30 10:44:32'),
+(3, 'Test license 1', 'for football', 1, 1, '2016-09-06 11:12:18', '2016-09-05 12:12:46'),
+(4, 'Test license 2', 'for football', 2, 0, '2016-09-05 12:13:02', '2016-09-05 12:13:02'),
+(5, 'Test license 3', 'for football', 2, 1, '2016-09-06 11:12:39', '2016-09-06 11:12:39');
 
 -- --------------------------------------------------------
 
@@ -608,6 +625,7 @@ CREATE TABLE `payment` (
 `id` int(11) NOT NULL,
   `application_id` int(11) NOT NULL,
   `fees` int(11) NOT NULL,
+  `amount_paid` int(11) NOT NULL,
   `payment_method` int(2) NOT NULL COMMENT '1=>"cheqe","2"=>"Draft","3"=>"Cash"',
   `cheque_date` date NOT NULL,
   `cheque_number` int(11) NOT NULL,
@@ -616,21 +634,14 @@ CREATE TABLE `payment` (
   `status` int(1) NOT NULL COMMENT '0=>"Not Approved",1=>"Approved"',
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `payment`
 --
 
-INSERT INTO `payment` (`id`, `application_id`, `fees`, `payment_method`, `cheque_date`, `cheque_number`, `bank_name`, `remarks`, `status`, `updated_at`, `created_at`) VALUES
-(2, 4, 500, 2, '2016-05-13', 125633, 'PNB', 'afdsafd', 0, '2016-05-30 06:31:34', '2016-05-06 14:08:35'),
-(3, 2, 100, 3, '0000-00-00', 0, '', 'dafsdfa1', 1, '2016-08-23 09:53:50', '2016-05-06 14:16:35'),
-(7, 5, 100, 3, '0000-00-00', 0, '', 'i wil pay that ammount at the department counter', 1, '2016-08-23 09:53:45', '2016-05-09 13:05:17'),
-(8, 6, 500, 1, '2016-05-25', 454512, 'SBI', 'dfads asdf adsf', 1, '2016-08-23 09:04:40', '2016-05-30 07:38:22'),
-(9, 12, 100, 1, '0000-00-00', 545555, 'pnb', 'kdsjflajdljdsklajfl sdflasdl f\r\n', 0, '2016-07-11 10:22:01', '2016-07-11 10:22:01'),
-(10, 13, 500, 3, '0000-00-00', 0, '', 'ok', 1, '2016-09-05 14:54:08', '2016-08-23 09:57:26'),
-(11, 13, 500, 3, '0000-00-00', 0, '', '', 0, '2016-08-23 10:24:48', '2016-08-23 10:24:48'),
-(13, 15, 500, 1, '0000-00-00', 87135486, 'PNB', 'fdsfasdfa', 0, '2016-08-23 11:06:55', '2016-08-23 11:06:55');
+INSERT INTO `payment` (`id`, `application_id`, `fees`, `amount_paid`, `payment_method`, `cheque_date`, `cheque_number`, `bank_name`, `remarks`, `status`, `updated_at`, `created_at`) VALUES
+(1, 1, 1500, 0, 2, '2016-09-07', 12345, 'SBI', 'Remark', 0, '2016-09-06 15:36:19', '2016-09-06 15:04:18');
 
 -- --------------------------------------------------------
 
@@ -967,12 +978,12 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 -- AUTO_INCREMENT for table `applications`
 --
 ALTER TABLE `applications`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=18;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `application_log`
 --
 ALTER TABLE `application_log`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `application_result`
 --
@@ -982,7 +993,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
 -- AUTO_INCREMENT for table `approval`
 --
 ALTER TABLE `approval`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=47;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=50;
 --
 -- AUTO_INCREMENT for table `coaches`
 --
@@ -1012,7 +1023,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=28;
 -- AUTO_INCREMENT for table `courses`
 --
 ALTER TABLE `courses`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT for table `courses_parameter`
 --
@@ -1032,7 +1043,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=23;
 -- AUTO_INCREMENT for table `license`
 --
 ALTER TABLE `license`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `measurements`
 --
@@ -1047,7 +1058,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
 -- AUTO_INCREMENT for table `payment`
 --
 ALTER TABLE `payment`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=14;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `registration_details`
 --
