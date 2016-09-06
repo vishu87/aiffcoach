@@ -6,48 +6,66 @@ class PaymentController extends BaseController {
     public function index(){
         if(Input::has('course')){
             $sql = Payment::listing()->where('applications.course_id',Input::get('course'));
-            $url_link = 'admin/Payment?course='.Input::get('course').'&page=';
         }
         else{
             $sql = Payment::listing();
-            $url_link = 'admin/Payment?page=';
         }
+        
         $total = $sql->count();
-        $max_per_page = 25;
+        $max_per_page = 100;
         $total_pages = ceil($total/$max_per_page);
         if(Input::has('page')){
-            $page_id = Input::get('page');
+          $page_id = Input::get('page');
         } else {
-            $page_id = 1;
+          $page_id = 1;
+        }
+
+        $input_string = 'admin/Payment?';
+        $count_string = 0;
+        foreach (Input::all() as $key => $value) {
+          if($key != 'page'){
+            $input_string .= ($count_string == 0)?'':'&';
+            $input_string .= $key.'='.$value;
+            $count_string++;
+          }
         }
         $payments = $sql->skip(($page_id-1)*$max_per_page)->take($max_per_page)->get();
         $courses = [""=>"Select"]+Course::lists('name','id');
         $status = Application::status();
         $this->layout->sidebar = View::make('admin.sidebar',["sidebar"=>'payment','subsidebar'=>1]);
-        $this->layout->main = View::make('admin.payment.list',['courses'=>$courses,'status'=>$status,'payments'=>$payments,"title"=>'Payment Due List','flag'=>1,"total" => $total, "page_id"=>$page_id, "max_per_page" => $max_per_page, "total_pages" => $total_pages,'url_link'=>$url_link]);
+        $this->layout->main = View::make('admin.payment.list',['courses'=>$courses,'status'=>$status,'payments'=>$payments,"title"=>'Payment Due List','flag'=>1,"total" => $total, "page_id"=>$page_id, "max_per_page" => $max_per_page, "total_pages" => $total_pages,'input_string'=>$input_string]);
     }
     public function pendingPayments(){
         if(Input::has('course')){
             $sql = Payment::listing()->pendingPayments()->where('applications.course_id',Input::get('course'));
-            $url_link = 'admin/Payment/pending?course='.Input::get('course').'&page=';
         }
         else{
             $sql = Payment::listing()->pendingPayments();
-            $url_link = 'admin/Payment/pending?course='.Input::get('course').'&page=';
         }
+        
         $total = $sql->count();
-        $max_per_page = 25;
+        $max_per_page = 100;
         $total_pages = ceil($total/$max_per_page);
         if(Input::has('page')){
-            $page_id = Input::get('page');
+          $page_id = Input::get('page');
         } else {
-            $page_id = 1;
+          $page_id = 1;
+        }
+
+        $input_string = 'admin/Payment/pending?';
+        $count_string = 0;
+        foreach (Input::all() as $key => $value) {
+          if($key != 'page'){
+            $input_string .= ($count_string == 0)?'':'&';
+            $input_string .= $key.'='.$value;
+            $count_string++;
+          }
         }
         $payments = $sql->skip(($page_id-1)*$max_per_page)->take($max_per_page)->get();
         $courses = [""=>"Select"]+Course::lists('name','id');
         $status = Application::status();
         $this->layout->sidebar = View::make('admin.sidebar',["sidebar"=>'payment','subsidebar'=>2]);
-        $this->layout->main = View::make('admin.payment.list',['flag'=>'2','courses'=>$courses,'status'=>$status,'payments'=>$payments,"title"=>'Payment Due List',"total" => $total, "page_id"=>$page_id, "max_per_page" => $max_per_page, "total_pages" => $total_pages,'url_link'=>$url_link]);
+        $this->layout->main = View::make('admin.payment.list',['flag'=>'2','courses'=>$courses,'status'=>$status,'payments'=>$payments,"title"=>'Payment Due List',"total" => $total, "page_id"=>$page_id, "max_per_page" => $max_per_page, "total_pages" => $total_pages,'input_string'=>$input_string]);
     }
     public function approvePaymentStatus($id,$remarks,$count){
         $applicationId = Payment::select('application_id')->where('id',$id)->first();

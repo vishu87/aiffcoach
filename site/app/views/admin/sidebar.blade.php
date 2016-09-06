@@ -92,25 +92,14 @@
         <span class="selected"></span>
       </a>
     </li>
-    <li class="@if($sidebar == 'payment' ) active open @endif">
-      <a href="javascript:;">
-      <i class="fa fa-credit-card"></i>
-      <span class="title">Payment</span>
-      <span class="arrow @if($sidebar == 'payment' ) open @endif"></span>
+    <li class="@if($sidebar == 'payment' ) active @endif" >
+      <a href="{{url('/admin/Payment')}}">
+        <i class="fa fa-credit-card"></i>
+        <span class="title">Payments</span>
+        <span class="selected"></span>
       </a>
-      <ul class="sub-menu">
-        <li class="@if($sidebar == 'payment' && $subsidebar == 1 ) active @endif">
-          <a href="{{url('admin/Payment')}}">
-          <i class="fa fa-chevron-right"></i>
-          All</a>
-        </li>
-        <li class="@if($sidebar == 'payment' && $subsidebar == 2 ) active @endif">
-          <a href="{{url('admin/Payment/pending')}}">
-          <i class="fa fa-chevron-right"></i>
-          Pending</a>
-        </li>
-      </ul>
     </li>
+
     <li class="@if($sidebar == 'profile' ) active @endif" >
       <a href="{{url('/changePassword')}}">
         <i class="fa fa-lock"></i>

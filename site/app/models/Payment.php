@@ -5,14 +5,8 @@ class Payment extends Eloquent {
 
 	protected $table = 'payment';
 
-	/*
-	"0" => "Approval Pending",
-	"1" => "Payment Pending",
-	"2" => "Payment Approval Pending",
-	"3" => "Approved",
-	*/
 	public static function listing(){
-		return Payment::select('coaches.first_name','coaches.middle_name','applications.status as status_app','coaches.last_name','courses.name as course_name','payment.*')->leftJoin('applications','payment.application_id','=','applications.id')->join('courses','applications.course_id','=','courses.id')->join('coaches','applications.coach_id','=','coaches.id');
+		return Payment::select('coaches.full_name','applications.status as status_app','courses.name as course_name','payment.*')->leftJoin('applications','payment.application_id','=','applications.id')->leftJoin('courses','applications.course_id','=','courses.id')->join('coaches','applications.coach_id','=','coaches.id');
 	}
 
 	public function scopePendingPayments($query){

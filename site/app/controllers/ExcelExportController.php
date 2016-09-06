@@ -11,23 +11,36 @@ class ExcelExportController extends BaseController {
         if($flag==3){
             $coaches = Coach::listing()->get();    
         }
-        include(app_path().'/libraries/Classes/PHPExcel.php');
-        include(app_path().'/libraries/export/coach.php'); 
+        if(sizeof($coaches)>0){
+            include(app_path().'/libraries/Classes/PHPExcel.php');
+            include(app_path().'/libraries/export/coach.php'); 
+        } else {
+            return Redirect::back()->with('failure','No data found to export');
+        }
+        
     }
     public function exportLicence(){
         $licenses = License::get();
-        include(app_path().'/libraries/Classes/PHPExcel.php');
-        include(app_path().'/libraries/export/coach.php');
+        if(sizeof($licenses)>0){
+            include(app_path().'/libraries/Classes/PHPExcel.php');
+            include(app_path().'/libraries/export/coach.php'); 
+        } else {
+            return Redirect::back()->with('failure','No data found to export');
+        }
     }
     public function coursesExport($flag){
         if($flag==1){
-            $courses = Course::allCourses();  
+            $courses = Course::allCourses()->get();  
         }
         if($flag==2){
-            $courses = Course::Active();    
+            $courses = Course::Active()->get();    
         }
-        include(app_path().'/libraries/Classes/PHPExcel.php');
-        include(app_path().'/libraries/export/coach.php');
+        if(sizeof($courses)>0){
+            include(app_path().'/libraries/Classes/PHPExcel.php');
+            include(app_path().'/libraries/export/coach.php'); 
+        } else {
+            return Redirect::back()->with('failure','No data found to export');
+        }
     }
     public function applicationExport($flag,$course_id=0){
         if($flag==1){
@@ -46,8 +59,12 @@ class ExcelExportController extends BaseController {
                 $applications = Application::applications()->where('applications.status','!=',3)->get();
             }  
         }
-        include(app_path().'/libraries/Classes/PHPExcel.php');
-        include(app_path().'/libraries/export/coach.php');
+        if(sizeof($applications)>0){
+            include(app_path().'/libraries/Classes/PHPExcel.php');
+            include(app_path().'/libraries/export/coach.php'); 
+        } else {
+            return Redirect::back()->with('failure','No data found to export');
+        }
     }
     public function paymentExport($flag,$course_id=0){
         if($flag==1){
@@ -66,7 +83,11 @@ class ExcelExportController extends BaseController {
                 $payments = Payment::listing()->pendingPayments()->get();
             }  
         }
-        include(app_path().'/libraries/Classes/PHPExcel.php');
-        include(app_path().'/libraries/export/coach.php');
+        if(sizeof($payments)>0){
+            include(app_path().'/libraries/Classes/PHPExcel.php');
+            include(app_path().'/libraries/export/coach.php'); 
+        } else {
+            return Redirect::back()->with('failure','No data found to export');
+        }
     }
 }

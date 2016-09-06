@@ -36,6 +36,7 @@ class AdminController extends BaseController {
         $count_string++;
       }
     }
+    
     $coaches = $sql->skip(($page_id-1)*$max_per_page)->take($max_per_page)->get();
     $status = Coach::Status();
 
@@ -191,28 +192,51 @@ class AdminController extends BaseController {
     $status = Application::status();
     $courses = ["" => "Select Course"] + Course::lists('name','id');
     if(Input::has('course')){
-      $applications = Application::select('courses.name as course_name','courses.id as course_id','applications.id','applications.status','coaches.first_name','coaches.last_name','coaches.middle_name','license.name as license_name','application_result.status as finalResult','application_result.remarks')
+      $sql = Application::select('courses.name as course_name','courses.id as course_id','applications.id','applications.status','coaches.first_name','coaches.last_name','coaches.middle_name','license.name as license_name','application_result.status as finalResult','application_result.remarks')
         ->join('coaches','applications.coach_id','=','coaches.id')
         ->leftJoin('courses','applications.course_id','=','courses.id')
         ->leftJoin('license','courses.license_id','=','license.id')
         ->leftJoin('application_result','applications.id','=','application_result.application_id')
         ->where('applications.status',3)
-        ->where('applications.course_id',Input::get('course'))
-        ->get();
+        ->where('applications.course_id',Input::get('course'));
       $resultStatus = Result::status();
     }else{
-      $applications = Application::select('courses.name as course_name','courses.id as course_id','applications.id','applications.status','coaches.first_name','coaches.last_name','coaches.middle_name','license.name as license_name','application_result.status as finalResult','application_result.remarks')
+      $sql = Application::select('courses.name as course_name','courses.id as course_id','applications.id','applications.status','coaches.first_name','coaches.last_name','coaches.middle_name','license.name as license_name','application_result.status as finalResult','application_result.remarks')
         ->join('coaches','applications.coach_id','=','coaches.id')
         ->join('courses','applications.course_id','=','courses.id')
         ->leftJoin('license','courses.license_id','=','license.id')
         ->leftJoin('application_result','applications.id','=','application_result.application_id')
-        ->where('applications.status',3)
-        ->get();
+        ->where('applications.status',3);
       $resultStatus = Result::status();
       // $applications = Application::applications()->where('applications.status',3)->get();
     }
+    if(Input::has('course')){
+      if(Input::get('course') != '' && Input::get('course') != 0){
+        $sql = $sql->where('applications.course_id',Input::get('course'));
+      }
+    }
+    $input_string = 'admin/ApplicationResults?';
+    $total = $sql->count();
+    $max_per_page =50;
+    $total_pages = ceil($total/$max_per_page);
+    if(Input::has('page')){
+      $page_id = Input::get('page');
+    } else {
+      $page_id = 1;
+    }
+    $count_string = 0;
+    foreach (Input::all() as $key => $value) {
+      if($key != 'page'){
+        $input_string .= ($count_string == 0)?'':'&';
+        $input_string .= $key.'='.$value;
+        $count_string++;
+      }
+    }
+
+    $applications = $sql->skip(($page_id-1)*$max_per_page)->take($max_per_page)->get();
+
     $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'results']);
-    $this->layout->main = View::make('resultAdmin.applications.index',['status'=>$status,"applications"=>$applications,'title'=>'Applications Results','flag'=>1, "courses" => $courses,'resultStatus'=>$resultStatus]);
+    $this->layout->main = View::make('resultAdmin.applications.index',['status'=>$status,"applications"=>$applications,'title'=>'Applications Results','flag'=>1, "courses" => $courses,'resultStatus'=>$resultStatus ,"total" => $total, "page_id"=>$page_id, "max_per_page" => $max_per_page, "total_pages" => $total_pages,'input_string'=>$input_string]);
   }  
 
   public function editParameterMarks($application_id){
