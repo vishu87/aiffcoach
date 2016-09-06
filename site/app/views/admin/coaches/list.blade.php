@@ -121,8 +121,6 @@
 				@include('admin.coaches.view')
 			<?php $count++;?>
 			@endforeach
-			
-
 		</table>
 	</div>
 </div>

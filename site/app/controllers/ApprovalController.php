@@ -14,7 +14,7 @@ class ApprovalController extends BaseController {
           $page_id = 1;
         }
 
-        $input_string = 'pendingApprovals/pendingDocument?page=';
+        $input_string = 'pendingApprovals/pendingDocument?';
         $count_string = 0;
         foreach (Input::all() as $key => $value) {
           if($key != 'page'){
@@ -40,7 +40,7 @@ class ApprovalController extends BaseController {
           $page_id = 1;
         }
 
-        $input_string = 'pendingApprovals/pendingLicenses?page=';
+        $input_string = 'pendingApprovals/pendingLicenses?';
         $count_string = 0;
         foreach (Input::all() as $key => $value) {
           if($key != 'page'){
@@ -66,7 +66,7 @@ class ApprovalController extends BaseController {
           $page_id = 1;
         }
 
-        $input_string = 'pendingApprovals/pendingEmploymentDetails?page=';
+        $input_string = 'pendingApprovals/pendingEmploymentDetails?';
         $count_string = 0;
         foreach (Input::all() as $key => $value) {
           if($key != 'page'){
@@ -92,7 +92,7 @@ class ApprovalController extends BaseController {
           $page_id = 1;
         }
 
-        $input_string = 'pendingApprovals/pendingActivities?page=';
+        $input_string = 'pendingApprovals/pendingActivities?';
         $count_string = 0;
         foreach (Input::all() as $key => $value) {
           if($key != 'page'){
