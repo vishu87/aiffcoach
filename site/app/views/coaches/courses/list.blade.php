@@ -29,7 +29,6 @@
 				<th>Fees</th>
 				<th>#</th>
 				
-				
 			</tr></thead>
 			<tbody id="courses">
 				<?php $count = 1; ?>

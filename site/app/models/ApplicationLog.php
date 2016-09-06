@@ -4,15 +4,6 @@ class ApplicationLog extends Eloquent {
 
 	protected $table = 'application_log';
 
-	public static function types(){
-		return array(
-			"1" => "Coach",
-			"2" => "Coach Document",
-			"3" => "Coach License",
-			"4" => "Coach Employment",
-			"5" => "Coach Activity"
-		);
-	}
 
 	public static function status(){
 		return  array('0'=>'Pending','1' =>'Approved','2'=>'Referred Back','3'=>'Rejected' );

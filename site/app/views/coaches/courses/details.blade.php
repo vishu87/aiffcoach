@@ -1,10 +1,20 @@
-<?php if($tab_type==1){$link='courses/active';}else if($tab_type==2){$link='courses/inactive';}else if($tab_type==3){$link='dashboard';} ?>
+
+@if(Session::has('success'))
+	<div class="alert alert-success alert-dismissable">
+		<button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>
+		{{Session::get('success')}}
+	</div>
+@endif
+
+@if(Session::has('failure'))
+    	<div class="alert alert-danger">
+        	<button type="button" class="close" data-dismiss="alert">×</button>
+        	<i class="fa fa-ban-circle"></i><strong>Failure!</strong> {{Session::get('failure')}}
+       	</div>
+@endif
 <div class="row">
 	<div class="col-md-6">
 		<h3 class="page-title">{{$course->name}}</h3>
-	</div>
-	<div class="col-md-6 ">
-		<a href="{{url('/coach/'.$link)}}" class="btn  blue pull-right">Back</a>
 	</div>
 </div>
 
@@ -77,7 +87,25 @@
 </div>
 
 <div class="row">
-	<div class=" col-offset-4 col-md-4">
-		<button class="btn  blue " action = "{{'coach/courses/apply/'.$course->id}}">Apply</button>
-	</div>
+	@if($is_applied)
+		<div class="alert alert-danger">
+			You have already applied for the course. Please check applications section.
+		</div>
+	@else
+	{{Form::open(array('url'=>'coach/courses/apply/'.$course->id,'method'=>'post','files'=>'true','class'=>"check_form"))}}
+        <div class="col-md-6">
+          <div class="">
+            <label>Remarks <span class="color-red">*</span></label>
+            {{Form::text('remarks','',["class"=>"form-control","required"=>"true"])}}
+          </div>
+          <div>
+            <label>Document</label>
+            {{Form::file('document',["class"=>'form-control'])}}
+          </div>
+        </div>
+        <div class="col-md-12">
+          {{Form::submit('Apply for course',["class"=>"btn green","style"=>"margin-top:20px"])}}
+        </div>
+      {{Form::close()}}
+    @endif
 </div>

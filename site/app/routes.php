@@ -66,10 +66,12 @@ Route::group(['prefix'=>'coach','before'=>['auth','coach']], function () {
 	});
 	Route::get('/passportDetails','CoachController@passportDetails');
 	Route::post('updatePassport','CoachController@updatePassport');
+
 	Route::group(["prefix"=>'Payment',"before"=>['auth']],function(){
 		Route::get('/{application_id}','PaymentController@Payment');
 		Route::post('option/{application_id}','PaymentController@paymentOption');
 	});
+
 	Route::group(['prefix'=>'dashboard','before'=>'auth'],function(){
 		Route::get('/','CoachController@dashboard');
 	});
@@ -85,8 +87,8 @@ Route::group(['prefix'=>'coach','before'=>['auth','coach']], function () {
 		Route::get('/','CourseController@allCourses');
 		Route::get('/active','CourseController@activeCourse');
 		Route::get('/inactive','CourseController@inactiveCourse');
-		Route::get('/details/{course_id}/{tab_type}','ApplicationController@details');
-		Route::get('/apply/{course_id}','ApplicationController@applyCourse');
+		Route::get('/details/{course_id}','ApplicationController@details');
+		Route::post('/apply/{course_id}','ApplicationController@applyCourse');
 	});
 	Route::group(["prefix"=>'applications'],function(){
 		Route::get('/','ApplicationController@allApplications');

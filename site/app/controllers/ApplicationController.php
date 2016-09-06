@@ -115,12 +115,12 @@ class ApplicationController extends BaseController {
         return json_encode($data);
     }
     /************ Coaches Apply For Courses **********/
-    public function details($course_id,$tab_type){
+    public function details($course_id){
 
         $course = Course::select('courses.*','license.name as license_name','license.authorised_by')
             ->join('license','courses.license_id','=','license.id')->where('courses.id',$course_id)->first();
 
-        $is_applied = Application::where('course_id',$course_id)->where('coach_id',Auth::user()->coach_id)->count();
+        $is_applied = Application::where('course_id',$course_id)->where('coach_id',Auth::user()->coach_id)->first();
 
         if($course->prerequisite_id != '')
         $prerequisites = explode(',',$course->prerequisite_id);
@@ -136,24 +136,9 @@ class ApplicationController extends BaseController {
         }
 
         $licenses = License::licenseList();
-
-        switch ($tab_type) {
-            case 1:
-                $tab = 5;
-                $tab_sub = 1;
-                break;
-            case 2:
-                $tab = 5;
-                $tab_sub = 2;
-                break;
-            case 3:
-                $tab = 'dashboard';
-                $tab_sub = '';
-            default:
-                $tab = 'dashboard';
-                $tab_sub = '';
-                break;
-        }
+      
+        $tab = 5;
+        $tab_sub = 0;
 
         $check_date_year = date("Y",strtotime($course->start_date));
         $check_date_year = $check_date_year - 2;
@@ -161,20 +146,39 @@ class ApplicationController extends BaseController {
 
         $this->layout->sidebar = View::make('coaches.sidebar',['sidebar'=>$tab,'subsidebar'=>$tab_sub]);
 
-        $this->layout->main = View::make('coaches.courses.details',["course"=>$course, 'is_applied'=>$is_applied, 'tab_type'=>$tab_type, "prerequisites"=>$prerequisites, "licenses"=>$licenses, "coach_licenses" => $coach_licenses, "check_date" => $check_date]);
+        $this->layout->main = View::make('coaches.courses.details',["course"=>$course, 'is_applied'=>$is_applied,"prerequisites"=>$prerequisites, "licenses"=>$licenses, "coach_licenses" => $coach_licenses, "check_date" => $check_date]);
     }
 
     public function applyCourse($course_id){
-        $application = new Application;
-        $application->course_id = $course_id;
-        $application->coach_id = Auth::User()->coach_id;
-        $application->status = 0;
-        $application->remarks = 'Applied | Pending';
-        $application->save(); 
-        $data['success'] = true;
-        $data['btn_title'] = 'Applied';
-        $data['remove_class'] = 'apply-course';
-        $data['message'] = 'You Have Successfully Applied For This Course';
-        return json_encode($data);
+        $check = Application::where('course_id',$course_id)->where('coach_id',Auth::user()->coach_id)->count();
+        if($check == 0){
+            $cre=[
+                "remarks"=>Input::get('remarks')
+            ];
+            $rules=[
+                "remarks"=>"required"
+            ];
+            $validation=Validator::make($cre,$rules);
+            if($validation->passes()){
+                $application = new Application;
+                $application->course_id = $course_id;
+                $application->coach_id = Auth::user()->coach_id;
+                $application->status = 0;
+                $application->remarks = '';
+                $application->save(); 
+                
+                $log = new ApplicationLog;
+                $log->entity_id = $application->id;
+                $log->status = 0;
+                $log->user_id = Auth::id();
+                $log->remarks = Input::get('remarks');
+
+                return Redirect::back()->with('success','You have successfully applied for the course');
+            } else {
+                return Redirect::back()->with('failure','Please fill mandatory fields');
+            }
+        } else {
+            return Redirect::back()->with('failure','You have already applied for this course');
+        }
     }
 }

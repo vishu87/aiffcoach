@@ -158,17 +158,8 @@ class CourseController extends BaseController {
 
     public function activeCourse(){
         $courses =  Course::Active();
-        $check = [];
-        foreach ($courses as $value) {
-            $count = Application::where('coach_id',Auth::User()->coach_id)->where('course_id',$value->id)->count();
-
-            if($count>=1){
-                $check[] = $value->id;
-            }
-        }
-        // return $check;
         $this->layout->sidebar = View::make('coaches.sidebar',['sidebar'=>5,'subsidebar'=>1]);
-        $this->layout->main = View::make('coaches.courses.list',['courses'=>$courses,'title'=>'Active Courses','check'=>$check]);
+        $this->layout->main = View::make('coaches.courses.list',['courses'=>$courses,'title'=>'Active Courses']);
     }
     public function inactiveCourse(){
         $courses =  Course::Inactive();
