@@ -23,7 +23,7 @@ class ApplicationController extends BaseController {
         }
         $sql = $sql->where('applications.status',$application_status);
 
-        $input_string = 'admin/Applications/approved?';
+        $input_string = 'admin/Applications/all?';
 
         $total = $sql->count();
         $max_per_page = 20;
@@ -56,10 +56,10 @@ class ApplicationController extends BaseController {
         $courses = ["" => "Select Course"] + Course::lists('name','id');
         if(Input::has('course')){
             $sql = Application::applications()->where('applications.status','=',0)->where('applications.course_id',Input::get('course'));
-            $url_link = 'admin/Applications/pending?course='.Input::get('course').'&page=';
+            $input_string = 'admin/Applications/pending?course='.Input::get('course').'&page=';
         } else {
             $sql = Application::applications()->where('applications.status','=',0);
-            $url_link = 'admin/Applications/pending?page=';
+            $input_string = 'admin/Applications/pending?';
         }
         $total = $sql->count();
         $max_per_page = 25;
@@ -69,9 +69,17 @@ class ApplicationController extends BaseController {
         } else {
             $page_id = 1;
         }
+        $count_string = 0;
+        foreach (Input::all() as $key => $value) {
+          if($key != 'page'){
+            $input_string .= ($count_string == 0)?'':'&';
+            $input_string .= $key.'='.$value;
+            $count_string++;
+          }
+        }
         $applications = $sql->skip(($page_id-1)*$max_per_page)->take($max_per_page)->get();
         $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'Applications','subsidebar'=>3]);
-        $this->layout->main = View::make('admin.applications.list',['status'=>$status,"courses" => $courses,"applications"=>$applications,'title'=>'Pending Applications','flag'=>2,"total" => $total, "page_id"=>$page_id, "max_per_page" => $max_per_page, "total_pages" => $total_pages,'url_link'=>$url_link]);
+        $this->layout->main = View::make('admin.applications.list',['status'=>$status,"courses" => $courses,"applications"=>$applications,'title'=>'Pending Applications','flag'=>2,"total" => $total, "page_id"=>$page_id, "max_per_page" => $max_per_page, "total_pages" => $total_pages,'input_string'=>$input_string]);
     }
     public function markApplication($id,$count){
         $application = Application::find($id);
