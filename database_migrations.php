@@ -61,4 +61,22 @@ ALTER TABLE `courses` ADD `registration_start` DATE NOT NULL AFTER `end_date`, A
 ALTER TABLE `license`  ADD `user_type` INT NOT NULL  AFTER `authorised_by`;
 ALTER TABLE `courses`  ADD `user_type` INT NOT NULL  AFTER `documents`;
 ALTER TABLE `payment`  ADD `amount_paid` INT NOT NULL  AFTER `fees`;
+
+//07-09
+CREATE TABLE `application_log` (
+`id` int(11) NOT NULL,
+  `entity_id` int(11) NOT NULL,
+  `type` int(1) NOT NULL,
+  `closed` int(1) NOT NULL,
+  `status` int(3) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `document` text NOT NULL,
+  `remarks` text NOT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+
+ALTER TABLE `application_log` ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `application_log` MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
 ?>
