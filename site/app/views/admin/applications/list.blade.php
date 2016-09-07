@@ -2,7 +2,7 @@
 	<div class="col-md-8">
 		<h3 class="page-title">{{$title}}</h3>
 	</div>
-	<div class="col-md-4">
+	<div class="col-md-4 hidden ">
 		<a class="btn green pull-right" href="{{url('/admin/applicationExport/'.$flag.'/'.app('request')->input('course'))}}">Export Excel</a>
 	</div>
 </div>

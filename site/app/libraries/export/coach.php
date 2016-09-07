@@ -58,9 +58,9 @@ function getNameFromNumber($num) {
 $row = 1;
 $i = 0;
 if(isset($coaches)){
-	$fields = array("sn","first_name","middle_name","last_name",'email','gender',"dob",'state_reference','mobile');
-	$field_names = array("SN", "First Name", "Middle Name","Last Name","Email","Gender","DOB","State of Reference","Contact No");
-	$widths = array("10","20","20","10","25","30","10","10","30","20");
+	$fields = array("sn",'registration_id',"full_name",'email','gender',"dob",'state_reference','mobile');
+	$field_names = array("SN","Registration Id" ,"Name","Email","Gender","DOB","State of Reference","Contact No");
+	$widths = array("10","20","20","10","25","30","30","20");
 	$exportData = $coaches;
 	$title = 'Coaches';
 }

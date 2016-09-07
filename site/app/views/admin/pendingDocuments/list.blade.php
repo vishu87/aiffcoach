@@ -6,8 +6,8 @@
 			Pending Approvals
 		</h3>
 	</div>
-	<div class="col-md-5">
-		<a class="btn green pull-right" href="javascript();">Export Excel</a>
+	<div class="col-md-5 hidden ">
+		<a class="btn green pull-right" href="#">Export Excel</a>
 	</div>
 </div>
 

@@ -33,6 +33,7 @@ Route::post('/register', 'CoachController@register');
 
 Route::group(['before' => 'auth'], function () {
     Route::post('/approve/{entity_type}/{etity_id}','ApprovalController@postApprove');
+    Route::get('/resultExport','ExcelExportController@resultExport');
 });
 
 Route::group(['before' => 'auth',"prefix"=>'pendingApprovals'], function () {
@@ -132,6 +133,7 @@ Route::group(["before"=>['auth']],function(){
 			Route::get('/coursesExport/{flag}','ExcelExportController@coursesExport');
 			Route::get('applicationExport/{flag}/{course_id?}','ExcelExportController@applicationExport');
 			Route::get('paymentExport/{flag}/{course_id?}','ExcelExportController@paymentExport');
+			
 			Route::group(["prefix"=>'Courses'],function(){
 				Route::get('/','CourseController@index');
 				Route::get('/active','CourseController@active');

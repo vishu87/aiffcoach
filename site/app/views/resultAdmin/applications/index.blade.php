@@ -2,12 +2,8 @@
 	<div class="col-md-8">
 		<h3 class="page-title">{{$title}}</h3>
 	</div>
-	<div class="col-md-4">
-		@if(Auth::User()->privilege==2)
-			<a class="btn green pull-right" href="{{url('/admin/ApplicationResults/exportApplications?course='.Input::get('course'))}}">Export Results</a>
-		@else
-			<a class="btn green pull-right" href="{{url('/resultAdmin/exportApplications?course='.Input::get('course'))}}">Export Results</a>
-		@endif
+	<div class="col-md-4 hidden ">
+		<a class="btn green pull-right" href="{{url('/resultExport')}}">Export Results</a>
 	</div>
 </div>
 @if(Session::has('success'))

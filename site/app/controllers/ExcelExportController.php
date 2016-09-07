@@ -3,10 +3,10 @@ class ExcelExportController extends BaseController {
     public function coachExport($flag){
         // flag = "1"=>Approved Coach,"2"=>pending Coach,"3"=>All Coaches
         if($flag==1){
-            $coaches = Coach::listing()->approved()->get();  
+            $coaches = Coach::listing()->approved()->where('users.official_types','LIKE','%'.Auth::user()->manage_official_type.'%')->get();  
         }
         if($flag==2){
-            $coaches = Coach::listing()->pending()->get();    
+            $coaches = Coach::listing()->pending()->where('users.official_types','LIKE','%'.Auth::user()->manage_official_type.'%')->get();    
         }
         if($flag==3){
             $coaches = Coach::listing()->get();    
@@ -20,7 +20,7 @@ class ExcelExportController extends BaseController {
         
     }
     public function exportLicence(){
-        $licenses = License::get();
+        $licenses = License::where('user_type',Auth::user()->manage_official_type)->get();
         if(sizeof($licenses)>0){
             include(app_path().'/libraries/Classes/PHPExcel.php');
             include(app_path().'/libraries/export/coach.php'); 
@@ -30,10 +30,10 @@ class ExcelExportController extends BaseController {
     }
     public function coursesExport($flag){
         if($flag==1){
-            $courses = Course::allCourses()->get();  
+            $courses = Course::allCourses()->where('courses.user_type',Auth::user()->manage_official_type)->get();  
         }
         if($flag==2){
-            $courses = Course::Active()->get();    
+            $courses = Course::Active()->where('courses.user_type',Auth::user()->manage_official_type)->get();    
         }
         if(sizeof($courses)>0){
             include(app_path().'/libraries/Classes/PHPExcel.php');
@@ -90,4 +90,14 @@ class ExcelExportController extends BaseController {
             return Redirect::back()->with('failure','No data found to export');
         }
     }
+    public function resultExport(){
+        $results = [];
+        if(sizeof($results)>0){
+            include(app_path().'/libraries/Classes/PHPExcel.php');
+            include(app_path().'/libraries/export/coach.php'); 
+        } else {
+            return Redirect::back()->with('failure','No data found to export');
+        }
+    }
+
 }
