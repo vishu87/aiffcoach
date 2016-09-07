@@ -25,8 +25,11 @@ class CourseController extends BaseController {
 
     public function add(){
         $licenses = [''=>'Select'] + License::where('user_type',Auth::user()->manage_official_type)->lists('name','id');
+
+        $instructors = ['' => 'Select'] + User::where('privilege',3)->lists('name','id');
+
         $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'courses','subsidebar'=>1]);
-        $this->layout->main = View::make('admin.courses.add',['licenses'=>$licenses]);
+        $this->layout->main = View::make('admin.courses.add',['licenses' => $licenses, "instructors" => $instructors]);
     }
 
     public function insert(){
@@ -159,12 +162,12 @@ class CourseController extends BaseController {
     /**********courses for coach panel*******/
 
     public function activeCourse(){
-        $courses =  Course::Active()->get();
+        $courses =  Course::Active()->where('courses.user_type','LIKE','%'.Auth::user()->official_types.'%')->get();
         $this->layout->sidebar = View::make('coaches.sidebar',['sidebar'=>5,'subsidebar'=>1]);
         $this->layout->main = View::make('coaches.courses.list',['courses'=>$courses,'title'=>'Active Courses']);
     }
     public function inactiveCourse(){
-        $courses =  Course::Inactive()->get();
+        $courses =  Course::Inactive()->where('courses.user_type','LIKE','%'.Auth::user()->official_types.'%')->get();
         $this->layout->sidebar = View::make('coaches.sidebar',['sidebar'=>5,'subsidebar'=>2]);
         $this->layout->main = View::make('coaches.courses.list',['courses'=>$courses,'title'=>'Inactive Courses','status'=>'inactive']);
     }

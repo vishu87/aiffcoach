@@ -2,7 +2,7 @@
 	<td>{{$count}}</td>
 	<td>{{$data->course_name}}</td>
 	<td>{{$data->license_name}}</td>
-	<td>{{$data->first_name.' '.$data->middle_name.' '.$data->last_name}}</td>
+	<td>{{$data->full_name}}</td>
 	<td>{{$data->remarks}}</td>
 	<td>{{($data->finalResult!='')?$resultStatus[$data->finalResult]:''}}</td>
 	<td>

@@ -15,6 +15,9 @@
 	<div class="col-md-6">
 		<h3 class="page-title">Official Name - {{$application->full_name}}</h3>
 	</div>
+	<div class="col-md-6">
+		<h3 class="page-title page-title2">Current Status - {{$ApplicationStatus[$application->status]}}</h3>
+	</div>
 </div>
 
 <div class="row">
@@ -91,7 +94,7 @@
 		</div>
 
 		@if($payment)
-			@if($payment->check_status())
+			@if($payment->check_status($application))
 				@include('coaches.applications.payment')
 			@else
 				@include('coaches.applications.payment_view')

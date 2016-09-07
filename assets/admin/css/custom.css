@@ -10,6 +10,16 @@ textarea.form-control{
 .required{
 	color: #F00;
 }
+.page-title2{
+	padding: 0px;
+    font-size: 23px;
+    letter-spacing: -1px;
+    display: block;
+    color: #666;
+    margin: 0px 0px 15px 0px;
+    font-weight: 300;
+    font-family: "Open Sans", sans-serif;
+}
 .error{
 	color: #F42B2B;
 }

@@ -22,12 +22,12 @@ class Payment extends Eloquent {
 		}
 	}
 
-	public function check_status(){
+	public function check_status($application){
 		$var = false;
 		if(Session::get('privilege') == 2){
 			$var = true;
 		} else {
-			if( ($this->status == 1 || $this->status == 2) ){
+			if( ($application->status == 1 || $application->status == 4) ){
 				$var = true;
 			}
 		}

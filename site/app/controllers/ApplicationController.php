@@ -145,7 +145,7 @@ class ApplicationController extends BaseController {
 
         $application = Application::select('applications.*','license.name as license_name','coaches.full_name')->join('coaches','applications.coach_id','=','coaches.id')->join('courses','applications.course_id','=','courses.id')->leftJoin('license','courses.license_id','=','license.id')->where('applications.id',$application_id)->first();
         $course = Course::find($application->course_id);
-
+        $ApplicationStatus = Application::status();
         if($course->prerequisite_id != '')
         $prerequisites = explode(',',$course->prerequisite_id);
         else $prerequisites = array();
@@ -175,7 +175,7 @@ class ApplicationController extends BaseController {
 
         $payment = Payment::where('application_id',$application_id)->first();
 
-        $this->layout->main = View::make('admin.applications.details',["course"=>$course, "prerequisites"=>$prerequisites, "licenses"=>$licenses, "coach_licenses" => $coach_licenses, "check_date" => $check_date, "application" => $application, "application_log" => $application_log, "payment" => $payment]);
+        $this->layout->main = View::make('admin.applications.details',["course"=>$course, "prerequisites"=>$prerequisites, "licenses"=>$licenses, "coach_licenses" => $coach_licenses, "check_date" => $check_date, "application" => $application, "application_log" => $application_log, "payment" => $payment, "ApplicationStatus" => $ApplicationStatus]);
     }
 
     public function applyCourse($course_id){

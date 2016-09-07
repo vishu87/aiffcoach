@@ -3,7 +3,7 @@
 class CoachController extends BaseController {
     protected $layout = 'layout';
     public function dashboard(){
-        $courses =  Course::Active()->get();
+        $courses =  Course::Active()->where('courses.user_type','LIKE','%'.Auth::user()->official_types.'%')->get();
         $check = [];
         foreach ($courses as $course) {
             $count = Application::where('coach_id',Auth::User()->coach_id)->where('course_id',$course->id)->count();

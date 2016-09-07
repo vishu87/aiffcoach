@@ -19,7 +19,6 @@ Route::get('/reset', function(){
     return View::make('reset');
 });
 
-
 Route::post('/tm_admin', 'UserController@postLogin');
 Route::post('/reset', 'UserController@postReset');
 

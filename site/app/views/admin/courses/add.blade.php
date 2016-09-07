@@ -72,6 +72,11 @@
 				{{Form::select('prerequisite_id[]',$licenses,(isset($course))?$course->prerequisite_id:'',["class"=>"form-control","multiple"=>"true"])}}
 				<span class="error">{{$errors->first('prerequisite_id')}}</span>
 			</div>
+			<div class="col-md-3 form-group">
+				{{Form::label('Instructors')}}
+				{{Form::select('result_admin_id[]',$instructors,(isset($course))?$course->result_admin_id:'',["class"=>"form-control","multiple"=>"true"])}}
+				<span class="error">{{$errors->first('result_admin_id')}}</span>
+			</div>
 		</div>
 		<div class="row">	
 			<div class="col-md-12 form-group">

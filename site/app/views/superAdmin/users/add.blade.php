@@ -40,7 +40,12 @@
 		{{Form::select('user_type',$UserTypes,(isset($user))?$user->privilege:'',["class"=>"form-control","required"=>"true","id"=>"UserType"])}}
 		<span class="error"><?php echo $errors->first('user_type'); ?></span>
 	</div>
-	<div class="form-group col-md-6">
+	<div class="form-group col-md-6 <?php if(isset($user)){if($user->privilege==3){echo 'hidden';}} ?>" id="instructor" >
+		<label>Manage officials</label><span class="error"> *</span>
+		{{Form::select('manage_official_type',$OfficialTypes,(isset($user))?$user->manage_official_type:'',["class"=>"form-control","required"=>"true"])}}
+		<span class="error"><?php echo $errors->first('manage_official_type'); ?></span>
+	</div>
+	<div class="form-group col-md-6 clear">
 		<label>Mobile</label>
 		{{Form::text('mobile',(isset($user))?$user->mobile:'',["class"=>"form-control"])}}
 		<span class="error"><?php echo $errors->first('mobile'); ?></span>

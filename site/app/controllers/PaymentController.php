@@ -5,10 +5,10 @@ class PaymentController extends BaseController {
     // admin panel function  starts
     public function index(){
         if(Input::has('course')){
-            $sql = Payment::listing()->where('applications.course_id',Input::get('course'));
+            $sql = Payment::listing()->join('users','users.coach_id','=','coaches.id')->where('users.official_types','LIKE','%'.Auth::user()->manage_official_type.'%')->where('applications.course_id',Input::get('course'));
         }
         else{
-            $sql = Payment::listing();
+            $sql = Payment::listing()->join('users','users.coach_id','=','coaches.id')->where('users.official_types','LIKE','%'.Auth::user()->manage_official_type.'%');
         }
         
         $total = $sql->count();

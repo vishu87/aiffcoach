@@ -88,9 +88,12 @@
 
 <div class="row">
 	@if($is_applied)
-		<div class="alert alert-danger">
-			You have already applied for the course. Please check applications section.
-		</div>
+		@if(!Session::has('success'))
+			<div class="alert alert-danger">
+				You have already applied for the course. Please check applications section.
+			</div>
+		@endif
+		
 	@else
 	{{Form::open(array('url'=>'coach/courses/apply/'.$course->id,'method'=>'post','files'=>'true','class'=>"check_form"))}}
         <div class="col-md-6">

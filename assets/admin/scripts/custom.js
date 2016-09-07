@@ -168,6 +168,17 @@ $(document).on("change", "#document_id", function() {
     }
 });
 
+
+$(document).on("change", "#UserType", function() {
+    var btn = $(this);
+    if(btn.val()==3){
+    	$('#instructor').addClass('hidden');
+    }
+    else if(btn.val()==2){
+    	$('#instructor').removeClass('hidden');
+    }
+});
+
 $(document).on("click", ".apply-course", function() {
     var btn = $(this);
 	bootbox.confirm("Are you sure?", function(result) {

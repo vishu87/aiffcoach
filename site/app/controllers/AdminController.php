@@ -192,20 +192,24 @@ class AdminController extends BaseController {
     $status = Application::status();
     $courses = ["" => "Select Course"] + Course::lists('name','id');
     if(Input::has('course')){
-      $sql = Application::select('courses.name as course_name','courses.id as course_id','applications.id','applications.status','coaches.first_name','coaches.last_name','coaches.middle_name','license.name as license_name','application_result.status as finalResult','application_result.remarks')
+      $sql = Application::select('courses.name as course_name','courses.id as course_id','applications.id','applications.status','coaches.full_name','license.name as license_name','application_result.status as finalResult','application_result.remarks')
         ->join('coaches','applications.coach_id','=','coaches.id')
+        ->join('users','applications.coach_id','=','users.coach_id')
         ->leftJoin('courses','applications.course_id','=','courses.id')
         ->leftJoin('license','courses.license_id','=','license.id')
         ->leftJoin('application_result','applications.id','=','application_result.application_id')
+        ->where('users.official_types','LIKE','%'.Auth::user()->manage_official_type.'%')
         ->where('applications.status',3)
         ->where('applications.course_id',Input::get('course'));
       $resultStatus = Result::status();
     }else{
-      $sql = Application::select('courses.name as course_name','courses.id as course_id','applications.id','applications.status','coaches.first_name','coaches.last_name','coaches.middle_name','license.name as license_name','application_result.status as finalResult','application_result.remarks')
+      $sql = Application::select('courses.name as course_name','courses.id as course_id','applications.id','applications.status','coaches.full_name','license.name as license_name','application_result.status as finalResult','application_result.remarks')
         ->join('coaches','applications.coach_id','=','coaches.id')
+        ->join('users','applications.coach_id','=','users.coach_id')
         ->join('courses','applications.course_id','=','courses.id')
         ->leftJoin('license','courses.license_id','=','license.id')
         ->leftJoin('application_result','applications.id','=','application_result.application_id')
+        ->where('users.official_types','LIKE','%'.Auth::user()->manage_official_type.'%')
         ->where('applications.status',3);
       $resultStatus = Result::status();
       // $applications = Application::applications()->where('applications.status',3)->get();
@@ -273,7 +277,7 @@ class AdminController extends BaseController {
   }
 
   public function uploadLicense($application_id){
-    $coach = Application::select('applications.coach_id','applications.course_id','coaches.full_name','coaches.id','license.name as license_name','courses.license_id')->join('courses','courses.id','=','applications.course_id')->leftJoin('license','courses.license_id','=','license.id')->join('coaches','applications.coach_id','=','coaches.id')->where('applications.id',$application_id)->first();
+    $coach = Application::select('applications.coach_id','applications.course_id','coaches.full_name','coaches.id','license.name as license_name','courses.license_id')->join('courses','courses.id','=','applications.course_id')->leftJoin('license','courses.license_id','=','license.id')->join('coaches','applications.coach_id','=','coaches.id')->join('users','users.coach_id','=','applications.coach_id')->where('applications.id',$application_id)->where('users.official_types','LIKE','%'.Auth::user()->manage_official_type.'%')->first();
     $checkLicense = CoachLicense::where('coach_id',$coach->id)->where('course_id',$coach->course_id)->count();
     $coachLicense = CoachLicense::listing()->where('coach_id',$coach->coach_id)->get(); 
     if($checkLicense>0){

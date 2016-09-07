@@ -79,4 +79,14 @@ CREATE TABLE `application_log` (
 ALTER TABLE `application_log` ADD PRIMARY KEY (`id`);
 
 ALTER TABLE `application_log` MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
+
+//updated on chirag server
+CREATE TABLE IF NOT EXISTS `course_result_admin` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `course_id` int(11) NOT NULL,
+  `result_admin_id` varchar(50) NOT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 ?>

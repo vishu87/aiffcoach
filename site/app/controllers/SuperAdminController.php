@@ -16,24 +16,33 @@ class SuperAdminController extends BaseController {
 
     public function addUser(){
         $UserTypes =[""=>"select"] + User::UserTypes();
+        $OfficialTypes =[""=>"select"] + User::OfficialTypes();
         if (($key = array_search('Coach', $UserTypes)) !== false) {
             unset($UserTypes[$key]);
         }
         $this->layout->sidebar = View::make('superAdmin.sidebar',['sidebar'=>2]);
-        $this->layout->main = View::make("superAdmin.users.add",['UserTypes'=>$UserTypes]);
+        $this->layout->main = View::make("superAdmin.users.add",['UserTypes'=>$UserTypes,"OfficialTypes"=>$OfficialTypes]);
     }
 
     public function storeUser(){
         $cre = ["name"=>Input::get('name'),"email"=>Input::get('email'),"user_type"=>Input::get('user_type')];
         $rules = ["name"=>"required",'email'=>'required|unique:users,username','user_type'=>'required'];
+        if(Input::get('user_type')==2){
+            $cre = $cre + ["manage_official_type" => Input::get('manage_official_type')];
+            $rules = $rules + ["manage_official_type" => 'required'];
+        } else {
+
+        }
         $validator = Validator::make($cre,$rules);
         if($validator->passes()){
+
             $password = str_random(8);
             $user = new User;
             $user->name = Input::get('name');
             $user->username = Input::get('email');
             $user->password = Hash::make($password);
             $user->password_check = $password;
+            $user->manage_official_type = Input::get('manage_official_type');
             $user->mobile = Input::get('mobile');
             $user->privilege = Input::get('user_type');
             $user->save();
@@ -48,23 +57,36 @@ class SuperAdminController extends BaseController {
 
     public function editUser($user_id){
         $user = User::find($user_id);
+        $OfficialTypes =[""=>"select"] + User::OfficialTypes();
         $UserTypes =[""=>"select"] + User::UserTypes();
         if (($key = array_search('Coach', $UserTypes)) !== false) {
             unset($UserTypes[$key]);
         }
         $this->layout->sidebar = View::make('superAdmin.sidebar',['sidebar'=>2]);
-        $this->layout->main = View::make("superAdmin.users.add",['user'=>$user,'UserTypes'=>$UserTypes]);
+        $this->layout->main = View::make("superAdmin.users.add",['user'=>$user,'UserTypes'=>$UserTypes,"OfficialTypes"=>$OfficialTypes]);
     }
 
     public function updateUser($user_id){
         $cre = ["name"=>Input::get('name'),"email"=>Input::get('email'),"user_type"=>Input::get('user_type')];
         $rules = ["name"=>"required",'email'=>'required|unique:users,username,'.$user_id,'user_type'=>'required'];
+        if(Input::get('user_type')==2){
+            $cre = $cre + ["manage_official_type" => Input::get('manage_official_type')];
+            $rules = $rules + ["manage_official_type" => 'required'];
+        } else {
+
+        }
         $validator = Validator::make($cre,$rules);
         if($validator->passes()){
             $user = User::find($user_id);
             $user->name = Input::get('name');
             $user->username = Input::get('email');
             $user->mobile = Input::get('mobile');
+            if(Input::get('user_type')==2){
+                $user->manage_official_type = Input::get('manage_official_type');
+            }
+            else{
+                $user->manage_official_type = 0;
+            }
             $user->privilege = Input::get('user_type');
             $user->save();
 
