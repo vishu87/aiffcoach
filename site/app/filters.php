@@ -59,7 +59,7 @@ Route::filter('coach', function()
 
 Route::filter('admin', function()
 {
-	if(Auth::user()->privilege != 2){
+	if(Auth::user()->privilege != 2 && Auth::user()->privilege != 4){
 		return Redirect::to('/');
 	}
 });

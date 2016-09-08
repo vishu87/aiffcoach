@@ -18,7 +18,7 @@ class Coach extends Eloquent {
     }
 
     public function scopePending($query){
-        return $query->where('coaches.status', '=', 0);
+        return $query->whereIn('coaches.status', array(0,2));
     }
 
     public function scopeReferBack($query){

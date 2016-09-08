@@ -183,7 +183,7 @@
 		</div>
 	@else
 	<div class="alert alert-warning">
-		No License found
+		No pending documents found
 	</div>
 	@endif
 @endif
@@ -243,7 +243,7 @@
 	</div>
 	@else
 	<div class="alert alert-warning">
-		No License found
+		No pending licenses found
 	</div>
 	@endif
 @endif
@@ -308,7 +308,7 @@
 	</div>
 	@else
 	<div class="alert alert-warning">
-		No employment details found
+		No pending employment details found
 	</div>
 	@endif
 @endif
@@ -367,7 +367,7 @@
 	</div>
 	@else
 	<div class="alert alert-warning">
-		No Activity found
+		No pending activities found
 	</div>
 	@endif
 @endif	
