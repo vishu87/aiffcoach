@@ -5,10 +5,10 @@ class PaymentController extends BaseController {
     // admin panel function  starts
     public function index(){
         if(Input::has('course')){
-            $sql = Payment::listing()->join('users','users.coach_id','=','coaches.id')->where('users.official_types','LIKE','%'.Auth::user()->manage_official_type.'%')->where('applications.course_id',Input::get('course'));
+            $sql = Payment::listing()->where('courses.user_type',Auth::user()->manage_official_type)->where('applications.course_id',Input::get('course'));
         }
         else{
-            $sql = Payment::listing()->join('users','users.coach_id','=','coaches.id')->where('users.official_types','LIKE','%'.Auth::user()->manage_official_type.'%');
+            $sql = Payment::listing()->where('courses.user_type',Auth::user()->manage_official_type);
         }
         
         $total = $sql->count();
@@ -30,7 +30,7 @@ class PaymentController extends BaseController {
           }
         }
         $payments = $sql->skip(($page_id-1)*$max_per_page)->take($max_per_page)->get();
-        $courses = [""=>"Select"]+Course::lists('name','id');
+        $courses = [""=>"Select"]+Course::where('user_type',Auth::user()->manage_official_type)->lists('name','id');
         $status = Application::status();
         $this->layout->sidebar = View::make('admin.sidebar',["sidebar"=>'payment','subsidebar'=>1]);
         $this->layout->main = View::make('admin.payment.list',['courses'=>$courses,'status'=>$status,'payments'=>$payments,"title"=>'Payment Due List','flag'=>1,"total" => $total, "page_id"=>$page_id, "max_per_page" => $max_per_page, "total_pages" => $total_pages,'input_string'=>$input_string]);

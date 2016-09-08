@@ -49,15 +49,7 @@ class CourseController extends BaseController {
             'registration_end'=>'required|date|after:registration_start',
             'license_id'=>'required',
             'fee'=>'required',
-            ];
-        if(Input::has('instructor')){
-            $instructorsList = Input::get('instructor');    
-            if (($key = array_search('', $instructorsList)) !== false) {
-                unset($instructorsList[$key]);
-                $cre = $cre + ["instructor" => $instructorsList];
-                $rules = $rules + ["instructor" => 'required'];
-            }
-        }    
+            ];    
         $validator = Validator::make($cre,$rules);
         if($validator->passes()){
             $course = new Course;
@@ -82,15 +74,18 @@ class CourseController extends BaseController {
                 $course->documents = $destinationPath.$doc;
             }
             $course->save();
-            if(Input::get('instructor') == '' && Input::get('instructor')==0){
-                $instructors = '';
-            } else {
-                $instructors = implode(',',Input::get('instructor'));
+            if(Input::has('instructor')){
+                $instructors = Input::get('instructor');
+                foreach ($instructors as $instructor) {
+                    if($instructor != '' && $instructor != 0){
+                        $courseInstructor = new CourseResultAdmin;
+                        $courseInstructor->course_id = $course->id;
+                        $courseInstructor->result_admin_id = $instructor;
+                        $courseInstructor->save();
+                    }
+                }
             }
-            $courseInstructor = new CourseResultAdmin;
-            $courseInstructor->course_id = $course->id;
-            $courseInstructor->result_admin_id = $instructors;
-            $courseInstructor->save();
+
             return Redirect::Back()->with('success','New Course  Added!!');
         }
         return Redirect::back()->withErrors($validator)->withInput()->with('failure','All Fields Are Not Field!');
@@ -100,8 +95,11 @@ class CourseController extends BaseController {
         $course = Course::find($id);
         $selectedPrerequisites = explode(',',$course->prerequisite_id);
         $instructors = ['' => 'Select'] + User::where('privilege',3)->lists('name','id');
-        $courseInstructor = CourseResultAdmin::where('course_id',$id)->first();
-        $selectedInstructors = explode(',',$courseInstructor->result_admin_id);
+        $courseInstructor = CourseResultAdmin::where('course_id',$id)->get();
+        $selectedInstructors = [];
+        foreach ($courseInstructor as $key => $value) {
+            $selectedInstructors[$key] = $value->result_admin_id;
+        }
         $selectedPrerequisites = explode(',',$course->prerequisite_id);
         $licenses = [''=>'Select']+License::lists('name','id');
         $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'courses','subsidebar'=>1]);
@@ -127,15 +125,7 @@ class CourseController extends BaseController {
             'registration_end'=>'required|date|after:registration_start',
             'license_id'=>'required',
             'fee'=>'required',
-            ];
-        if(Input::has('instructor')){
-            $instructorsList = Input::get('instructor');    
-            if (($key = array_search('', $instructorsList)) !== false) {
-                unset($instructorsList[$key]);
-                $cre = $cre + ["instructor" => $instructorsList];
-                $rules = $rules + ["instructor" => 'required'];
-            }
-        }   
+            ];   
         $validator = Validator::make($cre,$rules);
 
         if($validator->passes()){
@@ -164,16 +154,17 @@ class CourseController extends BaseController {
                 $course->documents = $destinationPath.$doc;
             }
             $course->save();
-            if(Input::get('instructor') == '' && Input::get('instructor')==0){
-                $instructors = '';
-            } else {
-                $instructors = implode(',',Input::get('instructor'));
-            }
-            $checkInstructor = CourseResultAdmin::where('course_id',$id)->count();
-            if($checkInstructor > 0){
-                $courseInstructor = CourseResultAdmin::where('course_id',$id)->update(["result_admin_id" => $instructors]);
-            } else {
-                $courseInstructor = CourseResultAdmin::insert(["course_id" => $id, "result_admin_id" => $instructors]);
+            $deletePreviousInstructors = CourseResultAdmin::where('course_id',$id)->delete();
+            if(Input::has('instructor')){
+                $instructors = Input::get('instructor');
+                foreach ($instructors as $instructor) {
+                    if($instructor != '' && $instructor != 0){
+                        $courseInstructor = new CourseResultAdmin;
+                        $courseInstructor->course_id = $course->id;
+                        $courseInstructor->result_admin_id = $instructor;
+                        $courseInstructor->save();
+                    }
+                }
             }
             return Redirect::Back()->with('success','Course Details Updated!!');
         }

@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col-md-8">
-		<h2 class="page-title">{{'Edit Details - '.strtoupper($coach->full_name)}} <br>({{strtoupper($coach->registration_id)}})</h2>
+		<h2 class="page-title">{{'Edit Details - '.strtoupper($coach->full_name)}} <br>{{strtoupper($coach->registration_id)}}</h2>
 	</div>
 	<div class="col-md-4">
 		<a href="{{url('admin/viewCoachDetails/'.$coach->id)}}" class="btn blue pull-right" style="margin-top:10px">Back</a>
@@ -45,6 +45,12 @@
 		          			<a href="{{url($coach->photo)}}" target="_blank">view current</a>
 		          		@endif		
 		          	</div>
+		        </div>
+		        <div class="col-md-6 form-group">
+		        	<label class="form-label">User Types</label><br>
+		        	@foreach($officialTypes as $officialTypeId => $officialTypeValue)
+		        		{{Form::checkbox('official_types[]',$officialTypeId,in_array($officialTypeId,$selectedOfficialTypes))}}  &nbsp;{{$officialTypeValue}} <br>
+		        	@endforeach
 		        </div>
 			</div>
 		<!---profile form end-->

@@ -145,13 +145,20 @@ class AdminController extends BaseController {
     $licenseList = License::lists('name','id');
     $ApprovalStatus = Approval::status();
     $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'coach','subsidebar'=>3]);
-    $this->layout->main = View::make('admin.coaches.profile',['coach'=>$coach,'employmentDetails'=>$employmentDetails,"documents"=>$documents,"activities"=>$activities,"courses"=>$courses,"licenseList"=>$licenseList,"coachStatus"=>$coachStatus,"coachLicense"=>$coachLicense,'ApprovalStatus'=>$ApprovalStatus]);
+    $this->layout->main = View::make('admin.coaches.profile',['coach' => $coach, 'employmentDetails' => $employmentDetails, "documents" => $documents, "activities" => $activities, "courses" => $courses, "licenseList" => $licenseList, "coachStatus" => $coachStatus, "coachLicense" => $coachLicense, 'ApprovalStatus' => $ApprovalStatus]);
   }
 
   public function editCoachProfile($coach_id){
     $coach = Coach::select('coaches.*','states.name as state_registation','coach_parameters.email','coach_parameters.address1','coach_parameters.address2','coach_parameters.city','coach_parameters.pincode','coach_parameters.mobile')->join('states','coaches.state_id','=','states.id')->join('coach_parameters','coaches.id','=','coach_parameters.coach_id')->where('coaches.id',$coach_id)->first();
+    $officialTypes = User::OfficialTypes();
+    $selectedOfficialTypes = User::where('coach_id',$coach_id)->first();
+    if($selectedOfficialTypes->official_types != ''){
+      $selectedOfficialTypes = explode(',',$selectedOfficialTypes->official_types);
+    } else {
+      $selectedOfficialTypes = [];
+    }
     $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'coach','subsidebar'=>3]);
-    $this->layout->main = View::make('admin.coaches.editProfile',["coach"=>$coach]);
+    $this->layout->main = View::make('admin.coaches.editProfile',["coach" => $coach, "officialTypes" => $officialTypes, "selectedOfficialTypes" => $selectedOfficialTypes]);
   }
 
   public function updateCoachProfile($coach_id){
@@ -173,6 +180,11 @@ class AdminController extends BaseController {
       }
       $coach->save();
       $coach_parameters = CoachParameter::where('coach_id',$coach_id)->update(["email"=>Input::get('email'),'mobile'=>Input::get('mobile')]);
+      if(Input::has('official_types')){
+        $official_types = implode(',',Input::get('official_types'));
+        $user = User::where('coach_id',$coach_id)->update(["official_types"=>$official_types]);
+      }
+
       return Redirect::to('admin/viewCoachDetails/'.$coach_id)->with('success','profile updated successfully');
 
     }

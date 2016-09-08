@@ -73,8 +73,8 @@
 				<span class="error">{{$errors->first('prerequisite_id')}}</span>
 			</div>
 			<div class="col-md-3 form-group">
-				{{Form::label('Instructors')}} <span class="error"> *</span>
-				{{Form::select('instructor[]',$instructors,(isset($selectedInstructors))?$selectedInstructors:'',["class"=>"form-control","multiple"=>"true" , "required" => "true"])}}
+				{{Form::label('Instructors')}}
+				{{Form::select('instructor[]',$instructors,(isset($selectedInstructors))?$selectedInstructors:'',["class"=>"form-control","multiple"=>"true"])}}
 				<span class="error">{{$errors->first('instructor')}}</span>
 			</div>
 		</div>
