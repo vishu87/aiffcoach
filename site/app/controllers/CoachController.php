@@ -382,8 +382,9 @@ class CoachController extends BaseController {
     }
     public function employmentDetails(){
         $employment = EmploymentDetails::where('coach_id',Auth::User()->coach_id)->get();
+        $employmentStatus = Approval::status();
         $this->layout->sidebar = View::make('coaches.sidebar',["sidebar"=>'2']);
-        $this->layout->main = View::make('coaches.employments.employment',['employment'=>$employment]);
+        $this->layout->main = View::make('coaches.employments.employment',['employment'=>$employment, 'employmentStatus'=>$employmentStatus]);
     }
     public function addNewEmployment(){
         $this->layout->sidebar = View::make('coaches.sidebar',['sidebar'=>2]);

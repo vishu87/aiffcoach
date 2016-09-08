@@ -8,8 +8,15 @@ class resultAdminController extends BaseController {
         $this->layout->main = View::make('resultAdmin.dashboard',[]);
     }
     public function index(){
+        $instructorCourseId = CourseResultAdmin::select('course_id')->where('result_admin_id','LIKE','%'.Auth::user()->id.'%')->get();
+        $courseIdArray = [];
+        foreach ($instructorCourseId as $key => $value) {
+            $courseIdArray[$key] = $value->course_id;
+        }
+        
         $status = Application::status();
-        $courses = ["" => "Select Course"] + Course::lists('name','id');
+        $courses = ["" => "Select Course"] + Course::whereIn('id',$courseIdArray)->lists('name','id');
+
         if(Input::has('course')){
             $applications = Application::select('courses.name as course_name','courses.id as course_id','applications.id','applications.status','coaches.first_name','coaches.last_name','coaches.middle_name','license.name as license_name','application_result.status as finalResult','application_result.remarks')
                 ->join('coaches','applications.coach_id','=','coaches.id')
@@ -27,6 +34,7 @@ class resultAdminController extends BaseController {
                 ->leftJoin('license','courses.license_id','=','license.id')
                 ->leftJoin('application_result','applications.id','=','application_result.application_id')
                 ->where('applications.status',3)
+                ->whereIn('applications.course_id',$courseIdArray)
                 ->get();
             $resultStatus = Result::status();
             // $applications = Application::applications()->where('applications.status',3)->get();

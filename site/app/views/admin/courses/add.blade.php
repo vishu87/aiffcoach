@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col-md-6">
-		<h3 class="page-title">Add Course</h3>
+		<h3 class="page-title">@if(isset($course)) Update Course Details @else Add Course @endif</h3>
 	</div>
 	<div class="col-md-6">
 		<a href="{{url('admin/Courses')}}" class="btn blue pull-right">Go Back</a>
@@ -69,13 +69,13 @@
 			</div>
 			<div class="col-md-3 form-group">
 				{{Form::label('Prerequisites')}}
-				{{Form::select('prerequisite_id[]',$licenses,(isset($course))?$course->prerequisite_id:'',["class"=>"form-control","multiple"=>"true"])}}
+				{{Form::select('prerequisite_id[]',$licenses,(isset($selectedPrerequisites))?$selectedPrerequisites:'',["class"=>"form-control","multiple"=>"true"])}}
 				<span class="error">{{$errors->first('prerequisite_id')}}</span>
 			</div>
 			<div class="col-md-3 form-group">
-				{{Form::label('Instructors')}}
-				{{Form::select('result_admin_id[]',$instructors,(isset($course))?$course->result_admin_id:'',["class"=>"form-control","multiple"=>"true"])}}
-				<span class="error">{{$errors->first('result_admin_id')}}</span>
+				{{Form::label('Instructors')}} <span class="error"> *</span>
+				{{Form::select('instructor[]',$instructors,(isset($selectedInstructors))?$selectedInstructors:'',["class"=>"form-control","multiple"=>"true" , "required" => "true"])}}
+				<span class="error">{{$errors->first('instructor')}}</span>
 			</div>
 		</div>
 		<div class="row">	

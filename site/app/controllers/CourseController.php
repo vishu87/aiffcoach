@@ -25,9 +25,7 @@ class CourseController extends BaseController {
 
     public function add(){
         $licenses = [''=>'Select'] + License::where('user_type',Auth::user()->manage_official_type)->lists('name','id');
-
         $instructors = ['' => 'Select'] + User::where('privilege',3)->lists('name','id');
-
         $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'courses','subsidebar'=>1]);
         $this->layout->main = View::make('admin.courses.add',['licenses' => $licenses, "instructors" => $instructors]);
     }
@@ -52,8 +50,15 @@ class CourseController extends BaseController {
             'license_id'=>'required',
             'fee'=>'required',
             ];
+        if(Input::has('instructor')){
+            $instructorsList = Input::get('instructor');    
+            if (($key = array_search('', $instructorsList)) !== false) {
+                unset($instructorsList[$key]);
+                $cre = $cre + ["instructor" => $instructorsList];
+                $rules = $rules + ["instructor" => 'required'];
+            }
+        }    
         $validator = Validator::make($cre,$rules);
-
         if($validator->passes()){
             $course = new Course;
             $course->name= Input::get('name');
@@ -73,11 +78,19 @@ class CourseController extends BaseController {
             if(Input::hasFile('documents')){
                 $extension = Input::file('documents')->getClientOriginalExtension();
                 $doc = "Document_".Auth::id().'_'.str_replace(' ','-',Input::file('documents')->getClientOriginalName());
-                
                 Input::file('documents')->move($destinationPath,$doc);
                 $course->documents = $destinationPath.$doc;
             }
             $course->save();
+            if(Input::get('instructor') == '' && Input::get('instructor')==0){
+                $instructors = '';
+            } else {
+                $instructors = implode(',',Input::get('instructor'));
+            }
+            $courseInstructor = new CourseResultAdmin;
+            $courseInstructor->course_id = $course->id;
+            $courseInstructor->result_admin_id = $instructors;
+            $courseInstructor->save();
             return Redirect::Back()->with('success','New Course  Added!!');
         }
         return Redirect::back()->withErrors($validator)->withInput()->with('failure','All Fields Are Not Field!');
@@ -85,9 +98,14 @@ class CourseController extends BaseController {
 
     public function edit($id){
         $course = Course::find($id);
+        $selectedPrerequisites = explode(',',$course->prerequisite_id);
+        $instructors = ['' => 'Select'] + User::where('privilege',3)->lists('name','id');
+        $courseInstructor = CourseResultAdmin::where('course_id',$id)->first();
+        $selectedInstructors = explode(',',$courseInstructor->result_admin_id);
+        $selectedPrerequisites = explode(',',$course->prerequisite_id);
         $licenses = [''=>'Select']+License::lists('name','id');
         $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'courses','subsidebar'=>1]);
-        $this->layout->main = View::make('admin.courses.add',['licenses'=>$licenses,'course'=>$course]);
+        $this->layout->main = View::make('admin.courses.add',['licenses' => $licenses, 'course' => $course, "instructors" => $instructors, "selectedInstructors" => $selectedInstructors, "selectedPrerequisites" => $selectedPrerequisites ]);
     }
 
     public function update($id){
@@ -110,6 +128,14 @@ class CourseController extends BaseController {
             'license_id'=>'required',
             'fee'=>'required',
             ];
+        if(Input::has('instructor')){
+            $instructorsList = Input::get('instructor');    
+            if (($key = array_search('', $instructorsList)) !== false) {
+                unset($instructorsList[$key]);
+                $cre = $cre + ["instructor" => $instructorsList];
+                $rules = $rules + ["instructor" => 'required'];
+            }
+        }   
         $validator = Validator::make($cre,$rules);
 
         if($validator->passes()){
@@ -138,6 +164,17 @@ class CourseController extends BaseController {
                 $course->documents = $destinationPath.$doc;
             }
             $course->save();
+            if(Input::get('instructor') == '' && Input::get('instructor')==0){
+                $instructors = '';
+            } else {
+                $instructors = implode(',',Input::get('instructor'));
+            }
+            $checkInstructor = CourseResultAdmin::where('course_id',$id)->count();
+            if($checkInstructor > 0){
+                $courseInstructor = CourseResultAdmin::where('course_id',$id)->update(["result_admin_id" => $instructors]);
+            } else {
+                $courseInstructor = CourseResultAdmin::insert(["course_id" => $id, "result_admin_id" => $instructors]);
+            }
             return Redirect::Back()->with('success','Course Details Updated!!');
         }
         return Redirect::back()->withErrors($validator)->withInput()->with('failure','All Fields Are Not Field!');
@@ -162,12 +199,14 @@ class CourseController extends BaseController {
     /**********courses for coach panel*******/
 
     public function activeCourse(){
-        $courses =  Course::Active()->where('courses.user_type','LIKE','%'.Auth::user()->official_types.'%')->get();
+        $user_type = explode(',',Auth::user()->official_types);
+        $courses =  Course::Active()->whereIn('courses.user_type',$user_type)->get();
         $this->layout->sidebar = View::make('coaches.sidebar',['sidebar'=>5,'subsidebar'=>1]);
         $this->layout->main = View::make('coaches.courses.list',['courses'=>$courses,'title'=>'Active Courses']);
     }
     public function inactiveCourse(){
-        $courses =  Course::Inactive()->where('courses.user_type','LIKE','%'.Auth::user()->official_types.'%')->get();
+        $user_type = explode(',',Auth::user()->official_types);
+        $courses =  Course::Inactive()->whereIn('courses.user_type',$user_type)->get();
         $this->layout->sidebar = View::make('coaches.sidebar',['sidebar'=>5,'subsidebar'=>2]);
         $this->layout->main = View::make('coaches.courses.list',['courses'=>$courses,'title'=>'Inactive Courses','status'=>'inactive']);
     }

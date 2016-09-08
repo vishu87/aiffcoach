@@ -32,6 +32,7 @@
 					<th>Start Date</th>
 					<th>End Date</th>
 					<th>Contract</th>
+					<th>Approval Status</th>
 					<th>#</th>
 				</tr>
 			</thead>

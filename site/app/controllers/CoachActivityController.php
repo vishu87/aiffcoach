@@ -11,8 +11,9 @@ class CoachActivityController extends BaseController {
 
     public function index(){
         $activities = CoachActivity::where('coach_id',Auth::User()->coach_id)->get();
+        $activityStatus = Approval::status();
         $this->layout->sidebar = View::make('coaches.sidebar',['sidebar'=>3]);
-        $this->layout->main = View::make('coaches.activity.list',['activities'=>$activities]);
+        $this->layout->main = View::make('coaches.activity.list',['activities'=>$activities, "activityStatus"=>$activityStatus]);
     }
     
     public function add(){

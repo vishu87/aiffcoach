@@ -30,6 +30,7 @@
 				<th>To</th>
 				<th>Participants</th>
 				<th>Postion / Role</th>
+				<th>Approval Status</th>
 				<th>#</th>
 			</tr>
 		</thead>

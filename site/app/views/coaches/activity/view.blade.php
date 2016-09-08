@@ -5,7 +5,7 @@
 	<td>{{date('d-m-Y',strtotime($data->to_date))}}</td>
 	<td>{{$data->participants}}</td>
 	<td>{{$data->position_role}}</td>
-
+	<td>{{$activityStatus[$data->status]}}</td>
 	<td>
 		<a type="button" class="btn yellow btn-sm"  href="{{url('coach/activity/edit/'.$data->id)}}" count = "{{$count}}"> <i class="fa fa-edit"></i> Edit</a>
 
