@@ -17,7 +17,7 @@ class resultAdminController extends BaseController {
         $courses = ["" => "Select Course"] + Course::whereIn('id',$courseIdArray)->lists('name','id');
 
         if(Input::has('course')){
-            $applications = Application::select('courses.name as course_name','courses.id as course_id','applications.id','applications.status','coaches.first_name','coaches.last_name','coaches.middle_name','license.name as license_name','application_result.status as finalResult','application_result.remarks')
+            $applications = Application::select('courses.name as course_name','courses.id as course_id','applications.id','applications.status','coaches.full_name','license.name as license_name','application_result.status as finalResult','application_result.remarks')
                 ->join('coaches','applications.coach_id','=','coaches.id')
                 ->leftJoin('courses','applications.course_id','=','courses.id')
                 ->leftJoin('license','courses.license_id','=','license.id')
@@ -27,7 +27,7 @@ class resultAdminController extends BaseController {
                 ->get();
             $resultStatus = Result::status();
         }else{
-            $applications = Application::select('courses.name as course_name','courses.id as course_id','applications.id','applications.status','coaches.first_name','coaches.last_name','coaches.middle_name','license.name as license_name','application_result.status as finalResult','application_result.remarks')
+            $applications = Application::select('courses.name as course_name','courses.id as course_id','applications.id','applications.status','coaches.full_name','license.name as license_name','application_result.status as finalResult','application_result.remarks')
                 ->join('coaches','applications.coach_id','=','coaches.id')
                 ->join('courses','applications.course_id','=','courses.id')
                 ->leftJoin('license','courses.license_id','=','license.id')
