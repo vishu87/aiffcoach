@@ -8,12 +8,11 @@ class resultAdminController extends BaseController {
         $this->layout->main = View::make('resultAdmin.dashboard',[]);
     }
     public function index(){
-        $instructorCourseId = CourseResultAdmin::select('course_id')->where('result_admin_id','LIKE','%'.Auth::user()->id.'%')->get();
+        $instructorCourseId = CourseResultAdmin::select('course_id')->where('result_admin_id',Auth::user()->id)->get();
         $courseIdArray = [];
         foreach ($instructorCourseId as $key => $value) {
             $courseIdArray[$key] = $value->course_id;
         }
-        
         $status = Application::status();
         $courses = ["" => "Select Course"] + Course::whereIn('id',$courseIdArray)->lists('name','id');
 
