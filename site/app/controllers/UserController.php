@@ -53,6 +53,9 @@ class UserController extends BaseController {
         if(Auth::User()->privilege==3){
             $this->layout->sidebar = View::make('resultAdmin.sidebar',['sidebar'=>4,'subsidebar'=>'']);
         }
+        if(Auth::User()->privilege==4){
+            $this->layout->sidebar = View::make('superAdmin.sidebar',['sidebar'=>3,'subsidebar'=>'']);
+        }
         
         $this->layout->main = View::make('profile',[]);
     }
