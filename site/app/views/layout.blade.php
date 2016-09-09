@@ -8,7 +8,7 @@
     <div class="page-logo" style="padding-top:10px; width: 240px;">
     
 <!--       {{HTML::image("assets/admin/img/logo.png","Logo",["class"=>"logo-default","style"=>"width:40px"])}} -->
-      <span class="">AIFF Coach </span>
+      <span class="">AIFF Officials </span>
       <div class="menu-toggler sidebar-toggler hide">
         <!-- DOC: Remove the above "hide" to enable the sidebar toggler button on header -->
       </div>

@@ -35,7 +35,14 @@
   <div class="logo">
     <img src="{{url('assets/img/aiff.jpg')}}">
   </div>
-
+<div style="max-width:700px; margin:0 auto">
+  @if(Session::has('success'))
+    <div class="alert alert-success alert-dismissable">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>
+      {{Session::get('success')}}
+    </div>
+  @endif
+</div>
 <div class="content">
   <!-- BEGIN LOGIN FORM -->
   {{ Form::open(array('action' => 'UserController@postLogin','class' => 'login-form',"method"=>"POST")) }}
@@ -44,12 +51,7 @@
         <i class="fa fa-ban-circle"></i><strong>Failure!</strong> {{Session::get('failure')}}
       </div>
   @endif
-  @if(Session::has('success'))
-    <div class="alert alert-success alert-dismissable">
-      <button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>
-      {{Session::get('success')}}
-    </div>
-  @endif
+  
     <h3 class="form-title">Login to your account</h3>
     <div class="alert alert-danger display-hide">
       <button class="close" data-close="alert"></button>

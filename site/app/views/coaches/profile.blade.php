@@ -259,6 +259,11 @@
 						{{Form::select('document',$document_types,'',["class"=>"form-control",'required'=>'true',"id"=>"document_id"])}}
 					</div>
 					<div class="col-md-4 form-group"> 
+				        <label class="form-label">Document Number</label>   <span class="error">*</span>    
+				        {{Form::text('number','',['class'=>'form-control','required'=>'true'])}}
+				        <span class="error">{{$errors->first('number')}}</span>
+				    </div>
+					<div class="col-md-4 form-group"> 
 				        <label class="form-label">Attach Document</label> <span class="error">*</span>      
 				        {{Form::file('file',['class'=>'form-control','placeholder'=>'Attach Passport Copy','pdf'=>'true','required'=>'true'])}}
 				        <span class="error">{{$errors->first('passport_proof')}}</span>
@@ -268,7 +273,7 @@
 				        {{Form::text('expiry','',['class'=>'form-control datepicker','date_en'=>'true'])}}
 				        <span class="error">{{$errors->first('passport_proof')}}</span>
 				    </div>
-				    <div class="col-md-4 form-group clear">
+				    <div class="col-md-4 form-group">
 				    	<label>Remarks</label>
 				    	{{Form::text('remarks','',["class"=>"form-control"])}}
 				    </div>
@@ -300,12 +305,12 @@
 						<td>{{date('d-m-Y',strtotime($data->expiry_date))}}</td>
 						<td>{{$ApprovalStatus[$data->status]}}</td>
 						<td>
-							<a type="button" class="btn yellow btn-sm "  href="{{url($data->file)}}" target="_blank"> <i class="fa fa-cube"></i> View</a>
+							<a type="button" class="btn yellow btn-sm "  href="{{url($data->file)}}" target="_blank"> View</a>
 
-							<button  div-id="{{'approve_list_'.$count_main}}" class="btn btn-xs blue showApprovals"><i class="fa fa-angle-double-right"></i> Details</button>
+							<button  div-id="{{'approve_list_'.$count_main}}" class="btn btn-sm blue showApprovals"><i class="fa fa-angle-double-right"></i> Details</button>
 
 							@if($data->status != 1)
-								<button type="button" class="btn red btn-sm delete-div" div-id="document_{{$data->id}}"  action="{{'coach/addDocument/delete/'.$data->id}}"> <i class="fa fa-remove"></i> Delete</button>
+								<button type="button" class="btn red btn-sm delete-div" div-id="document_{{$data->id}}"  action="{{'coach/addDocument/delete/'.$data->id}}"> Delete</button>
 							@endif
 						</td>
 					</tr>

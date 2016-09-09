@@ -238,9 +238,9 @@ class RegistrationController extends BaseController {
                 $document->coach_id = $coach->id;
                 $document->document_id = 1; // for passport
                 $document->name = '';
-                $document->status=1;
-                $document->file = $data3["passport_proof"];
-                $document->number = $data3['passport'];
+                $document->status = 0;
+                $document->file = (isset($data3["passport_proof"]))?$data3["passport_proof"]:'';
+                $document->number = (isset($data3['passport']))?$data3['passport']:'';
                 $document->expiry_date = date('Y-m-d',strtotime($data3["passport_expiry"]));
                 $document->save();
             }
@@ -260,7 +260,7 @@ class RegistrationController extends BaseController {
             // $mail->Body = View::make('mail',["type" => 1,'hash'=>$hash,'user_name'=>$username,'name'=>$user->username,"username"=>$user->username, "password"=>$password]);
             // $mail->send();
             $delete_temp_row = DB::table('reg_data')->where('id',$id)->delete();
-            return Redirect::to('/')->with('success','Registration Completed Successfully An Email is Sent to Your Registered Mail Id With Login Details!');
+            return Redirect::to('/')->with('success','You have successfully registered. An email has been sent to your registered e-mail with login details!');
         } else {
             return Redirect::back()->withErrors($validator)->withInput()->with('failure','All Fields Are Not Field!');
         }

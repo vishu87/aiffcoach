@@ -22,6 +22,7 @@
 							<td>DOB<br>
 								<b>{{date("d-m-Y",strtotime($coach->dob))}}</b>
 							</td>
+						</tr><tr>
 							<td>Email<br>
 								<b>{{$coach->email}}</b>
 							</td>
@@ -30,12 +31,14 @@
 							<td>Gender<br>
 								<b>{{($coach->gender==1)?'Male':'Female'}}</b>
 							</td>
+						</tr><tr>
 							<td>State of Registration<br>
 								<b>{{$coach->state_registation}}</b>
 							</td>
 						</tr>
 						<tr>
 							<td>Mobile<br><b>{{$coach->mobile}}</b></td>
+						</tr><tr>
 							<td>Address<br>
 								<b>{{$coach->address1.' '.$coach->address2.' '.$coach->city.' '.$coach->pincode}}</b>
 							</td>
