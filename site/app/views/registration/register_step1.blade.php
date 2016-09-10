@@ -53,7 +53,7 @@
 							    <div class="row">
 							        <div class="col-md-6 form-group">
 							        	<label class="form-label" style="width:100%"> DOB <span class="error"> *</span></label>
-							        	{{Form::text('dob',(isset($data["dob"]))?date('d-m-Y',strtotime($data["dob"])):'',["class"=>"form-control datepicker","date_en"=>"true"])}}
+							        	{{Form::text('dob',(isset($data["dob"]))?date('d-m-Y',strtotime($data["dob"])):'',["class"=>"form-control datepicker","date_en"=>"true","required"=>"true"])}}
 							          <span class="dob-error"></span>
 							        </div>
 								    <div class="col-md-6">

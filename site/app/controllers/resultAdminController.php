@@ -13,8 +13,14 @@ class resultAdminController extends BaseController {
         foreach ($instructorCourseId as $key => $value) {
             $courseIdArray[$key] = $value->course_id;
         }
+        if(sizeof($courseIdArray)>0){
+            $courses = ["" => "Select Course"] + Course::whereIn('id',$courseIdArray)->lists('name','id');
+        }
+        else{
+            $courses = [];$courseIdArray = [0];
+        }
         $status = Application::status();
-        $courses = ["" => "Select Course"] + Course::whereIn('id',$courseIdArray)->lists('name','id');
+        
 
         if(Input::has('course')){
             $applications = Application::select('courses.name as course_name','courses.id as course_id','applications.id','applications.status','coaches.full_name','license.name as license_name','application_result.status as finalResult','application_result.remarks')

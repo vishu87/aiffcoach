@@ -16,8 +16,8 @@
 				</div>
 			</div>
 			<div class="col-md-6">
-				<div class="row" style="padding:10px;">
-					<table class="table table-bordered table-hover">
+				<div class="row" >
+					<table class="table table-bordered table-hover" style="width:100%">
 						<tr>
 							<td>DOB<br>
 								<b>{{date("d-m-Y",strtotime($coach->dob))}}</b>
@@ -46,8 +46,8 @@
 		</div>
 	</div>
 	<div class="col-md-6">
-		<div style="margin:10px;">
-			<h3>Status - {{$coachStatus[$coach->status]}}</h3>
+		<div style="margin-left:30px;">
+			<h3 class="page-title">Status - {{$coachStatus[$coach->status]}}</h3>
 			@if($coach->check_admin())
 				<?php $entity_type=1; $entity_id = $coach->id;?>
 				@include('approve_box')
