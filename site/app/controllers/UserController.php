@@ -120,5 +120,4 @@ class UserController extends BaseController {
             return Redirect::Back()->withErrors($validator)->withInput();
         }
     }
-
 }
