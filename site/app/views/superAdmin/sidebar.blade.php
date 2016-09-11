@@ -39,6 +39,13 @@
         <span class="selected"></span>
       </a>
     </li>
+    <li class="@if($sidebar == 3) active @endif" >
+      <a href="{{url('/changePassword')}}">
+        <i class="fa fa-lock"></i>
+        <span class="title">Change Password</span>
+        <span class="selected"></span>
+      </a>
+    </li>
   </ul>
 </div>
 

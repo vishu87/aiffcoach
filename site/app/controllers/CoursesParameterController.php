@@ -14,12 +14,15 @@ class CoursesParameterController extends BaseController {
         $parameters = Parameter::where('active',0)->get();
     	$coursesParameter = CourseParameter::select('courses_parameter.id','parameters.parameter','license.name as license_name','courses_parameter.license_id','courses_parameter.parameter_id')->leftJoin('parameters','courses_parameter.parameter_id','=','parameters.id')->leftJoin('license','courses_parameter.license_id','=','license.id')->where('courses_parameter.active',0)->orderBy('courses_parameter.license_id','asc')->get();
         $parameter = [];
-        foreach ($coursesParameter as $courseParameter) {
-           if(!isset($parameter[$courseParameter->license_id]))$parameter[$courseParameter->license_id]=array();
-           
-           array_push($parameter[$courseParameter->license_id],$courseParameter->parameter);
-           $parameter_string[$courseParameter->license_id] = implode(',',$parameter[$courseParameter->license_id]);
-            
+        if(sizeof($coursesParameter)>0){
+            foreach ($coursesParameter as $courseParameter) {
+               if(!isset($parameter[$courseParameter->license_id]))$parameter[$courseParameter->license_id]=array();
+               
+               array_push($parameter[$courseParameter->license_id],$courseParameter->parameter);
+               $parameter_string[$courseParameter->license_id] = implode(',',$parameter[$courseParameter->license_id]);
+            }
+        } else{
+            $parameter_string = [];   
         }
 
     	$this->layout->sidebar = View::make('resultAdmin.sidebar',['sidebar'=>3]);

@@ -38,19 +38,18 @@
                     
                     <div class="col-md-6 form-group clear">
                       <label class="form-label">City <span class="error"> *</span> </label>
-                      {{Form::text('city',(isset($data["city"]))?$data["city"]:'',['class'=>'form-control','placeholder'=>'City Name'])}}
+                      {{Form::text('city',(isset($data["city"]))?$data["city"]:'',['class'=>'form-control','placeholder'=>'City Name',"required"=>"true"])}}
                     </div>
                     
                     <div class="col-md-6 form-group">
                       <label class="form-label">Pincode <span class="error"> *</span> </label>
-                      {{Form::text('pincode',(isset($data["pincode"]))?$data["pincode"]:'',['class'=>'form-control','placeholder'=>'Pin Code'])}}
+                      {{Form::text('pincode',(isset($data["pincode"]))?$data["pincode"]:'',['class'=>'form-control','placeholder'=>'Pin Code',"required"=>"true"])}}
                     </div>
                     
                     <div class="col-md-6 form-group">
                       <label class="form-label">State <span class="error"> *</span> </label>
-                      {{Form::select('state',$state,(isset($data["state"]))?$data["state"]:'',['class'=>'form-control'])}}
+                      {{Form::select('state',$state,(isset($data["state"]))?$data["state"]:'',['class'=>'form-control',"required"=>"true"])}}
                     </div>
-
                   </div>
                 </div>
               </div>
