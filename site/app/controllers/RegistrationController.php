@@ -225,6 +225,7 @@ class RegistrationController extends BaseController {
             $hash = Hash::make(str_random(6));
             $user = new User;
             $user->coach_id = $coach->id;
+            $user->name = $data1['first_name'].' '.$data1['middle_name'].' '.$data1['last_name'];
             $user->username = $data1['email'];
             $user->password = Hash::make($password);
             $user->privilege = 1;

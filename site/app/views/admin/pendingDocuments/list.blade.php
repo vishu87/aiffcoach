@@ -183,7 +183,7 @@
 		</div>
 	@else
 	<div class="alert alert-warning">
-		No License found
+		No Document found
 	</div>
 	@endif
 @endif
