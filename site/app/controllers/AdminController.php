@@ -4,12 +4,34 @@ class AdminController extends BaseController {
   protected $layout = 'layout';
   
   public function index(){
+    
+    $approved_officials = Coach::listing()->approved()->where('users.official_types','LIKE','%'.Auth::user()->manage_official_type.'%')->count();
+
+    $pending_officials = Coach::listing()->pending()->where('users.official_types','LIKE','%'.Auth::user()->manage_official_type.'%')->count();
+
     $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'dashboard','subsidebar'=>1]);
-    $this->layout->main = View::make('admin.index',[]);
+    
+    $this->layout->main = View::make('admin.index',["approved_officials" => $approved_officials, "pending_officials" => $pending_officials]);
+  }
+
+  public function get_sidebar(){
+    if(Session::get('privilege') == 2){
+      return 'admin.sidebar';
+    }
+    else if(Session::get('privilege') == 4){
+      return 'superAdmin.sidebar';
+    } else {
+      return '';
+    }
   }
 
   public function approvedCoach(){
-  	$sql = Coach::listing()->approved()->where('users.official_types','LIKE','%'.Auth::user()->manage_official_type.'%');
+
+    if(Session::get('privilege') == 4){
+  	  $sql = Coach::listing()->approved();
+    } else {
+      $sql = Coach::listing()->approved()->where('users.official_types','LIKE','%'.Auth::user()->manage_official_type.'%');
+    }
 
     if(Input::get("registration_id") != ''){
       $sql = $sql->where('coaches.registration_id','LIKE','%'.Input::get('registration_id').'%');
@@ -40,12 +62,20 @@ class AdminController extends BaseController {
     $coaches = $sql->skip(($page_id-1)*$max_per_page)->take($max_per_page)->get();
     $status = Coach::Status();
 
-    $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'coach','subsidebar'=>1]);
+    $sidebar_file = $this->get_sidebar();
+
+    $this->layout->sidebar = View::make($sidebar_file,['sidebar'=>'coach','subsidebar'=>1]);
     $this->layout->main = View::make('admin.coaches.list',['coaches'=>$coaches,"title"=>'Approved Officials', "status" => $status,'flag'=>1,"total" => $total, "page_id"=>$page_id, "max_per_page" => $max_per_page, "total_pages" => $total_pages,'input_string'=>$input_string]);
   }
 
   public function pendingCoach(){
-  	$sql = Coach::listing()->pending()->where('users.official_types','LIKE','%'.Auth::user()->manage_official_type.'%');
+
+    if(Session::get('privilege') == 4){
+      $sql = Coach::listing()->pending();
+    } else {
+      $sql = Coach::listing()->pending()->where('users.official_types','LIKE','%'.Auth::user()->manage_official_type.'%');
+    }
+
     if(Input::get("registration_id") != ''){
       $sql = $sql->where('coaches.registration_id','LIKE','%'.Input::get('registration_id').'%');
     }
@@ -74,7 +104,8 @@ class AdminController extends BaseController {
     $coaches = $sql->skip(($page_id-1)*$max_per_page)->take($max_per_page)->get();
     $status = Coach::Status();
 
-    $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'coach','subsidebar'=>2]);
+    
+    $this->layout->sidebar = View::make($this->get_sidebar(),['sidebar'=>'coach','subsidebar'=>2]);
     $this->layout->main = View::make('admin.coaches.list',['coaches'=>$coaches,"title"=>'Pending for Approval', "status" => $status,'flag'=>2,"total" => $total, "page_id"=>$page_id, "max_per_page" => $max_per_page, "total_pages" => $total_pages,'input_string'=>$input_string]);
   }
   // public function inactiveCoach(){
@@ -105,7 +136,7 @@ class AdminController extends BaseController {
   // } 
   public function viewCoachDetails($id){
     $coach = Coach::select('coaches.*','states.name as state_registation','coach_parameters.email','coach_parameters.address1','coach_parameters.address2','coach_parameters.city','coach_parameters.pincode','coach_parameters.mobile')->join('states','coaches.state_id','=','states.id')->join('coach_parameters','coaches.id','=','coach_parameters.coach_id')->where('coaches.id',$id)->first();
-    $documents = CoachDocument::select('coach_documents.*','documents.name as document_name')->join('documents','coach_documents.document_id','=','documents.id')->where('coach_id',$id)->get();
+    $documents = CoachDocument::select('coach_documents.*','documents.name as document_name')->leftJoin('documents','coach_documents.document_id','=','documents.id')->where('coach_id',$id)->get();
     $coachLicense = CoachLicense::listing()->where('coach_id',$id)->get();
     $employmentDetails = EmploymentDetails::where('coach_id',$id)->get();
     $activities = CoachActivity::where('coach_id',$id)->get();

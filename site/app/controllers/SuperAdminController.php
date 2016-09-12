@@ -4,8 +4,12 @@ class SuperAdminController extends BaseController {
     protected $layout = 'layout';
 
     public function dashboard(){
-        $this->layout->sidebar = View::make('superAdmin.sidebar',['sidebar'=>1]);
-        $this->layout->main = View::make('superAdmin.dashboard',[]);
+
+        $approved_officials = Coach::approved()->count();
+        $pending_officials = Coach::pending()->count();
+        
+        $this->layout->sidebar = View::make('superAdmin.sidebar',['sidebar'=>'dashboard']);
+        $this->layout->main = View::make('superAdmin.dashboard',["approved_officials" => $approved_officials, "pending_officials" => $pending_officials]);
     }
     public function manage_logins(){
         $users = User::whereIn('privilege',array(2,3))->orderBy('id','asc')->get();

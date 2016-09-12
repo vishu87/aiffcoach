@@ -28,7 +28,7 @@
          <li class="@if($sidebar == 'coach' && $subsidebar == 2 ) active @endif">
           <a href="{{url('admin/pendingCoach')}}">
           <i class="fa fa-chevron-right"></i>
-          Pending</a>
+          Under Process</a>
         </li>
       </ul>
     </li>

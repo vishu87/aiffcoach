@@ -3,7 +3,7 @@ class ApprovalController extends BaseController {
     protected $layout = 'layout';
 
     public function pendingDocument(){
-        $sql = CoachDocument::select('coach_documents.*','documents.name as document_name','coaches.full_name')->join('documents','coach_documents.document_id','=','documents.id')->leftJoin('coaches','coach_documents.coach_id','=','coaches.id')->join('users','users.coach_id','=','coach_documents.coach_id')->where('users.official_types','LIKE','%'.Auth::user()->manage_official_type.'%')->where('coach_documents.status','!=',1);
+        $sql = CoachDocument::select('coach_documents.*','documents.name as document_name','coaches.full_name')->leftJoin('documents','coach_documents.document_id','=','documents.id')->leftJoin('coaches','coach_documents.coach_id','=','coaches.id')->join('users','users.coach_id','=','coach_documents.coach_id')->where('users.official_types','LIKE','%'.Auth::user()->manage_official_type.'%')->where('coach_documents.status','!=',1);
         if(Input::get("registration_id") != ''){
           $sql = $sql->where('coaches.registration_id','LIKE','%'.Input::get('registration_id').'%');
         }
@@ -206,6 +206,8 @@ class ApprovalController extends BaseController {
                         $log->user_id = Auth::id();
                         $log->remarks = 'Approved';
                         $log->save();
+                        $document->status = 1;
+                        $document->save();
                     }
                     break;
                 case 2:

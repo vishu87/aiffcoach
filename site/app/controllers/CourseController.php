@@ -26,6 +26,7 @@ class CourseController extends BaseController {
     public function add(){
         $licenses = [''=>'Select'] + License::where('user_type',Auth::user()->manage_official_type)->lists('name','id');
         $instructors = ['' => 'Select'] + User::where('privilege',3)->lists('name','id');
+        // return $instructors;
         $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'courses','subsidebar'=>1]);
         $this->layout->main = View::make('admin.courses.add',['licenses' => $licenses, "instructors" => $instructors]);
     }
