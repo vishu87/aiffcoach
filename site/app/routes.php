@@ -133,6 +133,23 @@ Route::group(["before"=>['auth']],function(){
 			Route::get('applicationExport/{flag}/{course_id?}','ExcelExportController@applicationExport');
 			Route::get('paymentExport/{flag}/{course_id?}','ExcelExportController@paymentExport');
 			
+			Route::group(["prefix"=>"Parameter"],function(){
+				Route::get('/','ParameterController@index');
+				Route::post('/insert','ParameterController@insert');
+				Route::get('/edit/{id}','ParameterController@edit');
+				Route::put('/update/{id}','ParameterController@update');
+				Route::delete('/delete/{id}','ParameterController@delete');
+				Route::get('/exportExcel','ParameterController@exportExcel');
+			});
+			Route::group(["prefix"=>"coursesParameter"],function(){
+				Route::get('/','CoursesParameterController@index');
+				Route::post('/insert','CoursesParameterController@insert');
+				Route::get('/edit/{id}','CoursesParameterController@edit');
+				Route::put('/update/{id}','CoursesParameterController@update');
+				Route::delete('/delete/{id}','CoursesParameterController@delete');
+				Route::get('/exportExcel','CoursesParameterController@exportExcel');
+			});
+			
 			Route::group(["prefix"=>'Courses'],function(){
 				Route::get('/','CourseController@index');
 				Route::get('/active','CourseController@active');
@@ -178,22 +195,7 @@ Route::group(["prefix"=>'resultAdmin','before'=>["auth","resultAdmin"]],function
 	Route::get('/dashboard','resultAdminController@dashboard');
 	Route::get('/','resultAdminController@index');
 	Route::get('/exportApplications','resultAdminController@exportExcel');
-	Route::group(["prefix"=>"Parameter"],function(){
-		Route::get('/','ParameterController@index');
-		Route::post('/insert','ParameterController@insert');
-		Route::get('/edit/{id}','ParameterController@edit');
-		Route::put('/update/{id}','ParameterController@update');
-		Route::delete('/delete/{id}','ParameterController@delete');
-		Route::get('/exportExcel','ParameterController@exportExcel');
-	});
-	Route::group(["prefix"=>"coursesParameter"],function(){
-		Route::get('/','CoursesParameterController@index');
-		Route::post('/insert','CoursesParameterController@insert');
-		Route::get('/edit/{id}','CoursesParameterController@edit');
-		Route::put('/update/{id}','CoursesParameterController@update');
-		Route::delete('/delete/{id}','CoursesParameterController@delete');
-		Route::get('/exportExcel','CoursesParameterController@exportExcel');
-	});
+	
 	Route::group(["prefix"=>"result"],function(){
 		Route::get('/','resultAdminController@indexResult');
 		Route::post('/insert','resultAdminController@insert');

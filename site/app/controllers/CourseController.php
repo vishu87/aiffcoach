@@ -62,6 +62,9 @@ class CourseController extends BaseController {
             $course->license_id = Input::get('license_id');
             if(Input::has('prerequisite_id')){
                 $course->prerequisite_id = implode(',',Input::get('prerequisite_id'));
+                if(in_array(Input::get('license_id'),Input::get('prerequisite_id'))){
+                    return Redirect::back()->withInput()->with('failure','License and prerequisites can not be same');
+                }
             }
             $course->venue = Input::get('venue');
             $course->description = Input::get('description');
@@ -142,9 +145,7 @@ class CourseController extends BaseController {
             }
             $course->description = Input::get('description');
             $course->license_id = Input::get('license_id');
-            
             $course->fees = Input::get('fee');
-
             $destinationPath = 'coaches-doc/';
 
             if(Input::hasFile('documents')){
@@ -183,7 +184,6 @@ class CourseController extends BaseController {
             $data['success'] = true;
             $data['message'] = 'Item Deleted!';
         }
-        
         return json_encode($data);
     }
 

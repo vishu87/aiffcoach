@@ -46,7 +46,20 @@
         <span class="selected"></span>
       </a>
     </li>
-    
+    <li class="@if($sidebar == 2 ) active @endif" >
+      <a href="{{url('/admin/Parameter')}}">
+        <i class="fa fa-lock"></i>
+        <span class="title">Parameters</span>
+        <span class="selected"></span>
+      </a>
+    </li>
+    <li class="@if($sidebar == 3 ) active @endif" >
+      <a href="{{url('/admin/coursesParameter')}}">
+        <i class="fa fa-lock"></i>
+        <span class="title">License Parameter</span>
+        <span class="selected"></span>
+      </a>
+    </li>
     <li class="@if($sidebar == 'courses' ) active open @endif">
       <a href="javascript:;">
       <i class="fa fa-book"></i>

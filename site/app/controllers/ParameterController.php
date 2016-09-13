@@ -11,8 +11,8 @@ class ParameterController extends BaseController {
 
     public function index(){
     	
-    	$coursesParameter = Parameter::where('parameters.active',0)->get();
-    	$this->layout->sidebar = View::make('resultAdmin.sidebar',['sidebar'=>2]);
+    	$coursesParameter = Parameter::where('parameters.user_type',Auth::user()->manage_official_type)->get();
+    	$this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>2]);
     	$this->layout->main = View::make('resultAdmin.Parameter.list',['coursesParameter'=>$coursesParameter]);
     } 
 
@@ -29,6 +29,7 @@ class ParameterController extends BaseController {
             $parameter = new Parameter;
             $parameter->parameter = Input::get('parameter');
             $parameter->max_marks = Input::get('max_marks');
+            $parameter->user_type = Auth::user()->manage_official_type;
             $parameter->save();
             return Redirect::back()->with('success','Parameter Added Successully .');
         }
@@ -36,38 +37,61 @@ class ParameterController extends BaseController {
     }
 
     public function edit($id){
-        $coursesParameter  = Parameter::where('active',0)->get();
-        $parameter = Parameter::find($id);
-        // return $coursesParameter;
-        $this->layout->sidebar = View::make('resultAdmin.sidebar',['sidebar'=>2]);
-        $this->layout->main = View::make('resultAdmin.Parameter.list',['parameter'=>$parameter,'coursesParameter'=>$coursesParameter]);
+        $query = Parameter::where('id',$id)->where('user_type',Auth::user()->manage_official_type);
+        $count = $query->count();
+        if($count > 0){
+
+            $coursesParameter  = $query->get();
+            $parameter = Parameter::find($id);
+            $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>2]);
+            $this->layout->main = View::make('resultAdmin.Parameter.list',['parameter'=>$parameter,'coursesParameter'=>$coursesParameter]);
+        }
+        else{
+            return Redirect::to('/admin/Parameter')->with('failure','Invalid parameter or parameter not exist');
+        }
     }
 
-    
-    
     public function update($id){
-        $cre = ['parameter'=>Input::get('parameter'),'max_marks'=>Input::get('max_marks')];
-        $rules = ['parameter'=>'required','max_marks'=>'required'];    
-        $validator = Validator::make($cre,$rules);
-        if($validator->passes()){
-            $check = Parameter::where('parameter',Input::get('parameter'))->where('id','!=',$id)->where('active','!=',1)->count();
-            if($check>0){
-                return Redirect::back()->with('failure','A Unit is Already Exits with this name');
+        $query = Parameter::where('id',$id)->where('user_type',Auth::user()->manage_official_type);
+        $count = $query->count();
+        if($count > 0){
+            $cre = ['parameter'=>Input::get('parameter'),'max_marks'=>Input::get('max_marks')];
+            $rules = ['parameter'=>'required','max_marks'=>'required'];    
+            $validator = Validator::make($cre,$rules);
+            if($validator->passes()){
+                $check = Parameter::where('parameter',Input::get('parameter'))->where('id','!=',$id)->count();
+                if($check>0){
+                    return Redirect::back()->with('failure','A parameter is Already Exits with this name');
+                } else {
+                    $parameter = Parameter::find($id);
+                    $parameter->parameter = Input::get('parameter');
+                    $parameter->max_marks = Input::get('max_marks');
+                    $parameter->user_type = Auth::user()->manage_official_type;
+                    $parameter->save();
+                    return Redirect::to('admin/Parameter')->with('success','Parameter Updated Successully .');
+                }
+            } else {
+                return Redirect::back()->withErrors($validator)->withInput();
             }
-            $parameter = Parameter::find($id);
-            $parameter->parameter = Input::get('parameter');
-            $parameter->max_marks = Input::get('max_marks');
-            $parameter->save();
-            return Redirect::to('resultAdmin/Parameter')->with('success','Parameter Updated Successully .');
+            
+        } else {
+            return Redirect::back()->with('failure','Invalid parameter or parameter not exist');
         }
-        return Redirect::back()->withErrors($validator)->withInput();
     }
 
    
     public function delete($id){
-        Parameter::where('id',$id)->update(["active"=>1]);
-        $data['success'] = true;
-        $data['message'] ="Unit Deleted Successully";
+        $query = Parameter::where('id',$id)->where('user_type',Auth::user()->manage_official_type);
+        $count = $query->count();
+        if($count >0){
+            $deleteParameter = $query->delete();
+            $data['success'] = true;
+            $data['message'] ="Unit Deleted Successully";
+        }
+        else{
+            $data['success'] = false;
+            $data['message'] ="Invalid request";
+        }
         return json_encode($data);
     }
 
@@ -77,6 +101,3 @@ class ParameterController extends BaseController {
         include(app_path().'/libraries/export/coach.php');
     }
 }
-
-
-

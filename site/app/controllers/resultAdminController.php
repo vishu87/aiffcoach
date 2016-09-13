@@ -68,7 +68,7 @@ class resultAdminController extends BaseController {
             return View::make('resultAdmin.result.list',['parameters'=>$parameters,'application_id'=>$id,"results"=>$results,"applicationStatus"=>$applicationStatus,"resultStatus"=>$resultStatus]);
         }
         else{
-            return "Result for this application is pending / Result Not found";
+            return "<span style='color:red'>Result for this application is pending / Result Not found</span>";
         }    
     }
 

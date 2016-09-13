@@ -225,6 +225,7 @@ $(document).on("click", ".delete-div", function() {
 		    	data = JSON.parse(data);
 		    	if(data.success==false){
 		    		bootbox.alert(data.message);
+		    		btn.html(initial_html);
 		    	}
 		    	else {
 		    		$("#"+deleteDiv).hide('500', function(){

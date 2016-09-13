@@ -245,6 +245,17 @@ class RegistrationController extends BaseController {
                 $document->expiry_date = date('Y-m-d',strtotime($data3["passport_expiry"]));
                 $document->save();
             }
+
+            if($data3['dob_proof'] != ''){
+                $document = new CoachDocument;
+                $document->coach_id = $coach->id;
+                $document->document_id = 2; // for passport
+                $document->name = '';
+                $document->status = 0;
+                $document->file = (isset($data1["dob_proof"]))?$data1["dob_proof"]:'';
+                $document->save();
+            }
+
             // $coach_parameter->passport_no = $data3['passport'];
             // $coach_parameter->passport_expiry = $data3['passport_expiry'];
             // $coach_parameter->passport_copy = $data3["passport_proof"];

@@ -10,7 +10,7 @@ class CoursesParameterController extends BaseController {
     protected $layout = 'layout';
 
     public function index(){
-    	$licenses = License::licenseList();
+    	$licenses =[""=>"Select"] + License::where('user_type',Auth::user()->manage_official_type)->lists('name','id');
         $parameters = Parameter::where('active',0)->get();
     	$coursesParameter = CourseParameter::select('courses_parameter.id','parameters.parameter','license.name as license_name','courses_parameter.license_id','courses_parameter.parameter_id')->leftJoin('parameters','courses_parameter.parameter_id','=','parameters.id')->leftJoin('license','courses_parameter.license_id','=','license.id')->where('courses_parameter.active',0)->orderBy('courses_parameter.license_id','asc')->get();
         $parameter = [];
@@ -25,7 +25,7 @@ class CoursesParameterController extends BaseController {
             $parameter_string = [];   
         }
 
-    	$this->layout->sidebar = View::make('resultAdmin.sidebar',['sidebar'=>3]);
+    	$this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>3]);
     	$this->layout->main = View::make('resultAdmin.coursesParameter.list',['coursesParameter'=>$coursesParameter,'licenses'=>$licenses,'parameters'=>$parameters,"parameter_string"=>$parameter_string]);
     } 
 
@@ -49,7 +49,7 @@ class CoursesParameterController extends BaseController {
     }
 
     public function edit($id){
-        $licenses = License::licenseList();
+        $licenses = [""=>"Select"] + License::where('user_type',Auth::user()->manage_official_type)->lists('name','id');
         $parameters = Parameter::where('active',0)->get();
         $coursesParameter  = CourseParameter::select('courses_parameter.id','parameters.parameter','license.name as license_name','courses_parameter.license_id')->leftJoin('parameters','courses_parameter.parameter_id','=','parameters.id')->leftJoin('license','courses_parameter.license_id','=','license.id')->where('courses_parameter.active',0)->orderBy('courses_parameter.license_id','asc')->get();
 
@@ -68,7 +68,7 @@ class CoursesParameterController extends BaseController {
            $parameter_string[$courseParameter->license_id] = implode(',',$licenseParameter[$courseParameter->license_id]);
             
         }
-        $this->layout->sidebar = View::make('resultAdmin.sidebar',['sidebar'=>3]);
+        $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>3]);
         $this->layout->main = View::make('resultAdmin.coursesParameter.list',['parameter'=>$parameter,'coursesParameter'=>$coursesParameter,'licenses'=>$licenses,'parameters'=>$parameters,'selectedParameters'=>$selectedParameters,"parameter_string"=>$parameter_string]);
     }
 
@@ -90,7 +90,7 @@ class CoursesParameterController extends BaseController {
                     $parameter->save();
                 }
             }
-            return Redirect::to('resultAdmin/coursesParameter')->with('success','Parameter Updated Successully .');
+            return Redirect::to('admin/coursesParameter')->with('success','Parameter Updated Successully .');
         }
         return Redirect::back()->withErrors($validator)->withInput();
     }

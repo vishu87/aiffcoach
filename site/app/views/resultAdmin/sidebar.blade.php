@@ -20,7 +20,7 @@
         <span class="selected"></span>
       </a>
     </li>
-    <li class="@if($sidebar == 2 ) active @endif" >
+    <!-- <li class="@if($sidebar == 2 ) active @endif" >
       <a href="{{url('/resultAdmin/Parameter')}}">
         <i class="fa fa-lock"></i>
         <span class="title">Parameters</span>
@@ -33,7 +33,7 @@
         <span class="title">License Parameter</span>
         <span class="selected"></span>
       </a>
-    </li>
+    </li> -->
     <!-- <li class="@if($sidebar == 4 ) active @endif" >
       <a href="{{url('/resultAdmin/result')}}">
         <i class="fa fa-lock"></i>

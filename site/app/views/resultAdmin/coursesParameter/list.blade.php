@@ -3,7 +3,7 @@
 		<h3 class="page-title">License Parameters</h3>
 	</div>
 	<div class="col-md-6">
-		<a class="btn green pull-right" href="{{url('/resultAdmin/coursesParameter/exportExcel')}}">Export Excel</a>
+		<a class="btn green pull-right" href="{{url('/admin/coursesParameter/exportExcel')}}">Export Excel</a>
 
 	</div>
 </div>
@@ -20,12 +20,12 @@
     </div>
 @endif
 <div class="portlet box blue">
-    <div class="portlet-title"><div class="caption">@if(!isset($parameter))Add @else Update - {{$parameter->name}} @endif</div></div>
+    <div class="portlet-title"><div class="caption">@if(!isset($parameter))Add Parameters @else Update Parameters @endif</div></div>
         <div class="portlet-body form">
             @if(isset($parameter))
-			{{Form::open(array("url"=>'resultAdmin/coursesParameter/update/'.$parameter->id,"method"=>'PUT',"class"=>"form  check_form","files"=>'true'))}}
+			{{Form::open(array("url"=>'admin/coursesParameter/update/'.$parameter->id,"method"=>'PUT',"class"=>"form  check_form","files"=>'true'))}}
 			@else
-			{{Form::open(array("url"=>'resultAdmin/coursesParameter/insert',"method"=>'post',"class"=>" form  check_form","files"=>'true'))}}
+			{{Form::open(array("url"=>'admin/coursesParameter/insert',"method"=>'post',"class"=>" form  check_form","files"=>'true'))}}
 			@endif
             <div class="form-body">
                 <div class="row">
@@ -78,8 +78,8 @@
 						@endif	
 					</td>
 					<td>
-						<a type="button" class="btn btn-sm yellow " href="{{url('resultAdmin/coursesParameter/edit/'.$data->id)}}" ><i class="fa fa-edit"></i> Edit</a>
-						<button type="button" class="btn btn-sm red delete-div" div-id="parameter_{{$data->id}}"  action="{{'resultAdmin/coursesParameter/delete/'.$data->id}}"> <i class="fa fa-remove"></i></button>
+						<a type="button" class="btn btn-sm yellow " href="{{url('admin/coursesParameter/edit/'.$data->id)}}" ><i class="fa fa-edit"></i> Edit</a>
+						<button type="button" class="btn btn-sm red delete-div" div-id="parameter_{{$data->id}}"  action="{{'admin/coursesParameter/delete/'.$data->id}}"> <i class="fa fa-remove"></i></button>
 					</td>
 				</tr>
 				@endif

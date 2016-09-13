@@ -89,4 +89,7 @@ CREATE TABLE IF NOT EXISTS `course_result_admin` (
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+// 11-09-2016
+ALTER TABLE `parameters` ADD `user_type` INT(2) NOT NULL AFTER `max_marks`;
 ?>
