@@ -156,7 +156,7 @@
 						<td>{{$document->full_name}}</td>
 						<td>{{$document->document_name}}</td>
 						<td>{{$document->number}}</td>
-						<td>{{date('d-m-Y',strtotime($document->expiry_date))}}</td>
+						<td>@if($document->document_id != 2) {{date('d-m-Y',strtotime($document->expiry_date))}} @endif </td>
 						<td>@if($document->file!='')<a href="{{url($document->file)}}" target="_blank">View </a>@endif
 						</td>
 						<td>{{isset($ApprovalStatus[$document->status])?$ApprovalStatus[$document->status]:''}}</td>

@@ -246,10 +246,10 @@ class RegistrationController extends BaseController {
                 $document->save();
             }
 
-            if($data3['dob_proof'] != ''){
+            if($data1['dob_proof']){
                 $document = new CoachDocument;
                 $document->coach_id = $coach->id;
-                $document->document_id = 2; // for passport
+                $document->document_id = 2; // for date of birth
                 $document->name = '';
                 $document->status = 0;
                 $document->file = (isset($data1["dob_proof"]))?$data1["dob_proof"]:'';
