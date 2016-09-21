@@ -8,10 +8,17 @@ class AdminController extends BaseController {
     $approved_officials = Coach::listing()->approved()->where('users.official_types','LIKE','%'.Auth::user()->manage_official_type.'%')->count();
 
     $pending_officials = Coach::listing()->pending()->where('users.official_types','LIKE','%'.Auth::user()->manage_official_type.'%')->count();
-
+    $active_courses =  Course::Active()->where('courses.user_type',Auth::user()->manage_official_type)->count();
+    $all_courses = Course::select('courses.*','license.name as license_name','license.authorised_by')
+      ->join('license','courses.license_id','=','license.id')
+      ->where('courses.user_type',Auth::user()->manage_official_type)
+      ->count();
+    $approved_applications =   Application::applications()->where('courses.user_type',Auth::user()->manage_official_type)->where('applications.status',1)->count();
+    $pending_applications =   Application::applications()->where('courses.user_type',Auth::user()->manage_official_type)->where('applications.status',0)->count();
+    $payment_under_approval =   Application::applications()->where('courses.user_type',Auth::user()->manage_official_type)->where('applications.status',2)->count();
     $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'dashboard','subsidebar'=>1]);
     
-    $this->layout->main = View::make('admin.index',["approved_officials" => $approved_officials, "pending_officials" => $pending_officials]);
+    $this->layout->main = View::make('admin.index',["approved_officials" => $approved_officials, "pending_officials" => $pending_officials, "active_courses" => $active_courses,"all_courses" => $all_courses, "approved_applications" => $approved_applications, "pending_applications" => $pending_applications, "payment_under_approval" => $payment_under_approval,]);
   }
 
   public function get_sidebar(){
