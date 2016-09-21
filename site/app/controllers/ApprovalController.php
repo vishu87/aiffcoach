@@ -193,21 +193,27 @@ class ApprovalController extends BaseController {
             switch ($entity_type) {
                 case 1:
                     $coach = Coach::find($entity_id);
-                    $coach->status = Input::get('type');
+                    if(Session::get('privilege') == 2){
+                        $coach->status = Input::get('type');
+                    } else {
+                        $coach->status = 0;
+                    }
                     $coach->save();
                     // break;
                     // aprove coach documents
-                    $CoachDocument = CoachDocument::where('coach_id',$coach->id)->get();
-                    foreach ($CoachDocument as $document) {
-                        $log = new Approval;
-                        $log->status = Input::get('type');
-                        $log->entity_id = $document->id;
-                        $log->entity_type = 2;
-                        $log->user_id = Auth::id();
-                        $log->remarks = 'Approved';
-                        $log->save();
-                        $document->status = 1;
-                        $document->save();
+                    if(Session::get('privilege') == 2){ // only in case of admin
+                        $CoachDocument = CoachDocument::where('coach_id',$coach->id)->where('status',0)->get();
+                        foreach ($CoachDocument as $document) {
+                            $log = new Approval;
+                            $log->status = Input::get('type');
+                            $log->entity_id = $document->id;
+                            $log->entity_type = 2;
+                            $log->user_id = Auth::id();
+                            $log->remarks = 'Approved';
+                            $log->save();
+                            $document->status = 1;
+                            $document->save();
+                        }
                     }
                     break;
                 case 2:

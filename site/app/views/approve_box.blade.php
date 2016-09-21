@@ -6,12 +6,14 @@
   </div>
   <div class="portlet-body log-body">
     <div class="row">
-      {{Form::open(array('url'=>'approve/'.$entity_type.'/'.$entity_id,'method'=>'post','files'=>'true','class'=>"check_form"))}}
-        <div class="col-md-4">
+      {{Form::open(array('url'=>'approve/'.$entity_type.'/'.$entity_id,'method'=>'post','files'=>'true','class'=>""))}}
+        <div class="col-md-4" @if(Session::get('privilege') != 2) hidden @endif>
           <label>Status</label><br>
           {{Form::radio('type',1, true)}} Approve <br>
-          {{Form::radio('type',2)}} Refer Back <br>
-          {{Form::radio('type',3)}} Reject <br>
+          @if(Session::get('privilege') == 2)
+            @if($show_refer == 1) {{Form::radio('type',2)}} Refer Back <br> @endif
+            {{Form::radio('type',3)}} Reject <br>
+          @endif
         </div>
         <div class="col-md-8">
           <div class="">

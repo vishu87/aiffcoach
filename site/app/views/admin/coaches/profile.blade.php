@@ -52,7 +52,7 @@
 		<div style="margin-left:30px;">
 			<h3 class="page-title">Status - {{$coachStatus[$coach->status]}}</h3>
 			@if($coach->check_admin())
-				<?php $entity_type=1; $entity_id = $coach->id;?>
+				<?php $entity_type=1; $entity_id = $coach->id; $show_refer = 1; ?>
 				@include('approve_box')
 			@endif
 			{{Approval::approval_html(1, $coach->id)}}
@@ -92,7 +92,7 @@
 					<div class="row" style="">
 						@if($document->check_admin())
 						<div class="col-md-6">
-							<?php $entity_id = $document->id;?>
+							<?php $entity_id = $document->id; $show_refer = 0;?>
 							@include('approve_box')
 						</div>
 						@endif
@@ -146,7 +146,7 @@
 						
 						@if($license->check_admin())
 						<div class="col-md-6">
-							<?php $entity_id = $license->id;?>
+							<?php $entity_id = $license->id; $show_refer = 0;?>
 							@include('approve_box')
 						</div>
 						@endif
@@ -206,7 +206,7 @@
 						
 						@if($employment->check_admin())
 						<div class="col-md-6">
-							<?php $entity_id = $employment->id;?>
+							<?php $entity_id = $employment->id; $show_refer = 0;?>
 							@include('approve_box')
 						</div>
 						@endif
@@ -261,7 +261,7 @@
 						
 						@if($activity->check_admin())
 						<div class="col-md-6">
-							<?php $entity_id = $activity->id;?>
+							<?php $entity_id = $activity->id; $show_refer = 0;?>
 							@include('approve_box')
 						</div>
 						@endif

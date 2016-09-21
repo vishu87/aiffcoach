@@ -225,7 +225,7 @@ class RegistrationController extends BaseController {
             $hash = Hash::make(str_random(6));
             $user = new User;
             $user->coach_id = $coach->id;
-            $user->name = $data1['first_name'].' '.$data1['middle_name'].' '.$data1['last_name'];
+            $user->name = $coach->full_name;
             $user->username = $data1['email'];
             $user->password = Hash::make($password);
             $user->privilege = 1;
@@ -261,18 +261,20 @@ class RegistrationController extends BaseController {
             // $coach_parameter->passport_copy = $data3["passport_proof"];
 
 
-            // $username = $user->username;
-            // require app_path().'/classes/PHPMailerAutoload.php';
-            // $mail = new PHPMailer;
-            // $mail->isMail();
-            // $mail->setFrom('info@the-aiff.com', 'All India Football Federation');
-            // $mail->addAddress($data1['email']);
-            // $mail->isHTML(true);
-            // $mail->Subject = "AIFF - CMS";
-            // $mail->Body = View::make('mail',["type" => 1,'hash'=>$hash,'user_name'=>$username,'name'=>$user->username,"username"=>$user->username, "password"=>$password]);
-            // $mail->send();
+            $username = $user->username;
+            require app_path().'/classes/PHPMailerAutoload.php';
+            $mail = new PHPMailer;
+            $mail->isMail();
+            $mail->setFrom('info@the-aiff.com', 'All India Football Federation');
+            $mail->addAddress($username);
+            $mail->isHTML(true);
+            $mail->Subject = "Login Details - AIFF Official Registration System";
+            $mail->Body = View::make('mail',["type" => 1,'name'=>$coach->full_name, "username"=>$user->username, "password"=>$password]);
+            $mail->send();
+
             $delete_temp_row = DB::table('reg_data')->where('id',$id)->delete();
             return Redirect::to('/')->with('success','You have successfully registered. An email has been sent to your registered e-mail with login details!');
+            
         } else {
             return Redirect::back()->withErrors($validator)->withInput()->with('failure','All Fields Are Not Field!');
         }

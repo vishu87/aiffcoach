@@ -15,7 +15,7 @@ class Approval extends Eloquent {
 	}
 
 	public static function status(){
-		return  array('0'=>'Pending','1' =>'Approved','2'=>'Referred Back','3'=>'Rejected' );
+		return  array('0'=>'Pending for Approval','1' =>'Approved','2'=>'Referred Back','3'=>'Rejected' );
 	}
 
 	public static function get_status($status_id){
@@ -27,7 +27,7 @@ class Approval extends Eloquent {
 	}
 
 	public static function approval_html($entity_type, $entity_id){
-		$logs = Approval::select('approval.*','users.username as user_name')->join('users','users.id','=','approval.user_id')->where('entity_type',$entity_type)->where('entity_id',$entity_id)->orderBy('created_at','DESC')->get();
+		$logs = Approval::select('approval.*','users.name as user_name', 'users.privilege')->join('users','users.id','=','approval.user_id')->where('entity_type',$entity_type)->where('entity_id',$entity_id)->orderBy('created_at','DESC')->get();
 		$str = '';
 		if(isset($logs)){
 			if(sizeof($logs) > 0){
@@ -38,10 +38,9 @@ class Approval extends Eloquent {
 						<tr>
 							<th>SN</th>
 							<th>Remarks</th>
-							<th>Document</th>
 							<th>Status</th>
-							<th>Created by</th>
 							<th>Date</th>
+							<th>Document</th>
 						</tr>
 					</thead>';
 					foreach($logs as $log){
@@ -49,16 +48,20 @@ class Approval extends Eloquent {
 							$url = '<a href='.url($log->document).' target=_blank>view</a>';
 						}
 						else{
-							$url='';
+							$url='N/A';
 						}
 						$str .= '<tr>
-							<th>'.$count_log++.'</th>
-							<th>'.$log->remarks.'</th>
-							<th>'.$url.'</th>
-							<th>'.Approval::get_status($log->status).'</th>
-							<th>'.$log->user_name.'</th>
-							<th>'.date('d-m-Y',strtotime($log->created_at)).'</th>
-						</tr>';
+							<td>'.$count_log++.'</td>
+							<td>'.$log->remarks.'</td>
+							<td>';
+						if($log->privilege == 2){
+							$str .= Approval::get_status($log->status);
+						} else {
+							$str .= '';
+						}
+						$str .= '</td>
+							<td>'.$log->user_name.'<br>'.date('d-m-Y',strtotime($log->created_at)).'</td>
+						<td>'.$url.'</td></tr>';
 					}
 				$str .= '</table>';
 			}

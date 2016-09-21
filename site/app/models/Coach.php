@@ -40,4 +40,12 @@ class Coach extends Eloquent {
             return false;
         }
     }
+
+    public function check_coach(){
+        if(Session::get('privilege') == 1 && $this->status == 2){
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

@@ -11,8 +11,9 @@ class CoachController extends BaseController {
                 $check[] = $course->id;
             }
         }
+        $coach = Coach::find(Auth::user()->coach_id);
         $this->layout->sidebar = View::make('coaches.sidebar',['sidebar'=>'dashboard']);
-        $this->layout->main = View::make('coaches.dashboard',['courses'=>$courses,'title'=>'Active Courses','check'=>$check]);
+        $this->layout->main = View::make('coaches.dashboard',['courses'=>$courses,'title'=>'Active Courses','check'=>$check, "coach" => $coach]);
     }
     public function contactInformation(){
         $id = Auth::User()->coach_id;

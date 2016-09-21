@@ -105,11 +105,11 @@ class UserController extends BaseController {
                 require app_path().'/classes/PHPMailerAutoload.php';
                 $mail = new PHPMailer;
                 $mail->isMail();
-                // $mail->setFrom('info@the-aiff.com', 'All India Football Federation');
+                $mail->setFrom('info@the-aiff.com', 'All India Football Federation');
                 $mail->addAddress(Input::get("username"));
                 $mail->isHTML(true);
-                $mail->Subject = "AIFF - CMS Password Reset";
-                $mail->Body = View::make('mail',["type" => 2, "name" => $user->username, "username"=>$user->username, "password"=>$password]);
+                $mail->Subject = "AIFF - Password Reset";
+                $mail->Body = View::make('mail',["type" => 2, "name" => $user->name, "username"=>$user->username, "password"=>$password]);
                 $mail->send();
 
                 return Redirect::Back()->with('success', 'Your Password has been reset. Please check your email');

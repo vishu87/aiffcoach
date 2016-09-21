@@ -51,6 +51,16 @@ class SuperAdminController extends BaseController {
             $user->privilege = Input::get('user_type');
             $user->save();
 
+            require app_path().'/classes/PHPMailerAutoload.php';
+            $mail = new PHPMailer;
+            $mail->isMail();
+            $mail->setFrom('info@the-aiff.com', 'All India Football Federation');
+            $mail->addAddress($user->username);
+            $mail->isHTML(true);
+            $mail->Subject = "Login Details - AIFF Official Registration System";
+            $mail->Body = View::make('mail',["type" => 1,'name'=>$user->name, "username"=>$user->username, "password"=>$password]);
+            $mail->send();
+
             return Redirect::back()->with('success','New user added successfully');
         }
         else{
