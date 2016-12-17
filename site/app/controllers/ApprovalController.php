@@ -3,7 +3,7 @@ class ApprovalController extends BaseController {
     protected $layout = 'layout';
 
     public function pendingDocument(){
-        $sql = CoachDocument::select('coach_documents.*','documents.name as document_name','coaches.full_name')->leftJoin('documents','coach_documents.document_id','=','documents.id')->leftJoin('coaches','coach_documents.coach_id','=','coaches.id')->join('users','users.coach_id','=','coach_documents.coach_id')->where('users.official_types','LIKE','%'.Auth::user()->manage_official_type.'%')->where('coach_documents.status','!=',1);
+        $sql = CoachDocument::select('coach_documents.*','documents.name as document_name','coaches.full_name')->leftJoin('documents','coach_documents.document_id','=','documents.id')->leftJoin('coaches','coach_documents.coach_id','=','coaches.id')->join('users','users.coach_id','=','coach_documents.coach_id')->where('users.official_types','LIKE','%'.Auth::user()->manage_official_type.'%')->where('coach_documents.status','=',0);
         if(Input::get("registration_id") != ''){
           $sql = $sql->where('coaches.registration_id','LIKE','%'.Input::get('registration_id').'%');
         }
@@ -42,7 +42,7 @@ class ApprovalController extends BaseController {
 
         $documents = $sql->skip(($page_id-1)*$max_per_page)->take($max_per_page)->get();
         $ApprovalStatus = Approval::status();
-        $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'pendingDocument','subsidebar'=>0]);
+        $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'coach','subsidebar'=>3]);
         $this->layout->main = View::make('admin.pendingDocuments.list',["docType"=>'pendingDocument' , "documents"=>$documents , 'ApprovalStatus'=>$ApprovalStatus ,"total" => $total, "page_id"=>$page_id, "max_per_page" => $max_per_page, "total_pages" => $total_pages,'input_string'=>$input_string,'link_string'=>$link_string]);
     }
     public function pendingLicenses(){
@@ -84,7 +84,7 @@ class ApprovalController extends BaseController {
 
         $coachLicense = $sql->skip(($page_id-1)*$max_per_page)->take($max_per_page)->get();
         $ApprovalStatus = Approval::status();
-        $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'pendingDocument','subsidebar'=>0]);
+        $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'coach','subsidebar'=>3]);
         $this->layout->main = View::make('admin.pendingDocuments.list',["docType"=>'pendingLicenses', "coachLicense"=>$coachLicense, 'ApprovalStatus'=>$ApprovalStatus ,"total" => $total, "page_id"=>$page_id, "max_per_page" => $max_per_page, "total_pages" => $total_pages,'input_string'=>$input_string, "link_string"=>$link_string]);
     }
     public function pendingEmploymentDetails(){
@@ -126,7 +126,7 @@ class ApprovalController extends BaseController {
 
         $employmentDetails = $sql->skip(($page_id-1)*$max_per_page)->take($max_per_page)->get();
         $ApprovalStatus = Approval::status();
-        $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'pendingDocument','subsidebar'=>0]);
+        $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'coach','subsidebar'=>3]);
         $this->layout->main = View::make('admin.pendingDocuments.list',["docType"=>'pendingEmploymentDetails', 'employmentDetails'=>$employmentDetails, 'ApprovalStatus'=>$ApprovalStatus ,"total" => $total, "page_id"=>$page_id, "max_per_page" => $max_per_page, "total_pages" => $total_pages,'input_string'=>$input_string ,'link_string'=>$link_string]);
     }
     public function pendingActivities(){
@@ -167,7 +167,7 @@ class ApprovalController extends BaseController {
         }
         $activities = $sql->skip(($page_id-1)*$max_per_page)->take($max_per_page)->get();
         $ApprovalStatus = Approval::status();
-        $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'pendingDocument','subsidebar'=>0]);
+        $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'coach','subsidebar'=>3]);
         $this->layout->main = View::make('admin.pendingDocuments.list',["docType"=>'pendingActivities' , "activities"=>$activities, 'ApprovalStatus'=>$ApprovalStatus ,"total" => $total, "page_id"=>$page_id, "max_per_page" => $max_per_page, "total_pages" => $total_pages,'input_string'=>$input_string, "link_string"=>$link_string]);
     }
 

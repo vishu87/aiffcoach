@@ -91,5 +91,10 @@ CREATE TABLE IF NOT EXISTS `course_result_admin` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 // 11-09-2016
+
 ALTER TABLE `parameters` ADD `user_type` INT(2) NOT NULL AFTER `max_marks`;
+
+//17-12-2016
+ALTER TABLE `coach_documents` ADD `start_date` DATE NOT NULL AFTER `file`;
+
 ?>

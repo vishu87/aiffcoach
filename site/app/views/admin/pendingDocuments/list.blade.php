@@ -1,5 +1,4 @@
 <?php $count_main = 1; ?>
-<h3 class="page-title"></h3>
 <div class="row">
 	<div class="col-md-7">
 		<h3 class="page-title">
@@ -12,16 +11,16 @@
 </div>
 
 @if(Session::has('success'))
-<div class="alert alert-success alert-dismissable">
-	<button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>
-	{{Session::get('success')}}
-</div>
+	<div class="alert alert-success alert-dismissable">
+		<button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>
+		{{Session::get('success')}}
+	</div>
 @endif
 @if(Session::has('failure'))
-    	<div class="alert alert-danger">
-        	<button type="button" class="close" data-dismiss="alert">×</button>
-        	<i class="fa fa-ban-circle"></i><strong>Failure!</strong> {{Session::get('failure')}}
-       	</div>
+	<div class="alert alert-danger">
+    	<button type="button" class="close" data-dismiss="alert">×</button>
+    	<i class="fa fa-ban-circle"></i><strong>Failure!</strong> {{Session::get('failure')}}
+   	</div>
 @endif
 
 
@@ -115,19 +114,19 @@
 <ul class="nav nav-tabs">
 	<li class="{{($docType=='pendingDocument')?'active':''}}">
 		<a href="{{url('pendingApprovals/pendingDocument?'.$link_string)}}" >
-		Pending Documents </a>
+		Documents </a>
 	</li>
 	<li class="{{($docType=='pendingLicenses')?'active':''}}">
 		<a href="{{url('pendingApprovals/pendingLicenses?'.$link_string)}}" >
-		Pending License </a>
+		License </a>
 	</li>
 	<li class="{{($docType=='pendingEmploymentDetails')?'active':''}}">
 		<a href="{{url('pendingApprovals/pendingEmploymentDetails?'.$link_string)}}" >
-		Pending Employment Details </a>
+		Employment Details </a>
 	</li>
 	<li class="{{($docType=='pendingActivities')?'active':''}}">
 		<a href="{{url('pendingApprovals/pendingActivities?'.$link_string)}}" >
-		Pending Activities </a>
+		Activities </a>
 	</li>
 </ul>
 
@@ -183,11 +182,6 @@
 		</div>
 	@else
 	<div class="alert alert-warning">
-<<<<<<< HEAD
-
-		No Document found
-=======
->>>>>>> 09c8ceea02512fd39af9319877778b42a816cb48
 		No pending documents found
 	</div>
 	@endif

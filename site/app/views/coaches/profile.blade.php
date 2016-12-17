@@ -266,12 +266,17 @@
 					<div class="col-md-4 form-group"> 
 				        <label class="form-label">Attach Document</label> <span class="error">*</span>      
 				        {{Form::file('file',['class'=>'form-control','placeholder'=>'Attach Passport Copy','pdf'=>'true','required'=>'true'])}}
-				        <span class="error">{{$errors->first('passport_proof')}}</span>
+				        
 				    </div>
 				    <div class="col-md-4 form-group"> 
-				        <label class="form-label">Expiry Date</label>   <span class="error">*</span>    
+				        <label class="form-label">Start Date</label>   <span class="error">*</span>    
+				        {{Form::text('start_date','',['class'=>'form-control datepicker','date_en'=>'true' , 'required'=>'true'])}}
+				        <span class="error">{{$errors->first('start_date')}}</span>
+				    </div>
+				    <div class="col-md-4 form-group"> 
+				        <label class="form-label">Expiry Date</label>
 				        {{Form::text('expiry','',['class'=>'form-control datepicker','date_en'=>'true'])}}
-				        <span class="error">{{$errors->first('passport_proof')}}</span>
+				        
 				    </div>
 				    <div class="col-md-4 form-group">
 				    	<label>Remarks</label>
@@ -292,7 +297,8 @@
 			<tr>
 				<th style="width:50px">SN</th>
 				<th>Document Name</th>
-				<th>Expiry Date</th>
+				<th>Document Number</th>
+				<th>Start Date</th>
 				<th>Status</th>
 				<th>#</th>
 			</tr></thead>
@@ -302,6 +308,7 @@
 					<tr id="document_{{$data->id}}">
 						<td>{{$count}}</td>
 						<td>{{($data->document_id==0)?$data->name:$document_types[$data->document_id]}}</td>
+						<td>{{$data->number}}</td>
 						<td>{{date('d-m-Y',strtotime($data->expiry_date))}}</td>
 						<td>{{$ApprovalStatus[$data->status]}}</td>
 						<td>

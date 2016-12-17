@@ -25,20 +25,21 @@
           <i class="fa fa-chevron-right"></i>
           Approved</a>
         </li>
-         <li class="@if($sidebar == 'coach' && $subsidebar == 2 ) active @endif">
+        <li class="@if($sidebar == 'coach' && $subsidebar == 2 ) active @endif">
           <a href="{{url('admin/pendingCoach')}}">
           <i class="fa fa-chevron-right"></i>
           Under Process</a>
         </li>
+
+        <li class="@if($sidebar == 'coach' && $subsidebar == 3 ) active @endif">
+          <a href="{{url('pendingApprovals/pendingDocument')}}">
+          <i class="fa fa-chevron-right"></i>
+          Under Approval Details</a>
+        </li>
+
       </ul>
     </li>
-    <li class="@if($sidebar == 'pendingDocument' ) active @endif" >
-      <a href="{{url('pendingApprovals/pendingDocument')}}">
-        <i class="fa fa-edit"></i>
-        <span class="title">Pending Documents</span>
-        <span class="selected"></span>
-      </a>
-    </li>
+    
     <li class="@if($sidebar == 'license' ) active @endif" >
       <a href="{{url('/admin/License')}}">
         <i class="fa fa-key"></i>
