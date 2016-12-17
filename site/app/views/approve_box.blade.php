@@ -11,7 +11,7 @@
           <label>Status</label><br>
           {{Form::radio('type',1, true)}} Approve <br>
           @if(Session::get('privilege') == 2)
-            @if($show_refer == 1) {{Form::radio('type',2)}} Refer Back <br> @endif
+            @if(isset($show_refer)) @if($show_refer == 1) {{Form::radio('type',2)}} Refer Back <br> @endif @endif
             {{Form::radio('type',3)}} Reject <br>
           @endif
         </div>
