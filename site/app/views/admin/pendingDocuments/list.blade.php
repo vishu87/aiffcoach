@@ -183,8 +183,11 @@
 		</div>
 	@else
 	<div class="alert alert-warning">
+<<<<<<< HEAD
 
 		No Document found
+=======
+>>>>>>> 09c8ceea02512fd39af9319877778b42a816cb48
 		No pending documents found
 	</div>
 	@endif
