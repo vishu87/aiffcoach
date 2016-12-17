@@ -151,7 +151,9 @@ class AdminController extends BaseController {
     $coachStatus = Coach::status();
     $licenseList = License::lists('name','id');
     $ApprovalStatus = Approval::status();
+
     $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'coach','subsidebar'=>3]);
+    
     $this->layout->main = View::make('admin.coaches.profile',['coach' => $coach, 'employmentDetails' => $employmentDetails, "documents" => $documents, "activities" => $activities, "courses" => $courses, "licenseList" => $licenseList, "coachStatus" => $coachStatus, "coachLicense" => $coachLicense, 'ApprovalStatus' => $ApprovalStatus]);
   }
 
