@@ -33,7 +33,7 @@
 
 <body class="login">
   <div class="logo">
-    <img src="{{url('assets/img/aiff.jpg')}}">
+    <img src="{{url('assets/img/aiff.png')}}" style="width:240px; height:auto">
   </div>
 <div style="max-width:700px; margin:0 auto">
   @if(Session::has('success'))
