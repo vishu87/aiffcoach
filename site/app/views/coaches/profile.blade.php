@@ -269,8 +269,8 @@
 				        
 				    </div>
 				    <div class="col-md-4 form-group"> 
-				        <label class="form-label">Start Date</label>   <span class="error">*</span>    
-				        {{Form::text('start_date','',['class'=>'form-control datepicker','date_en'=>'true' , 'required'=>'true'])}}
+				        <label class="form-label">Issue Date</label>
+				        {{Form::text('start_date','',['class'=>'form-control datepicker','date_en'=>'true' ])}}
 				        <span class="error">{{$errors->first('start_date')}}</span>
 				    </div>
 				    <div class="col-md-4 form-group"> 
@@ -360,7 +360,7 @@
 		        </div>
 		        <div class="col-md-6 clear">
 		          <div class="form-group"> 
-		            <label class="form-label">Start Date <span class="error">*</span></label><br>
+		            <label class="form-label">Issue Date <span class="error">*</span></label><br>
 		            {{Form::text('start_date','',["class"=>"form-control datepicker",'required'=>'true',"date_en"=>"true"])}}
 		            <span class="error">{{$errors->first('start_date')}}</span>
 		          </div>

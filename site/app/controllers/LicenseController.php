@@ -11,8 +11,9 @@ class LicenseController extends BaseController {
 
     public function add(){
         $authority = License::Authority();
+        $licenses = License::licenseList();
         $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'license','subsidebar'=>1]);
-        $this->layout->main = View::make('admin.license.add',['authority'=>$authority]);
+        $this->layout->main = View::make('admin.license.add',['authority'=>$authority , "licenses" => $licenses]);
     }
 
     public function insert(){
@@ -24,6 +25,9 @@ class LicenseController extends BaseController {
             $license = new License;
             $license->name= Input::get('name');
             $license->description = Input::get('description');
+            if(Input::has('prerequisite_id')){
+                $license->prerequisite_id = implode(',',Input::get('prerequisite_id'));
+            }
             $license->authorised_by = Input::get('authorised_by');
             $license->user_type = Auth::user()->manage_official_type;
             $license->save();
@@ -34,9 +38,11 @@ class LicenseController extends BaseController {
 
     public function edit($id){
         $license = License::find($id);
+        $selectedPrerequisites = explode(',',$license->prerequisite_id);
         $authority = License::Authority();
+        $licenses = License::licenseList();
         $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'license','subsidebar'=>1]);
-        $this->layout->main = View::make('admin.license.add',['authority'=>$authority,'license'=>$license]);
+        $this->layout->main = View::make('admin.license.add',['authority'=>$authority,'license'=>$license , "licenses" => $licenses ,"selectedPrerequisites" => $selectedPrerequisites]);
     }
 
     public function update($id){
@@ -48,6 +54,9 @@ class LicenseController extends BaseController {
             $license = License::find($id);
             $license->name= Input::get('name');
             $license->description = Input::get('description');
+            if(Input::has('prerequisite_id')){
+                $license->prerequisite_id = implode(',',Input::get('prerequisite_id'));
+            }
             $license->authorised_by = Input::get('authorised_by');
             $license->save();
             return Redirect::back()->with('success','License Updated Successfully!!');

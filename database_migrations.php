@@ -97,4 +97,21 @@ ALTER TABLE `parameters` ADD `user_type` INT(2) NOT NULL AFTER `max_marks`;
 //17-12-2016
 ALTER TABLE `coach_documents` ADD `start_date` DATE NOT NULL AFTER `file`;
 
+// 21/12/2016
+ALTER TABLE `employment_details` ADD `emp_status` INT(1) NOT NULL DEFAULT '0' AFTER `employment`;
+
+ALTER TABLE `employment_details` ADD `cv` TEXT NOT NULL AFTER `contract`;
+
+ALTER TABLE `employment_details` ADD `referral_contact` VARCHAR(20) NOT NULL AFTER `cv`;
+
+ALTER TABLE `coach_activity` CHANGE `position_role` `position_role` INT(3) NOT NULL;
+
+ALTER TABLE `coach_activity` ADD `role_name` VARCHAR(50) NOT NULL AFTER `position_role`;
+
+ALTER TABLE `payment` ADD `amount` INT NOT NULL AFTER `bank_name`;
+
+//22-12-2016
+ALTER TABLE `license` ADD `prerequisite_id` VARCHAR(20) NOT NULL AFTER `name`;
+
+ALTER TABLE `courses` DROP `prerequisite_id`;
 ?>

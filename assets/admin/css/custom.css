@@ -23,6 +23,9 @@ textarea.form-control{
 .error{
 	color: #F42B2B;
 }
+.hiddenDiv{
+	display: none;
+}
 .tablesorter-headerRow{
 	border-top: 2px solid #ddd;
 }

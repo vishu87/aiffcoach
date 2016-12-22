@@ -35,6 +35,12 @@
 					{{$payment->bank_name}}
 				</div>
 			</div>
+			<div class="col-md-12 form-group">
+				<label>Amount</label><br>
+				<div class="log-status">
+					{{$payment->amount}}
+				</div>
+			</div>
 		</div>
 		<div class="row">
 			<div class="col-md-12 form-group">

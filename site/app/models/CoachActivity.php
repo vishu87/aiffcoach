@@ -12,4 +12,8 @@ class CoachActivity extends Eloquent {
             return false;
         }
     }
+
+    public static function coach_roles(){
+    	return  array("1" => "Ast Coach" , "2" => "Head Coach" , "3" => "GK Coach" , "4" => "Team Manager" , "5" => "Physiotherapist","6" => "Others");
+    }
 }

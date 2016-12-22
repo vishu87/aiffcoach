@@ -54,15 +54,22 @@
 					<span class="error">{{$errors->first('place')}}</span>
 				</div>
 				<div class="col-md-6 form-group">
-					{{Form::label('Position / Role')}}<span class="error">*</span>
-					{{Form::text('position_role',(isset($activity))?$activity->position_role:'',["class"=>"form-control","required"=>"true"])}}
-					<span class="error">{{$errors->first('position_role')}}</span>
-				</div>
-				<div class="col-md-3 form-group">
 					<label>No of Participants</label>
 					{{Form::text('participants',(isset($activity))?$activity->participants:'',["class"=>"form-control"])}}
 					<span class="error">{{$errors->first('participants')}}</span>
 				</div>
+				<div class="col-md-6 form-group">
+					{{Form::label('Coach Role')}}<span class="error">*</span>
+					{{Form::select('position_role',$coach_roles,(isset($activity))?$activity->position_role:'',["class"=>"form-control","required"=>"true" , "id" => "coach_role"])}}
+					<span class="error">{{$errors->first('position_role')}}</span>
+				</div>
+
+				<div class="col-md-6 form-group {{(isset($activity))?($activity->position_role == 6)?'':'hidden':'hidden'}}" id="roleName">
+					{{Form::label('Role Name')}}<span class="error">*</span>
+					{{Form::text('role_name',(isset($activity))?$activity->role_name:'',["class"=>"form-control","required"=>"true"])}}
+					<span class="error">{{$errors->first('role_name')}}</span>
+				</div>
+				
 			</div>
 		<!---my form end-->
 	

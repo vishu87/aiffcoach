@@ -60,12 +60,6 @@ class CourseController extends BaseController {
             $course->registration_start = date('y-m-d',strtotime(Input::get('registration_start')));
             $course->registration_end = date('y-m-d',strtotime(Input::get('registration_end')));
             $course->license_id = Input::get('license_id');
-            if(Input::has('prerequisite_id')){
-                $course->prerequisite_id = implode(',',Input::get('prerequisite_id'));
-                if(in_array(Input::get('license_id'),Input::get('prerequisite_id'))){
-                    return Redirect::back()->withInput()->with('failure','License and prerequisites can not be same');
-                }
-            }
             $course->venue = Input::get('venue');
             $course->description = Input::get('description');
             $course->fees = Input::get('fee');
@@ -97,17 +91,15 @@ class CourseController extends BaseController {
 
     public function edit($id){
         $course = Course::find($id);
-        $selectedPrerequisites = explode(',',$course->prerequisite_id);
         $instructors = ['' => 'Select'] + User::where('privilege',3)->lists('name','id');
         $courseInstructor = CourseResultAdmin::where('course_id',$id)->get();
         $selectedInstructors = [];
         foreach ($courseInstructor as $key => $value) {
             $selectedInstructors[$key] = $value->result_admin_id;
         }
-        $selectedPrerequisites = explode(',',$course->prerequisite_id);
         $licenses = [''=>'Select']+License::lists('name','id');
         $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'courses','subsidebar'=>1]);
-        $this->layout->main = View::make('admin.courses.add',['licenses' => $licenses, 'course' => $course, "instructors" => $instructors, "selectedInstructors" => $selectedInstructors, "selectedPrerequisites" => $selectedPrerequisites ]);
+        $this->layout->main = View::make('admin.courses.add',['licenses' => $licenses, 'course' => $course, "instructors" => $instructors, "selectedInstructors" => $selectedInstructors]);
     }
 
     public function update($id){
@@ -140,9 +132,6 @@ class CourseController extends BaseController {
             $course->registration_start = date('y-m-d',strtotime(Input::get('registration_start')));
             $course->registration_end = date('y-m-d',strtotime(Input::get('registration_end')));
             $course->venue = Input::get('venue');
-            if(Input::has('prerequisite_id')){
-                $course->prerequisite_id = implode(',',Input::get('prerequisite_id'));
-            }
             $course->description = Input::get('description');
             $course->license_id = Input::get('license_id');
             $course->fees = Input::get('fee');

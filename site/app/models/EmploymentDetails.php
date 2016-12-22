@@ -1,6 +1,5 @@
 <?php
 
-
 class EmploymentDetails extends Eloquent {
 
 	protected $table = 'employment_details';
@@ -11,5 +10,9 @@ class EmploymentDetails extends Eloquent {
         } else {
             return false;
         }
+    }
+
+    public static function emp_status(){
+    	return array("1" => "Present" , "2" => "Previous");
     }
 }

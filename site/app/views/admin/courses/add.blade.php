@@ -68,14 +68,17 @@
 				<span class="error">{{$errors->first('venue')}}</span>
 			</div>
 			<div class="col-md-3 form-group">
-				{{Form::label('Prerequisites')}}
-				{{Form::select('prerequisite_id[]',$licenses,(isset($selectedPrerequisites))?$selectedPrerequisites:'',["class"=>"form-control","multiple"=>"true"])}}
-				<span class="error">{{$errors->first('prerequisite_id')}}</span>
-			</div>
-			<div class="col-md-3 form-group">
 				{{Form::label('Instructors')}}
 				{{Form::select('instructor[]',$instructors,(isset($selectedInstructors))?$selectedInstructors:'',["class"=>"form-control","multiple"=>"true"])}}
 				<span class="error">{{$errors->first('instructor')}}</span>
+			</div>
+			<div class="col-md-6 form-group">
+				{{Form::label('Documents')}}
+				{{Form::file('documents',["class"=>"form-control","pdf"=>'true'])}}
+				<span class="error">{{$errors->first('documents')}}</span>
+				@if(isset($course))
+    				@if($course->documents!='')<a href="{{url($course->documents)}}" class="btn yellow" target="_blank">View Old Document</a>@endif
+        		@endif	
 			</div>
 		</div>
 		<div class="row">	
@@ -86,20 +89,7 @@
 			</div>
 		</div>
 		<div class="row">	
-			<div class="col-md-6 form-group">
-				<div class="row">
-					<div class="col-md-8">
-						{{Form::label('Documents')}}
-						{{Form::file('documents',["class"=>"form-control","pdf"=>'true'])}}
-						<span class="error">{{$errors->first('documents')}}</span>
-					</div>
-					@if(isset($course))
-						<div class="col-md-4" style="margin-top:25px;">
-	        				@if($course->documents!='')<a href="{{url($course->documents)}}" class="btn yellow" target="_blank">View Old Document</a>@endif
-	        			</div>
-	        		@endif	
-				</div>
-			</div>
+			
 		</div>
 	<!---my form end-->
 </div>

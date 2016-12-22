@@ -36,6 +36,11 @@
 					{{Form::text('bank_name',$payment->bank_name,["class"=>"form-control payment_details","placeholder"=>"Bank Name"])}}
 					<span class="error">{{$errors->first('bank_name')}}</span>
 				</div>
+				<div class="col-md-12 form-group">
+					<label>Amount</label><span class="error"> *</span>
+					{{Form::text('amount',$payment->amount,["class"=>"form-control payment_details"])}}
+					<span class="error">{{$errors->first('amount')}}</span>
+				</div>
 			</div>
 			<div class="row">
 				<div class="col-md-12 form-group">

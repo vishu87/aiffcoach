@@ -12,13 +12,15 @@ class CoachActivityController extends BaseController {
     public function index(){
         $activities = CoachActivity::where('coach_id',Auth::User()->coach_id)->get();
         $activityStatus = Approval::status();
+        $coach_roles = CoachActivity::coach_roles();
         $this->layout->sidebar = View::make('coaches.sidebar',['sidebar'=>3]);
-        $this->layout->main = View::make('coaches.activity.list',['activities'=>$activities, "activityStatus"=>$activityStatus]);
+        $this->layout->main = View::make('coaches.activity.list',['activities'=>$activities, "activityStatus"=>$activityStatus , "coach_roles" => $coach_roles]);
     }
     
     public function add(){
-         $this->layout->sidebar = View::make('coaches.sidebar',['sidebar'=>3]);
-        $this->layout->main = View::make('coaches.activity.add');
+        $coach_roles = ["" => "Select"] + CoachActivity::coach_roles();
+        $this->layout->sidebar = View::make('coaches.sidebar',['sidebar'=>3]);
+        $this->layout->main = View::make('coaches.activity.add' ,["coach_roles" => $coach_roles]);
     }
     
     public function insert(){
@@ -33,7 +35,7 @@ class CoachActivityController extends BaseController {
             'start_date'=>'required|date',
             'place'=>'required',
             'position_role'=>'required'
-            ];
+            ];  
         $validator = Validator::make($cre,$rules);
         if($validator->passes()){
             $activity = new CoachActivity;
@@ -42,6 +44,9 @@ class CoachActivityController extends BaseController {
             $activity->to_date = date('Y-m-d',strtotime(Input::get('to_date')));
             $activity->place = Input::get('place');
             $activity->position_role = Input::get('position_role');
+            if(Input::get('position_role') == 6){
+                $activity->role_name = Input::get('role_name');
+            }
             $activity->participants = Input::get('participants');
             $activity->coach_id = Auth::User()->coach_id;
             $activity->save();
@@ -53,8 +58,10 @@ class CoachActivityController extends BaseController {
     }
     public function edit($id){
         $activity = CoachActivity::where('coach_id',Auth::User()->coach_id)->find($id);
+        $coach_roles = ["" => "Select"] + CoachActivity::coach_roles();
+
         $this->layout->sidebar = View::make('coaches.sidebar',['sidebar'=>3]);
-        $this->layout->main = View::make('coaches.activity.add',['activity'=>$activity]);
+        $this->layout->main = View::make('coaches.activity.add',['activity'=>$activity , "coach_roles" => $coach_roles]);
         
     }
     public function update($id){
@@ -62,14 +69,14 @@ class CoachActivityController extends BaseController {
             'event'=>Input::get('event'),
             'start_date'=>Input::get('from_date'),
             'place'=>Input::get('place'),
-            'position_role'=>Input::get('position_role')
+            'position_role'=>Input::get('position_role'),
             ];
         $rules = [
             'event'=>'required',
             'start_date'=>'required|date',
             'place'=>'required',
-            'position_role'=>'required'
-            ];
+            'position_role'=>'required',
+            ];   
         $validator = Validator::make($cre,$rules);
         if($validator->passes()){
             $activity = CoachActivity::find($id);
@@ -78,6 +85,11 @@ class CoachActivityController extends BaseController {
             $activity->to_date = date('Y-m-d',strtotime(Input::get('to_date')));
             $activity->place = Input::get('place');
             $activity->position_role = Input::get('position_role');
+            if(Input::get('position_role') == 6){
+                $activity->role_name = Input::get('role_name');
+            }else{
+                $activity->role_name = '';
+            }
             $activity->participants = Input::get('participants');
             $activity->coach_id = Auth::User()->coach_id;
             $activity->save();

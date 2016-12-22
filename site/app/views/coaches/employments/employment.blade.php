@@ -29,6 +29,8 @@
 				<tr>
 					<th style="width:50px">SN</th>
 					<th>Employment</th>
+					<th>Status</th>
+					<th>Referral</th>
 					<th>Start Date</th>
 					<th>End Date</th>
 					<th>Contract</th>

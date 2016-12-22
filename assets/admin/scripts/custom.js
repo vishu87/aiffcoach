@@ -168,6 +168,16 @@ $(document).on("change", "#document_id", function() {
     }
 });
 
+$(document).on("change", "select#coach_role", function() {
+    var btn = $(this);
+
+    if(btn.val()!=6){
+    	$('#roleName').addClass('hidden');
+    }
+    else {
+    	$('#roleName').removeClass('hidden');
+    }
+});
 
 $(document).on("change", "#UserType", function() {
     var btn = $(this);

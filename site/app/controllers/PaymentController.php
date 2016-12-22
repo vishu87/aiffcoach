@@ -96,8 +96,8 @@ class PaymentController extends BaseController {
     }
 
     public function putPayment($payment_id){
-        $cre = ["payment_method"=>Input::get('payment_method'),"cheque_date"=>Input::get('cheque_date'),"cheque_no"=>Input::get('cheque_no'),"bank_name"=>Input::get('bank_name')];
-        $rules = ["payment_method"=>'required',"cheque_date"=>'required',"cheque_no"=>'required',"bank_name"=>'required'];
+        $cre = ["payment_method"=>Input::get('payment_method'),"cheque_date"=>Input::get('cheque_date'),"cheque_no"=>Input::get('cheque_no'),"bank_name"=>Input::get('bank_name') , "amount" => Input::get('amount')];
+        $rules = ["payment_method"=>'required',"cheque_date"=>'required',"cheque_no"=>'required',"bank_name"=>'required' , 'amount' => 'required | numeric'];
         $validator = Validator::make($cre,$rules);
         if($validator->passes()){
             $payment = Payment::find($payment_id);
@@ -105,6 +105,7 @@ class PaymentController extends BaseController {
             $payment->cheque_date = date("Y-m-d",strtotime(Input::get('cheque_date')));
             $payment->cheque_number = Input::get('cheque_no');
             $payment->bank_name = Input::get('bank_name');
+            $payment->amount = Input::get('amount');
             $payment->remarks = Input::get('remarks');
             $payment->save();
             return Redirect::back()->with('success','Payment details are successfully updated.');

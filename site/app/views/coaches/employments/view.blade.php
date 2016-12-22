@@ -1,6 +1,8 @@
 <tr id="emp_{{$data->id}}">
 	<td>{{$count}}</td>
 	<td>{{$data->employment}}</td>
+	<td>{{(isset($emp_status[$data->emp_status]))?$emp_status[$data->emp_status]:''}}</td>
+	<td>{{$data->referral_name.'<br>'.$data->referral_contact}}</td>
 	<td>{{date('d-m-Y',strtotime($data->start_date))}}</td>
 	<td>
 		@if(date('Y',strtotime($data->end_date))!=1970)

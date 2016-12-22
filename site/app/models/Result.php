@@ -5,7 +5,7 @@ class Result extends Eloquent {
 	public static function status(){
 		$status = [
 			""=>"Select",
-			"1"=>"Pro Fail",
+			"1"=>"Fame",
 			"2"=>"Fail",
 			"3"=>"Pass",
 			"4"=>"Pro Pass"

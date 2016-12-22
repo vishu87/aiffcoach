@@ -6,7 +6,7 @@ class CoachDocument extends Eloquent {
 	protected $table = 'coach_documents';
 
 	public static function DocTypes(){
-		return  DB::table('documents')->lists('name','id') + ["0"=>"Others"];
+		return  DB::table('documents')->lists('name','id') ;
 	}
 
 	public function check_admin(){

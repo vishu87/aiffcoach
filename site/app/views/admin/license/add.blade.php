@@ -42,17 +42,24 @@
 					<span class="error">{{$errors->first('name')}}</span>
 				</div>
 				<div class="col-md-6 form-group">
-					{{Form::label('Description')}} <span class="error"> *</span>
-					{{Form::text('description',(isset($license))?$license->description:'',["class"=>"form-control","required"=>"true"])}}
-					<span class="error">{{$errors->first('description')}}</span>
+					{{Form::label('Authorised By')}} <span class="error"> *</span>
+					{{Form::select('authorised_by',$authority,(isset($license))?$license->authorised_by:'',["class"=>"form-control","required"=>"true"])}}
+					<span class="error">{{$errors->first('authorised_by')}}</span>
 				</div>
+				
+				
 			</div>
 			
 			<div class="row">	
 				<div class="col-md-6 form-group">
-					{{Form::label('Authorised By')}} <span class="error"> *</span>
-					{{Form::select('authorised_by',$authority,(isset($license))?$license->authorised_by:'',["class"=>"form-control","required"=>"true"])}}
-					<span class="error">{{$errors->first('authorised_by')}}</span>
+					{{Form::label('Prerequisites')}}
+					{{Form::select('prerequisite_id[]',$licenses,(isset($selectedPrerequisites))?$selectedPrerequisites:'',["class"=>"form-control","multiple"=>"true"])}}
+					<span class="error">{{$errors->first('prerequisite_id')}}</span>
+				</div>
+				<div class="col-md-6 form-group">
+					{{Form::label('Description')}} <span class="error"> *</span>
+					{{Form::textarea('description',(isset($license))?$license->description:'',["class"=>"form-control","required"=>"true"])}}
+					<span class="error">{{$errors->first('description')}}</span>
 				</div>
 			</div>
 		<!---my form end-->

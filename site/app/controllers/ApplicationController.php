@@ -109,7 +109,7 @@ class ApplicationController extends BaseController {
     /************ Coaches Apply For Courses **********/
     public function details($course_id){
 
-        $course = Course::select('courses.*','license.name as license_name','license.authorised_by')
+        $course = Course::select('courses.*','license.name as license_name','license.prerequisite_id','license.authorised_by')
             ->join('license','courses.license_id','=','license.id')->where('courses.id',$course_id)->first();
 
         $is_applied = Application::where('course_id',$course_id)->where('coach_id',Auth::user()->coach_id)->first();
@@ -144,7 +144,8 @@ class ApplicationController extends BaseController {
     public function detailsApplication($application_id){
 
         $application = Application::select('applications.*','license.name as license_name','coaches.full_name')->join('coaches','applications.coach_id','=','coaches.id')->join('courses','applications.course_id','=','courses.id')->leftJoin('license','courses.license_id','=','license.id')->where('applications.id',$application_id)->first();
-        $course = Course::find($application->course_id);
+        $course = Course::select('courses.*','license.name as license_name','license.prerequisite_id','license.authorised_by')
+            ->join('license','courses.license_id','=','license.id')->where('courses.id',$application->course_id)->first();
         $ApplicationStatus = Application::status();
         if($course->prerequisite_id != '')
         $prerequisites = explode(',',$course->prerequisite_id);
