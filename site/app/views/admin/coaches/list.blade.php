@@ -105,7 +105,24 @@
 		@endif
 	</div>
 </div>
-
+<div>
+	<ul class="nav nav-tabs">
+		<li class="{{($pending_type==0)?'active':''}}">
+			<a href="{{url('admin/pendingCoach?pending_type=0')}}" >
+			Pending</a>
+		</li>
+		<li class="{{($pending_type==2)?'active':''}}">
+			<a href="{{url('admin/pendingCoach?pending_type=2')}}" >
+			Referred Back</a>
+		</li>
+		<li class="{{($pending_type==3)?'active':''}}">
+			<a href="{{url('admin/pendingCoach?pending_type=3')}}" >
+			Rejected</a>
+		</li>
+		
+		
+	</ul>
+</div>
 <div class="row">
 	<div class="col-md-12">
 		<table class="table table-bordered table-hover tablesorter">

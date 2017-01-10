@@ -77,10 +77,16 @@ class AdminController extends BaseController {
 
   public function pendingCoach(){
 
+    $pending_type = 0;
+
+    if(Input::has('pending_type')){
+      $pending_type = Input::get('pending_type');
+    }
+
     if(Session::get('privilege') == 4){
-      $sql = Coach::listing()->pending();
+      $sql = Coach::listing()->where('coaches.status', $pending_type);
     } else {
-      $sql = Coach::listing()->pending()->where('users.official_types','LIKE','%'.Auth::user()->manage_official_type.'%');
+      $sql = Coach::listing()->where('coaches.status', $pending_type)->where('users.official_types','LIKE','%'.Auth::user()->manage_official_type.'%');
     }
 
     if(Input::get("registration_id") != ''){
@@ -113,7 +119,7 @@ class AdminController extends BaseController {
 
     
     $this->layout->sidebar = View::make($this->get_sidebar(),['sidebar'=>'coach','subsidebar'=>2]);
-    $this->layout->main = View::make('admin.coaches.list',['coaches'=>$coaches,"title"=>'Pending for Approval', "status" => $status,'flag'=>2,"total" => $total, "page_id"=>$page_id, "max_per_page" => $max_per_page, "total_pages" => $total_pages,'input_string'=>$input_string]);
+    $this->layout->main = View::make('admin.coaches.list',['coaches'=>$coaches,"title"=>'Pending for Approval', "status" => $status,'flag'=>2,"total" => $total, "page_id"=>$page_id, "max_per_page" => $max_per_page, "total_pages" => $total_pages,'input_string'=>$input_string ,"pending_type" => $pending_type]);
   }
 
   public function deleteCoachProfile($coach_id){

@@ -12,9 +12,10 @@ class CoachController extends BaseController {
             }
         }
         $coach_employments = EmploymentDetails::where('coach_id',Auth::user()->coach_id)->get();
+        $coach_licenses = CoachLicense::where('coach_id',Auth::user()->coach_id)->get();
         $coach = Coach::find(Auth::user()->coach_id);
         $this->layout->sidebar = View::make('coaches.sidebar',['sidebar'=>'dashboard']);
-        $this->layout->main = View::make('coaches.dashboard',['courses'=>$courses,'title'=>'Active Courses','check'=>$check, "coach" => $coach , "coach_employments" => $coach_employments]);
+        $this->layout->main = View::make('coaches.dashboard',['courses'=>$courses,'title'=>'Active Courses','check'=>$check, "coach" => $coach , "coach_employments" => $coach_employments , "coach_licenses" => $coach_licenses]);
     }
     public function contactInformation(){
         $id = Auth::User()->coach_id;
