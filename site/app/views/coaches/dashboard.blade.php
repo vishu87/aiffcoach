@@ -16,7 +16,12 @@
 	<div class="alert alert-danger">
 		no employment details found
 	</div>
+@endif
 
+@if(sizeof($coach_licenses) < 1)
+	<div class="alert alert-danger">
+		no license details found
+	</div>
 @endif
 <div class="row">
 	<div class="col-md-6">
