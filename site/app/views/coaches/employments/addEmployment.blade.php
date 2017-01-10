@@ -1,4 +1,4 @@
-<div class="row">
+<div class="">
 	<div class="col-md-7">
 		<h3 class="page-title">
 			@if(!isset($employment))
@@ -70,32 +70,32 @@
 			<div class="col-md-6 form-group">
 				@if(isset($employment))
         			<div class="form-group">
-        				<label>Upload CV</label>
-		        		{{Form::file('cv',["class"=>"form-control","id"=>"contract","pdf"=>'true'])}}
+        				<label>Upload CV (Resume)<span class="error"> *</span></label>
+		        		{{Form::file('cv',["class"=>"form-control" ,"required"=>true,"id"=>"contract","pdf"=>'true'])}}
 			            <span class="error">{{$errors->first('cv')}}</span>
 			            <div class="col-md-4 form-group">
         					@if($employment->cv!='')<a href="{{url($employment->cv)}}" target="_blank">view current</a>@endif
         				</div>
         			</div>
 		        @else
-		        	<label>CV</label>
-	        		{{Form::file('cv',["class"=>"form-control","id"=>"contract","pdf"=>'true'])}}
+		        	<label>CV (Resume)<span class="error"> *</span></label>
+	        		{{Form::file('cv',["class"=>"form-control","required"=>true,"id"=>"contract","pdf"=>'true'])}}
 		            <span class="error">{{$errors->first('cv')}}</span>
 		        @endif    
 	        </div>
 			<div class="col-md-6 form-group">
 				@if(isset($employment))
         			<div class="form-group">
-        				<label>Copy of Present Footballing Employment Contract</label>
-		        		{{Form::file('present_emp_copy',["class"=>"form-control","id"=>"contract","pdf"=>'true'])}}
+        				<label>Copy of Present Footballing Employment Contract <span class="error"> *</span></label>
+		        		{{Form::file('present_emp_copy',["class"=>"form-control","required"=>true,"id"=>"contract","pdf"=>'true'])}}
 			            <span class="error">{{$errors->first('present_emp_copy')}}</span>
 			            <div class="col-md-4 form-group">
         					@if($employment->contract!='')<a href="{{url($employment->contract)}}" target="_blank">view current</a>@endif
         				</div>
         			</div>
 		        @else
-		        	<label>Copy of Present Footballing Employment Contract</label>
-	        		{{Form::file('present_emp_copy',["class"=>"form-control","id"=>"contract","pdf"=>'true'])}}
+		        	<label>Copy of Present Footballing Employment Contract <span class="error">*</span></label>
+	        		{{Form::file('present_emp_copy',["class"=>"form-control","required"=>true,"id"=>"contract","pdf"=>'true'])}}
 		            <span class="error">{{$errors->first('present_emp_copy')}}</span>
 		        @endif    
 	        </div>

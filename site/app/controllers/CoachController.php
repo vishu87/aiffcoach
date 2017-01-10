@@ -405,14 +405,18 @@ class CoachController extends BaseController {
             'start_date'=>Input::get('date_since_emp'),
             'employment_status' => Input::get('employment_status'),
             'referral_contact' => Input::get('referral_contact'),
-            'referral_name' => Input::get('referral_name')
+            'referral_name' => Input::get('referral_name'),
+            'cv' => Input::file('cv'),
+            'present_emp_copy' => Input::file('present_emp_copy')
             ];
         $rules = [
             'present_emp'=>'required',
             'start_date'=>'required',
             'employment_status' => 'required',
             'referral_contact' => 'required',
-            'referral_name' => 'required'
+            'referral_name' => 'required' ,
+            'cv' => 'required',
+            'present_emp_copy' => 'required'
             ];        
         $validator = Validator::make($cre,$rules);
         if($validator->passes()){
@@ -457,7 +461,9 @@ class CoachController extends BaseController {
             'end_date'=>Input::get('end_date'),
             'employment_status' => Input::get('employment_status'),
             'referral_contact' => Input::get('referral_contact'),
-            'referral_name' => Input::get('referral_name')
+            'referral_name' => Input::get('referral_name'),
+            'cv' => Input::file('cv'),
+            'present_emp_copy' => Input::file('present_emp_copy')
             ];
         $rules = [
             'present_emp'=>'required',
@@ -465,7 +471,9 @@ class CoachController extends BaseController {
             'end_date'=>'required' , 
             'employment_status' => 'required',
             'referral_name' => 'required',
-            'referral_contact' =>'required | numeric'
+            'referral_contact' =>'required | numeric',
+            'cv' => 'required',
+            'present_emp_copy' => 'required'
             ];    
         $validator = Validator::make($cre,$rules);
         if($validator->passes()){
@@ -511,7 +519,7 @@ class CoachController extends BaseController {
     public function coachLicense(){
         $id = Auth::User()->coach_id;
         $coachLicense = CoachLicense::listing()->where('coach_id',$id)->get();
-        $licenses = License::licenseList();
+        $licenses = ["" => "Select"] + License::where('user_type',Auth::user()->official_types)->lists('name','id');
         $this->layout->sidebar = View::make('coaches.sidebar',["sidebar"=>'profile','subsidebar'=>2]);
         $this->layout->main = View::make('coaches.profile',['coachLicense'=>$coachLicense,"profileType"=>6,'title'=>'Coach Licenses',"licenses"=>$licenses]);
     }
