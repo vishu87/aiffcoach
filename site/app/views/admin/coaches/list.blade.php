@@ -105,6 +105,8 @@
 		@endif
 	</div>
 </div>
+
+@if(isset($pending_type))
 <div>
 	<ul class="nav nav-tabs">
 		<li class="{{($pending_type==0)?'active':''}}">
@@ -120,9 +122,9 @@
 			Rejected</a>
 		</li>
 		
-		
 	</ul>
 </div>
+@endif
 <div class="row">
 	<div class="col-md-12">
 		<table class="table table-bordered table-hover tablesorter">

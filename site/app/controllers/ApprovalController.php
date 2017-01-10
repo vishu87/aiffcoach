@@ -10,7 +10,7 @@ class ApprovalController extends BaseController {
         if(Input::get("official_name") != ''){
           $sql = $sql->where('coaches.full_name','LIKE','%'.Input::get('official_name').'%');
         }
-
+        $sql = $sql->where('coaches.status',1);
         $total = $sql->count();
         $max_per_page = 20;
         $total_pages = ceil($total/$max_per_page);
@@ -53,6 +53,9 @@ class ApprovalController extends BaseController {
         if(Input::get("official_name") != ''){
           $sql = $sql->where('coaches.full_name','LIKE','%'.Input::get('official_name').'%');
         }
+
+        $sql = $sql->where('coaches.status',1);
+
         $total = $sql->count();
         $max_per_page = 20;
         $total_pages = ceil($total/$max_per_page);
@@ -95,6 +98,8 @@ class ApprovalController extends BaseController {
         if(Input::get("official_name") != ''){
           $sql = $sql->where('coaches.full_name','LIKE','%'.Input::get('official_name').'%');
         }
+        $sql = $sql->where('coaches.status',1);
+        
         $total = $sql->count();
         $max_per_page = 20;
         $total_pages = ceil($total/$max_per_page);

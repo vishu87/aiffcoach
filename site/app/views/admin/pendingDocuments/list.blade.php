@@ -124,10 +124,10 @@
 		<a href="{{url('pendingApprovals/pendingEmploymentDetails?'.$link_string)}}" >
 		Employment Details </a>
 	</li>
-	<li class="{{($docType=='pendingActivities')?'active':''}}">
+	<!-- <li class="{{($docType=='pendingActivities')?'active':''}}">
 		<a href="{{url('pendingApprovals/pendingActivities?'.$link_string)}}" >
 		Activities </a>
-	</li>
+	</li> -->
 </ul>
 
 @if(isset($documents))
@@ -152,7 +152,9 @@
 				@foreach($documents as $document)
 					<tr>	
 						<td>{{($page_id-1)*$max_per_page + $count}}</td>
-						<td>{{$document->full_name}}</td>
+						<td>
+							<a href="{{url('/admin/viewCoachDetails/'.$document->coach_id)}}" target="_blank">{{$document->full_name}}</a>
+						</td>
 						<td>{{$document->document_name}}</td>
 						<td>{{$document->number}}</td>
 						<td>@if($document->document_id != 2) {{date('d-m-Y',strtotime($document->expiry_date))}} @endif </td>
@@ -182,7 +184,7 @@
 		</div>
 	@else
 	<div class="alert alert-warning">
-		No pending documents found
+		No pending documents found for approved coaches
 	</div>
 	@endif
 @endif
@@ -210,7 +212,10 @@
 			@foreach($coachLicense as $license)
 				<tr>	
 					<td>{{($page_id-1)*$max_per_page + $count}}</td>
-					<td>{{$license->full_name}}</td>
+					<td>
+						<a href="{{url('/admin/viewCoachDetails/'.$license->coach_id)}}" target="_blank">{{$license->full_name}}</a>
+					</td>
+
 					<td>{{$license->license_name}}</td>
 					<td>{{$license->number}}</td>
 					<td>{{date('d-m-Y',strtotime($license->start_date))}}</td>
@@ -242,7 +247,7 @@
 	</div>
 	@else
 	<div class="alert alert-warning">
-		No pending licenses found
+		No pending licenses found for approved coaches
 	</div>
 	@endif
 @endif
@@ -274,7 +279,9 @@
 			@foreach($employmentDetails as $employment)
 				<tr>	
 					<td>{{($page_id-1)*$max_per_page + $count}}</td>
-					<td>{{$employment->full_name}}</td>
+					<td>
+						<a href="{{url('/admin/viewCoachDetails/'.$employment->coach_id)}}" target="_blank">{{$employment->full_name}}</a>
+					</td>
 					<td>{{$employment->employment}}</td>
 					<td>{{date('d-m-Y',strtotime($employment->start_date))}}</td>
 					<td>{{date('d-m-Y',strtotime($employment->end_date))}}</td>
@@ -307,7 +314,7 @@
 	</div>
 	@else
 	<div class="alert alert-warning">
-		No pending employment details found
+		No pending employment details found for approved coaches
 	</div>
 	@endif
 @endif
