@@ -14,7 +14,7 @@
 
 @if(sizeof($coach_employments) < 1)
 	<div class="alert alert-danger">
-		no employment details found
+		Your profile doesn't have any employment details. Please add at least one employment details to get approved by AIFF.<br>To add new employement <a href="{{url('coach/addNewEmployment')}}">Click Here</a>
 	</div>
 
 @endif
