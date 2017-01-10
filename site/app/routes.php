@@ -117,8 +117,11 @@ Route::group(["before"=>['auth']],function(){
 	Route::group(["before"=>['admin']],function(){
 		Route::group(["prefix"=>'admin'],function(){
 			Route::get('/','AdminController@index');
+
 			Route::get('/approvedCoach','AdminController@approvedCoach');
 			Route::get('/pendingCoach','AdminController@pendingCoach');
+			Route::delete('/deleteCoachProfile/{coach_id}','AdminController@deleteCoachProfile');
+
 			Route::get('/inactiveCoach','AdminController@inactiveCoach');
 			Route::get('viewCoach/{id}','AdminController@viewCoach');
 			Route::get('editCoachProfile/{coach_id}','AdminController@editCoachProfile');

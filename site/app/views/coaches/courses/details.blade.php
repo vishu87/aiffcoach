@@ -98,8 +98,8 @@
 	{{Form::open(array('url'=>'coach/courses/apply/'.$course->id,'method'=>'post','files'=>'true','class'=>"check_form"))}}
         <div class="col-md-6">
           <div class="">
-            <label>Remarks <span class="color-red">*</span></label>
-            {{Form::text('remarks','',["class"=>"form-control","required"=>"true"])}}
+            <label>Remarks </label>
+            {{Form::text('remarks','',["class"=>"form-control"])}}
           </div>
           <div>
             <label>Document</label>

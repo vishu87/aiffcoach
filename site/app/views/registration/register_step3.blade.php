@@ -19,12 +19,48 @@
                 <div class="form-group"> 
                   <label class="form-label">Registration For <span class="error">*</span></label>
                   {{Form::select('official_types',$official_types,(isset($data->official_types))?$data->official_types:'',['required'=>'true','class'=>'form-control'])}}
-                    <span class="error">{{$errors->first('passport')}}</span>
+                    <span class="error">{{$errors->first('official_types')}}</span>
+                </div>
+              </div>
+              
+            </div>
+            <div class="row">
+              <h4 style="padding: 0 15px;font-weight: 400">D License Details</h4>
+              
+              <div class="col-md-6">
+                <div class="form-group"> 
+                  <label class="form-label">Start Date <span class="error">*</span></label>
+                  {{Form::text('start_date',(isset($data->start_date))?date('d-m-Y',strtotime($data->start_date)):'',['required'=>'true','class'=>'form-control  datepicker' ,"date_en"=>true ,'placeholder'=>'License start date'])}}
+                    <span class="error">{{$errors->first('start_date')}}</span>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group"> 
+                  <label class="form-label">End Date </label>
+                  {{Form::text('end_date',(isset($data->end_date))?date('d-m-Y',strtotime($data->end_date)):'',['class'=>'form-control  datepicker' ,"date_en"=>true ,'placeholder'=>'license expiry if any'])}}
+                    <span class="error">{{$errors->first('end_date')}}</span>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group"> 
+                  <label class="form-label">License Number<span class="error">*</span></label>
+                  {{Form::text('license_number',(isset($data->license_number))?$data->license_number:'',['required'=>'true','class'=>'form-control' ,'placeholder'=>'Enter License Number'])}}
+                    <span class="error">{{$errors->first('license_number')}}</span>
+                </div>
+              </div>
+              
+              <div class="col-md-6">
+                <div class="form-group"> 
+                  <label class="form-label">Upload D-License </label>
+                  {{Form::file('d_licence',['class'=>'form-control'])}}
+                    <span class="error">{{$errors->first('d_licence')}}</span>
                 </div>
               </div>
             </div>
-
             <div class="row">
+              <h4 style="padding: 0 15px;font-weight: 400">Passport Details</h4>
               <div class="col-md-6">
                 <div class="form-group"> 
                   <label class="form-label">Passport No</label>       

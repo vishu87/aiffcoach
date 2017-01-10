@@ -182,30 +182,21 @@ class ApplicationController extends BaseController {
     public function applyCourse($course_id){
         $check = Application::where('course_id',$course_id)->where('coach_id',Auth::user()->coach_id)->count();
         if($check == 0){
-            $cre=[
-                "remarks"=>Input::get('remarks')
-            ];
-            $rules=[
-                "remarks"=>"required"
-            ];
-            $validation=Validator::make($cre,$rules);
-            if($validation->passes()){
-                $application = new Application;
-                $application->course_id = $course_id;
-                $application->coach_id = Auth::user()->coach_id;
-                $application->status = 0;
-                $application->remarks = '';
-                $application->save(); 
-                
-                $log = new ApplicationLog;
-                $log->entity_id = $application->id;
-                $log->status = 0;
-                $log->save();
+           
+            $application = new Application;
+            $application->course_id = $course_id;
+            $application->coach_id = Auth::user()->coach_id;
+            $application->status = 0;
+            $application->remarks = '';
+            $application->save(); 
+            
+            $log = new ApplicationLog;
+            $log->entity_id = $application->id;
+            $log->status = 0;
+            $log->save();
 
-                return Redirect::back()->with('success','You have successfully applied for the course');
-            } else {
-                return Redirect::back()->with('failure','Please fill mandatory fields');
-            }
+            return Redirect::back()->with('success','You have successfully applied for the course');
+        
         } else {
             return Redirect::back()->with('failure','You have already applied for this course');
         }

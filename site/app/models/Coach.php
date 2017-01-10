@@ -30,7 +30,7 @@ class Coach extends Eloquent {
     }
 
     public static function listing(){
-    	return Coach::select('coaches.id','coaches.registration_id','coaches.gender','coaches.dob','coaches.full_name','states.name as state_reference','coach_parameters.email','coach_parameters.mobile','coaches.status','users.official_types')->join('users','users.coach_id','=','coaches.id')->leftJoin('states','coaches.state_id','=','states.id')->leftJoin('coach_parameters','coaches.id','=','coach_parameters.coach_id');
+    	return Coach::select('coaches.id','coaches.registration_id','coaches.gender','coaches.dob','coaches.full_name','states.name as state_reference','coach_parameters.email','coach_parameters.mobile','coaches.status','users.official_types')->join('users','users.coach_id','=','coaches.id')->leftJoin('states','coaches.state_id','=','states.id')->leftJoin('coach_parameters','coaches.id','=','coach_parameters.coach_id')->where('coaches.deleted',0);
     }
 
     public function check_admin(){

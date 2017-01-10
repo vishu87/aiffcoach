@@ -164,8 +164,21 @@ class RegistrationController extends BaseController {
 
     public function post_registration_step3(){
         $id = Input::get('id');
-        $cre = ["official_types"=>Input::get('official_types')];
-        $rules = ["official_types" => "required"];
+        $cre = [
+            "official_types"=>Input::get("official_types"),
+            "start_date"=>Input::get("start_date"),
+            "end_date"=>Input::get("end_date"),
+            "license_number" => Input::get("license_number")
+            
+
+            ];
+        $rules = [
+            "official_types" => "required",
+            "start_date" => "required |date",
+            "end_date" => "date|after:start_date",
+            "license_number" =>"required"
+            
+            ];
 
         $validator = Validator::make($cre,$rules);
         if($validator->passes()){
@@ -178,9 +191,25 @@ class RegistrationController extends BaseController {
                 Input::file('passport_proof')->move($destinationPath,$doc);
                 $data["passport_proof"] = $destinationPath.$doc;
             }
+            
+            $licensePath = 'coach-licenses/';
+
+            if(Input::hasFile('d_licence')){
+                $extension = Input::file('d_licence')->getClientOriginalExtension();
+                $doc = "PassportProof_".str_replace(' ','-',Input::file('d_licence')->getClientOriginalName());
+                
+                Input::file('d_licence')->move($licensePath,$doc);
+                $data["d_licence"] = $licensePath.$doc;
+            }
+
             $data["passport_expiry"] = Input::get('passport_expiry');
             $data["passport"] = Input::get('passport');
             $data["official_types"] = Input::get('official_types');
+
+            $data["license_number"] = Input::get('license_number');
+            $data["start_date"] = Input::get('start_date');
+            $data["end_date"] = Input::get('end_date');
+
             $data = serialize($data);
             if(Input::get('id') == 0){
                 $insert_id = DB::table('reg_data')->insertGetId(array('data3' => $data));
@@ -208,6 +237,7 @@ class RegistrationController extends BaseController {
             $coach->save();
             $coach->registration_id = strtoupper(date("YM")).$coach->id;
             $coach->save();
+
             $coach_parameter = new CoachParameter;
             $coach_parameter->coach_id = $coach->id;
             $coach_parameter->birth_place = $data1['birth_place'];
@@ -221,8 +251,10 @@ class RegistrationController extends BaseController {
             $coach_parameter->mobile = $data2['mobile'];
             $coach_parameter->landline = $data2['landline'];
             $coach_parameter->save();
+
             $password = str_random(8);
             $hash = Hash::make(str_random(6));
+
             $user = new User;
             $user->coach_id = $coach->id;
             $user->name = $coach->full_name;
@@ -234,6 +266,19 @@ class RegistrationController extends BaseController {
             $user->password_check = $password;
             $user->official_types = $data3["official_types"];
             $user->save();
+
+            //Coaches D license details
+
+            $coach_license = new CoachLicense;
+            $coach_license->coach_id = $coach->id;
+            $coach_license->license_id = 1;
+            $coach_license->document = (isset($data3["d_licence"]))?$data3["d_licence"]:'';
+            $coach_license->number = $data3["license_number"];
+            $coach_license->start_date = date('Y-m-d',strtotime($data3["start_date"]));
+            $coach_license->end_date = date('Y-m-d',strtotime($data3["end_date"]));
+            $coach_license->save();
+
+            //passport Details
             if($data3['passport'] != ''){
                 $document = new CoachDocument;
                 $document->coach_id = $coach->id;
@@ -246,6 +291,7 @@ class RegistrationController extends BaseController {
                 $document->save();
             }
 
+            //birth proof documents
             if($data1['dob_proof']){
                 $document = new CoachDocument;
                 $document->coach_id = $coach->id;

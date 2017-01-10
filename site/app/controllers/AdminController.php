@@ -115,6 +115,22 @@ class AdminController extends BaseController {
     $this->layout->sidebar = View::make($this->get_sidebar(),['sidebar'=>'coach','subsidebar'=>2]);
     $this->layout->main = View::make('admin.coaches.list',['coaches'=>$coaches,"title"=>'Pending for Approval', "status" => $status,'flag'=>2,"total" => $total, "page_id"=>$page_id, "max_per_page" => $max_per_page, "total_pages" => $total_pages,'input_string'=>$input_string]);
   }
+
+  public function deleteCoachProfile($coach_id){
+    $deleteCoach = Coach::find($coach_id);
+    $deleteCoach->deleted = 1;
+    $deleteCoach->save();
+    $restrictLogin = User::where('coach_id',$coach_id)->update(["active"=>1]);
+    // Application::where('coach_id',$coach_id)->delete();
+    // CoachActivity::where('coach_id',$coach_id)->delete();
+    // CoachDocument::where('coach_id',$coach_id)->delete();
+    // CoachLicense::where('coach_id',$coach_id)->delete();
+    // CoachParameter::where('coach_id',$coach_id)->delete();
+    // CoachLicense::where('coach_id',$coach_id)->delete();
+    $data['success'] = true;
+    $data['message'] = "Coach Deleted successfully";
+    return json_encode($data);
+  }
   // public function inactiveCoach(){
   // 	$coaches = Coach::listing()->disapproved()->get();
   //     $status = Coach::Status();
@@ -147,7 +163,7 @@ class AdminController extends BaseController {
     $coachLicense = CoachLicense::listing()->where('coach_id',$id)->get();
     $employmentDetails = EmploymentDetails::where('coach_id',$id)->get();
     $activities = CoachActivity::where('coach_id',$id)->get();
-    $courses = Application::select('applications.*','courses.name as course_name','courses.prerequisite_id','courses.end_date','courses.documents','license.name as license_name')->join('courses','applications.course_id','=','courses.id')->leftJoin('license','license.id','=','courses.license_id')->where('coach_id',$id)->get();
+    $courses = Application::select('applications.*','courses.name as course_name','courses.end_date','courses.documents','license.name as license_name')->join('courses','applications.course_id','=','courses.id')->leftJoin('license','license.id','=','courses.license_id')->where('coach_id',$id)->get();
     $coachStatus = Coach::status();
     $licenseList = License::lists('name','id');
     $ApprovalStatus = Approval::status();
