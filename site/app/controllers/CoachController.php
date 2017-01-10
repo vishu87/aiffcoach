@@ -11,9 +11,10 @@ class CoachController extends BaseController {
                 $check[] = $course->id;
             }
         }
+        $coach_employments = EmploymentDetails::where('coach_id',Auth::user()->coach_id)->get();
         $coach = Coach::find(Auth::user()->coach_id);
         $this->layout->sidebar = View::make('coaches.sidebar',['sidebar'=>'dashboard']);
-        $this->layout->main = View::make('coaches.dashboard',['courses'=>$courses,'title'=>'Active Courses','check'=>$check, "coach" => $coach]);
+        $this->layout->main = View::make('coaches.dashboard',['courses'=>$courses,'title'=>'Active Courses','check'=>$check, "coach" => $coach , "coach_employments" => $coach_employments]);
     }
     public function contactInformation(){
         $id = Auth::User()->coach_id;
@@ -23,19 +24,7 @@ class CoachController extends BaseController {
         $this->layout->sidebar = View::make('coaches.sidebar',["sidebar"=>'profile','subsidebar'=>2]);
         $this->layout->main = View::make('coaches.profile',['state'=>$state,'coach'=>$CoachParameters,"profileType"=>2,'title'=>'Contact Information']);
     }
-    // public function passportDetails(){
-    //     $id = Auth::User()->coach_id;
-    //     $coach = Coach::find($id);
-    //     if($coach->status!=0){   
-    //         $CoachParameters = CoachParameter::where('coach_id',Auth::User()->coach_id)->first();
-    //         $this->layout->sidebar = View::make('coaches.sidebar',["sidebar"=>'profile','subsidebar'=>3]);
-    //         $this->layout->main = View::make('coaches.profile',['coach'=>$CoachParameters,"profileType"=>3,'title'=>'Passport Details']);
-    //     }
-    //     else{
-    //         $this->layout->sidebar = '';
-    //         $this->layout->main = View::make('coaches.index');
-    //     }
-    // }
+    
     public function personalInformation(){
         $id = Auth::User()->coach_id;
         $coach = Coach::find($id);
@@ -43,6 +32,7 @@ class CoachController extends BaseController {
         $this->layout->sidebar = View::make('coaches.sidebar',["sidebar"=>'profile','subsidebar'=>1]);
         $this->layout->main = View::make('coaches.profile',['coach'=>$coach,'CoachParameter'=>$CoachParameter,"profileType"=>1,'title'=>'Personal Details']);
     }
+
     public function updatePersonalInformation(){
         $id = Auth::User()->coach_id;
         $coach = Coach::find($id);
@@ -64,8 +54,7 @@ class CoachController extends BaseController {
             return Redirect::back()->with('success','Details Updated Successfully');
         }
         else{
-            $this->layout->sidebar = '';
-            $this->layout->main = View::make('coaches.index');
+            return Redirect::back()->withErrors($validator)->withInput();
         }
     }
     public function measurements(){
@@ -276,73 +265,7 @@ class CoachController extends BaseController {
      	}
      	return Redirect::back()->withErrors($validator)->withInput()->with('failure','All Fields Are Not Field!');			
     }
-    public function postEmployment(){
-        $cre=["present_emp"=>Input::get('present_emp'),
-            "date_since_emp"=>Input::get("date_since_emp"),
-            "aiff_certificate"=>Input::get("aiff_certificate"),
-            "aiff_certificate_copy"=>Input::file("aiff_certificate_copy"),
-            "last_afc_date"=>Input::get("last_afc_date"),
-            "aiff_latest_copy"=>Input::file("aiff_latest_copy"),
-           ];
-        $rules =[
-            "present_emp"=>'required',
-            "date_since_emp"=>'required',
-            "aiff_certificate"=>'required',
-            "aiff_certificate_copy"=>'required',
-            "last_afc_date"=>'required',
-            "aiff_latest_copy"=>'required',
-           ];      
-        $validator = Validator::make($cre,$rules);
-        if($validator->passes()){
-            $destinationPath = "coaches-doc/";
-            $employment_details = new EmploymentDetails;
-            $employment_details->coach_id = Auth::User()->coach_id;
-            $employment_details->employment = Input::get('present_emp');
-            $employment_details->start_date = Input::get('date_since_emp');
-            if(Input::hasFile('present_emp_copy')){
-                $extension = Input::file('present_emp_copy')->getClientOriginalExtension();
-                $doc = "PassportProof_".Auth::id().'_'.str_replace(' ','-',Input::file('present_emp_copy')->getClientOriginalName());
-                Input::file('present_emp_copy')->move($destinationPath,$doc);
-                $employment_details->contract = $destinationPath.$doc;
-            }
-            $employment_details->save();
-            $emp_name = Input::get('emp_name');
-            $start_date = Input::get('start_date');
-            $end_date = Input::get('end_date');
-            $count1 = 0;
-            foreach ($emp_name as $value) {
-                if($emp_name[$count1]!='' && $start_date[$count1] !='' && $end_date[$count1]!=''){
-                    $employment_details = new EmploymentDetails;
-                    $employment_details->coach_id = Auth::User()->coach_id;
-                    $employment_details->employment=$emp_name[$count1];
-                    $employment_details->start_date = $start_date[$count1];
-                    $employment_details->end_date = $end_date[$count1];     
-                    $employment_details->save();
-                }
-                $count1++;
-            }
-            $registeration_details = new RegistrationDetails;
-            $registeration_details->coach_id = Auth::User()->coach_id;
-            $registeration_details->certificate_no = Input::get('aiff_certificate');
-            $registeration_details->certificate_date = Input::get('last_afc_date');
-            if(Input::hasFile('aiff_certificate_copy')){
-                $extension = Input::file('aiff_certificate_copy')->getClientOriginalExtension();
-                $doc = "aiffcertificate_".Auth::id().'_'.str_replace(' ','-',Input::file('aiff_certificate_copy')->getClientOriginalName());
-                Input::file('aiff_certificate_copy')->move($destinationPath,$doc);
-                $registeration_details->certificate_copy = $destinationPath.$doc;
-            }
-            if(Input::hasFile('aiff_latest_copy')){
-                $extension = Input::file('aiff_latest_copy')->getClientOriginalExtension();
-                $doc = "aiffLatest_".Auth::id().'_'.str_replace(' ','-',Input::file('aiff_latest_copy')->getClientOriginalName());
-                Input::file('aiff_latest_copy')->move($destinationPath,$doc);
-                $registeration_details->latest_certificate_copy = $destinationPath.$doc;
-            }
-            $registeration_details->save();
-            Coach::where('id',Auth::User()->coach_id)->update(["status"=>1]);
-            return Redirect::back()->with('success','All Details Uploaded Successfully');
-        } 
-        return Redirect::back()->withErrors($validator)->withInput()->with('failure','All Fields Are Not Field!');     
-    }
+    
     public function updatePassport(){
         $cre = ['passport_no'=>Input::get('passport_no'),'passport_expiry'=>Input::get('passport_expiry')];
         $rules = ['passport_no'=>'required','passport_expiry'=>'required|date'];

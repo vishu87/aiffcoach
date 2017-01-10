@@ -11,6 +11,13 @@
         	<i class="fa fa-ban-circle"></i><strong>Failure!</strong> {{Session::get('failure')}}
        	</div>
 @endif
+
+@if(sizeof($coach_employments) < 1)
+	<div class="alert alert-danger">
+		no employment details found
+	</div>
+
+@endif
 <div class="row">
 	<div class="col-md-6">
 		<h2 class="page-title">Active Courses</h2>
