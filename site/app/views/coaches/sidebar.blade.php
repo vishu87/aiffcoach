@@ -27,7 +27,7 @@
         <span class="selected"></span>
       </a>
     </li>
-    <li class="@if($sidebar == 3 ) active @endif" >
+    <li class="@if($sidebar == 3 ) active @endif hidden" >
       <a href="{{url('/coach/activity')}}">
         <i class="fa fa-tasks"></i>
         <span class="title">Activities</span>

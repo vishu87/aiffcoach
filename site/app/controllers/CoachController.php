@@ -431,14 +431,14 @@ class CoachController extends BaseController {
             $employment->end_date = date('Y-m-d',strtotime(Input::get('end_date')));
             if(Input::hasFile('present_emp_copy')){
                 $extension = Input::file('present_emp_copy')->getClientOriginalExtension();
-                $doc = "presentemp_".Auth::id().'_'.str_replace(' ','-',Input::file('present_emp_copy')->getClientOriginalName());
+                $doc = "presentemp_".Auth::id().'_'.strtotime("now").'.'.$extension;
                 
                 Input::file('present_emp_copy')->move($destinationPath,$doc);
                 $employment->contract = $destinationPath.$doc;
             }
             if(Input::hasFile('cv')){
                 $extension = Input::file('cv')->getClientOriginalExtension();
-                $doc = "presentemp_".Auth::id().'_'.str_replace(' ','-',Input::file('cv')->getClientOriginalName());
+                $doc = "cv_".Auth::id().'_'.strtotime("now").'.'.$extension;
                 Input::file('cv')->move($destinationPath,$doc);
                 $employment->cv = $destinationPath.$doc;
             }
@@ -485,13 +485,13 @@ class CoachController extends BaseController {
             $updateEmployment->end_date = date('Y-m-d',strtotime(Input::get('end_date')));
             if(Input::hasFile('present_emp_copy')){
                 $extension = Input::file('present_emp_copy')->getClientOriginalExtension();
-                $doc = "presentemp_".Auth::id().'_'.str_replace(' ','-',Input::file('present_emp_copy')->getClientOriginalName());
+                $doc = "presentemp_".Auth::id().'_'.strtotime("now").'.'.$extension;
                 Input::file('present_emp_copy')->move($destinationPath,$doc);
                 $updateEmployment->contract = $destinationPath.$doc;
             }
             if(Input::hasFile('cv')){
                 $extension = Input::file('cv')->getClientOriginalExtension();
-                $doc = "presentemp_".Auth::id().'_'.str_replace(' ','-',Input::file('cv')->getClientOriginalName());
+                $doc = "cv_".Auth::id().'_'.strtotime("now").'.'.$extension;
                 Input::file('cv')->move($destinationPath,$doc);
                 $updateEmployment->cv = $destinationPath.$doc;
             }

@@ -55,10 +55,10 @@ class RegistrationController extends BaseController {
             if(Input::hasFile('photo')){
             
                 $extension = Input::file('photo')->getClientOriginalExtension();
-                $doc = "photo_".str_replace(' ','-',Input::file('photo')->getClientOriginalName());
-                
+                $doc = "photo_".strtotime("now").'_'.rand(1,100).'.'.$extension;
                 Input::file('photo')->move($destinationPath,$doc);
                 $data["photo"] = $destinationPath.$doc;
+
             } else {
                 if(isset($data_old)){
                     if(isset($data_old["photo"])){
@@ -66,13 +66,14 @@ class RegistrationController extends BaseController {
                     }
                 }
             }
+
             if(Input::hasFile('dob_proof')){
             
                 $extension = Input::file('dob_proof')->getClientOriginalExtension();
-                $doc = "dobProof_".str_replace(' ','-',Input::file('dob_proof')->getClientOriginalName());
-                
+                $doc = "dobproof_".strtotime("now").'_'.rand(1,100).'.'.$extension;
                 Input::file('dob_proof')->move($destinationPath,$doc);
                 $data["dob_proof"] = $destinationPath.$doc;
+
             } else {
                 if(isset($data_old)){
                     if(isset($data_old["dob_proof"])){
@@ -168,17 +169,16 @@ class RegistrationController extends BaseController {
             "official_types"=>Input::get("official_types"),
             "start_date"=>Input::get("start_date"),
             "end_date"=>Input::get("end_date"),
-            "license_number" => Input::get("license_number")
-            
-
-            ];
+            "license_number" => Input::get("license_number"),
+            "license" => Input::file("license"),
+        ];
         $rules = [
             "official_types" => "required",
             "start_date" => "required |date",
             "end_date" => "date|after:start_date",
-            "license_number" =>"required"
-            
-            ];
+            "license_number" =>"required",
+            "license" =>"required"
+        ];
 
         $validator = Validator::make($cre,$rules);
         if($validator->passes()){
@@ -186,7 +186,7 @@ class RegistrationController extends BaseController {
             $destinationPath = 'coaches-doc/';
             if(Input::hasFile('passport_proof')){
                 $extension = Input::file('passport_proof')->getClientOriginalExtension();
-                $doc = "PassportProof_".str_replace(' ','-',Input::file('passport_proof')->getClientOriginalName());
+                $doc = "PassportProof_".strtotime("now").'_'.rand(1,100).'.'.$extension;
                 
                 Input::file('passport_proof')->move($destinationPath,$doc);
                 $data["passport_proof"] = $destinationPath.$doc;
@@ -194,21 +194,22 @@ class RegistrationController extends BaseController {
             
             $licensePath = 'coach-licenses/';
 
-            if(Input::hasFile('d_licence')){
-                $extension = Input::file('d_licence')->getClientOriginalExtension();
-                $doc = "PassportProof_".str_replace(' ','-',Input::file('d_licence')->getClientOriginalName());
+            if(Input::hasFile('license')){
+
+                $extension = Input::file('license')->getClientOriginalExtension();
+                $doc = "license_".strtotime("now").'_'.rand(1,100).'.'.$extension;
                 
-                Input::file('d_licence')->move($licensePath,$doc);
-                $data["d_licence"] = $licensePath.$doc;
+                Input::file('license')->move($licensePath,$doc);
+                $data["license"] = $licensePath.$doc;
             }
 
             $data["passport_expiry"] = Input::get('passport_expiry');
             $data["passport"] = Input::get('passport');
             $data["official_types"] = Input::get('official_types');
 
+            $data["license_id"] = Input::get('license_id');
             $data["license_number"] = Input::get('license_number');
             $data["start_date"] = Input::get('start_date');
-            $data["end_date"] = Input::get('end_date');
 
             $data = serialize($data);
             if(Input::get('id') == 0){
@@ -267,15 +268,14 @@ class RegistrationController extends BaseController {
             $user->official_types = $data3["official_types"];
             $user->save();
 
-            //Coaches D license details
+            //Coaches license details
 
             $coach_license = new CoachLicense;
             $coach_license->coach_id = $coach->id;
-            $coach_license->license_id = 1;
-            $coach_license->document = (isset($data3["d_licence"]))?$data3["d_licence"]:'';
+            $coach_license->license_id = $data3["license_id"];
+            $coach_license->document = (isset($data3["license"]))?$data3["license"]:'';
             $coach_license->number = $data3["license_number"];
             $coach_license->start_date = date('Y-m-d',strtotime($data3["start_date"]));
-            $coach_license->end_date = date('Y-m-d',strtotime($data3["end_date"]));
             $coach_license->save();
 
             //passport Details

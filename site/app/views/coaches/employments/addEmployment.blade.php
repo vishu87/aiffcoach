@@ -1,4 +1,4 @@
-<div class="">
+<div class="row">
 	<div class="col-md-7">
 		<h3 class="page-title">
 			@if(!isset($employment))
@@ -30,7 +30,7 @@
 	@else
 	{{ Form::open(array('url' =>(isset($employment))?'coach/addEmployment/'.$employment->id:'coach/addEmployment',"method"=>"POST","files"=>'true','class'=>'form check_form')) }}
 	@endif			        
-	<div class="form-body">
+	<div class="">
 	    <div class="row">
 			<div class="col-md-6">
 		      <div class="form-group">
@@ -101,7 +101,7 @@
 	        </div>
 		</div>
 		<div>
-			<h3 class="page-title">
+			<h3>
 				Referral Details
 			</h3>
 		</div>

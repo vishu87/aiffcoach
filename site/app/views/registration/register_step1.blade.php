@@ -4,12 +4,28 @@
 			<div class="row form-wizard">
         		@include('register_status')
 			</div>
+			<div class="row hidden">
+				<div class="col-md-12">
+					<span style="font-size:13px;">Documents required during registrations -</span>
+					<ol>
+						<li>Date of birth proof (PDF format) - Mandatory</li>
+						<li>Recent Photograph (jpeg format) - Mandatory</li>
+						<li>Copy of C/D Licence (pdf format) - Mandatory</li>
+						<li>Passport (pdf format) - Optional</li>
+					</ol>
+				</div>
+			</div>
 			<div class="portlet box blue">
 			    <div class="portlet-title"><div class="caption">Step 1</div></div>
 			        <div class="portlet-body form">
 				        {{ Form::open(array('url' =>'registerStep1',"method"=>"POST","files"=>'true','class'=>'form check_form dob-validate')) }}
 				        {{Form::text('id',$id,["class"=>'hidden'])}}
 				          	<div class="form-body">
+				          		<div class="row">
+				          			<div class="col-md-12">
+				          				<span class="error">Please fill your name as per your date of birth certificate</span>
+				          			</div>
+				          		</div>
 				          		<div class="row">
 							        <div class="col-md-4">
 								        <div class="form-group">

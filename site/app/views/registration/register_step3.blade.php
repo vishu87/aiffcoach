@@ -25,9 +25,28 @@
               
             </div>
             <div class="row">
-              <h4 style="padding: 0 15px;font-weight: 400">D License Details</h4>
+              <div class="col-md-12">
+                
+              </div>
               
-              <div class="col-md-6">
+              <h4 style="padding: 0 15px;font-weight: 400">
+                License Details
+                <span style="font-size:12px;">
+                  You must upload either D or C license to register
+                </span>
+              </h4>
+              <?php
+                $types = ["" => "Select"] + License::whereIn("id",array(8,9))->lists("name", "id");
+              ?>
+              <div class="col-md-3">
+                <div class="form-group"> 
+                  <label class="form-label">License Type <span class="error">*</span></label>
+                  {{Form::select('license_id',$types,(isset($data->license_id))?date('d-m-Y',strtotime($data->license_id)):'',['required'=>'true'])}}
+                    <span class="error">{{$errors->first('start_date')}}</span>
+                </div>
+              </div>
+              
+              <div class="col-md-3">
                 <div class="form-group"> 
                   <label class="form-label">Start Date <span class="error">*</span></label>
                   {{Form::text('start_date',(isset($data->start_date))?date('d-m-Y',strtotime($data->start_date)):'',['required'=>'true','class'=>'form-control  datepicker' ,"date_en"=>true ,'placeholder'=>'License start date'])}}
@@ -37,15 +56,7 @@
 
               <div class="col-md-6">
                 <div class="form-group"> 
-                  <label class="form-label">End Date </label>
-                  {{Form::text('end_date',(isset($data->end_date))?date('d-m-Y',strtotime($data->end_date)):'',['class'=>'form-control  datepicker' ,"date_en"=>true ,'placeholder'=>'license expiry if any'])}}
-                    <span class="error">{{$errors->first('end_date')}}</span>
-                </div>
-              </div>
-
-              <div class="col-md-6">
-                <div class="form-group"> 
-                  <label class="form-label">License Number<span class="error">*</span></label>
+                  <label class="form-label">License Number <span class="error">*</span></label>
                   {{Form::text('license_number',(isset($data->license_number))?$data->license_number:'',['required'=>'true','class'=>'form-control' ,'placeholder'=>'Enter License Number'])}}
                     <span class="error">{{$errors->first('license_number')}}</span>
                 </div>
@@ -53,9 +64,9 @@
               
               <div class="col-md-6">
                 <div class="form-group"> 
-                  <label class="form-label">Upload D-License </label>
-                  {{Form::file('d_licence',['class'=>'form-control'])}}
-                    <span class="error">{{$errors->first('d_licence')}}</span>
+                  <label class="form-label">Upload License <span class="error">*</span></label>
+                  {{Form::file('license',['class'=>'form-control', 'required' => 'true'])}}
+                    <span class="error">{{$errors->first('license')}}</span>
                 </div>
               </div>
             </div>
