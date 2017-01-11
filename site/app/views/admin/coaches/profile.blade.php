@@ -183,6 +183,7 @@
 			<th>Employment</th>
 			<th>Start Date</th>
 			<th>End Date</th>
+			<th>Employment Status</th>
 			<th>Status</th>
 			<th>Document</th>
 			<th>#</th>
@@ -194,6 +195,10 @@
 				<td>{{$employment->employment}}</td>
 				<td>{{date('d-m-Y',strtotime($employment->start_date))}}</td>
 				<td>{{date('d-m-Y',strtotime($employment->end_date))}}</td>
+				<td>
+					<?php $emp_status = EmploymentDetails::emp_status(); ?>
+					{{(isset($emp_status[$employment->emp_status]))?$emp_status[$employment->emp_status]:''}}
+				</td>
 				<td>{{$ApprovalStatus[$employment->status]}}</td>
 				<td>@if($employment->contract!='')<a href="{{url($employment->contract)}}" target="_blank">View </a>@endif</td>
 				<td>
