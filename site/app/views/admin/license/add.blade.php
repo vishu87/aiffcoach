@@ -57,8 +57,8 @@
 					<span class="error">{{$errors->first('prerequisite_id')}}</span>
 				</div>
 				<div class="col-md-6 form-group">
-					{{Form::label('Description')}} <span class="error"> *</span>
-					{{Form::textarea('description',(isset($license))?$license->description:'',["class"=>"form-control","required"=>"true"])}}
+					{{Form::label('Description')}}
+					{{Form::textarea('description',(isset($license))?$license->description:'',["class"=>"form-control"])}}
 					<span class="error">{{$errors->first('description')}}</span>
 				</div>
 			</div>

@@ -114,4 +114,9 @@ ALTER TABLE `payment` ADD `amount` INT NOT NULL AFTER `bank_name`;
 ALTER TABLE `license` ADD `prerequisite_id` VARCHAR(20) NOT NULL AFTER `name`;
 
 ALTER TABLE `courses` DROP `prerequisite_id`;
-?>
+
+ALTER TABLE `license`  ADD `duration` INT NOT NULL DEFAULT '0'  AFTER `user_type`;
+
+
+
+

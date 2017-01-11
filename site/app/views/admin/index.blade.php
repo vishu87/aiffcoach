@@ -1,4 +1,4 @@
-<h2 class="page-title">Officials</h2>
+<h2 class="page-title">Coaches</h2>
 <div class="row">
 	<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
 		<div class="dashboard-stat blue-madison">
@@ -10,7 +10,7 @@
 					{{$approved_officials}}
 				</div>
 				<div class="desc">
-					Approved Officials
+					Approved Coaches
 				</div>
 			</div>
 			<a class="more" href="{{url('admin/approvedCoach')}}">
@@ -29,7 +29,7 @@
 					{{$pending_officials}}
 				</div>
 				<div class="desc">
-					Under Process
+					Coaches Under Process
 				</div>
 			</div>
 			<a class="more" href="{{url('admin/pendingCoach')}}">

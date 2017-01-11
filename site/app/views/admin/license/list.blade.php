@@ -25,8 +25,6 @@
 			<tr>
 				<th style="width:50px">SN</th>
 				<th>Name</th>
-				<th>Desccription</th>
-				<th>Authorised By</th>
 				<th>#</th>
 				
 				

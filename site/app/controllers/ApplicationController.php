@@ -3,7 +3,15 @@ class ApplicationController extends BaseController {
     protected $layout = 'layout';
 
     public function ApprovedApplications(){
-        $courses = ["" => "All Courses"] + Course::where('user_type',Auth::user()->manage_official_type)->lists('name','id');
+
+        $courses = array();
+        $courses[""] = "All Courses";
+
+        $courses_get = Course::where('user_type',Auth::user()->manage_official_type)->get();
+        foreach ($courses_get as $course) {
+            $courses[$course->id] = $course->name.', '.$course->venue.', '.date("d-m-Y", strtotime($course->start_date));
+        }
+
         $status = Application::status();
 
         $sql = Application::applications()->where('courses.user_type',Auth::user()->manage_official_type);

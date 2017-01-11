@@ -17,8 +17,8 @@ class LicenseController extends BaseController {
     }
 
     public function insert(){
-        $cre = ['name'=>Input::get('name'),'description'=>Input::get('description'),'authorised_by'=>Input::get('authorised_by')];
-        $rules = ['name'=>'required','description'=>'required','authorised_by'=>'required'];
+        $cre = ['name'=>Input::get('name'),'authorised_by'=>Input::get('authorised_by')];
+        $rules = ['name'=>'required','authorised_by'=>'required'];
 
         $validator = Validator::make($cre,$rules);
         if($validator->passes()){
@@ -46,8 +46,8 @@ class LicenseController extends BaseController {
     }
 
     public function update($id){
-        $cre = ['name'=>Input::get('name'),'description'=>Input::get('description'),'authorised_by'=>Input::get('authorised_by')];
-        $rules = ['name'=>'required','description'=>'required','authorised_by'=>'required'];
+        $cre = ['name'=>Input::get('name'),'authorised_by'=>Input::get('authorised_by')];
+        $rules = ['name'=>'required','authorised_by'=>'required'];
 
         $validator = Validator::make($cre,$rules);
         if($validator->passes()){

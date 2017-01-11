@@ -33,12 +33,12 @@
 				<span class="error">{{$errors->first('name')}}</span>
 			</div>
 			<div class="col-md-3 form-group">
-				{{Form::label('Start Date')}} <span class="error"> *</span>
+				{{Form::label('Course Start Date')}} <span class="error"> *</span>
 				{{Form::text('start_date',(isset($course))?date('d-m-Y',strtotime($course->start_date)):'',["class"=>"form-control datepicker","required"=>"true","date_en"=>'true'])}}
 				<span class="error">{{$errors->first('start_date')}}</span>
 			</div>
 			<div class="col-md-3 form-group">
-				{{Form::label('End Date')}} <span class="error"> *</span>
+				{{Form::label('Course End Date')}} <span class="error"> *</span>
 				{{Form::text('end_date',(isset($course))?date('d-m-Y',strtotime($course->end_date)):'',["class"=>"form-control datepicker","required"=>"true","date_en"=>'true'])}}
 				<span class="error">{{$errors->first('end_date')}}</span>
 			</div>
@@ -72,7 +72,7 @@
 				{{Form::select('instructor[]',$instructors,(isset($selectedInstructors))?$selectedInstructors:'',["class"=>"form-control","multiple"=>"true"])}}
 				<span class="error">{{$errors->first('instructor')}}</span>
 			</div>
-			<div class="col-md-6 form-group">
+			<div class="col-md-6 form-group hidden">
 				{{Form::label('Documents')}}
 				{{Form::file('documents',["class"=>"form-control","pdf"=>'true'])}}
 				<span class="error">{{$errors->first('documents')}}</span>
@@ -83,7 +83,7 @@
 		</div>
 		<div class="row">	
 			<div class="col-md-12 form-group">
-				{{Form::label('Description')}} 
+				<label>Remarks (if any)</label>
 				{{Form::textarea('description',(isset($course))?$course->description:'',["class"=>"form-control"])}}
 				<span class="error">{{$errors->first('description')}}</span>
 			</div>

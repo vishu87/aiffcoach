@@ -72,7 +72,7 @@ class AdminController extends BaseController {
     $sidebar_file = $this->get_sidebar();
 
     $this->layout->sidebar = View::make($sidebar_file,['sidebar'=>'coach','subsidebar'=>1]);
-    $this->layout->main = View::make('admin.coaches.list',['coaches'=>$coaches,"title"=>'Approved Officials', "status" => $status,'flag'=>1,"total" => $total, "page_id"=>$page_id, "max_per_page" => $max_per_page, "total_pages" => $total_pages,'input_string'=>$input_string]);
+    $this->layout->main = View::make('admin.coaches.list',['coaches'=>$coaches,"title"=>'Approved Coaches', "status" => $status,'flag'=>1,"total" => $total, "page_id"=>$page_id, "max_per_page" => $max_per_page, "total_pages" => $total_pages,'input_string'=>$input_string]);
   }
 
   public function pendingCoach(){
@@ -119,7 +119,7 @@ class AdminController extends BaseController {
 
     
     $this->layout->sidebar = View::make($this->get_sidebar(),['sidebar'=>'coach','subsidebar'=>2]);
-    $this->layout->main = View::make('admin.coaches.list',['coaches'=>$coaches,"title"=>'Pending for Approval', "status" => $status,'flag'=>2,"total" => $total, "page_id"=>$page_id, "max_per_page" => $max_per_page, "total_pages" => $total_pages,'input_string'=>$input_string ,"pending_type" => $pending_type]);
+    $this->layout->main = View::make('admin.coaches.list',['coaches'=>$coaches,"title"=>'Coaches Under Process', "status" => $status,'flag'=>2,"total" => $total, "page_id"=>$page_id, "max_per_page" => $max_per_page, "total_pages" => $total_pages,'input_string'=>$input_string ,"pending_type" => $pending_type]);
   }
 
   public function deleteCoachProfile($coach_id){

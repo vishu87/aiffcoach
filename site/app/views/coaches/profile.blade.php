@@ -410,7 +410,7 @@
 							<a type="button" class="btn yellow btn-sm "  href="{{url($data->document)}}" target="_blank"> <i class="fa fa-cube"></i> View</a>
 						@else
 						
-						@endif	
+						@endif
 
 						<button type="button" class="btn red btn-sm delete-div" div-id="document_{{$data->id}}"  action="{{'coach/coachLicense/delete/'.$data->id}}"> <i class="fa fa-remove"></i> Delete</button>
 					</td>
