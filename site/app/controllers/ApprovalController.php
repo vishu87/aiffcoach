@@ -3,14 +3,20 @@ class ApprovalController extends BaseController {
     protected $layout = 'layout';
 
     public function pendingDocument(){
-        $sql = CoachDocument::select('coach_documents.*','documents.name as document_name','coaches.full_name')->leftJoin('documents','coach_documents.document_id','=','documents.id')->leftJoin('coaches','coach_documents.coach_id','=','coaches.id')->join('users','users.coach_id','=','coach_documents.coach_id')->where('users.official_types','LIKE','%'.Auth::user()->manage_official_type.'%')->where('coach_documents.status','=',0);
+        $sql = CoachDocument::select('coach_documents.*','documents.name as document_name','coaches.full_name')->leftJoin('documents','coach_documents.document_id','=','documents.id')->leftJoin('coaches','coach_documents.coach_id','=','coaches.id')->join('users','users.coach_id','=','coach_documents.coach_id')->where('users.official_types','LIKE','%'.Auth::user()->manage_official_type.'%')->where('coach_documents.status','=',0)->orderBy('coach_documents.id','asc');
         if(Input::get("registration_id") != ''){
           $sql = $sql->where('coaches.registration_id','LIKE','%'.Input::get('registration_id').'%');
         }
         if(Input::get("official_name") != ''){
           $sql = $sql->where('coaches.full_name','LIKE','%'.Input::get('official_name').'%');
         }
+        if(Input::get('view')){
+
+        }else{
+
         $sql = $sql->where('coaches.status',1);
+        }
+
         $total = $sql->count();
         $max_per_page = 20;
         $total_pages = ceil($total/$max_per_page);
@@ -43,7 +49,7 @@ class ApprovalController extends BaseController {
         $documents = $sql->skip(($page_id-1)*$max_per_page)->take($max_per_page)->get();
         $ApprovalStatus = Approval::status();
         $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'coach','subsidebar'=>3]);
-        $this->layout->main = View::make('admin.pendingDocuments.list',["docType"=>'pendingDocument' , "documents"=>$documents , 'ApprovalStatus'=>$ApprovalStatus ,"total" => $total, "page_id"=>$page_id, "max_per_page" => $max_per_page, "total_pages" => $total_pages,'input_string'=>$input_string,'link_string'=>$link_string]);
+        $this->layout->main = View::make('admin.pendingDocuments.list',["docType"=>'all' , "documents"=>$documents , 'ApprovalStatus'=>$ApprovalStatus ,"total" => $total, "page_id"=>$page_id, "max_per_page" => $max_per_page, "total_pages" => $total_pages,'input_string'=>$input_string,'link_string'=>$link_string]);
     }
     public function pendingLicenses(){
         $sql = CoachLicense::listing()->join('users','users.coach_id','=','coach_licenses.coach_id')->where('users.official_types','LIKE','%'.Auth::user()->manage_official_type.'%')->where('coach_licenses.status','!=',1);

@@ -71,7 +71,7 @@
 				@if(isset($employment))
         			<div class="form-group">
         				<label>Upload CV (Resume)<span class="error"> *</span></label>
-		        		{{Form::file('cv',["class"=>"form-control" ,"required"=>true,"id"=>"contract","pdf"=>'true'])}}
+		        		{{Form::file('cv',["class"=>"form-control" ,($employment->cv =='')?'required':'',"id"=>"contract","pdf"=>'true'])}}
 			            <span class="error">{{$errors->first('cv')}}</span>
 			            <div class="col-md-4 form-group">
         					@if($employment->cv!='')<a href="{{url($employment->cv)}}" target="_blank">view current</a>@endif
@@ -87,7 +87,7 @@
 				@if(isset($employment))
         			<div class="form-group">
         				<label>Copy of Present Footballing Employment Contract <span class="error"> *</span></label>
-		        		{{Form::file('present_emp_copy',["class"=>"form-control","required"=>true,"id"=>"contract","pdf"=>'true'])}}
+		        		{{Form::file('present_emp_copy',["class"=>"form-control",($employment->contract =='')?'required':'',"id"=>"present_emp","pdf"=>'true'])}}
 			            <span class="error">{{$errors->first('present_emp_copy')}}</span>
 			            <div class="col-md-4 form-group">
         					@if($employment->contract!='')<a href="{{url($employment->contract)}}" target="_blank">view current</a>@endif
@@ -95,7 +95,7 @@
         			</div>
 		        @else
 		        	<label>Copy of Present Footballing Employment Contract <span class="error">*</span></label>
-	        		{{Form::file('present_emp_copy',["class"=>"form-control","required"=>true,"id"=>"contract","pdf"=>'true'])}}
+	        		{{Form::file('present_emp_copy',["class"=>"form-control","required"=>true,"id"=>"present_emp","pdf"=>'true'])}}
 		            <span class="error">{{$errors->first('present_emp_copy')}}</span>
 		        @endif    
 	        </div>

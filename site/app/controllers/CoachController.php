@@ -388,8 +388,7 @@ class CoachController extends BaseController {
             'employment_status' => Input::get('employment_status'),
             'referral_contact' => Input::get('referral_contact'),
             'referral_name' => Input::get('referral_name'),
-            'cv' => Input::file('cv'),
-            'present_emp_copy' => Input::file('present_emp_copy')
+            
         ];
         $rules = [
             'present_emp'=>'required',
@@ -398,8 +397,7 @@ class CoachController extends BaseController {
             'employment_status' => 'required',
             'referral_name' => 'required',
             'referral_contact' =>'required | numeric',
-            'cv' => 'required',
-            'present_emp_copy' => 'required'
+            
         ];
         $validator = Validator::make($cre,$rules);
         if($validator->passes()){
