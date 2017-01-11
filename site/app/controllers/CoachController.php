@@ -3,19 +3,28 @@
 class CoachController extends BaseController {
     protected $layout = 'layout';
     public function dashboard(){
-        $courses =  Course::Active()->where('courses.user_type','LIKE','%'.Auth::user()->official_types.'%')->get();
-        $check = [];
-        foreach ($courses as $course) {
-            $count = Application::where('coach_id',Auth::User()->coach_id)->where('course_id',$course->id)->count();
-            if($count>=1){
-                $check[] = $course->id;
+        
+        $courses = array();
+
+        $courses_get =  Course::Active()->where('courses.user_type','LIKE','%'.Auth::user()->official_types.'%')->get();
+        
+        foreach ($courses_get as $course) {
+            $application = Application::where('coach_id',Auth::User()->coach_id)->where('course_id',$course->id)->first();
+            if($application){
+                $course->application_id = $application->id;
+                $course->application_status = $application->status;
             }
+            $courses[] = $course;
         }
-        $coach_employments = EmploymentDetails::where('coach_id',Auth::user()->coach_id)->get();
-        $coach_licenses = CoachLicense::where('coach_id',Auth::user()->coach_id)->get();
+        
+        $coach_employments = EmploymentDetails::where('coach_id',Auth::user()->coach_id)->count();
+        
+        $coach_licenses = CoachLicense::where('coach_id',Auth::user()->coach_id)->count();
+        
         $coach = Coach::find(Auth::user()->coach_id);
+        
         $this->layout->sidebar = View::make('coaches.sidebar',['sidebar'=>'dashboard']);
-        $this->layout->main = View::make('coaches.dashboard',['courses'=>$courses,'title'=>'Active Courses','check'=>$check, "coach" => $coach , "coach_employments" => $coach_employments , "coach_licenses" => $coach_licenses]);
+        $this->layout->main = View::make('coaches.dashboard',['courses'=>$courses,'title'=>'Active Courses', "coach" => $coach , "coach_employments" => $coach_employments , "coach_licenses" => $coach_licenses]);
     }
     public function contactInformation(){
         $id = Auth::User()->coach_id;
@@ -340,7 +349,7 @@ class CoachController extends BaseController {
             'start_date'=>'required',
             'employment_status' => 'required',
             'referral_contact' => 'required',
-            'referral_name' => 'required' ,
+            'referral_name' => 'required',
             'cv' => 'required',
             'present_emp_copy' => 'required'
         ];        
@@ -354,7 +363,8 @@ class CoachController extends BaseController {
             $employment->referral_name = Input::get('referral_name');
             $employment->referral_contact = Input::get('referral_contact');
             $employment->start_date = date('Y-m-d',strtotime(Input::get('date_since_emp')));
-            $employment->end_date = (Input::get('end_date') != '')?date('Y-m-d',strtotime(Input::get('end_date'))):null;
+            $employment->end_date = (Input::get('end_date') != '') ? date('Y-m-d',strtotime(Input::get('end_date'))) : null;
+
             if(Input::hasFile('present_emp_copy')){
                 $extension = Input::file('present_emp_copy')->getClientOriginalExtension();
                 $doc = "presentemp_".Auth::id().'_'.strtotime("now").'.'.$extension;
@@ -362,12 +372,14 @@ class CoachController extends BaseController {
                 Input::file('present_emp_copy')->move($destinationPath,$doc);
                 $employment->contract = $destinationPath.$doc;
             }
+
             if(Input::hasFile('cv')){
                 $extension = Input::file('cv')->getClientOriginalExtension();
                 $doc = "cv_".Auth::id().'_'.strtotime("now").'.'.$extension;
                 Input::file('cv')->move($destinationPath,$doc);
                 $employment->cv = $destinationPath.$doc;
             }
+
             $employment->save();
             return Redirect::to('coach/employmentDetails')->with('success','Employment Details Added Successfully');    
         }
@@ -384,35 +396,34 @@ class CoachController extends BaseController {
         $cre = [
             'present_emp'=>Input::get('present_emp'),
             'start_date'=>Input::get('date_since_emp'),
-            'end_date'=>Input::get('end_date'),
             'employment_status' => Input::get('employment_status'),
             'referral_contact' => Input::get('referral_contact'),
             'referral_name' => Input::get('referral_name'),
-            
         ];
         $rules = [
             'present_emp'=>'required',
             'start_date'=>'required',
-            'end_date'=>'required' , 
             'employment_status' => 'required',
+            'referral_contact' =>'required',
             'referral_name' => 'required',
-            'referral_contact' =>'required | numeric',
-            
         ];
         $validator = Validator::make($cre,$rules);
         if($validator->passes()){
+
             $destinationPath = 'coaches-doc/';
             $updateEmployment = EmploymentDetails::find($id);
             $updateEmployment->employment = Input::get('present_emp');
             $updateEmployment->emp_status = Input::get('employment_status');
             $updateEmployment->start_date = date('Y-m-d',strtotime(Input::get('date_since_emp')));
             $updateEmployment->end_date  = (Input::get('end_date') != '')?date('Y-m-d',strtotime(Input::get('end_date'))):null;
+            
             if(Input::hasFile('present_emp_copy')){
                 $extension = Input::file('present_emp_copy')->getClientOriginalExtension();
                 $doc = "presentemp_".Auth::id().'_'.strtotime("now").'.'.$extension;
                 Input::file('present_emp_copy')->move($destinationPath,$doc);
                 $updateEmployment->contract = $destinationPath.$doc;
             }
+            
             if(Input::hasFile('cv')){
                 $extension = Input::file('cv')->getClientOriginalExtension();
                 $doc = "cv_".Auth::id().'_'.strtotime("now").'.'.$extension;
@@ -422,11 +433,13 @@ class CoachController extends BaseController {
 
             $updateEmployment->referral_name = Input::get('referral_name');
             $updateEmployment->referral_contact = Input::get('referral_contact');
-            $updateEmployment->save();            
+            $updateEmployment->save();  
+
             return Redirect::back()->with('success','Details Updated Successfully');    
         }
         return Redirect::back()->withErrors($validator)->withInput()->with('failure','All Fields Are Not Field!');
     }
+    
     public function deleteEmployment($id){
         $count = EmploymentDetails::where('id',$id)->count();
         if($count<1){

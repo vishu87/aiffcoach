@@ -30,12 +30,11 @@
 					<th style="width:50px">SN</th>
 					<th>Employment</th>
 					<th>Status</th>
-					<th>Referral</th>
+					<th>Referral Details</th>
 					<th>Start Date</th>
 					<th>End Date</th>
-					<th>Contract</th>
-					<th>Approval Status</th>
-					<th>#</th>
+					<th>Documents</th>
+					<th>Manage</th>
 				</tr>
 			</thead>
 			<?php $count = 1;?>

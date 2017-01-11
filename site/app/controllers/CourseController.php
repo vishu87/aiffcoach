@@ -20,7 +20,7 @@ class CourseController extends BaseController {
     public function inactive(){
         $courses =  Course::Inactive()->where('courses.user_type',Auth::user()->manage_official_type)->get();
         $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'courses','subsidebar'=>3]);
-        $this->layout->main = View::make('admin.courses.list',['courses'=>$courses,'title'=>'Inactive Courses']);
+        $this->layout->main = View::make('admin.courses.list',['courses'=>$courses,'title'=>'Past Courses']);
     }
 
     public function add(){
@@ -189,6 +189,6 @@ class CourseController extends BaseController {
         $user_type = explode(',',Auth::user()->official_types);
         $courses =  Course::Inactive()->whereIn('courses.user_type',$user_type)->get();
         $this->layout->sidebar = View::make('coaches.sidebar',['sidebar'=>5,'subsidebar'=>2]);
-        $this->layout->main = View::make('coaches.courses.list',['courses'=>$courses,'title'=>'Inactive Courses','status'=>'inactive']);
+        $this->layout->main = View::make('coaches.courses.list',['courses'=>$courses,'title'=>'Past Courses','status'=>'inactive']);
     }
 }

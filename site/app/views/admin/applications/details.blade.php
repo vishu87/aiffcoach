@@ -13,7 +13,7 @@
 @endif
 <div class="row">
 	<div class="col-md-6">
-		<h3 class="page-title">Official Name - {{$application->full_name}}</h3>
+		<h3 class="page-title">Applicant - {{$application->full_name}}</h3>
 	</div>
 	<div class="col-md-6">
 		<h3 class="page-title page-title2">Current Status - {{$ApplicationStatus[$application->status]}}</h3>
@@ -28,45 +28,38 @@
 					<span>Course</span>
 					{{$course->name}}
 				</div>
-				<div class="col-md-6">
-					<span>License</span>
-					{{$application->license_name}}
-				</div>
 			</div>
 
 			<div class="row detail">
 				<div class="col-md-4">
-					<span>Start Date</span>
+					<span>Course Start Date</span>
 					{{date('d-m-Y',strtotime($course->start_date))}}
 				</div>
 				<div class="col-md-4">
-					<span>End Date</span>
+					<span>Course End Date</span>
 					{{date('d-m-Y',strtotime($course->end_date))}}
+				</div>
+				<div class="col-md-4">
+					<span>Registration Start Date</span>
+					{{date('d-m-Y',strtotime($course->registration_start))}}
+				</div>
+				<div class="col-md-4">
+					<span>Registration End Date</span>
+					{{date('d-m-Y',strtotime($course->registration_end))}}
 				</div>
 				<div class="col-md-4">
 					<span>Venue</span>
 					{{$course->venue}}
 				</div>
-			</div>
-
-			<div class="row detail">
 				<div class="col-md-4">
 					<span>Fees</span>
 					{{$course->fees}} Rs
-				</div>
-				<div class="col-md-4">
-					<span>Attachments</span>
-					@if(!empty($course->documents))
-						<a href="{{url($course->documents)}}" target="_blank" style="font-size:16px;">View document</a>
-					@else
-					N/A
-					@endif
 				</div>
 			</div>
 
 			<div class="row detail">
 				<div class="col-md-6">
-					<span>Description</span>
+					<span>Remarks</span>
 					{{$course->description}}
 				</div>
 			</div>

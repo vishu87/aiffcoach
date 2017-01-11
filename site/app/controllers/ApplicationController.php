@@ -61,16 +61,16 @@ class ApplicationController extends BaseController {
 
     /************* Coaches methods return here********/
     public function applied(){
-        $applications =  Application::select('applications.status','application_result.status as finalResult','applications.remarks','applications.id as application_id','courses.fees','courses.name as course_name','courses.end_date','license.id as license_id','license.name as license_name','license.authorised_by','license.description')
+
+        $applications =  Application::select('applications.status','application_result.status as finalResult','applications.remarks','applications.id as application_id','courses.fees','courses.name as course_name','courses.venue', 'applications.created_at', 'courses.id as course_id','courses.venue')
             ->join('courses','applications.course_id','=','courses.id')
-            ->join('license','courses.license_id','=','license.id')
             ->leftJoin('application_result','applications.id','=','application_result.application_id')
             ->where('applications.coach_id',Auth::User()->coach_id)
             ->get();
         $status = Application::status();
         $resultStatus = Result::status();
         $this->layout->sidebar = View::make('coaches.sidebar',['sidebar'=>'4','subsidebar'=>1]);
-        $this->layout->main = View::make('coaches.applications.list',['resultStatus'=>$resultStatus,'status'=>$status,"applications"=>$applications,'title'=>'Applied Applications']);
+        $this->layout->main = View::make('coaches.applications.list',['resultStatus'=>$resultStatus,'status'=>$status,"applications"=>$applications,'title'=>'My Applications']);
     }
 
     public function viewMarks($application_id){
@@ -123,7 +123,7 @@ class ApplicationController extends BaseController {
         $is_applied = Application::where('course_id',$course_id)->where('coach_id',Auth::user()->coach_id)->first();
 
         if($course->prerequisite_id != '')
-        $prerequisites = explode(',',$course->prerequisite_id);
+            $prerequisites = explode(',',$course->prerequisite_id);
         else $prerequisites = array();
 
         $coach_licenses = array();
@@ -143,6 +143,8 @@ class ApplicationController extends BaseController {
         $check_date_year = date("Y",strtotime($course->start_date));
         $check_date_year = $check_date_year - 2;
         $check_date = $check_date_year.'-'.date("m",strtotime($course->start_date)).'-'.date("d",strtotime($course->start_date));
+
+        $today = date("Y-m-d");
 
         $this->layout->sidebar = View::make('coaches.sidebar',['sidebar'=>$tab,'subsidebar'=>$tab_sub]);
 

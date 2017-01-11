@@ -12,13 +12,13 @@
        	</div>
 @endif
 
-@if(sizeof($coach_employments) < 1)
+@if($coach_employments == 0)
 	<div class="alert alert-danger">
 		Your profile doesn't have any employment details. Please add at least one employment details to get approved by AIFF.<br>To add new employement <a href="{{url('coach/addNewEmployment')}}">Click Here</a>
 	</div>
 @endif
 
-@if(sizeof($coach_licenses) < 1)
+@if($coach_licenses == 0)
 	<div class="alert alert-danger">
 		Your profile doesn't have any license details. Please add at least one license to get approved by AIFF.<br>
 		To add license <a href="{{url('coach/coachLicense')}}">Click here</a>
@@ -52,10 +52,19 @@
 							<td>{{$data->registration_end}}</td>
 							<td>
 								@if(!isset($status))
-									@if(in_array($data->id,$check))
-										<a type="button" class="btn blue btn-sm " div-id="activity_{{$data->id}}"  href="{{url('coach/courses/details/'.$data->id)}}">Already Applied</button>
+									@if(isset($data->application_id))
+										<a type="button" class="btn green btn-sm " href="{{url('control/applications/details/'.$data->application_id)}}">View Application</a>
+										@if($data->application_status == 1)
+											<span class="badge badge-danger badge-roundless"> Please fill payment details </span>
+										@endif
+										@if($data->application_status == 4)
+											<span class="badge badge-danger badge-roundless"> Your application is referred back </span>
+										@endif
+										@if($data->application_status == 5)
+											<span class="badge badge-danger badge-roundless"> Your application is rejected </span>
+										@endif
 									@else
-										<a type="button" class="btn blue btn-sm " div-id="activity_{{$data->id}}"  href="{{url('coach/courses/details/'.$data->id)}}">Apply</button>
+										<a type="button" class="btn default btn-sm " href="{{url('coach/courses/details/'.$data->id)}}">View Course</button>
 									@endif
 								@endif	
 							</td>

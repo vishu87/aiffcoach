@@ -18,7 +18,7 @@
 						Payment has been confirmed
 					</div>
 				@endif
-				<div class="col-md-4">
+				<div class="col-md-12">
 					<span>Remarks</span>
 					<div class="log-remarks">
 						{{$log->remarks}}
@@ -28,7 +28,7 @@
 		@else
 			<div class="row">
 				@if($log->status == 1)
-					<div class="col-md-12" style="margin-bottom:10px; font-weight:bold; font-size:13px;">
+					<div class="col-md-12" style="margin-bottom:10px; font-weight:bold; font-size:13px; color: #F00">
 						Please fill the payment details and confirm the payment by submitting this form
 					</div>
 				@endif

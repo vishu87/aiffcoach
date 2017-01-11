@@ -1,17 +1,16 @@
 <tr id="activity_{{$data->application_id}}">
 	<td>{{$count}}</td>
-	<td>{{$data->course_name}}</td>
-	<td>{{$data->license_name}}</td>
-	<td>{{($data->authorised_by==1)?'AFC':'AIFF'}}</td>
-	<td>{{$data->end_date}}</td>
-	<td>{{$data->fees}}</td>
-	@if(!isset($value))
-
-	<td>{{($data->status==1)?'Application Accepted':$data->remarks}}</td>
-	<td>{{(isset($status[$data->status]))?$status[$data->status]:''}}</td>
-	<td>{{($data->finalResult!='')?$resultStatus[$data->finalResult]:''}}</td>
-	@endif	
+	<td>{{$data->course_name}}, {{$data->venue}}</td>
+	<td style="width: 100px">{{date("d-m-Y",strtotime($data->created_at))}}</td>
+	<td>{{$data->fees}} Rs</td>
 	<td>
+		{{(isset($status[$data->status]))?$status[$data->status]:''}}
+		@if($data->status == 1)
+			<span class="badge badge-danger badge-roundless"> Please fill payment details </span>
+		@endif
+	</td>
+	<td style="width: 200px">
 		<a class="btn blue btn-sm" href="{{url('control/applications/details/'.$data->application_id)}}">View</a>
+		<a class="btn default btn-sm" href="{{url('coach/courses/details/'.$data->course_id)}}">View Course</a>
 	</td>
 </tr>

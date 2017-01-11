@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-md-8">
-        <h3 class="page-title">Change Account Login Password</h3>
+        <h3 class="page-title">Change Password</h3>
     </div>
 </div>
 @if(Session::has('success'))
