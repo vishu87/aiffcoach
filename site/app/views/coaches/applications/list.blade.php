@@ -23,17 +23,11 @@
 			<thead>
 				<tr>
 					<th style="width:50px">SN</th>
-					<th>Course Name</th>
-					<th>License Name</th>
-					<th>Authorised By</th>
-					<th>Last Date</th>
+					<th>Course</th>
+					<th>Application Date</th>
 					<th style="width:50px">Fees</th>
-					@if(!isset($value))
-					<th>Remark</th>
 					<th>Application Status</th>
-					@endif
-					<th>Result Status</th>
-					<th style="width:200px">#</th>
+					<th style="width:200px">Manage</th>
 				</tr>
 			</thead>
 			<tbody id="applications">

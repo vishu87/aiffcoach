@@ -19,40 +19,36 @@
 </div>
 
 <div class="course-details">
+
 	<div class="row detail">
-		<div class="col-md-6">
-			<span>License</span>
-			{{$course->license_name}}
+		<div class="col-md-3">
+			<span>Course Start Date</span>
+			{{date('d-m-Y',strtotime($course->start_date))}}
 		</div>
+		<div class="col-md-3">
+			<span>Course End Date</span>
+			{{date('d-m-Y',strtotime($course->end_date))}}
+		</div>
+
+		<div class="col-md-3">
+			<span>Registration Start Date</span>
+			{{date('d-m-Y',strtotime($course->registration_start))}}
+		</div>
+		<div class="col-md-3">
+			<span>Registration End Date</span>
+			{{date('d-m-Y',strtotime($course->registration_end))}}
+		</div>
+		
 	</div>
 
 	<div class="row detail">
-		<div class="col-md-4">
-			<span>Start Date</span>
-			{{date('d-m-Y',strtotime($course->start_date))}}
-		</div>
-		<div class="col-md-4">
-			<span>End Date</span>
-			{{date('d-m-Y',strtotime($course->end_date))}}
-		</div>
-		<div class="col-md-4">
+		<div class="col-md-3">
 			<span>Venue</span>
 			{{$course->venue}}
 		</div>
-	</div>
-
-	<div class="row detail">
-		<div class="col-md-4">
+		<div class="col-md-3">
 			<span>Fees</span>
 			{{$course->fees}} Rs
-		</div>
-		<div class="col-md-4">
-			<span>Attachments</span>
-			@if(!empty($course->documents))
-				<a href="{{url($course->documents)}}" target="_blank" style="font-size:16px;">View document</a>
-			@else
-			N/A
-			@endif
 		</div>
 	</div>
 
@@ -85,8 +81,8 @@
 	</div>
 
 </div>
-
-<div class="row">
+<?php $today = date("Y-m-d"); ?>
+<div class="">
 	@if($is_applied)
 		@if(!Session::has('success'))
 			<div class="alert alert-danger">
@@ -94,21 +90,27 @@
 			</div>
 		@endif
 		
-	@else
-	{{Form::open(array('url'=>'coach/courses/apply/'.$course->id,'method'=>'post','files'=>'true','class'=>"check_form"))}}
-        <div class="col-md-6">
-          <div class="">
-            <label>Remarks </label>
-            {{Form::text('remarks','',["class"=>"form-control"])}}
-          </div>
-          <div>
-            <label>Document</label>
-            {{Form::file('document',["class"=>'form-control'])}}
-          </div>
-        </div>
-        <div class="col-md-12">
-          {{Form::submit('Apply for course',["class"=>"btn green","style"=>"margin-top:20px"])}}
-        </div>
-      {{Form::close()}}
+	@elseif($course->registration_end > $today)
+		{{Form::open(array('url'=>'coach/courses/apply/'.$course->id,'method'=>'post','files'=>'true','class'=>"check_form"))}}
+	        <div class="row">
+	        	<div class="col-md-6">
+		          <div class="">
+		            <label>Remarks </label>
+		            {{Form::text('remarks','',["class"=>"form-control"])}}
+		          </div>
+		          <div>
+		            <label>Document</label>
+		            {{Form::file('document',["class"=>'form-control'])}}
+		          </div>
+		        </div>
+		        <div class="col-md-12">
+		          {{Form::submit('Apply for course',["class"=>"btn green","style"=>"margin-top:20px"])}}
+		        </div>
+	        </div>
+      	{{Form::close()}}
+    @else
+    	<div class="alert alert-danger">
+			Registrations are over
+		</div>
     @endif
 </div>

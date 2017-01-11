@@ -16,7 +16,7 @@
     <li class="@if($sidebar == 'profile' ) active @endif" >
       <a href="{{url('/coach/personalInformation')}}">
         <i class="fa fa-user"></i>
-        <span class="title">Profile</span>
+        <span class="title">My Profile</span>
         <span class="selected"></span>
       </a>
     </li>
@@ -45,13 +45,13 @@
         <li class="@if($sidebar == 5 && $subsidebar == 1 ) active @endif">
           <a href="{{url('coach/courses/active')}}">
           <i class="fa fa-chevron-right"></i>
-          Active</a>
+          Active Courses</a>
         </li>
 
         <li class="@if($sidebar == 5 && $subsidebar == 2 ) active @endif">
           <a href="{{url('coach/courses/inactive')}}">
           <i class="fa fa-chevron-right"></i>
-          Inactive</a>
+          Past Courses</a>
         </li>
       </ul>
     </li>
@@ -65,7 +65,7 @@
         <li class="@if($sidebar == 4 && $subsidebar == 1 ) active @endif" style="display:inherit">
           <a href="{{url('coach/applications/applied')}}">
           <i class="fa fa-chevron-right"></i>
-          Applied</a>
+          My Applications</a>
         </li>
         
         <!-- <li class="@if($sidebar == 4 && $subsidebar == 2 ) active @endif">

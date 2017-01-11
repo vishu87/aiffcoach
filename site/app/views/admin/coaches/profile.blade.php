@@ -73,7 +73,7 @@
 			<th>Expiry Date</th>
 			<th>Document</th>
 			<th>Status</th>
-			<th>#</th>
+			<th style="display: none">#</th>
 		</tr>
 		<?php $count=1;?>
 		@foreach($documents as $document)
@@ -81,11 +81,14 @@
 				<td>{{$count}}</td>
 				<td>{{$document->document_name}}</td>
 				<td>{{$document->number}}</td>
-				<td>{{date('d-m-Y',strtotime($document->expiry_date))}}</td>
-				<td>@if($document->file!='')<a href="{{url($document->file)}}" target="_blank">View </a>@endif
+				<td>{{($document->expiry_date)?date('d-m-Y',strtotime($document->expiry_date)):''}}</td>
+				<td>
+					@if($document->file!='')
+						<a href="{{url($document->file)}}" target="_blank">View </a>
+					@endif
 				</td>
 				<td>{{isset($ApprovalStatus[$document->status])?$ApprovalStatus[$document->status]:''}}</td>
-				<td><button  div-id="{{'approve_list_'.$count_main}}" class="btn btn-xs blue showApprovals"><i class="fa fa-angle-double-right"></i> Details</button></td>
+				<td style="display: none"><button  div-id="{{'approve_list_'.$count_main}}" class="btn btn-xs blue showApprovals"><i class="fa fa-angle-double-right"></i> Details</button></td>
 			</tr>
 			<tr id="{{'approve_list_'.$count_main++}}" style="display:none;">
 				<td colspan="7">
@@ -122,11 +125,10 @@
 			<th style="width:50px;">SN</th>
 			<th>License Name</th>
 			<th>License Number</th>
-			<th>Start Date</th>
-			<th>End Date</th>
+			<th>Issue Date</th>
 			<th>Document</th>
 			<th>Status</th>
-			<th>#</th>
+			<th style="display: none">#</th>
 		</tr>
 		<?php $count=1;?>
 		@foreach($coachLicense as $license)
@@ -135,10 +137,9 @@
 				<td>{{$license->license_name}}</td>
 				<td>{{$license->number}}</td>
 				<td>{{date('d-m-Y',strtotime($license->start_date))}}</td>
-				<td>@if($license->end_date){{date('d-m-Y',strtotime($license->end_date))}}@endif</td>
 				<td>@if($license->document!='')<a href="{{url($license->document)}}" target="_blank">View </a>@endif</td>
 				<td>{{$ApprovalStatus[$license->status]}}</td>
-				<td><button  div-id="{{'approve_list_'.$count_main}}" class="btn btn-xs blue showApprovals"><i class="fa fa-angle-double-right"></i> Details</button></td>
+				<td style="display: none"><button  div-id="{{'approve_list_'.$count_main}}" class="btn btn-xs blue showApprovals"><i class="fa fa-angle-double-right"></i> Details</button></td>
 			</tr>
 			<tr id="{{'approve_list_'.$count_main++}}" style="display:none;">
 				<td colspan="8">
@@ -186,7 +187,7 @@
 			<th>Employment Status</th>
 			<th>Status</th>
 			<th>Document</th>
-			<th>#</th>
+			<th style="display: none">#</th>
 		</tr>
 		<?php $count=1;?>
 		@foreach($employmentDetails as $employment)
@@ -201,7 +202,7 @@
 				</td>
 				<td>{{$ApprovalStatus[$employment->status]}}</td>
 				<td>@if($employment->contract!='')<a href="{{url($employment->contract)}}" target="_blank">View </a>@endif</td>
-				<td>
+				<td style="display: none">
 					<button  div-id="{{'approve_list_'.$count_main}}" class="btn btn-xs blue showApprovals"><i class="fa fa-angle-double-right"></i> Details</button></td>
 				</td>
 			</tr>
@@ -231,7 +232,7 @@
 	No employment details found
 </div>
 @endif
-<div>
+<div style="display: none">
 	<h3>Activity Details</h3>
 </div>
 @if(sizeof($activities) > 0)
@@ -282,8 +283,8 @@
 	</table> 
 </div>
 @else
-<div class="alert alert-warning">
-	No Activity found
+<div class="alert alert-warning" style="display: none">
+	No Activities found
 </div>
 @endif
 
@@ -301,30 +302,20 @@
 		<tr>
 			<th style="width:50px;">SN</th>
 			<th>Course Name</th>
-			<th>Course License</th>
-			<th>Prerequisite</th>
-			<th>End Date</th>
-			<th>#</th>
+			<th>Venue</th>
+			<th>Application Date</th>
+			<th>Manage</th>
 		</tr>
 		<?php $count=1;?>
 		@foreach($courses as $course)
 			<tr>	
 				<td>{{$count}}</td>
 				<td>{{$course->course_name}}</td>
-				<td>{{$course->license_name}}</td>
+				<td>{{$course->venue}}</td>
+				<td>{{date('d-m-Y',strtotime($course->created_at))}}</td>
 				<td>
-					<?php if($course->prerequisite_id!=''){
-						   $prerequisites = explode(',',$course->prerequisite_id);	
-						   foreach ($prerequisites as $prerequisite) {
-						   		echo $licenseList[$prerequisite].', ';
-						   }
-						}
-						else{
-
-							}?>
+					<a href="{{url('control/applications/details/'.$course->id)}}" class="btn btn-xs blue">View</a>
 				</td>
-				<td>{{date('d-m-Y',strtotime($course->end_date))}}</td>
-				<td>@if($course->documents!='')<a href="{{url($course->documents)}}" target="_blank">View </a>@endif</td>
 			</tr>
 			<?php $count++?>
 		@endforeach

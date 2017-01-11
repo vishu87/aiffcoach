@@ -23,11 +23,12 @@
 			<tr>
 				<th style="width:50px">SN</th>
 				<th>Course Name</th>
-				<th>License Name</th>
-				<th>Authorised By</th>
-				<th>Last Date</th>
+				<th>Venue</th>
+				<th>Course Start Date</th>
+				<th>Registration Start Date</th>
+				<th>Registration End Date</th>
 				<th>Fees</th>
-				<th>#</th>
+				<th>Manage</th>
 				
 			</tr></thead>
 			<tbody id="courses">

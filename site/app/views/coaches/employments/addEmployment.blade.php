@@ -61,7 +61,7 @@
 			<div class="col-md-6">
 		      	<div class="form-group ">
 		        	<label>End Date</label>
-		            {{Form::text('end_date',(isset($employment))?date('d-m-Y',strtotime($employment->end_date)):'',['class'=>"form-control datepicker ","date_en"=>'true'])}}
+		            {{Form::text('end_date',(isset($employment))?($employment->end_date)?date('d-m-Y',strtotime($employment->end_date)):'':'',['class'=>"form-control datepicker ","date_en"=>'true'])}}
 		            <span class="error">{{$errors->first('date_since_emp')}}</span>
 		      	</div>
 		    </div>

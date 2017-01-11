@@ -252,7 +252,7 @@
     <div class="portlet-body form">
       	<div class="form-body">
             <div class="">
-                {{ Form::open(array('url' =>'coach/addDocument/add',"method"=>"POST","files"=>'true','class'=>'form check_form check_form_2')) }}
+                {{ Form::open(array('url' =>'coach/addDocument/add', "method"=>"POST","files"=>'true','class'=>'form check_form check_form_2')) }}
 	            <div class="row" >
 					<div class="col-md-4 form-group" id="document-div">
 						<label>Select Document</label><span class="error">*</span>
@@ -298,8 +298,8 @@
 				<th style="width:50px">SN</th>
 				<th>Document Name</th>
 				<th>Document Number</th>
-				<th>Start Date</th>
-				<th>Status</th>
+				<th>Issue Date</th>
+				
 				<th>#</th>
 			</tr></thead>
 			<tbody id="documents">
@@ -309,12 +309,12 @@
 						<td>{{$count}}</td>
 						<td>{{($data->document_id==0)?$data->name:$document_types[$data->document_id]}}</td>
 						<td>{{$data->number}}</td>
-						<td>{{date('d-m-Y',strtotime($data->expiry_date))}}</td>
-						<td>{{$ApprovalStatus[$data->status]}}</td>
+						<td>{{($data->start_date)?date('d-m-Y',strtotime($data->start_date)):''}}</td>
+						
 						<td>
 							<a type="button" class="btn yellow btn-sm "  href="{{url($data->file)}}" target="_blank"> View</a>
 
-							<button  div-id="{{'approve_list_'.$count_main}}" class="btn btn-sm blue showApprovals"><i class="fa fa-angle-double-right"></i> Details</button>
+							<button  div-id="{{'approve_list_'.$count_main}}" class="btn btn-sm blue showApprovals hidden"><i class="fa fa-angle-double-right"></i> Details</button>
 
 							@if($data->status != 1)
 								<button type="button" class="btn red btn-sm delete-div" div-id="document_{{$data->id}}"  action="{{'coach/addDocument/delete/'.$data->id}}"> Delete</button>
@@ -345,7 +345,7 @@
 @if($profileType==6)
   	<div class="form-body">
         <div class="">
-            {{ Form::open(array('url' =>'coach/coachLicense/add',"method"=>"POST","files"=>'true','class'=>'form check_form')) }}
+            {{ Form::open(array('url' =>'coach/coachLicense/add', "method"=>"POST","files"=>'true','class'=>'form check_form')) }}
 	        <div class="row">
 	        	<div class="col-md-6 form-group"><label class="form-label">License Name <span class="error">*</span></label>
 		           {{Form::select('license_id',$licenses,'',["class"=>"form-control","required"=>"true"])}}
@@ -373,8 +373,8 @@
 		          </div>
 		        </div>
             	<div class="col-md-6 form-group clear">
-            		<label class="form-label">Document Copy</label><br>
-            		{{Form::file('document',["class"=>"form-control"])}}
+            		<label class="form-label">Document Copy <span class="error">*</span></label><br>
+            		{{Form::file('document',["class"=>"form-control",'required'=>'true'])}}
             	</div>	
             </div>
         </div>
@@ -393,7 +393,7 @@
 					<th>License Number</th>
 					<th>Start Date</th>
 					<th>End Date</th>
-					<th>#</th>
+					<th>Manage</th>
 				</tr>
 			</thead>
 			<tbody id="licenses">
@@ -404,15 +404,15 @@
 					<td>{{$data->license_name}}</td>
 					<td>{{$data->number}}</td>
 					<td>{{date('d-m-Y',strtotime($data->start_date))}}</td>
-					<td>{{date('d-m-Y',strtotime($data->end_date))}}</td>
+					<td>{{($data->end_date)?date('d-m-Y',strtotime($data->end_date)):''}}</td>
 					<td>
-						@if($data->document!='')
+						@if($data->document != '')
 							<a type="button" class="btn yellow btn-sm "  href="{{url($data->document)}}" target="_blank"> <i class="fa fa-cube"></i> View</a>
-						@else
-						
 						@endif
 
-						<button type="button" class="btn red btn-sm delete-div" div-id="document_{{$data->id}}"  action="{{'coach/coachLicense/delete/'.$data->id}}"> <i class="fa fa-remove"></i> Delete</button>
+						@if($data->status == 0)
+							<button type="button" class="btn red btn-sm delete-div" div-id="document_{{$data->id}}"  action="{{'coach/coachLicense/delete/'.$data->id}}"> <i class="fa fa-remove"></i> Delete</button>
+						@endif
 					</td>
 				</tr>
 				<?php $count++ ?>

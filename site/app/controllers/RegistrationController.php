@@ -279,16 +279,18 @@ class RegistrationController extends BaseController {
             $coach_license->save();
 
             //passport Details
-            if($data3['passport'] != ''){
-                $document = new CoachDocument;
-                $document->coach_id = $coach->id;
-                $document->document_id = 1; // for passport
-                $document->name = '';
-                $document->status = 0;
-                $document->file = (isset($data3["passport_proof"]))?$data3["passport_proof"]:'';
-                $document->number = (isset($data3['passport']))?$data3['passport']:'';
-                $document->expiry_date = date('Y-m-d',strtotime($data3["passport_expiry"]));
-                $document->save();
+            if(isset($data3["passport_proof"])){
+                if($data3['passport_proof'] != '' && $data3['passport'] != '' && $data3['passport_expiry'] != ''){
+                    $document = new CoachDocument;
+                    $document->coach_id = $coach->id;
+                    $document->document_id = 1; // for passport
+                    $document->name = '';
+                    $document->status = 0;
+                    $document->file = (isset($data3["passport_proof"]))?$data3["passport_proof"]:'';
+                    $document->number = (isset($data3['passport']))?$data3['passport']:'';
+                    $document->expiry_date = date('Y-m-d',strtotime($data3["passport_expiry"]));
+                    $document->save();
+                }
             }
 
             //birth proof documents

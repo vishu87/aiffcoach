@@ -5,15 +5,20 @@
 	<td>{{$data->referral_name.'<br>'.$data->referral_contact}}</td>
 	<td>{{date('d-m-Y',strtotime($data->start_date))}}</td>
 	<td>
-		@if(date('Y',strtotime($data->end_date))!=1970)
+		@if($data->end_date)
 			{{date('d-m-Y',strtotime($data->end_date))}}
-		@else
 		@endif
 	</td>
-	<td>@if($data->contract!='')<a href="{{url($data->contract)}}" target="_blank">view</a>@endif</td>
-	<td>{{$employmentStatus[$data->status]}}</td>
-	<td id="emp_{{$data->id}}">
+	<td>
+		@if($data->contract!='')
+			Contract - <a href="{{url($data->contract)}}" target="_blank">view</a> <br>
+		@endif
+		@if($data->cv!='')
+			CV - <a href="{{url($data->cv)}}" target="_blank">view</a>
+		@endif
+	</td>
+	<td id="emp_{{$data->id}}" style="width: 120px">
 		<a type="button" class="btn yellow btn-sm" href="{{url('coach/editEmployment/'.$data->id)}}"  <i class="fa fa-edit"></i> Edit</a>
-		<button type="button" class="btn red delete-div btn-sm" div-id="emp_{{$data->id}}"  action="{{'coach/deleteEmployment/'.$data->id}}"> <i class="fa fa-remove"></i> Delete</button>
+		<button type="button" class="btn red delete-div btn-sm" div-id="emp_{{$data->id}}"  action="{{'coach/deleteEmployment/'.$data->id}}"> <i class="fa fa-remove"></i></button>
 	</td>
 </tr>
