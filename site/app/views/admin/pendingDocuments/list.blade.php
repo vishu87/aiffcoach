@@ -147,8 +147,7 @@
 					<th>Coach Name</th>
 					<th>doc id</th>
 					<th>Document Name</th>
-					<th>Document Number</th>
-					<th>Expiry Date</th>
+					<th>Start Date / Expiry Date</th>
 					<th>Document</th>
 					<th>Status</th>
 					<th>#</th>
@@ -162,7 +161,16 @@
 						</td>
 						<td>{{$document->id}}</td>
 						<td>{{$document->document_name}}</td>
-						<td>{{$document->number}}</td>
+						<td>
+							
+							{{Form::open(["url"=>'/correctData/'.$document->id,"method"=>'post'])}}
+								start_date {{Form::text('start_date',($document->start_date)?date('d-m-Y',strtotime($document->start_date)):'',["class"=>"datepicker"])}}
+								<br>
+								expiry_date {{Form::text('expiry_date',($document->expiry_date)?date('d-m-Y',strtotime($document->expiry_date)):'',["class"=>"datepicker"])}}
+								<br>
+								<button type="submit">Submit</button>
+							{{Form::close()}}
+						</td>
 						<td>@if($document->document_id != 2) {{date('d-m-Y',strtotime($document->expiry_date))}} @endif </td>
 						<td>@if($document->file!='')<a href="{{url($document->file)}}" target="_blank">View </a>@endif
 						</td>
