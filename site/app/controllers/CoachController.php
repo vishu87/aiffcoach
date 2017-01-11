@@ -103,7 +103,7 @@ class CoachController extends BaseController {
         $documents = CoachDocument::where('coach_id',$id)->get();
         $document_types = [''=>"select"]+CoachDocument::DocTypes();
         $this->layout->sidebar = View::make('coaches.sidebar',["sidebar"=>'profile','subsidebar'=>1]);
-        $this->layout->main = View::make('coaches.profile',['documents'=>$documents,'document_types'=>$document_types,"profileType"=>5,'title'=>'Add Documents' , "ApprovalStatus"=>$ApprovalStatus]);
+        $this->layout->main = View::make('coaches.profile',['documents'=>$documents,'document_types'=>$document_types,"profileType"=>5,'title'=>'Documents' , "ApprovalStatus"=>$ApprovalStatus]);
     }
 
     public function addDocument(){
@@ -112,13 +112,11 @@ class CoachController extends BaseController {
             "document"=>Input::get('document'),
             "file"=>Input::file('file'),
             "number" => Input::get('number'),
-            
         ];
         $rules = [
             "document"=>'required',
             "file"=>'required',
             "number" => 'required',
-            
         ];
         $validator = Validator::make($cre,$rules);
         if($validator->passes()){
@@ -127,14 +125,18 @@ class CoachController extends BaseController {
             $document->document_id = Input::get('document');
             $document->number = Input::get('number');
             $document->remarks = Input::get('remarks');
-            $document->expiry_date = date('Y-m-d',strtotime(Input::get('expiry')));
+            
+            $document->start_date = (Input::get('start_date') != '')?date('Y-m-d',strtotime(Input::get('start_date'))):null;
+            $document->expiry_date = (Input::get('expiry') != '')?date('Y-m-d',strtotime(Input::get('expiry'))):null;
+
             if(Input::has('doc_name')){
                 $document->name = Input::get('doc_name');
             }
+
             $destinationPath= 'coaches-doc/';
             if(Input::hasFile('file')){
                 $extension = Input::file('file')->getClientOriginalExtension();
-                $doc = "file_".Auth::id().'_'.str_replace(' ','-',Input::file('file')->getClientOriginalName());
+                $doc = "file_".Auth::id().'_'.strtotime("now").'.'.$extension;
                 Input::file('file')->move($destinationPath,$doc);
                 $document->file = $destinationPath.$doc;
             }
@@ -445,7 +447,7 @@ class CoachController extends BaseController {
         $coachLicense = CoachLicense::listing()->where('coach_id',$id)->get();
         $licenses = ["" => "Select"] + License::where('user_type',Auth::user()->official_types)->lists('name','id');
         $this->layout->sidebar = View::make('coaches.sidebar',["sidebar"=>'profile','subsidebar'=>2]);
-        $this->layout->main = View::make('coaches.profile',['coachLicense'=>$coachLicense,"profileType"=>6,'title'=>'Coach Licenses',"licenses"=>$licenses]);
+        $this->layout->main = View::make('coaches.profile',['coachLicense'=>$coachLicense,"profileType"=>6,'title'=>'Licenses',"licenses"=>$licenses]);
     }
 
     public function addLicense(){
@@ -457,12 +459,14 @@ class CoachController extends BaseController {
             $coachLicense->coach_id = Auth::User()->coach_id;
             $coachLicense->license_id = Input::get("license_id");
             $coachLicense->number = Input::get("number");
+
             $coachLicense->start_date = date("Y-m-d",strtotime(Input::get("start_date")));
-            $coachLicense->end_date = date("Y-m-d",strtotime(Input::get("end_date")));
+            if(Input::get("end_date") != '') $coachLicense->end_date = date("Y-m-d",strtotime(Input::get("end_date")));
+            
             $destinationPath = "coach-licenses/";
             if(Input::hasFile('document')){
                 $extension = Input::file('document')->getClientOriginalExtension();
-                $doc = "dobProof_".Auth::id().'_'.str_replace(' ','-',Input::file('document')->getClientOriginalName());
+                $doc = "license_".Auth::id().'_'.strtotime("now").'.'.$extension;
                 Input::file('document')->move($destinationPath,$doc);
                 $coachLicense->document = $destinationPath.$doc;
             }

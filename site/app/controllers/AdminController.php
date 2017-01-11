@@ -144,7 +144,7 @@ class AdminController extends BaseController {
     $coachLicense = CoachLicense::listing()->where('coach_id',$id)->get();
     $employmentDetails = EmploymentDetails::where('coach_id',$id)->get();
     $activities = CoachActivity::where('coach_id',$id)->get();
-    $courses = Application::select('applications.*','courses.name as course_name','courses.end_date','courses.documents','license.name as license_name')->join('courses','applications.course_id','=','courses.id')->leftJoin('license','license.id','=','courses.license_id')->where('coach_id',$id)->get();
+    $courses = Application::select('applications.*','courses.name as course_name','courses.venue')->join('courses','applications.course_id','=','courses.id')->where('coach_id',$id)->get();
     $coachStatus = Coach::status();
     $licenseList = License::lists('name','id');
     $ApprovalStatus = Approval::status();
