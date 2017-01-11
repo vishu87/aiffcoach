@@ -124,6 +124,10 @@
 		<a href="{{url('pendingApprovals/pendingEmploymentDetails?'.$link_string)}}" >
 		Employment Details </a>
 	</li>
+	<li class="{{($docType=='all')?'active':''}}">
+		<a href="{{url('pendingApprovals/pendingDocument?'.$link_string.'&view=all')}}" >
+		All Document </a>
+	</li>
 	<!-- <li class="{{($docType=='pendingActivities')?'active':''}}">
 		<a href="{{url('pendingApprovals/pendingActivities?'.$link_string)}}" >
 		Activities </a>
@@ -141,6 +145,7 @@
 				<tr>
 					<th style="width:50px;">SN</th>
 					<th>Coach Name</th>
+					<th>doc id</th>
 					<th>Document Name</th>
 					<th>Document Number</th>
 					<th>Expiry Date</th>
@@ -155,6 +160,7 @@
 						<td>
 							<a href="{{url('/admin/viewCoachDetails/'.$document->coach_id)}}" target="_blank">{{$document->full_name}}</a>
 						</td>
+						<td>{{$document->id}}</td>
 						<td>{{$document->document_name}}</td>
 						<td>{{$document->number}}</td>
 						<td>@if($document->document_id != 2) {{date('d-m-Y',strtotime($document->expiry_date))}} @endif </td>
