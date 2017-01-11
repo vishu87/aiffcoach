@@ -124,10 +124,10 @@
 		<a href="{{url('pendingApprovals/pendingEmploymentDetails?'.$link_string)}}" >
 		Employment Details </a>
 	</li>
-	<li class="{{($docType=='all')?'active':''}}">
+	<!-- <li class="{{($docType=='all')?'active':''}}">
 		<a href="{{url('pendingApprovals/pendingDocument?'.$link_string.'&view=all')}}" >
 		All Document </a>
-	</li>
+	</li> -->
 	<!-- <li class="{{($docType=='pendingActivities')?'active':''}}">
 		<a href="{{url('pendingApprovals/pendingActivities?'.$link_string)}}" >
 		Activities </a>
@@ -147,7 +147,8 @@
 					<th>Coach Name</th>
 					<th>doc id</th>
 					<th>Document Name</th>
-					<th>Start Date / Expiry Date</th>
+					<th>Start Date </th>
+					<th>Expiry Date</th>
 					<th>Document</th>
 					<th>Status</th>
 					<th>#</th>
@@ -161,15 +162,16 @@
 						</td>
 						<td>{{$document->id}}</td>
 						<td>{{$document->document_name}}</td>
+						<td>{{date('d-m-Y',strtotime($document->start_date))}}</td>
 						<td>
-							
-							{{Form::open(["url"=>'/correctData/'.$document->id,"method"=>'post'])}}
+							{{date('d-m-Y',strtotime($document->expiry_date))}}
+							<!-- {{Form::open(["url"=>'/correctData/'.$document->id,"method"=>'post'])}}
 								start_date {{Form::text('start_date',($document->start_date)?date('d-m-Y',strtotime($document->start_date)):'',["class"=>"datepicker"])}}
 								<br>
 								expiry_date {{Form::text('expiry_date',($document->expiry_date)?date('d-m-Y',strtotime($document->expiry_date)):'',["class"=>"datepicker"])}}
 								<br>
 								<button type="submit">Submit</button>
-							{{Form::close()}}
+							{{Form::close()}} -->
 						</td>
 						<td>@if($document->document_id != 2) {{date('d-m-Y',strtotime($document->expiry_date))}} @endif </td>
 						<td>@if($document->file!='')<a href="{{url($document->file)}}" target="_blank">View </a>@endif
