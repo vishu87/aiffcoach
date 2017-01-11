@@ -24,16 +24,6 @@
 						{{$log->remarks}}
 					</div>
 				</div>
-				<div class="col-md-4">
-					<span>Document</span>
-					<div class="log-remarks">
-						@if($log->document != '')
-							<a href="{{url($log->document)}}" target="_blank">View File</a>
-						@else
-							N/A
-						@endif
-					</div>
-				</div>
 			</div>
 		@else
 			<div class="row">
@@ -54,10 +44,6 @@
 						<div class="col-md-5">
 							<label>Remarks <span class="required">*</span></label><br>
 							{{Form::text('remarks','',["class"=>"form-control"])}}
-						</div>
-						<div class="col-md-4">
-							<label>Document</label><br>
-							{{Form::file('document')}}
 						</div>
 						<div class="col-md-12">
 							<?php

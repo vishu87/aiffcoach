@@ -18,7 +18,7 @@
             <label>Remarks</label>
             {{Form::text('remarks','',["class"=>"form-control","required"=>"true"])}}
           </div>
-          <div>
+          <div style="display: none">
             <label>Document</label>
             {{Form::file('document',["class"=>'form-control'])}}
           </div>

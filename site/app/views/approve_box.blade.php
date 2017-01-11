@@ -1,7 +1,7 @@
 <div class="portlet green box">
   <div class="portlet-title" >
     <div class="caption">
-      Status
+      Comment Box
     </div>
   </div>
   <div class="portlet-body log-body">
@@ -20,7 +20,7 @@
             <label>Remarks</label>
             {{Form::text('remarks','',["class"=>"form-control","required"=>"true"])}}
           </div>
-          <div>
+          <div style="display: none">
             <label>Document</label>
             {{Form::file('document',["class"=>'form-control'])}}
           </div>

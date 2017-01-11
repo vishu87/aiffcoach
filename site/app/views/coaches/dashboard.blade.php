@@ -20,7 +20,8 @@
 
 @if(sizeof($coach_licenses) < 1)
 	<div class="alert alert-danger">
-		no license details found
+		Your profile doesn't have any license details. Please add at least one license to get approved by AIFF.<br>
+		To add license <a href="{{url('coach/coachLicense')}}">Click here</a>
 	</div>
 @endif
 <div class="row">
