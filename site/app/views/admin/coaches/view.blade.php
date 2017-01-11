@@ -1,7 +1,7 @@
 @if(isset($data))
 	<tr id="coach_{{$data->id}}">
 		<td>{{($page_id-1)*$max_per_page + $count}}</td>
-		<td>{{$data->full_name}}</td>
+		<td><a href="{{url('/admin/viewCoachDetails/'.$data->id)}}" target="_blank">{{$data->full_name}}</a></td>
 		<td>{{$data->registration_id}}</td>
 		<td>{{$data->email}} / {{$data->mobile}}</td>
 		<td>{{$data->state_reference}}</td>

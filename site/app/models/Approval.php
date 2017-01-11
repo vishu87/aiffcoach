@@ -40,6 +40,7 @@ class Approval extends Eloquent {
 							<th>Remarks</th>
 							<th>Status</th>
 							<th>Date</th>
+							<th>#</th>
 							<th>Document</th>
 						</tr>
 					</thead>';
@@ -50,8 +51,8 @@ class Approval extends Eloquent {
 						else{
 							$url='N/A';
 						}
-						$str .= '<tr>
-							<td>'.$count_log++.'</td>
+						$str .= '<tr id=approval_log_'.$log->id.'>
+							<td>'.$count_log.'</td>
 							<td>'.$log->remarks.'</td>
 							<td>';
 						if($log->privilege == 2){
@@ -60,8 +61,12 @@ class Approval extends Eloquent {
 							$str .= '';
 						}
 						$str .= '</td>
-							<td>'.$log->user_name.'<br>'.date('d-m-Y',strtotime($log->created_at)).'</td>
-						<td>'.$url.'</td></tr>';
+							<td>'.$log->user_name.'<br>'.date('d-m-Y',strtotime($log->created_at)).'</td>';
+						if (Auth::user()->privilege == 2) {
+							$str .= '<td>
+								<button class="btn btn-xs btn-warning edit-div" count='.$count_log++.' modal-title="Edit Remarks" div-id=approval_log_'.$log->id.' action=admin/editRemark/'.$log->id.'><i class = "fa fa-edit" ></i></button></td>';
+							}	
+						$str .= '<td>'.$url.'</td></tr>';
 					}
 				$str .= '</table>';
 			}

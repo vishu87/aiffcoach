@@ -117,6 +117,9 @@ Route::group(["before"=>['auth']],function(){
 	Route::group(["before"=>['admin']],function(){
 		Route::group(["prefix"=>'admin'],function(){
 			Route::get('/','AdminController@index');
+			
+			Route::get('/editRemark/{approval_log_id}','AdminController@editRemark');
+			Route::put('/updateRemark/{approval_log_id}','AdminController@updateRemark');
 
 			Route::get('/approvedCoach','AdminController@approvedCoach');
 			Route::get('/pendingCoach','AdminController@pendingCoach');

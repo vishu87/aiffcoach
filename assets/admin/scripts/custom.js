@@ -385,6 +385,7 @@ $(document).on('click','form.ajax_edit_pop button[type=submit]', function(e){
 		    success : function(data){
 		    	data = JSON.parse(data);
 		    	if(data.success){
+
 		    		$("#"+editDiv).replaceWith(data.message);
 			    	$(".modal").modal("hide");
 		    	} else {
