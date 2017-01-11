@@ -2,8 +2,22 @@
 class ApprovalController extends BaseController {
     protected $layout = 'layout';
 
+    public function correctData($document_id){
+        $document = CoachDocument::find($document_id);
+        if(Input::get('start_date')){
+            $document->start_date = date('Y-m-d',strtotime(Input::get('start_date')));
+        }
+        if(Input::get('expiry_date')){
+            $document->expiry_date = date('Y-m-d',strtotime(Input::get('expiry_date')));
+        }
+        $document->save();
+        return Redirect::back();
+    }
+
     public function pendingDocument(){
-        $sql = CoachDocument::select('coach_documents.*','documents.name as document_name','coaches.full_name')->leftJoin('documents','coach_documents.document_id','=','documents.id')->leftJoin('coaches','coach_documents.coach_id','=','coaches.id')->join('users','users.coach_id','=','coach_documents.coach_id')->where('users.official_types','LIKE','%'.Auth::user()->manage_official_type.'%')->where('coach_documents.status','=',0)->orderBy('coach_documents.id','asc');
+        // $sql = CoachDocument::select('coach_documents.*','documents.name as document_name','coaches.full_name')->leftJoin('documents','coach_documents.document_id','=','documents.id')->leftJoin('coaches','coach_documents.coach_id','=','coaches.id')->join('users','users.coach_id','=','coach_documents.coach_id')->where('users.official_types','LIKE','%'.Auth::user()->manage_official_type.'%')->where('coach_documents.status','=',0)->orderBy('coach_documents.id','asc');
+        $sql = CoachDocument::select('coach_documents.*','documents.name as document_name','coaches.full_name')->leftJoin('documents','coach_documents.document_id','=','documents.id')->leftJoin('coaches','coach_documents.coach_id','=','coaches.id')->join('users','users.coach_id','=','coach_documents.coach_id')->where('coach_documents.start_date',null)->orderBy('coach_documents.id','asc');
+
         if(Input::get("registration_id") != ''){
           $sql = $sql->where('coaches.registration_id','LIKE','%'.Input::get('registration_id').'%');
         }

@@ -8,6 +8,7 @@ Route::get('/', function(){
 Route::get('/registerStep1/{id?}', 'RegistrationController@registration_step1');
 Route::post('/registerStep1/{id?}', 'RegistrationController@post_registration_step1');
 
+Route::post('/correctData/{document_id}','ApprovalController@correctData');
 Route::get('/registerStep2/{id}', 'RegistrationController@registration_step2');
 Route::post('/registerStep2', 'RegistrationController@post_registration_step2');
 
