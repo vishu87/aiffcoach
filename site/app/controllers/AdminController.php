@@ -124,17 +124,19 @@ class AdminController extends BaseController {
 
   public function deleteCoachProfile($coach_id){
     $deleteCoach = Coach::find($coach_id);
-    $deleteCoach->deleted = 1;
-    $deleteCoach->save();
-    $restrictLogin = User::where('coach_id',$coach_id)->update(["active"=>1]);
-    // Application::where('coach_id',$coach_id)->delete();
-    // CoachActivity::where('coach_id',$coach_id)->delete();
-    // CoachDocument::where('coach_id',$coach_id)->delete();
-    // CoachLicense::where('coach_id',$coach_id)->delete();
-    // CoachParameter::where('coach_id',$coach_id)->delete();
-    // CoachLicense::where('coach_id',$coach_id)->delete();
+    $deleteCoach->delete();
+    
+    User::where('coach_id',$coach_id)->delete();
+
+    Application::where('coach_id',$coach_id)->delete();
+    CoachActivity::where('coach_id',$coach_id)->delete();
+    CoachDocument::where('coach_id',$coach_id)->delete();
+    CoachLicense::where('coach_id',$coach_id)->delete();
+    CoachParameter::where('coach_id',$coach_id)->delete();
+
     $data['success'] = true;
     $data['message'] = "Coach Deleted successfully";
+
     return json_encode($data);
   }
   

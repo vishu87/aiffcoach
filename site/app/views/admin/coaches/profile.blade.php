@@ -126,6 +126,7 @@
 			<th>License Name</th>
 			<th>License Number</th>
 			<th>Issue Date</th>
+			<th>Expiry Date</th>
 			<th>Document</th>
 			<th>Status</th>
 			<th style="display: none">#</th>
@@ -137,6 +138,7 @@
 				<td>{{$license->license_name}}</td>
 				<td>{{$license->number}}</td>
 				<td>{{date('d-m-Y',strtotime($license->start_date))}}</td>
+				<td>{{($license->end_date)?date('d-m-Y',strtotime($license->end_date)):''}}</td>
 				<td>@if($license->document!='')<a href="{{url($license->document)}}" target="_blank">View </a>@endif</td>
 				<td>{{$ApprovalStatus[$license->status]}}</td>
 				<td style="display: none"><button  div-id="{{'approve_list_'.$count_main}}" class="btn btn-xs blue showApprovals"><i class="fa fa-angle-double-right"></i> Details</button></td>
@@ -201,7 +203,10 @@
 					{{(isset($emp_status[$employment->emp_status]))?$emp_status[$employment->emp_status]:''}}
 				</td>
 				<td>{{$ApprovalStatus[$employment->status]}}</td>
-				<td>@if($employment->contract!='')<a href="{{url($employment->contract)}}" target="_blank">View </a>@endif</td>
+				<td>
+					@if($employment->contract!='')<a href="{{url($employment->contract)}}" target="_blank">Contract<br></a>@endif
+					@if($employment->cv!='')<a href="{{url($employment->cv)}}" target="_blank">CV<br></a>@endif
+				</td>
 				<td style="display: none">
 					<button  div-id="{{'approve_list_'.$count_main}}" class="btn btn-xs blue showApprovals"><i class="fa fa-angle-double-right"></i> Details</button></td>
 				</td>

@@ -8,6 +8,6 @@
 	<td>{{$data->remarks}}</td>
 	<td>{{(isset($status[$data->status]))?$status[$data->status]:''}}</td>
 	<td>
-		<a href="{{url('/control/applications/details/'.$data->id)}}" class="btn blue btn-sm" target="_blank">View</a>			
+		<a href="{{url('/control/applications/details/'.$data->id)}}" class="btn blue btn-sm" target="_blank">View</a>		
 	</td>
 </tr>

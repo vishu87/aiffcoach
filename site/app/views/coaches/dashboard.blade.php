@@ -78,10 +78,10 @@
 	<div class="col-md-12">
 		
 		@if($coach->status == 2)
-			<div class="alert alert-danger">Your account is referred back. Please modify your profile and submit again.</div>
+			<div class="alert alert-danger">Your account is referred back. Please make changes to your profile as per AIFF remark below and then press re-submit button to send your account back for approval.{{Form::open(array('url'=>'approve/1/'.$coach->id,'method'=>'post','files'=>'true','class'=>""))}}{{Form::radio('type',1, true,["class"=>"hidden"])}}{{Form::submit('Re-Submit',["class"=>"btn green btn","style"=>"margin-top:20px"])}}{{Form::close()}}</div>
 		@endif
 		@if($coach->status == 3)
-			<div class="alert alert-danger">Your account is rejected. Please contact AIFF.</div>
+			<div class="alert alert-danger">Your account is rejected.</div>
 		@endif
 		@if($coach->status == 0)
 			<div class="alert alert-warning">Your account is under approval.</div>

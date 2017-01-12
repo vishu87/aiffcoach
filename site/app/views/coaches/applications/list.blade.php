@@ -27,7 +27,7 @@
 					<th>Application Date</th>
 					<th style="width:50px">Fees</th>
 					<th>Application Status</th>
-					<th style="width:200px">Manage</th>
+					<th style="width:215px">Manage</th>
 				</tr>
 			</thead>
 			<tbody id="applications">

@@ -1,7 +1,7 @@
 <!-- BEGIN FOOTER -->
 <div class="page-footer" style="text-align:center">
   <div class="page-footer-inner">
-     2015 &copy; Avyay Technologies.
+     2017 &copy; <a href="https://avyay.co.in" target="_blank">Avyay Technologies</a>
   </div>
   <div class="scroll-to-top">
     <i class="icon-arrow-up"></i>
@@ -42,7 +42,7 @@
 {{HTML::script("assets/admin/scripts/jquery-ui-1.11.4.js")}}
 
 
-{{HTML::script("assets/admin/scripts/custom.js")}}
+{{HTML::script("assets/admin/scripts/custom.js?v=1.0.1")}}
 <script>
 jQuery(document).ready(function() {   
    // initiate layout and plugins

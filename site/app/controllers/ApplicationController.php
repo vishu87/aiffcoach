@@ -34,7 +34,7 @@ class ApplicationController extends BaseController {
         $input_string = 'admin/Applications/all?';
 
         $total = $sql->count();
-        $max_per_page = 20;
+        $max_per_page = 100;
         $total_pages = ceil($total/$max_per_page);
 
         if(Input::has('page')){

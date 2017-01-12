@@ -195,11 +195,9 @@ class ApprovalController extends BaseController {
 
     public function postApprove($entity_type,$entity_id){
         $cre=[
-            "remarks"=>Input::get('remarks'),
             "type"=>Input::get('type')
         ];
         $rules=[
-            "remarks"=>"required",
             "type"=>"required"
         ];
         $validation=Validator::make($cre,$rules);
@@ -209,7 +207,12 @@ class ApprovalController extends BaseController {
             $log->entity_id = $entity_id;
             $log->entity_type = $entity_type;
             $log->user_id = Auth::id();
-            $log->remarks = Input::get('remarks');
+            if(Input::has('remarks')){
+                $log->remarks = Input::get('remarks');
+            } else {
+                $log->remarks = '';    
+            }
+            
             $log->save();
 
             switch ($entity_type) {
@@ -222,8 +225,10 @@ class ApprovalController extends BaseController {
                     }
                     $coach->save();
                     // break;
-                    // aprove coach documents
+                    
                     if(Session::get('privilege') == 2){ // only in case of admin
+
+                        // aprove coach documents
                         $CoachDocument = CoachDocument::where('coach_id',$coach->id)->where('status',0)->get();
                         foreach ($CoachDocument as $document) {
                             $log = new Approval;
@@ -235,6 +240,34 @@ class ApprovalController extends BaseController {
                             $log->save();
                             $document->status = 1;
                             $document->save();
+                        }
+
+                        // aprove coach licenses
+                        $CoachLicense = CoachLicense::where('coach_id',$coach->id)->where('status',0)->get();
+                        foreach ($CoachLicense as $license) {
+                            $log = new Approval;
+                            $log->status = Input::get('type');
+                            $log->entity_id = $license->id;
+                            $log->entity_type = 3;
+                            $log->user_id = Auth::id();
+                            $log->remarks = 'Approved';
+                            $log->save();
+                            $license->status = 1;
+                            $license->save();
+                        }
+
+                        // aprove coach employment
+                        $EmploymentDetails = EmploymentDetails::where('coach_id',$coach->id)->where('status',0)->get();
+                        foreach ($EmploymentDetails as $employment) {
+                            $log = new Approval;
+                            $log->status = Input::get('type');
+                            $log->entity_id = $employment->id;
+                            $log->entity_type = 4;
+                            $log->user_id = Auth::id();
+                            $log->remarks = 'Approved';
+                            $log->save();
+                            $employment->status = 1;
+                            $employment->save();
                         }
                     }
                     break;

@@ -225,7 +225,6 @@
 				<th>Start Date</th>
 				<th>End Date</th>
 				<th>Document</th>
-				<th>Status</th>
 				<th>#</th>
 			</tr>
 			<?php $count=1;?>
@@ -241,7 +240,6 @@
 					<td>{{($license->start_date != null)?date('d-m-Y',strtotime($license->start_date)):''}}</td>
 					<td>{{($license->end_date != null)?date('d-m-Y',strtotime($license->end_date)):''}}</td>
 					<td>@if($license->document!='')<a href="{{url($license->document)}}" target="_blank">View </a>@endif</td>
-					<td>{{$ApprovalStatus[$license->status]}}</td>
 					<td><button  div-id="{{'approve_list_'.$count_main}}" class="btn btn-xs blue showApprovals"><i class="fa fa-angle-double-right"></i> Approve</button></td>
 				</tr>
 				<tr id="{{'approve_list_'.$count_main++}}" style="display:none;">
@@ -291,9 +289,10 @@
 				<th>Employment</th>
 				<th>Start Date</th>
 				<th>End Date</th>
-				<th>Status</th>
-				<th>Document</th>
-				<th>#</th>
+				<th>Employement Status</th>
+				<th>Documents</th>
+				<th>Referral</th>
+				<th>Approve</th>
 			</tr>
 			<?php $count=1;?>
 			@foreach($employmentDetails as $employment)
@@ -305,14 +304,20 @@
 					<td>{{$employment->employment}}</td>
 					<td>{{($employment->start_date != null)?date('d-m-Y',strtotime($employment->start_date)):''}}</td>
 					<td>{{($employment->end_date != null)?date('d-m-Y',strtotime($employment->end_date)):''}}</td>
-					<td>{{$ApprovalStatus[$employment->status]}}</td>
-					<td>@if($employment->contract!='')<a href="{{url($employment->contract)}}" target="_blank">View </a>@endif</td>
+					<td>{{EmploymentDetails::emp_status()[$employment->emp_status]}}</td>
+					<td>
+						@if($employment->contract!='')<a href="{{url($employment->contract)}}" target="_blank">Contract </a><br>@endif
+						@if($employment->cv!='')<a href="{{url($employment->cv)}}" target="_blank">CV </a>@endif
+					</td>
+					<td>
+						{{$employment->referral_name}}<br>{{$employment->referral_contact}}
+					</td>
 					<td>
 						<button  div-id="{{'approve_list_'.$count_main}}" class="btn btn-xs blue showApprovals"><i class="fa fa-angle-double-right"></i> Approve</button></td>
 					</td>
 				</tr>
 				<tr id="{{'approve_list_'.$count_main++}}" style="display:none;">
-					<td colspan="8">
+					<td colspan="12">
 						<div class="row" style="">
 							
 							@if($employment->check_admin())
@@ -371,7 +376,7 @@
 					</td>
 				</tr>
 				<tr id="{{'approve_list_'.$count_main++}}" style="display:none;">
-					<td colspan="8">
+					<td colspan="12">
 						<div class="row" style="">
 							
 							@if($activity->check_admin())

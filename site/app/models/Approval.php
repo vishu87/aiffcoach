@@ -52,9 +52,14 @@ class Approval extends Eloquent {
 						}
 						$str .= '<tr id=approval_log_'.$log->id.'>
 							<td>'.$count_log++.'</td>
-							<td>'.$log->remarks;
+							<td>';
+						if($log->remarks != ''){
+							$str .= $log->remarks;
+						} else {
+							if($log->status == 1) $str .= '<i>Re-submitted by '.$log->user_name.'</i>';
+						}
 						if (Auth::user()->privilege == 2) {
-							$str .= ' <button class="btn btn-xs yellow edit-div" count='.$count_log++.' modal-title="Edit Remarks" div-id=approval_log_'.$log->id.' action=admin/editRemark/'.$log->id.'><i class = "fa fa-edit" ></i></button>';
+							$str .= ' <button class="btn btn-xs yellow edit-div" count='.$count_log.' modal-title="Edit Remarks" div-id=approval_log_'.$log->id.' action=admin/editRemark/'.$log->id.'><i class = "fa fa-edit" ></i></button>';
 						}
 						$str .= '</td>
 							<td>';
@@ -63,7 +68,7 @@ class Approval extends Eloquent {
 							} else {
 								$str .= '';
 							}
-							$str .= '</td><td>'.$log->user_name.'</td><td>'.date('d-m-y',strtotime($log->created_at)).'</td>';
+							$str .= '</td><td>'.$log->user_name.'</td><td>'.date('d-m-y',strtotime($log->created_at)).'</td></tr>';
 					}
 				$str .= '</table>';
 			}

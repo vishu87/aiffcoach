@@ -8,9 +8,8 @@
 		<td>{{(isset($status[$data->status]))?$status[$data->status]:''}}</td>
 		<td id="emp_{{$data->id}}">		
 			<a href="{{url('admin/viewCoachDetails/'.$data->id)}}" class="btn btn-sm blue" modal-title="{{$data->first_name.' '.$data->middle_name.' '.$data->last_name}}" target="_blank">Profile</a>
-
-			@if(Auth::user()->privilege == 4)
-			<button class="btn btn-sm btn-danger delete-div" div-id="coach_{{$data->id}}" action="{{'admin/deleteCoachProfile/'.$data->id}}"><i class="fa fa-remove"></i></button>
+			@if(Auth::user()->privilege == 2 && $data->status == 3)
+				<button class="btn btn-sm btn-danger delete-div" div-id="coach_{{$data->id}}" action="{{'admin/deleteCoachProfile/'.$data->id}}"><i class="fa fa-remove"></i></button>
 			@endif
 		</td>
 	</tr>

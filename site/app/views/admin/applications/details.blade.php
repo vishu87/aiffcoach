@@ -1,4 +1,3 @@
-
 @if(Session::has('success'))
 	<div class="alert alert-success alert-dismissable">
 		<button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>
@@ -16,7 +15,11 @@
 		<h3 class="page-title">Applicant - {{$application->full_name}}</h3>
 	</div>
 	<div class="col-md-6">
-		<h3 class="page-title page-title2">Current Status - {{$ApplicationStatus[$application->status]}}</h3>
+		<h3 class="page-title page-title2">Application Status - {{$ApplicationStatus[$application->status]}}</h3>
+		@if($data->status == 0 || $data->status == 4)
+			<button class="btn btn-sm btn-danger delete-div" div-id="activity_{{$data->application_id}}" action="{{'coach/applications/delete/'.$data->application_id}}"><i class="fa fa-remove"></i>
+			</button>
+		@endif
 	</div>
 </div>
 
@@ -64,6 +67,7 @@
 				</div>
 			</div>
 
+			@if(Session::get('privilege') == 2)
 			<div class="row detail">
 				<div class="col-md-12">
 					<span>Pre Requisites</span>
@@ -84,6 +88,20 @@
 					@endif
 				</div>
 			</div>
+			@else
+			<div class="row detail">
+				<div class="col-md-12">
+					<span>Pre Requisites</span>
+					@if(sizeof($prerequisites) > 0)
+						@foreach($prerequisites as $prerequisite)
+							<span class="">{{$licenses[$prerequisite]}}</span>
+						@endforeach
+					@else
+						Not Applicable
+					@endif
+				</div>
+			</div>
+			@endif
 		</div>
 
 		@if($payment)

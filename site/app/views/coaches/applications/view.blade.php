@@ -12,5 +12,9 @@
 	<td style="width: 200px">
 		<a class="btn blue btn-sm" href="{{url('control/applications/details/'.$data->application_id)}}">View</a>
 		<a class="btn default btn-sm" href="{{url('coach/courses/details/'.$data->course_id)}}">View Course</a>
+		@if($data->status == 0 || $data->status == 4)
+			<button class="btn btn-sm btn-danger delete-div" div-id="activity_{{$data->application_id}}" action="{{'coach/applications/delete/'.$data->id}}"><i class="fa fa-remove"></i>
+			</button>
+		@endif
 	</td>
 </tr>
