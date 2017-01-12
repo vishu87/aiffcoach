@@ -8,10 +8,9 @@
 				<span class="error">{{$errors->first('remarks')}}</span>
 			</div>
 		<!---form end-->
-	
-	<div class="form-actions" >
-		<button type="submit" class="btn blue">{{(isset($log))?'Update':'Add'}}</button>
-	</div>
+		<div class="form-actions" >
+			<button type="submit" class="btn blue">{{(isset($log))?'Update':'Add'}}</button>
+		</div>
 	</div>
 {{Form::close()}}
 

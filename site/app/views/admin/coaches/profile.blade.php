@@ -237,7 +237,7 @@
 </div>
 @if(sizeof($activities) > 0)
 <?php $entity_type=5; ?>
-<div class="row" style="padding:20px;">
+<div class="row" style="padding:20px;display: none">
 	<table class="table table-bordered table-hover">
 		<tr>
 			<th style="width:50px;">SN</th>

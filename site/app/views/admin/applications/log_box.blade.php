@@ -21,7 +21,10 @@
 				<div class="col-md-12">
 					<span>Remarks</span>
 					<div class="log-remarks" id="app_log_{{$log->id}}">
-						{{$log->remarks}} &nbsp;<button class="btn btn-xs edit-div yellow" div-id="app_log_{{$log->id}}" modal-title="Edit Remarks" action="control/editAppLog/{{$log->id}}"><i class="fa fa-edit"></i></button>
+						{{$log->remarks}} &nbsp;
+						@if(Auth::user()->privilege == 2)
+						<button class="btn btn-xs edit-div yellow" div-id="app_log_{{$log->id}}" modal-title="Edit Remarks" action="control/editAppLog/{{$log->id}}"><i class="fa fa-edit"></i></button>
+						@endif
 					</div>
 				</div>
 			</div>

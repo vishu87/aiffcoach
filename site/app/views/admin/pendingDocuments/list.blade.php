@@ -145,8 +145,8 @@
 				<tr>
 					<th style="width:50px;">SN</th>
 					<th>Coach Name</th>
-					<th>doc id</th>
 					<th>Document Name</th>
+					<th>Document Number</th>
 					<th>Start Date </th>
 					<th>Expiry Date</th>
 					<th>Document</th>
@@ -160,24 +160,28 @@
 						<td>
 							<a href="{{url('/admin/viewCoachDetails/'.$document->coach_id)}}" target="_blank">{{$document->full_name}}</a>
 						</td>
-						<td>{{$document->id}}</td>
 						<td>{{$document->document_name}}</td>
-						<td>{{date('d-m-Y',strtotime($document->start_date))}}</td>
-						<td>
+						<td>{{$document->number}}</td>
+						<td>{{($document->start_date != null)?date('d-m-Y',strtotime($document->start_date)):''}}</td>
+						<!-- <td>
 							{{date('d-m-Y',strtotime($document->expiry_date))}}
-							<!-- {{Form::open(["url"=>'/correctData/'.$document->id,"method"=>'post'])}}
+							{{Form::open(["url"=>'/correctData/'.$document->id,"method"=>'post'])}}
 								start_date {{Form::text('start_date',($document->start_date)?date('d-m-Y',strtotime($document->start_date)):'',["class"=>"datepicker"])}}
 								<br>
 								expiry_date {{Form::text('expiry_date',($document->expiry_date)?date('d-m-Y',strtotime($document->expiry_date)):'',["class"=>"datepicker"])}}
 								<br>
 								<button type="submit">Submit</button>
-							{{Form::close()}} -->
+							{{Form::close()}}
+						</td> -->
+						<td>
+							@if($document->document_id != 2)
+								{{($document->expiry_date != null)?date('d-m-Y',strtotime($document->expiry_date)):''}}
+							@endif
 						</td>
-						<td>@if($document->document_id != 2) {{date('d-m-Y',strtotime($document->expiry_date))}} @endif </td>
 						<td>@if($document->file!='')<a href="{{url($document->file)}}" target="_blank">View </a>@endif
 						</td>
 						<td>{{isset($ApprovalStatus[$document->status])?$ApprovalStatus[$document->status]:''}}</td>
-						<td><button  div-id="{{'approve_list_'.$count_main}}" class="btn btn-xs blue showApprovals"><i class="fa fa-angle-double-right"></i> Details</button></td>
+						<td><button  div-id="{{'approve_list_'.$count_main}}" class="btn btn-xs blue showApprovals"><i class="fa fa-angle-double-right"></i> Approve</button></td>
 					</tr>
 					<tr id="{{'approve_list_'.$count_main++}}" style="display:none;">
 						<td colspan="8">
@@ -234,11 +238,11 @@
 
 					<td>{{$license->license_name}}</td>
 					<td>{{$license->number}}</td>
-					<td>{{date('d-m-Y',strtotime($license->start_date))}}</td>
-					<td>{{date('d-m-Y',strtotime($license->end_date))}}</td>
+					<td>{{($license->start_date != null)?date('d-m-Y',strtotime($license->start_date)):''}}</td>
+					<td>{{($license->end_date != null)?date('d-m-Y',strtotime($license->end_date)):''}}</td>
 					<td>@if($license->document!='')<a href="{{url($license->document)}}" target="_blank">View </a>@endif</td>
 					<td>{{$ApprovalStatus[$license->status]}}</td>
-					<td><button  div-id="{{'approve_list_'.$count_main}}" class="btn btn-xs blue showApprovals"><i class="fa fa-angle-double-right"></i> Details</button></td>
+					<td><button  div-id="{{'approve_list_'.$count_main}}" class="btn btn-xs blue showApprovals"><i class="fa fa-angle-double-right"></i> Approve</button></td>
 				</tr>
 				<tr id="{{'approve_list_'.$count_main++}}" style="display:none;">
 					<td colspan="9">
@@ -299,12 +303,12 @@
 						<a href="{{url('/admin/viewCoachDetails/'.$employment->coach_id)}}" target="_blank">{{$employment->full_name}}</a>
 					</td>
 					<td>{{$employment->employment}}</td>
-					<td>{{date('d-m-Y',strtotime($employment->start_date))}}</td>
-					<td>{{date('d-m-Y',strtotime($employment->end_date))}}</td>
+					<td>{{($employment->start_date != null)?date('d-m-Y',strtotime($employment->start_date)):''}}</td>
+					<td>{{($employment->end_date != null)?date('d-m-Y',strtotime($employment->end_date)):''}}</td>
 					<td>{{$ApprovalStatus[$employment->status]}}</td>
 					<td>@if($employment->contract!='')<a href="{{url($employment->contract)}}" target="_blank">View </a>@endif</td>
 					<td>
-						<button  div-id="{{'approve_list_'.$count_main}}" class="btn btn-xs blue showApprovals"><i class="fa fa-angle-double-right"></i> Details</button></td>
+						<button  div-id="{{'approve_list_'.$count_main}}" class="btn btn-xs blue showApprovals"><i class="fa fa-angle-double-right"></i> Approve</button></td>
 					</td>
 				</tr>
 				<tr id="{{'approve_list_'.$count_main++}}" style="display:none;">
