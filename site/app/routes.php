@@ -45,6 +45,8 @@ Route::group(['before' => 'auth',"prefix"=>'pendingApprovals'], function () {
 
 Route::group(['before' => 'auth',"prefix"=>'control'], function () {
     Route::get('/applications/details/{application_id}','ApplicationController@detailsApplication');
+    Route::get('editAppLog/{log_id}','ApplicationController@editAppLog');
+    Route::put('updateAppLog/{log_id}','ApplicationController@updateAppLog');
     Route::post('/applications/log/{application_id}','ApplicationController@postLog');
     Route::put('/payments/{payment_id}','PaymentController@putPayment');
 });

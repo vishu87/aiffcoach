@@ -299,4 +299,18 @@ class ApplicationController extends BaseController {
         }
 
     }
+
+    public function editAppLog($log_id){
+        $log = ApplicationLog::find($log_id);
+        return View::make('admin.applications.editLog',['log'=>$log , 'flag'=>false]);
+    }
+    public function updateAppLog($log_id){
+        $log = ApplicationLog::find($log_id);
+        $log->remarks = Input::get('remarks');
+        $log->save();
+        $data['success'] = true;
+        $data['message'] = html_entity_decode(View::make('admin.applications.editLog',['log'=>$log , 'flag'=>true]));
+        return json_encode($data);
+
+    }
 }
