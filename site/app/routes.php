@@ -215,6 +215,13 @@ Route::group(["prefix"=>'resultAdmin','before'=>["auth","resultAdmin"]],function
 		Route::delete('/delete/{id}','resultAdminController@delete');
 		Route::post('/uploadMarks','resultAdminController@uploadMarks');
 	});
+
+	Route::group(["prefix"=>"courses"],function(){
+		Route::get('/','instructorCourseController@index');
+		Route::get('/viewApplications/{course_id}','instructorCourseController@courseApplications');
+	
+	});
+
 });
 
 Route::group(["prefix"=>'superAdmin','before'=>["auth","superAdmin"]],function(){

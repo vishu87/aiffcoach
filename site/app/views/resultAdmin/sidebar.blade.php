@@ -13,6 +13,14 @@
         <span class="selected"></span>
       </a>
     </li>
+    <li class="@if($sidebar == 12 ) active @endif" >
+      <a href="{{url('/resultAdmin/courses')}}">
+        <i class="fa fa-book"></i>
+        <span class="title">Courses</span>
+        <span class="selected"></span>
+      </a>
+    </li>
+
     <li class="@if($sidebar == 1 ) active @endif" >
       <a href="{{url('/resultAdmin')}}">
         <i class="fa fa-cube"></i>

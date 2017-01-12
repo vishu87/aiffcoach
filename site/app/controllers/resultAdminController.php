@@ -122,8 +122,6 @@ class resultAdminController extends BaseController {
             ->where('applications.id',$id)
             ->first();     
         $resultStatus = Result::status();    
-        // $data['success'] = true;
-        // $data['message']= html_entity_decode(View::make('resultAdmin.view',['data'=>$app_data,'count'=>Input::get('count'),'resultStatus'=>$resultStatus]));
         return Redirect::Back()->with('success','Marks Updated Successfully');
     }
 
