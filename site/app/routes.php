@@ -51,7 +51,7 @@ Route::group(['before' => 'auth',"prefix"=>'control'], function () {
     Route::put('/payments/{payment_id}','PaymentController@putPayment');
 });
 
-Route::group(['prefix'=>'coach','before'=>['auth','coach']], function () {
+Route::group(['prefix'=>'coach','before'=>'auth'], function () {
 
 	Route::post('/postEmployment','CoachController@postEmployment');
 	Route::get('/employmentDetails','CoachController@employmentDetails');

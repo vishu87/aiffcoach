@@ -73,11 +73,11 @@
 			<th>Expiry Date</th>
 			<th>Document</th>
 			<th>Status</th>
-			<th style="display: none">#</th>
+			<th>Delete</th>
 		</tr>
 		<?php $count=1;?>
 		@foreach($documents as $document)
-			<tr>	
+			<tr id="document_{{$document->id}}">	
 				<td>{{$count}}</td>
 				<td>{{$document->document_name}}</td>
 				<td>{{$document->number}}</td>
@@ -87,8 +87,12 @@
 						<a href="{{url($document->file)}}" target="_blank">View </a>
 					@endif
 				</td>
-				<td>{{isset($ApprovalStatus[$document->status])?$ApprovalStatus[$document->status]:''}}</td>
-				<td style="display: none"><button  div-id="{{'approve_list_'.$count_main}}" class="btn btn-xs blue showApprovals"><i class="fa fa-angle-double-right"></i> Details</button></td>
+				<td>
+					{{isset($ApprovalStatus[$document->status])?$ApprovalStatus[$document->status]:''}}
+				</td>
+				<td>
+					<button type="button" class="btn red btn-sm delete-div" div-id="document_{{$document->id}}"  action="{{'coach/addDocument/delete/'.$document->id}}"><i class="fa fa-remove"></i></button>
+				</td>
 			</tr>
 			<tr id="{{'approve_list_'.$count_main++}}" style="display:none;">
 				<td colspan="7">
@@ -129,11 +133,11 @@
 			<th>Expiry Date</th>
 			<th>Document</th>
 			<th>Status</th>
-			<th style="display: none">#</th>
+			<th>Delete</th>
 		</tr>
 		<?php $count=1;?>
 		@foreach($coachLicense as $license)
-			<tr>	
+			<tr id="license_{{$license->id}}">	
 				<td>{{$count}}</td>
 				<td>{{$license->license_name}}</td>
 				<td>{{$license->number}}</td>
@@ -141,7 +145,10 @@
 				<td>{{($license->end_date)?date('d-m-Y',strtotime($license->end_date)):''}}</td>
 				<td>@if($license->document!='')<a href="{{url($license->document)}}" target="_blank">View </a>@endif</td>
 				<td>{{$ApprovalStatus[$license->status]}}</td>
-				<td style="display: none"><button  div-id="{{'approve_list_'.$count_main}}" class="btn btn-xs blue showApprovals"><i class="fa fa-angle-double-right"></i> Details</button></td>
+				<td>
+					<button type="button" class="btn red btn-sm delete-div" div-id="license_{{$license->id}}"  action="{{'coach/coachLicense/delete/'.$license->id}}"> <i class="fa fa-remove"></i></button>
+					<button  div-id="{{'approve_list_'.$count_main}}" class="btn btn-xs blue showApprovals hidden"><i class="fa fa-angle-double-right"></i> Details</button>
+				</td>
 			</tr>
 			<tr id="{{'approve_list_'.$count_main++}}" style="display:none;">
 				<td colspan="8">

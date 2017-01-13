@@ -34,7 +34,7 @@ class Coach extends Eloquent {
     }
 
     public function check_admin(){
-        if(Session::get('privilege') == 2 && $this->status == 0){
+        if(Session::get('privilege') == 2){
             return true;
         } else {
             return false;

@@ -15,11 +15,15 @@
 		<h3 class="page-title">Applicant - {{$application->full_name}}</h3>
 	</div>
 	<div class="col-md-6">
-		<h3 class="page-title page-title2">Application Status - {{$ApplicationStatus[$application->status]}}</h3>
-		@if($data->status == 0 || $data->status == 4)
-			<button class="btn btn-sm btn-danger delete-div" div-id="activity_{{$data->application_id}}" action="{{'coach/applications/delete/'.$data->application_id}}"><i class="fa fa-remove"></i>
-			</button>
+		@if($application->coach_status != 1 && Session::get('privilege') == 2)
+			<div class="alert alert-danger alert-dismissable">
+				<span>Coach registration is not approved</span>
+				<a href="{{url('admin/viewCoachDetails/'.$application->coach_id)}}">View Profile</a>
+			</div>
 		@endif
+		<h3 class="page-title page-title2">
+			Application Status - {{$ApplicationStatus[$application->status]}}
+		</h3>
 	</div>
 </div>
 

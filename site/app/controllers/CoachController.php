@@ -1,4 +1,3 @@
-    
 <?php
 class CoachController extends BaseController {
     protected $layout = 'layout';
@@ -155,7 +154,13 @@ class CoachController extends BaseController {
         return Redirect::back()->withErrors($validator)->withInput();
     }  
     public function deleteDocument($id){
-        $count = CoachDocument::where('id',$id)->count();
+
+        if(Session::get('privilege') == 2){
+            $count = CoachDocument::find($id)->count();
+        } else {
+            $count = CoachDocument::where('coach_id',Auth::User()->coach_id)->where('id',$id)->count();    
+        }
+
         if($count<1){
             $data['success'] = false;
             $data['message'] = "Can't delete this document or document does not exist !";
@@ -491,7 +496,12 @@ class CoachController extends BaseController {
     }
 
     public function deleteLicense($coach_license_id){
-        $count = CoachLicense::where('coach_id',Auth::User()->coach_id)->where('id',$coach_license_id)->count();
+        if(Session::get('privilege') == 2){
+            $count = CoachLicense::find($coach_license_id)->count();
+        } else {
+            $count = CoachLicense::where('coach_id',Auth::User()->coach_id)->where('id',$coach_license_id)->count();    
+        }
+        
         if($count>0){
             CoachLicense::find($coach_license_id)->delete();
             $data["success"] = true;
