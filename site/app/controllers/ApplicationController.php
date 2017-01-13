@@ -246,6 +246,13 @@ class ApplicationController extends BaseController {
 
                     if($current_status == 0){
                         $application->status = ++$current_status;
+                    } else { 
+                        //for referred back re-submit by user
+                        $new_log = new ApplicationLog;
+                        $new_log->entity_id = $application->id;
+                        $new_log->status = 0;
+                        $new_log->save();
+                        $application->status = 0;
                     }
 
                     // if($current_status == 2){
