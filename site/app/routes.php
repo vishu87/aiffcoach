@@ -8,7 +8,7 @@ Route::get('/', function(){
 Route::get('/registerStep1/{id?}', 'RegistrationController@registration_step1');
 Route::post('/registerStep1/{id?}', 'RegistrationController@post_registration_step1');
 
-// Route::post('/correctData/{document_id}','ApprovalController@correctData');
+// Route::post'/correctData/{document_id}','ApprovalController@correctData');
 Route::get('/registerStep2/{id}', 'RegistrationController@registration_step2');
 Route::post('/registerStep2', 'RegistrationController@post_registration_step2');
 
@@ -18,6 +18,18 @@ Route::post('/registerStep3', 'RegistrationController@post_registration_step3');
 Route::get('/verify/{hash}','UserController@activeAccount');
 Route::get('/reset', function(){
     return View::make('reset');
+});
+
+
+Route::get('/correctData', function(){
+    $documents = CoachDocument::select('coach_documents.id','coaches.status as coach_status')->join('coaches','coaches.id','=','coach_documents.coach_id')->get();
+    foreach ($documents as $document) {
+    	if($document->coach_status != 1){
+    		$doc = CoachDocument::find($document->id);
+    		$doc->status = 0;
+    		$doc->save();
+    	}
+    }
 });
 
 Route::post('/tm_admin', 'UserController@postLogin');

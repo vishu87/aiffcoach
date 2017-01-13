@@ -65,10 +65,13 @@
 			@if(sizeof($prerequisites) > 0)
 				@foreach($prerequisites as $prerequisite)
 					@if(isset($coach_licenses[$prerequisite]))
-						@if($coach_licenses[$prerequisite]["start_date"] < $check_date )
+						<?php
+							$three_months = date("Y-m-d",strtotime("-3 months"));
+						?>
+						@if($coach_licenses[$prerequisite]["start_date"] < $three_months )
 							<span class="color-green"><i class="fa fa-check"></i> {{$licenses[$prerequisite]}}</span>
 						@else
-							<span class="color-red"><i class="fa fa-remove"></i> {{$licenses[$prerequisite]}} (Your license is registered on {{date("d-m-Y",strtotime($coach_licenses[$prerequisite]["start_date"]))}}. You must complete 2 years under this license to apply for the course.)</span>
+							<span class="color-red"><i class="fa fa-remove"></i> {{$licenses[$prerequisite]}} (Your license is registered on {{date("d-m-Y",strtotime($coach_licenses[$prerequisite]["start_date"]))}}. You must complete {{$coach_licenses[$prerequisite]["duration"]}} months under this license to apply for the course.)</span>
 						@endif
 					@else
 						<span class="color-red"><i class="fa fa-remove"></i> {{$licenses[$prerequisite]}}</span>

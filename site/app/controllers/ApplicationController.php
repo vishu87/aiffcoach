@@ -129,9 +129,9 @@ class ApplicationController extends BaseController {
         $coach_licenses = array();
 
         if($course->prerequisite_id != ''){
-            $coach_licenses_fetch = CoachLicense::where('coach_id', Auth::user()->coach_id)->whereIn('license_id',$prerequisites)->where('status',1)->get();
+            $coach_licenses_fetch = CoachLicense::select('coach_licenses.*','license.duration')->join('license','license.id','=','coach_licenses.license_id')->where('coach_id', Auth::user()->coach_id)->whereIn('license_id',$prerequisites)->where('status',1)->get();
             foreach ($coach_licenses_fetch as $license) {
-                $coach_licenses[$license->license_id] = array("start_date"=>$license->start_date);
+                $coach_licenses[$license->license_id] = array("start_date"=>$license->start_date, "duration" => $license->duration);
             } 
         }
 
@@ -140,15 +140,9 @@ class ApplicationController extends BaseController {
         $tab = 5;
         $tab_sub = 0;
 
-        $check_date_year = date("Y",strtotime($course->start_date));
-        $check_date_year = $check_date_year - 2;
-        $check_date = $check_date_year.'-'.date("m",strtotime($course->start_date)).'-'.date("d",strtotime($course->start_date));
-
-        $today = date("Y-m-d");
-
         $this->layout->sidebar = View::make('coaches.sidebar',['sidebar'=>$tab,'subsidebar'=>$tab_sub]);
 
-        $this->layout->main = View::make('coaches.courses.details',["course"=>$course, 'is_applied'=>$is_applied,"prerequisites"=>$prerequisites, "licenses"=>$licenses, "coach_licenses" => $coach_licenses, "check_date" => $check_date]);
+        $this->layout->main = View::make('coaches.courses.details',["course"=>$course, 'is_applied'=>$is_applied,"prerequisites"=>$prerequisites, "licenses"=>$licenses, "coach_licenses" => $coach_licenses]);
     }
 
     public function detailsApplication($application_id){
@@ -164,9 +158,10 @@ class ApplicationController extends BaseController {
         $coach_licenses = array();
 
         if($course->prerequisite_id != ''){
-            $coach_licenses_fetch = CoachLicense::where('coach_id', $application->coach_id)->whereIn('license_id',$prerequisites)->where('status',1)->get();
+
+            $coach_licenses_fetch = CoachLicense::select('coach_licenses.*','license.duration')->join('license','license.id','=','coach_licenses.license_id')->where('coach_id', $application->coach_id)->whereIn('license_id',$prerequisites)->where('status',1)->get();
             foreach ($coach_licenses_fetch as $license) {
-                $coach_licenses[$license->license_id] = array("start_date"=>$license->start_date);
+                $coach_licenses[$license->license_id] = array("start_date"=>$license->start_date, "duration" => $license->duration);
             } 
         }
 
