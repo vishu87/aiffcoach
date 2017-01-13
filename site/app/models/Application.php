@@ -9,8 +9,8 @@ class Application extends Eloquent {
 		return array(
 			"0" => "Pending for Approval",
 			"1" => "Approved",
-			"2" => "Payment under Approval",
-			"3" => "Selected for Course",
+			"2" => "Selected for Course",
+			"3" => "Payments Approved",
 			"4" => "Referred Back",
 			"5" => "Rejected"
 		);

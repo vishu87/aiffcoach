@@ -27,7 +27,7 @@ class Payment extends Eloquent {
 		if(Session::get('privilege') == 2){
 			$var = true;
 		} else {
-			if( ($application->status == 1 || $application->status == 4) ){
+			if( ($application->status == 2) ){
 				$var = true;
 			}
 		}

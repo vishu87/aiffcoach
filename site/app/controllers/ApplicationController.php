@@ -222,6 +222,7 @@ class ApplicationController extends BaseController {
             $log = ApplicationLog::find($log_id);
             $application = Application::where('id',$log->entity_id)->first();
             if($log->closed == 0){
+
                 $current_status = $log->status;
 
                 $type = Input::get('type');
@@ -243,36 +244,41 @@ class ApplicationController extends BaseController {
 
                 if($type == 1){
 
-                    if($current_status <= 2){
+                    if($current_status == 0){
                         $application->status = ++$current_status;
                     }
 
-                    if($current_status == 1){
-                        //create a payment
-                        $payment = new Payment;
-                        $payment->application_id = $application->id;
-                        $course_row = Course::select('fees')->where('id',$application->course_id)->first();
-                        $payment->fees = $course_row->fees;
-                        $payment->save();
-                    }
+                    // if($current_status == 2){
+                    //     //create a payment
+                    //     $check_payment = Payment::where('application_id',$application->id)->count();
+
+                    //     if($check_payment == 0){
+                    //         $payment = new Payment;
+                    //         $payment->application_id = $application->id;
+                    //         $course_row = Course::select('fees')->where('id',$application->course_id)->first();
+                    //         $payment->fees = $course_row->fees;
+                    //         $payment->save();
+                    //     }
+                        
+                    // }
 
 
-                    if($current_status == 1 || $current_status == 2){
-                        //create new log entry
-                        $new_log = new ApplicationLog;
-                        $new_log->entity_id = $application->id;
-                        $new_log->status = $current_status;
-                        $new_log->save();
-                    } elseif($current_status == 3){
-                        // do nothing
-                    } else {
-                        //create new log entry for association
-                        $new_log = new ApplicationLog;
-                        $new_log->entity_id = $application->id;
-                        $new_log->status = 0;
-                        $new_log->save();
-                        $application->status = 0;
-                    }
+                    // if($current_status == 1 || $current_status == 2){
+                    //     //create new log entry
+                    //     $new_log = new ApplicationLog;
+                    //     $new_log->entity_id = $application->id;
+                    //     $new_log->status = $current_status;
+                    //     $new_log->save();
+                    // } elseif($current_status == 3){
+                    //     // do nothing
+                    // } else {
+                    //     //create new log entry for association
+                    //     $new_log = new ApplicationLog;
+                    //     $new_log->entity_id = $application->id;
+                    //     $new_log->status = 0;
+                    //     $new_log->save();
+                    //     $application->status = 0;
+                    // }
                 } else {
                     $application->status = $type;
                     if($type == 4){ // if referred back

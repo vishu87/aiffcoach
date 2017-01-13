@@ -111,7 +111,7 @@
 			@endif
 		</div>
 
-		@if($payment)
+		@if($payment && false)
 			@if($payment->check_status($application))
 				@include('coaches.applications.payment')
 			@else
