@@ -45,7 +45,12 @@
 						@foreach($courses as $data)
 						<tr id="activity_{{$data->id}}">
 							<td>{{$count}}</td>
-							<td>{{$data->name}}</td>
+							<td>
+								{{$data->name}}
+								@if($data->postponed == 1)
+									<span class="badge badge-danger badge-roundless"> Postponed </span>
+								@endif
+							</td>
 							<td>{{$data->venue}}</td>
 							<td>{{$data->start_date}}</td>
 							<td>{{$data->registration_start}}</td>

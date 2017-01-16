@@ -375,4 +375,18 @@ class AdminController extends BaseController {
     $data['message'] = html_entity_decode(View::make('admin.coaches.editRemark',['log_data'=>$log_data ,'flag'=>1 , "count" => Input::get('count')]));
     return json_encode($data);
   }
+
+  public function logins(){
+    $users = User::select('id','name','username','mobile')->where('privilege',1)->orderBy('name','ASC')->get();
+    
+    $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'logins']);
+    $this->layout->main = View::make('admin.logins.list',["users" => $users]);
+  }
+
+  public function loginByUser($user_id){
+    Auth::loginUsingId($user_id);
+
+    return Redirect::to('/coach/dashboard');
+  }
+
 }

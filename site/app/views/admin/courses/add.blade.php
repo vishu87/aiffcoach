@@ -72,6 +72,11 @@
 				{{Form::select('instructor[]',$instructors,(isset($selectedInstructors))?$selectedInstructors:'',["class"=>"form-control","multiple"=>"true"])}}
 				<span class="error">{{$errors->first('instructor')}}</span>
 			</div>
+			<div class="col-md-3 form-group">
+				{{Form::label('Postponed')}}
+				{{Form::checkbox('postponed','1',(isset($course))?($course->postponed == 1)?true:false:false,["class"=>"form-control"])}}
+				<span class="error">{{$errors->first('instructor')}}</span>
+			</div>
 			<div class="col-md-6 form-group hidden">
 				{{Form::label('Documents')}}
 				{{Form::file('documents',["class"=>"form-control","pdf"=>'true'])}}

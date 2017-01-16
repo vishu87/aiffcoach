@@ -113,6 +113,13 @@
         <span class="selected"></span>
       </a>
     </li>
+    <li class="@if($sidebar == 'logins' ) active @endif" >
+      <a href="{{url('/admin/logins')}}">
+        <i class="fa fa-users"></i>
+        <span class="title">Manage Logins</span>
+        <span class="selected"></span>
+      </a>
+    </li>
 
     <li class="@if($sidebar == 'profile' ) active @endif" >
       <a href="{{url('/changePassword')}}">

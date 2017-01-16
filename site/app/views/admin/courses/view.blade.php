@@ -1,6 +1,11 @@
 <tr id="course_{{$data->id}}">
 	<td>{{$count}}</td>
-	<td>{{$data->name}}</td>
+	<td>
+		{{$data->name}}
+		@if($data->postponed == 1)
+			<span class="badge badge-danger badge-roundless"> Postponed </span>
+		@endif
+	</td>
 	<td>{{date('d-m-Y',strtotime($data->start_date))}}</td>
 	<td>{{date('d-m-Y',strtotime($data->registration_start))}}</td>
 	<td>{{date('d-m-Y',strtotime($data->registration_end))}}</td>

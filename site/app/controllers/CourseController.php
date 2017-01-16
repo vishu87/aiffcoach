@@ -64,6 +64,11 @@ class CourseController extends BaseController {
             $course->description = Input::get('description');
             $course->fees = Input::get('fee');
             $course->user_type = Auth::user()->manage_official_type;
+
+            if(Input::has('postponed')){
+                $course->postponed = 1;
+            } else $course->postponed = 0;
+
             $destinationPath = 'coaches-doc/';
             if(Input::hasFile('documents')){
                 $extension = Input::file('documents')->getClientOriginalExtension();
@@ -135,6 +140,11 @@ class CourseController extends BaseController {
             $course->description = Input::get('description');
             $course->license_id = Input::get('license_id');
             $course->fees = Input::get('fee');
+
+            if(Input::has('postponed')){
+                $course->postponed = 1;
+            } else $course->postponed = 0;
+
             $destinationPath = 'coaches-doc/';
 
             if(Input::hasFile('documents')){

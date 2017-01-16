@@ -1,6 +1,6 @@
 <tr id="payment_{{$data->id}}">
 	<td>{{($page_id-1)*$max_per_page + $count}}</td>
-	<td><a href="{{url('admin/viewCoachDetails/'.$data->id)}}" target="_blank">{{$data->full_name}}</a></td>
+	<td><a href="{{url('admin/viewCoachDetails/'.$data->coach_id)}}" target="_blank">{{$data->full_name}}</a></td>
 	<td>{{$data->course_name}}</td>
 	<td>{{$data->bank_name}}</td>
 	<td>{{$data->fees}}</td>

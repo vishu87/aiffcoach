@@ -119,4 +119,5 @@ ALTER TABLE `license`  ADD `duration` INT NOT NULL DEFAULT '0'  AFTER `user_type
 
 ALTER TABLE `coach_documents` CHANGE `start_date` `start_date` DATE NULL, CHANGE `expiry_date` `expiry_date` DATE NULL;
 
+ALTER TABLE `courses`  ADD `postponed` INT(1) NULL  AFTER `registration_end`;
 
