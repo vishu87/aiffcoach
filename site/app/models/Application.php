@@ -8,8 +8,8 @@ class Application extends Eloquent {
 	public static function Status(){
 		return array(
 			"0" => "Pending for Approval",
-			"1" => "Approved",
-			"2" => "Selected for Course",
+			"1" => "Shortlisted",
+			"2" => "Selected",
 			"3" => "Payments Approved",
 			"4" => "Referred Back",
 			"5" => "Rejected"

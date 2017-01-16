@@ -68,7 +68,9 @@
 						<?php
 							$three_months = date("Y-m-d",strtotime("-3 months"));
 						?>
-						@if($coach_licenses[$prerequisite]["start_date"] < $three_months )
+						@if($coach_licenses[$prerequisite]["status"] == 0 )
+							<span class="color-green"><i class="fa fa-check"></i> {{$licenses[$prerequisite]}}</span><span class="color-red"> (License available but not approved or profile is under approval)</span>
+						@elseif($coach_licenses[$prerequisite]["start_date"] < $three_months )
 							<span class="color-green"><i class="fa fa-check"></i> {{$licenses[$prerequisite]}}</span>
 						@else
 							<span class="color-red"><i class="fa fa-remove"></i> {{$licenses[$prerequisite]}} (Your license is registered on {{date("d-m-Y",strtotime($coach_licenses[$prerequisite]["start_date"]))}}. You must complete {{$coach_licenses[$prerequisite]["duration"]}} months under this license to apply for the course.)</span>
@@ -93,7 +95,7 @@
 			</div>
 		@endif
 		
-	@elseif($course->registration_end > $today)
+	@elseif($course->registration_end >= $today)
 		{{Form::open(array('url'=>'coach/courses/apply/'.$course->id,'method'=>'post','files'=>'true','class'=>"check_form"))}}
 	        <div class="row">
 	        	<div class="col-md-6">

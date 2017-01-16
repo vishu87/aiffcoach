@@ -5,7 +5,7 @@
 	<td>{{$data->fees}} Rs</td>
 	<td>
 		{{(isset($status[$data->status]))?$status[$data->status]:''}}
-		@if($data->status == 1)
+		@if($data->status == 2)
 			<span class="badge badge-danger badge-roundless"> Please fill payment details </span>
 		@endif
 	</td>

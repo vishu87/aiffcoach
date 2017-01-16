@@ -71,7 +71,6 @@
 				</div>
 			</div>
 
-			@if(Session::get('privilege') == 2)
 			<div class="row detail">
 				<div class="col-md-12">
 					<span>Pre Requisites</span>
@@ -81,7 +80,9 @@
 								<?php
 									$three_months = date("Y-m-d",strtotime("-3 months"));
 								?>
-								@if($coach_licenses[$prerequisite]["start_date"] < $three_months )
+								@if($coach_licenses[$prerequisite]["status"] == 0 )
+									<span class="color-green"><i class="fa fa-check"></i> {{$licenses[$prerequisite]}}</span><span class="color-red"> (License available but not approved or profile is under approval)</span>
+								@elseif($coach_licenses[$prerequisite]["start_date"] < $three_months )
 									<span class="color-green"><i class="fa fa-check"></i> {{$licenses[$prerequisite]}}</span>
 								@else
 									<span class="color-red"><i class="fa fa-remove"></i> {{$licenses[$prerequisite]}} (Your license is registered on {{date("d-m-Y",strtotime($coach_licenses[$prerequisite]["start_date"]))}}. You must complete {{$coach_licenses[$prerequisite]["duration"]}} months under this license to apply for the course.)</span>
@@ -95,24 +96,11 @@
 					@endif
 				</div>
 			</div>
-			@else
-			<div class="row detail">
-				<div class="col-md-12">
-					<span>Pre Requisites</span>
-					@if(sizeof($prerequisites) > 0)
-						@foreach($prerequisites as $prerequisite)
-							<span class="">{{$licenses[$prerequisite]}}</span>
-						@endforeach
-					@else
-						Not Applicable
-					@endif
-				</div>
-			</div>
-			@endif
+
 		</div>
 
-		@if($payment && false)
-			@if($payment->check_status($application))
+		@if($payment && $application->status == 2)
+			@if($payment->status == 0)
 				@include('coaches.applications.payment')
 			@else
 				@include('coaches.applications.payment_view')
@@ -130,7 +118,6 @@
 					</div>
 				@endif
 				@include('admin.applications.log_box')
-
 				<?php $count_log++; ?>
 			@endforeach
 		</div>

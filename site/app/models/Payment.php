@@ -1,6 +1,5 @@
 <?php
 
-
 class Payment extends Eloquent {
 
 	protected $table = 'payment';
@@ -24,7 +23,7 @@ class Payment extends Eloquent {
 
 	public function check_status($application){
 		$var = false;
-		if(Session::get('privilege') == 2){
+		if(Session::get('privilege') == 2 && $application->status == 2){
 			$var = true;
 		} else {
 			if( ($application->status == 2) ){

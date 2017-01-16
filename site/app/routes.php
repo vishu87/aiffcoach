@@ -207,7 +207,10 @@ Route::group(["before"=>['auth']],function(){
 			Route::group(["prefix"=>'Applications'],function(){
 				Route::get('/','ApplicationController@ApprovedApplications');
 				Route::get('/all','ApplicationController@ApprovedApplications');
+				Route::delete('/select/{application_id}','ApplicationController@selectApplication'); // but it is not deleting anything
 			});
+
+			Route::get('/payment/approve/{payment_id}','PaymentController@approvePaymentStatus');
 		});
 	});
 });

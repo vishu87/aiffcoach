@@ -111,7 +111,6 @@
 				<th style="width:50px">SN</th>
 				<th>Course Name</th>
 				<th>Coach Name</th>
-				<th>Remark</th>
 				<th>Status</th>
 				<th>#</th>
 			</tr></thead>

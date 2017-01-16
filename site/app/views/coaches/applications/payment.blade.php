@@ -50,6 +50,9 @@
 			</div>
 			<div style="">
 				<button type="submit" class="btn blue">Submit</button>
+				@if(Session::get('privilege') == 2 && $payment->status == 0)
+					<a href="{{url('/admin/payment/approve/'.$payment->id)}}" class="btn green">Approve Payment</a>
+				@endif
 			</div>
 		{{Form::close()}}
 	</div>

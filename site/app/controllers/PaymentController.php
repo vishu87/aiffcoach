@@ -114,6 +114,15 @@ class PaymentController extends BaseController {
             return Redirect::back()->withInput()->with('failure','Please fill all the fields');
         }
     }
+
+    public function approvePaymentStatus($payment_id){
+        $payment = Payment::find($payment_id);
+        
+        $payment->status = ($payment->status == 0)?1:0;
+        $payment->save();
+
+        return Redirect::back();
+    }
 }
 
 

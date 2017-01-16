@@ -16,12 +16,6 @@ class ApplicationController extends BaseController {
 
         $sql = Application::applications()->where('courses.user_type',Auth::user()->manage_official_type);
 
-        if(Input::has('course')){
-            if(Input::get('course') != '' && Input::get('course') != 0){
-                $sql = $sql->where('applications.course_id',Input::get('course'));
-            }
-        }
-
         $application_status = 0;
 
         if(Input::has('status')){
@@ -29,7 +23,19 @@ class ApplicationController extends BaseController {
                 $application_status = Input::get('status');
             }
         }
-        $sql = $sql->where('applications.status',$application_status);
+
+        if($application_status == 3){
+            $sql = $sql->join('payment','payment.application_id','=','applications.id')->where('payment.status',1);
+        } else {
+            $sql = $sql->where('applications.status',$application_status);
+        }
+
+        if(Input::has('course')){
+            if(Input::get('course') != '' && Input::get('course') != 0){
+                $sql = $sql->where('applications.course_id',Input::get('course'));
+            }
+        }
+
 
         $input_string = 'admin/Applications/all?';
 
@@ -129,10 +135,10 @@ class ApplicationController extends BaseController {
         $coach_licenses = array();
 
         if($course->prerequisite_id != ''){
-            $coach_licenses_fetch = CoachLicense::select('coach_licenses.*','license.duration')->join('license','license.id','=','coach_licenses.license_id')->where('coach_id', Auth::user()->coach_id)->whereIn('license_id',$prerequisites)->where('status',1)->get();
+            $coach_licenses_fetch = CoachLicense::select('coach_licenses.*','license.duration')->join('license','license.id','=','coach_licenses.license_id')->where('coach_id', Auth::user()->coach_id)->whereIn('license_id',$prerequisites)->get();
             foreach ($coach_licenses_fetch as $license) {
-                $coach_licenses[$license->license_id] = array("start_date"=>$license->start_date, "duration" => $license->duration);
-            } 
+                $coach_licenses[$license->license_id] = array("start_date"=>$license->start_date, "duration" => $license->duration, "status" => $license->status );
+            }
         }
 
         $licenses = License::licenseList();
@@ -159,9 +165,9 @@ class ApplicationController extends BaseController {
 
         if($course->prerequisite_id != ''){
 
-            $coach_licenses_fetch = CoachLicense::select('coach_licenses.*','license.duration')->join('license','license.id','=','coach_licenses.license_id')->where('coach_id', $application->coach_id)->whereIn('license_id',$prerequisites)->where('status',1)->get();
+            $coach_licenses_fetch = CoachLicense::select('coach_licenses.*','license.duration')->join('license','license.id','=','coach_licenses.license_id')->where('coach_id', $application->coach_id)->whereIn('license_id',$prerequisites)->get();
             foreach ($coach_licenses_fetch as $license) {
-                $coach_licenses[$license->license_id] = array("start_date"=>$license->start_date, "duration" => $license->duration);
+                $coach_licenses[$license->license_id] = array("start_date"=>$license->start_date, "duration" => $license->duration, "status" => $license->status );
             } 
         }
 
@@ -205,6 +211,26 @@ class ApplicationController extends BaseController {
         } else {
             return Redirect::back()->with('failure','You have already applied for this course');
         }
+    }
+
+    public function selectApplication($application_id){
+        
+        $application = Application::find($application_id);
+        $application->status = 2;
+        $application->save();
+        
+        $check_payment = Payment::where('application_id',$application_id)->count();
+        if($check_payment == 0){
+            $payment = new Payment;
+            $payment->application_id = $application_id;
+            $course_row = Course::select('fees')->where('id',$application->course_id)->first();
+            $payment->fees = $course_row->fees;
+            $payment->save();
+        }
+
+        $data['success'] = true;
+        $data['message'] = 'Selected';
+        return json_encode($data);
     }
 
     public function postLog($log_id){

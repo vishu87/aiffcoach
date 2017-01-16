@@ -5,6 +5,9 @@
 		</div>
 	</div>
 	<div class="portlet-body">
+		@if($payment->status == 1)
+			<div class="alert alert-success">Payment has been approved</div>
+		@endif
 		<div class="row">
 			<div class="col-md-12 form-group">
 				<label>Payment Method</label><br>
@@ -50,5 +53,9 @@
 				</div>
 			</div>
 		</div>
+		@if(Session::get('privilege') == 2 && $payment->status == 1)
+			<a href="{{url('/admin/payment/approve/'.$payment->id)}}" class="btn red">Disapprove Payment</a>
+		@endif
 	</div>
+
 </div>

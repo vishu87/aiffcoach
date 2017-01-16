@@ -54,7 +54,7 @@
 								@if(!isset($status))
 									@if(isset($data->application_id))
 										<a type="button" class="btn green btn-sm " href="{{url('control/applications/details/'.$data->application_id)}}">View Application</a>
-										@if($data->application_status == 1)
+										@if($data->application_status == 2)
 											<span class="badge badge-danger badge-roundless"> Please fill payment details </span>
 										@endif
 										@if($data->application_status == 4)
