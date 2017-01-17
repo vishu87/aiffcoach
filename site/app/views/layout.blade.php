@@ -5,10 +5,10 @@
   <!-- BEGIN HEADER INNER -->
   <div class="page-header-inner">
     <!-- BEGIN LOGO -->
-    <div class="page-logo" style="padding-top:10px; width: 315px;">
+    <div class="page-logo" style="padding-top:10px; width: 500px;">
     
 <!--       {{HTML::image("assets/admin/img/logo.png","Logo",["class"=>"logo-default","style"=>"width:40px"])}} -->
-      <span class="">Coach Registration System</span>
+      <span class="">AIFF Coach Education Registration System</span>
       <div class="menu-toggler sidebar-toggler hide">
         <!-- DOC: Remove the above "hide" to enable the sidebar toggler button on header -->
       </div>

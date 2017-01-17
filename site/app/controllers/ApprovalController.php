@@ -226,7 +226,7 @@ class ApprovalController extends BaseController {
                     $coach->save();
                     // break;
                     
-                    if(Session::get('privilege') == 2){ // only in case of admin
+                    if(Session::get('privilege') == 2 && Input::get('type') == 1){ // only in case of admin and approval
 
                         // aprove coach documents
                         $CoachDocument = CoachDocument::where('coach_id',$coach->id)->where('status',0)->get();

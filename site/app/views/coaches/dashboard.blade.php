@@ -52,9 +52,9 @@
 								@endif
 							</td>
 							<td>{{$data->venue}}</td>
-							<td>{{$data->start_date}}</td>
-							<td>{{$data->registration_start}}</td>
-							<td>{{$data->registration_end}}</td>
+							<td>{{date("d-M-Y",strtotime($data->start_date))}}</td>
+							<td>{{date("d-M-Y",strtotime($data->registration_start))}}</td>
+							<td>{{date("d-M-Y",strtotime($data->registration_end))}}</td>
 							<td>
 								@if(!isset($status))
 									@if(isset($data->application_id))

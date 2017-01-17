@@ -209,7 +209,11 @@ class AdminController extends BaseController {
 
   public function ApplicationsResults(){
     $status = Application::status();
-    $courses = ["" => "Select Course"] + Course::where('user_type',Auth::user()->manage_official_type)->lists('name','id');
+    $courses[""] = "All Courses";
+    $courses_get = Course::where('user_type',Auth::user()->manage_official_type)->get();
+    foreach ($courses_get as $course) {
+        $courses[$course->id] = $course->name.', '.$course->venue.', '.date("d-m-Y", strtotime($course->start_date));
+    }
     if(Input::has('course')){
       $sql = Application::select('courses.name as course_name','courses.id as course_id','applications.id','applications.status','coaches.full_name','license.name as license_name','application_result.status as finalResult','application_result.remarks')
         ->join('coaches','applications.coach_id','=','coaches.id')

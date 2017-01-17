@@ -110,6 +110,7 @@
 			<tr>
 				<th style="width:50px">SN</th>
 				<th>Course Name</th>
+				<th>Venue</th>
 				<th>Coach Name</th>
 				<th>Status</th>
 				<th>#</th>

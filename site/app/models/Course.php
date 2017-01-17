@@ -11,6 +11,12 @@ class Course extends Eloquent {
             ->join('license','courses.license_id','=','license.id')->where('end_date','>=',$currentDate);
 		return $query;
 	}
+	public static function Upcoming(){
+		$currentDate = date('y-m-d',strtotime('now'));
+		$query = DB::table('courses')->select('courses.*','license.name as license_name','license.authorised_by')
+            ->join('license','courses.license_id','=','license.id')->where('registration_start','>',$currentDate);
+		return $query;
+	}
 	public static function Inactive(){
 		$currentDate = date('y-m-d',strtotime('now'));
 		$query = DB::table('courses')->select('courses.*','license.name as license_name','license.authorised_by')

@@ -73,11 +73,11 @@
           <i class="fa fa-chevron-right"></i>
           Active</a>
         </li>
-        <!-- <li class="@if($sidebar == 'courses' && $subsidebar == 3 ) active @endif">
-          <a href="{{url('admin/Courses/inactive')}}">
-          <i class="fa fa-group"></i>
-          Inactive</a>
-        </li> -->
+        <li class="@if($sidebar == 'courses' && $subsidebar == 3 ) active @endif">
+          <a href="{{url('admin/Courses/upcoming')}}">
+          <i class="fa fa-chevron-right"></i>
+          Upcoming</a>
+        </li>
         <li class="@if($sidebar == 'courses' && $subsidebar == 1 ) active @endif" style="display:inherit">
           <a href="{{url('admin/Courses')}}">
           <i class="fa fa-chevron-right"></i>

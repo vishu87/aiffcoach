@@ -30,7 +30,13 @@ class PaymentController extends BaseController {
           }
         }
         $payments = $sql->skip(($page_id-1)*$max_per_page)->take($max_per_page)->get();
-        $courses = [""=>"Select"]+Course::where('user_type',Auth::user()->manage_official_type)->lists('name','id');
+        
+        $courses[""] = "All Courses";
+        $courses_get = Course::where('user_type',Auth::user()->manage_official_type)->get();
+        foreach ($courses_get as $course) {
+            $courses[$course->id] = $course->name.', '.$course->venue.', '.date("d-m-Y", strtotime($course->start_date));
+        }
+
         $status = Application::status();
         $this->layout->sidebar = View::make('admin.sidebar',["sidebar"=>'payment','subsidebar'=>1]);
         $this->layout->main = View::make('admin.payment.list',['courses'=>$courses,'status'=>$status,'payments'=>$payments,"title"=>'Payment Due List','flag'=>1,"total" => $total, "page_id"=>$page_id, "max_per_page" => $max_per_page, "total_pages" => $total_pages,'input_string'=>$input_string]);

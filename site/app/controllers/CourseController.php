@@ -17,6 +17,13 @@ class CourseController extends BaseController {
         $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'courses','subsidebar'=>2]);
         $this->layout->main = View::make('admin.courses.list',['courses'=>$courses,'title'=>'Active Courses','flag'=>2]);
     }
+
+    public function upcoming(){
+        $courses =  Course::Upcoming()->where('courses.user_type',Auth::user()->manage_official_type)->get();
+        $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'courses','subsidebar'=>3]);
+        $this->layout->main = View::make('admin.courses.list',['courses'=>$courses,'title'=>'Upcoming Courses','flag'=>2]);
+    }
+
     public function inactive(){
         $courses =  Course::Inactive()->where('courses.user_type',Auth::user()->manage_official_type)->get();
         $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'courses','subsidebar'=>3]);
@@ -195,6 +202,14 @@ class CourseController extends BaseController {
         $this->layout->sidebar = View::make('coaches.sidebar',['sidebar'=>5,'subsidebar'=>1]);
         $this->layout->main = View::make('coaches.courses.list',['courses'=>$courses,'title'=>'Active Courses']);
     }
+
+    public function upcomingCourse(){
+        $user_type = explode(',',Auth::user()->official_types);
+        $courses =  Course::Upcoming()->whereIn('courses.user_type',$user_type)->get();
+        $this->layout->sidebar = View::make('coaches.sidebar',['sidebar'=>5,'subsidebar'=>1]);
+        $this->layout->main = View::make('coaches.courses.list',['courses'=>$courses,'title'=>'Upcoming Courses']);
+    }
+
     public function inactiveCourse(){
         $user_type = explode(',',Auth::user()->official_types);
         $courses =  Course::Inactive()->whereIn('courses.user_type',$user_type)->get();

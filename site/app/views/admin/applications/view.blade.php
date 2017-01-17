@@ -1,6 +1,7 @@
 <tr id="coach_{{$data->id}}">
 	<td>{{($page_id-1)*$max_per_page + $count}}</td>
 	<td>{{$data->course_name}}</td>
+	<td>{{$data->venue}}</td>
 	<td>
 		<a href="{{url('/admin/viewCoachDetails/'.$data->coach_id)}}" target="_blank">{{$data->full_name}}</a>
 		

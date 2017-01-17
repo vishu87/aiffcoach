@@ -45,13 +45,19 @@
         <li class="@if($sidebar == 5 && $subsidebar == 1 ) active @endif">
           <a href="{{url('coach/courses/active')}}">
           <i class="fa fa-chevron-right"></i>
-          Active Courses</a>
+          Active</a>
+        </li>
+
+        <li class="@if($sidebar == 5 && $subsidebar == 3 ) active @endif">
+          <a href="{{url('coach/courses/upcoming')}}">
+          <i class="fa fa-chevron-right"></i>
+          Upcoming</a>
         </li>
 
         <li class="@if($sidebar == 5 && $subsidebar == 2 ) active @endif">
           <a href="{{url('coach/courses/inactive')}}">
           <i class="fa fa-chevron-right"></i>
-          Past Courses</a>
+          Past</a>
         </li>
       </ul>
     </li>

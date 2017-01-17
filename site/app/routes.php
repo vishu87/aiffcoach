@@ -30,6 +30,25 @@ Route::get('/correctData', function(){
     		$doc->save();
     	}
     }
+
+    $licenses = CoachLicense::select('coach_licenses.id','coaches.status as coach_status')->join('coaches','coaches.id','=','coach_licenses.coach_id')->get();
+    foreach ($licenses as $license) {
+    	if($license->coach_status != 1){
+    		$doc = coachLicense::find($license->id);
+    		$doc->status = 0;
+    		$doc->save();
+    	}
+    }
+
+    $employmentDetails = EmploymentDetails::select('employment_details.id','coaches.status as coach_status')->join('coaches','coaches.id','=','employment_details.coach_id')->get();
+    foreach ($employmentDetails as $emp) {
+    	if($emp->coach_status != 1){
+    		$doc = EmploymentDetails::find($emp->id);
+    		$doc->status = 0;
+    		$doc->save();
+    	}
+    }
+
 });
 
 Route::post('/tm_admin', 'UserController@postLogin');
@@ -114,6 +133,7 @@ Route::group(['prefix'=>'coach','before'=>'auth'], function () {
 	Route::group(["prefix"=>'courses'],function(){
 		Route::get('/','CourseController@allCourses');
 		Route::get('/active','CourseController@activeCourse');
+		Route::get('/upcoming','CourseController@upcomingCourse');
 		Route::get('/inactive','CourseController@inactiveCourse');
 		Route::get('/details/{course_id}','ApplicationController@details');
 		Route::post('/apply/{course_id}','ApplicationController@applyCourse');
@@ -178,6 +198,7 @@ Route::group(["before"=>['auth']],function(){
 				Route::get('/','CourseController@index');
 				Route::get('/active','CourseController@active');
 				Route::get('/inactive','CourseController@inactive');
+				Route::get('/upcoming','CourseController@upcoming');
 				Route::get('/add','CourseController@add');
 				Route::post('/insert','CourseController@insert');
 				Route::get('/edit/{id}','CourseController@edit');
