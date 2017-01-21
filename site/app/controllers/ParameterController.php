@@ -21,7 +21,7 @@ class ParameterController extends BaseController {
         $rules = ['parameter'=>'required','max_marks'=>'required'];    
         $validator = Validator::make($cre,$rules);
         if($validator->passes()){
-            $check = Parameter::where('parameter',Input::get('parameter'))->where('active','!=',1)->count();
+            $check = Parameter::where('parameter',Input::get('parameter'))->where('active','!=',1)->where('user_type',Auth::user()->manage_official_type)->count();
             if($check>0){
                 return Redirect::back()->with('failure','A Parameter is Already Exits with this name');
             }

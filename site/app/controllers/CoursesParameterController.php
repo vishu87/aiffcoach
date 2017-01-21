@@ -21,7 +21,8 @@ class CoursesParameterController extends BaseController {
 
     	$licenses =[""=>"Select"] + License::where('user_type',Auth::user()->manage_official_type)->whereNotIn('id',$licenseArr)->lists('name','id');
 
-        $parameters = Parameter::where('active',0)->get();
+        $parameters = Parameter::where('user_type',Auth::user()->manage_official_type)->where('active',0)->get();
+
     	$coursesParameter = CourseParameter::select('courses_parameter.id','parameters.parameter','license.name as license_name','courses_parameter.license_id','courses_parameter.parameter_id')->leftJoin('parameters','courses_parameter.parameter_id','=','parameters.id')->leftJoin('license','courses_parameter.license_id','=','license.id')->where('courses_parameter.active',0)->orderBy('courses_parameter.license_id','asc')->get();
         $parameter = [];
         if(sizeof($coursesParameter)>0){
@@ -59,7 +60,7 @@ class CoursesParameterController extends BaseController {
 
     public function edit($id){
         $licenses = [""=>"Select"] + License::where('user_type',Auth::user()->manage_official_type)->lists('name','id');
-        $parameters = Parameter::where('active',0)->get();
+        $parameters = Parameter::where('user_type',Auth::user()->manage_official_type)->where('active',0)->get();
         $coursesParameter  = CourseParameter::select('courses_parameter.id','parameters.parameter','license.name as license_name','courses_parameter.license_id')->leftJoin('parameters','courses_parameter.parameter_id','=','parameters.id')->leftJoin('license','courses_parameter.license_id','=','license.id')->where('courses_parameter.active',0)->orderBy('courses_parameter.license_id','asc')->get();
 
         $parameter = CourseParameter::find($id);
@@ -103,14 +104,16 @@ class CoursesParameterController extends BaseController {
 
    
     public function delete($id){
-        $count = CourseParameter::where('id',$id)->count();
-        if($count<1){
+        $count = CourseParameter::where('license_id',$id)->count();
+        if($count < 1){
             $data['success'] = false;
             $data['message'] = "Can Not Delete Course";
+        }else{
+
+            CourseParameter::where('license_id',$id)->delete();
+            $data['success'] = true;
+            $data['message'] ="License Parameter Deleted Successully";
         }
-        CourseParameter::where('id',$id)->update(["active"=>1]);
-        $data['success'] = true;
-        $data['message'] ="Unit Deleted Successully";
         return json_encode($data);
     }
 

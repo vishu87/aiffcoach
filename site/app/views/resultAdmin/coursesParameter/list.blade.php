@@ -79,7 +79,8 @@
 					</td>
 					<td>
 						<a type="button" class="btn btn-sm yellow " href="{{url('admin/coursesParameter/edit/'.$data->id)}}" ><i class="fa fa-edit"></i> Edit</a>
-						<button type="button" class="btn btn-sm red delete-div" div-id="parameter_{{$data->id}}"  action="{{'admin/coursesParameter/delete/'.$data->id}}"> <i class="fa fa-remove"></i></button>
+
+						<button type="button" class="btn btn-sm red delete-div" div-id="parameter_{{$data->id}}"  action="{{'admin/coursesParameter/delete/'.$data->license_id}}"> <i class="fa fa-remove"></i></button>
 					</td>
 				</tr>
 				@endif
