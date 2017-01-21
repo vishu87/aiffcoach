@@ -5,7 +5,7 @@
 	<div class="col-md-6">
 		<a class="btn green pull-right" href="{{url('/admin/coursesExport/'.$flag)}}">Export Excel</a>
 
-		<a type="button" class="btn green pull-right" style="margin-right:10px;" href="{{url('admin/Courses/add')}}"> <i class="fa fa-plus"></i> Add Course</a>
+		<!-- <a type="button" class="btn green pull-right" style="margin-right:10px;" href="{{url('admin/Courses/add')}}"> <i class="fa fa-plus"></i> Add Course</a> -->
 	</div>
 </div>
 @if(Session::has('success'))

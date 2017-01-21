@@ -110,7 +110,7 @@ class ApplicationController extends BaseController {
         $count = Application::where('id',$id)->count();
         if($count<1){
             $data['success'] = false;
-            $data['message'] = 'This Item does not exist';
+            $data['message'] = 'This Application does not exist';
         }
         else{
             Application::find($id)->delete();
@@ -346,5 +346,18 @@ class ApplicationController extends BaseController {
         $data['message'] = html_entity_decode(View::make('admin.applications.editLog',['log'=>$log , 'flag'=>true]));
         return json_encode($data);
 
+    }
+
+    public function deleteAppLog($log_id){
+        $log = ApplicationLog::find($log_id)->delete();
+
+        if($log){
+          $data['success'] = true;
+          $data['message'] = 'Remark Deleted Successfully';
+        }else{
+          $data['success'] = false;
+          $data['message'] = 'Remark no longer exist';
+        }
+        return json_encode($data);
     }
 }

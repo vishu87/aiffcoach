@@ -43,13 +43,13 @@
 				<span class="error">{{$errors->first('end_date')}}</span>
 			</div>
 			<div class="col-md-3 form-group clear">
-				{{Form::label('Registration Start Date')}} <span class="error"> *</span>
-				{{Form::text('registration_start',(isset($course))?date('d-m-Y',strtotime($course->registration_start)):'',["class"=>"form-control datepicker","required"=>"true","date_en"=>'true'])}}
+				{{Form::label('Registration Start Date')}} 
+				{{Form::text('registration_start',(isset($course))?($course->registration_start != null)?date('d-m-Y',strtotime($course->registration_start)):'':'',["class"=>"form-control datepicker","date_en"=>'true'])}}
 				<span class="error">{{$errors->first('registration_start')}}</span>
 			</div>
 			<div class="col-md-3 form-group">
-				{{Form::label('Registration End Date')}} <span class="error"> *</span>
-				{{Form::text('registration_end',(isset($course))?date('d-m-Y',strtotime($course->registration_end)):'',["class"=>"form-control datepicker","required"=>"true","date_en"=>'true'])}}
+				{{Form::label('Registration End Date')}} 
+				{{Form::text('registration_end',(isset($course))?($course->registration_end != null)?date('d-m-Y',strtotime($course->registration_end)):'':'',["class"=>"form-control datepicker","date_en"=>'true'])}}
 				<span class="error">{{$errors->first('registration_end')}}</span>
 			</div>	
 			<div class="col-md-3 form-group">

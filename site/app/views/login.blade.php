@@ -32,6 +32,13 @@
 <!-- END HEAD -->
 
 <body class="login">
+  <div class="row">
+    <div class="col-md-12">
+      <div style="padding: 10px;">
+        <a href="{{url('/view-all-coaches')}}" class="btn pull-right blue">View All Coaches</a>
+      </div>
+    </div>
+  </div>
   <div class="logo">
     <img src="{{url('assets/img/aiff.png')}}" style="width:240px; height:auto">
   </div>

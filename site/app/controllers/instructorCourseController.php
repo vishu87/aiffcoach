@@ -19,11 +19,15 @@ class instructorCourseController extends BaseController {
     		->where('applications.status',3)
     		->get();
 
-    	$course_parameters = CourseParameter::select('parameters.parameter','parameters.max_marks')
+    	$course_parameters = CourseParameter::select('parameters.*')
     		->join('license','license.id','=','courses_parameter.license_id')
     		->join('parameters','parameters.id','=','courses_parameter.parameter_id')
     		->get();	
     	$this->layout->sidebar = View::make('resultAdmin.sidebar',['sidebar'=>12]);
         $this->layout->main = View::make('resultAdmin.courses.applications',["applications" => $applications , "course_details" => $course_details , "course_parameters" => $course_parameters]);
     }
+
+    // public function addResult(){
+        
+    // }
 }

@@ -461,7 +461,22 @@ class CoachController extends BaseController {
     public function coachLicense(){
         $id = Auth::User()->coach_id;
         $coachLicense = CoachLicense::listing()->where('coach_id',$id)->get();
-        $licenses = ["" => "Select"] + License::where('user_type',Auth::user()->official_types)->lists('name','id');
+
+        $sql = License::where('user_type',Auth::user()->official_types);
+
+        $licenseUploaded = [];
+        if(sizeof($coachLicense) > 0){
+            foreach ($coachLicense as $license) {
+                array_push($licenseUploaded, $license->license_id);
+            }
+
+            $sql = $sql->whereNotIn('id',$licenseUploaded);
+        }
+
+        $licenses = $sql->lists('name','id');
+
+        $licenses = ["" => "Select"] + $licenses;
+
         $this->layout->sidebar = View::make('coaches.sidebar',["sidebar"=>'profile','subsidebar'=>2]);
         $this->layout->main = View::make('coaches.profile',['coachLicense'=>$coachLicense,"profileType"=>6,'title'=>'Licenses',"licenses"=>$licenses]);
     }
@@ -512,4 +527,51 @@ class CoachController extends BaseController {
         }
         return json_encode($data);
     }   
+
+    public function viewAllCoaches(){
+        
+        $sql = Coach::listing()->approved();
+        
+        if(Input::get("license_id") != ''){
+          $sql = $sql->join('coach_licenses','coach_licenses.coach_id','=','coaches.id')->where('coach_licenses.license_id','=',Input::get('license_id'));
+        }
+        if(Input::get("registration_id") != ''){
+          $sql = $sql->where('coaches.registration_id','LIKE','%'.Input::get('registration_id').'%');
+        }
+        if(Input::get("official_name") != ''){
+          $sql = $sql->where('coaches.full_name','LIKE','%'.Input::get('official_name').'%');
+        }
+
+
+        if(Input::get("state_id") != ''){
+          $sql = $sql->where('coaches.state_id',Input::get('state_id'));
+        }
+
+        $total = $sql->count();
+        $max_per_page = 100;
+        $total_pages = ceil($total/$max_per_page);
+        if(Input::has('page')){
+          $page_id = Input::get('page');
+        } else {
+          $page_id = 1;
+        }
+
+        $input_string = 'view-all-coaches?';
+        $count_string = 0;
+        foreach (Input::all() as $key => $value) {
+          if($key != 'page'){
+            $input_string .= ($count_string == 0)?'':'&';
+            $input_string .= $key.'='.$value;
+            $count_string++;
+          }
+        }
+        
+        $coaches = $sql->skip(($page_id-1)*$max_per_page)->take($max_per_page)->get();
+        $status = Coach::Status();
+
+        $licenses = License::licenseList();
+        $states = State::states();
+
+        return View::make('coaches',['coaches'=>$coaches,"title"=>'Registered Coaches', "status" => $status,'flag'=>1,"total" => $total, "page_id"=>$page_id, "max_per_page" => $max_per_page, "total_pages" => $total_pages,'input_string'=>$input_string , "licenses" => $licenses , "states" => $states]);
+    }
 }

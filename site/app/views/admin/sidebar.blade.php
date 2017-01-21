@@ -68,6 +68,11 @@
       <span class="arrow @if($sidebar == 'courses' ) open @endif"></span>
       </a>
       <ul class="sub-menu">
+        <li class="@if($sidebar == 'courses' && $subsidebar == 4 ) active @endif">
+          <a href="{{url('admin/Courses/add')}}">
+          <i class="fa fa-chevron-right"></i>
+          Add Course</a>
+        </li>
         <li class="@if($sidebar == 'courses' && $subsidebar == 2 ) active @endif">
           <a href="{{url('admin/Courses/active')}}">
           <i class="fa fa-chevron-right"></i>

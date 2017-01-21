@@ -22,7 +22,8 @@
 	<td>
 		{{$log_data->remarks}}
 		@if(Auth::user()->privilege == 2)
-		<button class="btn btn-xs btn-warning edit-div" modal-title="Edit Remarks" div-id="approval_log_{{$log_data->id}}" count="{{$count}}" action="{{'admin/editRemark/'.$log_data->id}}"><i class = "fa fa-edit" ></i></button>
+		<button class="btn btn-xs yellow edit-div" modal-title="Edit Remarks" div-id="approval_log_{{$log_data->id}}" count="{{$count}}" action="{{'admin/editRemark/'.$log_data->id}}"><i class = "fa fa-edit" ></i></button>
+		<button class="btn btn-xs red delete-div" div-id="approval_log_{{$log_data->id}}" count="{{$count}}" action="{{'admin/deleteRemark/'.$log_data->id}}"><i class = "fa fa-remove" ></i></button>
 		@endif
 	</td>
 	<td>

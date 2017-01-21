@@ -17,5 +17,6 @@
 @else
 <div class="log-remarks" id="app_log_{{$log->id}}">
 	{{$log->remarks}} &nbsp;<button class="btn btn-xs edit-div yellow" modal-title="Edit Remarks" div-id="app_log_{{$log->id}}" action="control/editAppLog/{{$log->id}}"><i class="fa fa-edit"></i></button>
+	<button class="btn btn-xs delete-div red" div-id="app_log_{{$log->id}}"  action="control/deleteAppLog/{{$log->id}}"><i class="fa fa-remove"></i></button>
 </div>
 @endif

@@ -62,6 +62,7 @@ Route::get('/logout', function(){
 });
 Route::post('/register', 'CoachController@register');
 
+Route::get('/view-all-coaches','CoachController@viewAllCoaches');
 Route::group(['before' => 'auth'], function () {
     Route::post('/approve/{entity_type}/{etity_id}','ApprovalController@postApprove');
     Route::get('/resultExport','ExcelExportController@resultExport');
@@ -78,6 +79,9 @@ Route::group(['before' => 'auth',"prefix"=>'control'], function () {
     Route::get('/applications/details/{application_id}','ApplicationController@detailsApplication');
     Route::get('editAppLog/{log_id}','ApplicationController@editAppLog');
     Route::put('updateAppLog/{log_id}','ApplicationController@updateAppLog');
+
+    Route::delete('deleteAppLog/{log_id}','ApplicationController@deleteAppLog');
+
     Route::post('/applications/log/{application_id}','ApplicationController@postLog');
     Route::put('/payments/{payment_id}','PaymentController@putPayment');
 });
@@ -158,6 +162,8 @@ Route::group(["before"=>['auth']],function(){
 			
 			Route::get('/editRemark/{approval_log_id}','AdminController@editRemark');
 			Route::put('/updateRemark/{approval_log_id}','AdminController@updateRemark');
+
+			Route::delete('/deleteRemark/{approval_log_id}','AdminController@deleteRemark');
 
 			Route::get('/approvedCoach','AdminController@approvedCoach');
 			Route::get('/pendingCoach','AdminController@pendingCoach');
@@ -258,6 +264,7 @@ Route::group(["prefix"=>'resultAdmin','before'=>["auth","resultAdmin"]],function
 	Route::group(["prefix"=>"courses"],function(){
 		Route::get('/','instructorCourseController@index');
 		Route::get('/viewApplications/{course_id}','instructorCourseController@courseApplications');
+		Route::post('/addResult','instructorCourseController@addResult');
 	
 	});
 
