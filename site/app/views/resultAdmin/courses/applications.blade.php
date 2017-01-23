@@ -25,7 +25,7 @@
 
 
 @if(sizeof($applications) > 0)
-	{{Form::open(["url"=>'resultAdmin/addResult',"method"=>"post"])}}
+	{{Form::open(["url"=>'resultAdmin/courses/addResult',"method"=>"post"])}}
 
 	<div class="row" style="padding:20px;">
 		<table class="table table-bordered table-hover">
@@ -41,18 +41,24 @@
 				<tr>	
 					<td>{{$count}}</td>
 					<td>{{$application->coach_name}}</td>
-					<?php for ($i=0; $i <sizeof($course_parameters) ; $i++) { ?>
+					@foreach($course_parameters as $parameter)
 						<td>
-							{{Form::text('mark_id','')}}
+							<div class="input-group">
+                                {{Form::text('parameter_'.$application->id.'_'.$parameter->id,'',["class"=>"form-control"])}}
+                                <span class="input-group-addon">
+                                    / {{$parameter->max_marks}}
+                                </span>
+                            </div>
 						</td>
-					<?php }?>
+					@endforeach
 				</tr>
 				<?php $count++?>
 			@endforeach
 		</table> 
 	</div>
-	<div style="text-align: center;">
-		<button class="btn block blue " >Submit</button>
+	<div class="row">
+		<div class="col-md-offset-2 col-md-4 "  ></div>
+		<button class="btn blue "  >Submit</button>
 	</div>
 	{{Form::close()}}
 @endif

@@ -10,7 +10,17 @@ class CoursesParameterController extends BaseController {
     protected $layout = 'layout';
 
     public function index(){
-    	$licenses =[""=>"Select"] + License::where('user_type',Auth::user()->manage_official_type)->lists('name','id');
+        $addedLicenses = CourseParameter::select('license_id')->groupBy('license_id')->get();
+        $licenseArr = [];
+        if(sizeof($addedLicenses) > 0){
+
+            foreach ($addedLicenses as $license) {
+                array_push($licenseArr,$license->license_id);
+            }
+        }
+
+    	$licenses =[""=>"Select"] + License::where('user_type',Auth::user()->manage_official_type)->whereNotIn('id',$licenseArr)->lists('name','id');
+
         $parameters = Parameter::where('active',0)->get();
     	$coursesParameter = CourseParameter::select('courses_parameter.id','parameters.parameter','license.name as license_name','courses_parameter.license_id','courses_parameter.parameter_id')->leftJoin('parameters','courses_parameter.parameter_id','=','parameters.id')->leftJoin('license','courses_parameter.license_id','=','license.id')->where('courses_parameter.active',0)->orderBy('courses_parameter.license_id','asc')->get();
         $parameter = [];
@@ -35,14 +45,13 @@ class CoursesParameterController extends BaseController {
         $validator = Validator::make($cre,$rules);
         if($validator->passes()){
             $parameters_array = Input::get('parameter_id');
-            for ($i=0; $i <sizeof($parameters_array) ; $i++) { 
-                if($parameters_array[$i]!=0 || $parameters_array[$i]!=''){
-                    $parameter = new CourseParameter;
-                    $parameter->parameter_id = $parameters_array[$i];
-                    $parameter->license_id = Input::get('license_id');
-                    $parameter->save();
-                }
+            foreach ($parameters_array as $param) {
+                $parameter = new CourseParameter;
+                $parameter->parameter_id = $param;
+                $parameter->license_id = Input::get('license_id');
+                $parameter->save();
             }
+            
             return Redirect::back()->with('success','Parameter Added Successully .');
         }
         return Redirect::back()->withErrors($validator)->withInput();
@@ -72,24 +81,21 @@ class CoursesParameterController extends BaseController {
         $this->layout->main = View::make('resultAdmin.coursesParameter.list',['parameter'=>$parameter,'coursesParameter'=>$coursesParameter,'licenses'=>$licenses,'parameters'=>$parameters,'selectedParameters'=>$selectedParameters,"parameter_string"=>$parameter_string]);
     }
 
-    
-    
     public function update($id){
         $cre = ['license_id'=>Input::get('license_id'),'parameter_id'=>Input::get('parameter_id')];
         $rules = ['license_id'=>'required','parameter_id'=>'required'];   
         $validator = Validator::make($cre,$rules);
         if($validator->passes()){
             $parameter = CourseParameter::find($id);
-            CourseParameter::where('license_id',$parameter->license_id)->delete();
+            CourseParameter::where('license_id',Input::get('license_id'))->delete();
             $parameters_array = Input::get('parameter_id');
-            for ($i=0; $i <sizeof($parameters_array) ; $i++) { 
-                if($parameters_array[$i]!=0 || $parameters_array[$i]!=''){
-                    $parameter = new CourseParameter;
-                    $parameter->parameter_id = $parameters_array[$i];
-                    $parameter->license_id = Input::get('license_id');
-                    $parameter->save();
-                }
+            foreach ($parameters_array as $param) {
+                $parameter = new CourseParameter;
+                $parameter->parameter_id = $param;
+                $parameter->license_id = Input::get('license_id');
+                $parameter->save();
             }
+            
             return Redirect::to('admin/coursesParameter')->with('success','Parameter Updated Successully .');
         }
         return Redirect::back()->withErrors($validator)->withInput();

@@ -95,7 +95,7 @@
 			</div>
 		@endif
 		
-	@elseif($course->registration_end >= $today)
+	@elseif($course->registration_end >= $today && $course->registration_start <= $today)
 		{{Form::open(array('url'=>'coach/courses/apply/'.$course->id,'method'=>'post','files'=>'true','class'=>"check_form"))}}
 	        <div class="row">
 	        	<div class="col-md-6">
@@ -115,7 +115,7 @@
       	{{Form::close()}}
     @else
     	<div class="alert alert-danger">
-			Registrations are over
+			Registration not allowed
 		</div>
     @endif
 </div>

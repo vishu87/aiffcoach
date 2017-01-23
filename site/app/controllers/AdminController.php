@@ -380,6 +380,18 @@ class AdminController extends BaseController {
     return json_encode($data);
   }
 
+  public function deleteRemark($approval_log_id){
+    $deleteRemark = Approval::find($approval_log_id)->delete();
+    if($deleteRemark){
+      $data['success'] = true;
+      $data['message'] = 'Remark Deleted Successfully';
+    }else{
+      $data['success'] = false;
+      $data['message'] = 'Remark no longer exist';
+    }
+    return json_encode($data);
+  }
+
   public function logins(){
     $users = User::select('id','name','username','mobile')->where('privilege',1)->orderBy('name','ASC')->get();
     

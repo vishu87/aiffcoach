@@ -121,3 +121,6 @@ ALTER TABLE `coach_documents` CHANGE `start_date` `start_date` DATE NULL, CHANGE
 
 ALTER TABLE `courses`  ADD `postponed` INT(1) NULL  AFTER `registration_end`;
 
+// 21/1/2017
+ALTER TABLE `courses` CHANGE `registration_end` `registration_end` DATE NULL DEFAULT NULL;
+ALTER TABLE `courses` CHANGE `registration_start` `registration_start` DATE NULL DEFAULT NULL;

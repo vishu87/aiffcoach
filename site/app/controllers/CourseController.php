@@ -34,7 +34,7 @@ class CourseController extends BaseController {
         $licenses = [''=>'Select'] + License::where('user_type',Auth::user()->manage_official_type)->lists('name','id');
         $instructors = ['' => 'Select'] + User::where('privilege',3)->lists('name','id');
         // return $instructors;
-        $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'courses','subsidebar'=>1]);
+        $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'courses','subsidebar'=>4]);
         $this->layout->main = View::make('admin.courses.add',['licenses' => $licenses, "instructors" => $instructors]);
     }
 
@@ -53,8 +53,8 @@ class CourseController extends BaseController {
             'name'=>'required',
             'start_date'=>'required|date',
             'end_date'=>'required|date|after:start_date',
-            'registration_start'=>'required|date',
-            'registration_end'=>'required|date|after:registration_start',
+            'registration_start'=>'date',
+            'registration_end'=>'date|after:registration_start',
             'license_id'=>'required',
             'fee'=>'required',
             ];    
@@ -64,8 +64,13 @@ class CourseController extends BaseController {
             $course->name= Input::get('name');
             $course->start_date = date('y-m-d',strtotime(Input::get('start_date')));
             $course->end_date = date('y-m-d',strtotime(Input::get('end_date')));
-            $course->registration_start = date('y-m-d',strtotime(Input::get('registration_start')));
-            $course->registration_end = date('y-m-d',strtotime(Input::get('registration_end')));
+
+            if(Input::get('registration_start') != ''){
+                $course->registration_start = date('y-m-d',strtotime(Input::get('registration_start')));
+            }
+            if(Input::get('registration_end')){
+                $course->registration_end = date('y-m-d',strtotime(Input::get('registration_end')));
+            }
             $course->license_id = Input::get('license_id');
             $course->venue = Input::get('venue');
             $course->description = Input::get('description');
@@ -129,8 +134,8 @@ class CourseController extends BaseController {
             'name'=>'required',
             'start_date'=>'required|date',
             'end_date'=>'required|date|after:start_date',
-            'registration_start'=>'required|date',
-            'registration_end'=>'required|date|after:registration_start',
+            'registration_start'=>'date',
+            'registration_end'=>'date|after:registration_start',
             'license_id'=>'required',
             'fee'=>'required',
             ];   
@@ -141,8 +146,14 @@ class CourseController extends BaseController {
             $course->name= Input::get('name');
             $course->start_date = date('y-m-d',strtotime(Input::get('start_date')));
             $course->end_date = date('y-m-d',strtotime(Input::get('end_date')));
-            $course->registration_start = date('y-m-d',strtotime(Input::get('registration_start')));
-            $course->registration_end = date('y-m-d',strtotime(Input::get('registration_end')));
+            if(Input::get('registration_start') != ''){
+                $course->registration_start = date('y-m-d',strtotime(Input::get('registration_start')));
+            }else{
+                $course->registration_start = null;
+            }
+            if(Input::get('registration_end')){
+                $course->registration_end = date('y-m-d',strtotime(Input::get('registration_end')));
+            }else{$course->registration_end = null;}
             $course->venue = Input::get('venue');
             $course->description = Input::get('description');
             $course->license_id = Input::get('license_id');
@@ -206,7 +217,7 @@ class CourseController extends BaseController {
     public function upcomingCourse(){
         $user_type = explode(',',Auth::user()->official_types);
         $courses =  Course::Upcoming()->whereIn('courses.user_type',$user_type)->get();
-        $this->layout->sidebar = View::make('coaches.sidebar',['sidebar'=>5,'subsidebar'=>1]);
+        $this->layout->sidebar = View::make('coaches.sidebar',['sidebar'=>5,'subsidebar'=>3]);
         $this->layout->main = View::make('coaches.courses.list',['courses'=>$courses,'title'=>'Upcoming Courses']);
     }
 

@@ -24,6 +24,7 @@
 						{{$log->remarks}} &nbsp;
 						@if(Auth::user()->privilege == 2)
 						<button class="btn btn-xs edit-div yellow" div-id="app_log_{{$log->id}}" modal-title="Edit Remarks" action="control/editAppLog/{{$log->id}}"><i class="fa fa-edit"></i></button>
+						<button class="btn btn-xs delete-div red" div-id="app_log_{{$log->id}}"  action="control/deleteAppLog/{{$log->id}}"><i class="fa fa-remove"></i></button>
 						@endif
 					</div>
 				</div>

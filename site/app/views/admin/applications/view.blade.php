@@ -12,5 +12,9 @@
 		@if($data->status == 1)
 		<button type="button" class="btn green btn-sm delete-div" div-id="coach_{{$data->id}}"  action="{{'admin/Applications/select/'.$data->id}}">Select <i class="fa fa-angle-double-right"></i></button>
 		@endif
+
+		<button class="btn btn-sm btn-danger delete-div" div-id="coach_{{$data->id}}" action="{{'coach/applications/delete/'.$data->id}}"><i class="fa fa-remove"></i>
+		</button>
+
 	</td>
 </tr>
