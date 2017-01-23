@@ -154,7 +154,8 @@
 							<th data-placeholder="Search..">Registration ID</th>
 							<th data-placeholder="Search..">Contact Details</th>
 							<th data-placeholder="Search..">State</th>
-							<th data-placeholder="Search..">Status</th>
+							<th data-placeholder="Search..">License</th>
+							<th data-placeholder="Search..">Employment</th>
 							<!-- <th >#</th> -->
 						</tr>
 					</thead>
@@ -168,11 +169,9 @@
 								<td>{{$data->registration_id}}</td>
 								<td>{{$data->email}} / {{$data->mobile}}</td>
 								<td>{{$data->state_reference}}</td>
-								<td>{{(isset($status[$data->status]))?$status[$data->status]:''}}</td>
-								<!-- <td id="emp_{{$data->id}}">		
-									<a href="{{url('admin/viewCoachDetails/'.$data->id)}}" class="btn btn-sm blue" modal-title="{{$data->first_name.' '.$data->middle_name.' '.$data->last_name}}" target="_blank">Profile</a> 
-									
-								</td> -->
+								<td>{{(isset($latest_license[$data->id]))?$latest_license[$data->id]:''}}</td>
+								<td>{{(isset($latest_emps[$data->id]))?$latest_emps[$data->id]:''}}</td>
+								
 							</tr>
 						@endif
 					<?php $count++;?>

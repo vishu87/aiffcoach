@@ -43,8 +43,17 @@ class AdminController extends BaseController {
     if(Input::get("registration_id") != ''){
       $sql = $sql->where('coaches.registration_id','LIKE','%'.Input::get('registration_id').'%');
     }
+
+    if(Input::get("license_id") != ''){
+      $sql = $sql->join('coach_licenses','coach_licenses.coach_id','=','coaches.id')->where('coach_licenses.license_id','=',Input::get('license_id'));
+    }
+
     if(Input::get("official_name") != ''){
       $sql = $sql->where('coaches.full_name','LIKE','%'.Input::get('official_name').'%');
+    }
+
+    if(Input::get("state_id") != ''){
+      $sql = $sql->where('coaches.state_id',Input::get('state_id'));
     }
 
     $total = $sql->count();
@@ -71,8 +80,11 @@ class AdminController extends BaseController {
 
     $sidebar_file = $this->get_sidebar();
 
+    $licenses = License::licenseList();
+    $states = State::states();
+
     $this->layout->sidebar = View::make($sidebar_file,['sidebar'=>'coach','subsidebar'=>1]);
-    $this->layout->main = View::make('admin.coaches.list',['coaches'=>$coaches,"title"=>'Approved Coaches', "status" => $status,'flag'=>1,"total" => $total, "page_id"=>$page_id, "max_per_page" => $max_per_page, "total_pages" => $total_pages,'input_string'=>$input_string]);
+    $this->layout->main = View::make('admin.coaches.list',['coaches'=>$coaches,"title"=>'Approved Coaches', "status" => $status,'flag'=>1,"total" => $total, "page_id"=>$page_id, "max_per_page" => $max_per_page, "total_pages" => $total_pages,'input_string'=>$input_string , "licenses" => $licenses , "states" => $states]);
   }
 
   public function pendingCoach(){
@@ -92,9 +104,19 @@ class AdminController extends BaseController {
     if(Input::get("registration_id") != ''){
       $sql = $sql->where('coaches.registration_id','LIKE','%'.Input::get('registration_id').'%');
     }
+
+    if(Input::get("license_id") != ''){
+      $sql = $sql->join('coach_licenses','coach_licenses.coach_id','=','coaches.id')->where('coach_licenses.license_id','=',Input::get('license_id'));
+    }
+
     if(Input::get("official_name") != ''){
       $sql = $sql->where('coaches.full_name','LIKE','%'.Input::get('official_name').'%');
     }
+
+    if(Input::get("state_id") != ''){
+      $sql = $sql->where('coaches.state_id',Input::get('state_id'));
+    }
+
     $total = $sql->count();
     $max_per_page = 100;
     $total_pages = ceil($total/$max_per_page);
@@ -117,9 +139,11 @@ class AdminController extends BaseController {
     $coaches = $sql->skip(($page_id-1)*$max_per_page)->take($max_per_page)->get();
     $status = Coach::Status();
 
+    $licenses = License::licenseList();
+    $states = State::states();
     
     $this->layout->sidebar = View::make($this->get_sidebar(),['sidebar'=>'coach','subsidebar'=>2]);
-    $this->layout->main = View::make('admin.coaches.list',['coaches'=>$coaches,"title"=>'Coaches Under Process', "status" => $status,'flag'=>2,"total" => $total, "page_id"=>$page_id, "max_per_page" => $max_per_page, "total_pages" => $total_pages,'input_string'=>$input_string ,"pending_type" => $pending_type]);
+    $this->layout->main = View::make('admin.coaches.list',['coaches'=>$coaches,"title"=>'Coaches Under Process', "status" => $status,'flag'=>2,"total" => $total, "page_id"=>$page_id, "max_per_page" => $max_per_page, "total_pages" => $total_pages,'input_string'=>$input_string ,"pending_type" => $pending_type, "licenses" => $licenses , "states" => $states]);
   }
 
   public function deleteCoachProfile($coach_id){

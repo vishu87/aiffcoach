@@ -23,22 +23,37 @@
    	</div>
 @endif
 <div class="row">
-	<div class="col-md-6">
+	<div class="col-md-12">
 		@if($flag==1)
 		{{ Form::open(array('url' => 'admin/approvedCoach', 'method' => 'GET','role' => 'form','class'=>"")) }}
 		@else
 		{{ Form::open(array('url' => 'admin/pendingCoach', 'method' => 'GET','role' => 'form','class'=>"")) }}
 		@endif
+
+		@if(Input::has('pending_type'))
+			{{Form::hidden('pending_type',Input::get('pending_type'))}}
+		@endif
 		<div class="row">
-			<div class="form-group col-md-6">
+			<div class="form-group col-md-4">
 				<label>Registration ID</label>
 				{{Form::text('registration_id',(Input::has('registration_id'))?Input::get('registration_id'):'',["class"=>"form-control"])}}
 				<span class="error"><?php echo $errors->first('registration_id'); ?></span>
 			</div>
-			<div class="form-group col-md-6">
+			<div class="form-group col-md-4">
 				<label>Name</label>
 				{{Form::text('official_name',(Input::has('official_name'))?Input::get('official_name'):'',["class"=>"form-control"])}}
 				<span class="error"><?php echo $errors->first('official_name'); ?></span>
+			</div>
+			<div class="form-group col-md-4">
+				<label>License</label>
+				{{Form::select('license_id',$licenses,(Input::has('license_id'))?Input::get('license_id'):'',["class"=>"form-control"])}}
+				<span class="error"><?php echo $errors->first('license_id'); ?></span>
+			</div>
+
+			<div class="form-group col-md-4">
+				<label>State</label>
+				{{Form::select('state_id',$states,(Input::has('state_id'))?Input::get('state_id'):'',["class"=>"form-control"])}}
+				<span class="error"><?php echo $errors->first('state_id'); ?></span>
 			</div>
 		</div>
 		<div style="margin-bottom:20px;">
@@ -46,9 +61,9 @@
 		</div>
 		{{Form::close()}}
 	</div>
-	<div class="col-md-6">
+	<div class="col-md-12">
 		@if(isset($total))
-			<div class="row" style="margin:20px 0;">
+			<div class="row" style="margin-bottom:20px;">
 				<div class="col-md-3">
 					<h3 class="page-title"></h3>
 				</div>

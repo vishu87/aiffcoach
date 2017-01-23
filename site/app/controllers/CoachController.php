@@ -572,6 +572,24 @@ class CoachController extends BaseController {
         $licenses = License::licenseList();
         $states = State::states();
 
-        return View::make('coaches',['coaches'=>$coaches,"title"=>'Registered Coaches', "status" => $status,'flag'=>1,"total" => $total, "page_id"=>$page_id, "max_per_page" => $max_per_page, "total_pages" => $total_pages,'input_string'=>$input_string , "licenses" => $licenses , "states" => $states]);
+        $coach_licenses = CoachLicense::select('coach_id','start_date','license_id','license.name as license_name')->join('license','license.id','=','coach_licenses.license_id')->where('status',1)->orderBy('start_date','desc')->get();
+
+        $latest_license = [];
+
+        foreach ($coach_licenses as $license) {
+            if(!isset($latest_license[$license->coach_id]))
+                $latest_license[$license->coach_id] = $license->license_name;
+        }
+
+        $coach_emps = EmploymentDetails::select('coach_id','employment')->where('status',1)->orderBy('start_date','desc')->get();
+
+        $latest_emps = [];
+
+        foreach ($coach_emps as $emps) {
+            if(!isset($latest_emps[$emps->coach_id]))
+                $latest_emps[$emps->coach_id] = $emps->employment;
+        }
+        
+        return View::make('coaches',['coaches'=>$coaches,"title"=>'Registered Coaches', "status" => $status,'flag'=>1,"total" => $total, "page_id"=>$page_id, "max_per_page" => $max_per_page, "total_pages" => $total_pages,'input_string'=>$input_string , "licenses" => $licenses , "states" => $states , "latest_license" => $latest_license , "latest_emps" => $latest_emps]);
     }
 }
