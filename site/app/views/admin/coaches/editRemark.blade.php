@@ -1,21 +1,20 @@
 @if(!$flag)
-{{Form::open(array("url"=>'admin/updateRemark/'.$log->id,"method"=>'PUT',"class"=>"check_form ajax_edit_pop"))}}
-	<div class="form-body">
-		<!--- my form start -->
-			<div class="form-group">
-				{{Form::label('Remarks')}}<span class="error">*</span>
-				{{Form::textarea('remarks',(isset($log))?$log->remarks:'',["class"=>"form-control ","required"=>"true"])}}
-				<span class="error">{{$errors->first('remarks')}}</span>
-			</div>
-			
-		<!---my form end-->
-	
-	<div class="form-actions" >
-		<button type="submit" class="btn blue">{{(isset($log))?'Update':'Add'}}</button>
-	</div>
-	</div>
-{{Form::close()}}
-
+	{{Form::open(array("url"=>'admin/updateRemark/'.$log->id,"method"=>'PUT',"class"=>"check_form ajax_edit_pop"))}}
+		<div class="form-body">
+			<!--- my form start -->
+				<div class="form-group">
+					{{Form::label('Remarks')}}<span class="error">*</span>
+					{{Form::textarea('remarks',(isset($log))?$log->remarks:'',["class"=>"form-control ","required"=>"true"])}}
+					<span class="error">{{$errors->first('remarks')}}</span>
+				</div>
+				
+			<!---my form end-->
+		
+		<div class="form-actions" >
+			<button type="submit" class="btn blue">{{(isset($log))?'Update':'Add'}}</button>
+		</div>
+		</div>
+	{{Form::close()}}
 @else
 <tr id="approval_log_{{$log_data->id}}">
 	<td>{{$count}}</td>

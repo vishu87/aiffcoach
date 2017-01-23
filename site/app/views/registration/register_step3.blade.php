@@ -32,16 +32,16 @@
               <h4 style="padding: 0 15px;font-weight: 400">
                 License Details
                 <span style="font-size:12px;">
-                  You must upload either D or C license to register
+                  You must upload one of the following licenses to register
                 </span>
               </h4>
               <?php
-                $types = ["" => "Select"] + License::whereIn("id",array(8,9))->lists("name", "id");
+                $types = ["" => "Select"] + License::lists("name", "id");
               ?>
               <div class="col-md-3">
                 <div class="form-group"> 
                   <label class="form-label">License Type <span class="error">*</span></label>
-                  {{Form::select('license_id',$types,(isset($data->license_id))?date('d-m-Y',strtotime($data->license_id)):'',['required'=>'true'])}}
+                  {{Form::select('license_id',$types,(isset($data->license_id))?date('d-m-Y',strtotime($data->license_id)):'',['required'=>'true','class'=>'form-control'])}}
                     <span class="error">{{$errors->first('start_date')}}</span>
                 </div>
               </div>

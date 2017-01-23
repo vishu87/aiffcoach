@@ -16,7 +16,8 @@ class Course extends Eloquent {
 	public static function Upcoming(){
 		$currentDate = date('y-m-d',strtotime('now'));
 		$query = DB::table('courses')->select('courses.*','license.name as license_name','license.authorised_by')
-            ->join('license','courses.license_id','=','license.id')->where('registration_start','>',$currentDate)
+            ->join('license','courses.license_id','=','license.id')
+            ->where('registration_start','>',$currentDate)
             ->orWhere('registration_start',null)
             ->orWhere('registration_end',null);
 		return $query;

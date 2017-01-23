@@ -160,6 +160,7 @@ class RegistrationController extends BaseController {
             return Redirect::to('/registerStep1');
         }
         $official_types = [""=>"Select"] + User::OfficialTypes();
+        
         $this->layout->main = View::make('registration.register_step3',["id"=>$id,'flag'=>3, 'official_types' => $official_types]);
     }
 
