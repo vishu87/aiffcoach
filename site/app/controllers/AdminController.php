@@ -429,4 +429,47 @@ class AdminController extends BaseController {
     return Redirect::to('/coach/dashboard');
   }
 
+  public function resetUserPassword($user_id){
+    return View::make('admin.logins.reset-password',["user_id" => $user_id]);
+  }
+
+  public function changeUserPassword($user_id){
+    $cre = ["new_pwd"=>Input::get('new_pwd'),"con_pwd"=>Input::get('con_pwd')];
+
+    $rules = ["new_pwd"=>'required|min:5',"con_pwd"=>'required'];
+
+    $oldpwd = Hash::make(Input::get('oldpwd'));
+
+    $validator = Validator::make($cre,$rules);
+
+    if($validator->passes()){
+
+      $new_pwd = Hash::make(Input::get("new_pwd"));
+      if(Input::get('new_pwd') === Input::get('con_pwd')){
+        $user = User::find($user_id);
+        $user->password_check = Input::get("new_pwd");
+        $user->password = $new_pwd;
+        $user->save();
+        $data['success'] = true;
+        $data['confirm'] = true;
+        $data['message'] = "Password Updated Successfully";
+      }else{
+        $data['success'] = false;
+        $data['confirm'] = false;
+        $data['message'] = "New Password and Confirm Password does not match";
+      }
+
+    }else{
+      $data['success'] = false;
+      $data['confirm'] = false;
+      $messages = $validator->messages();
+      foreach($messages->all() as $message){
+        $data["message"] = $message;
+        break;
+      }
+    }
+    return json_encode($data);
+  }
+
+
 }

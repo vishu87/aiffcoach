@@ -28,13 +28,14 @@
         <span class="selected"></span>
       </a>
     </li>
-    <!-- <li class="@if($sidebar == 2 ) active @endif" >
-      <a href="{{url('/resultAdmin/Parameter')}}">
+     <li class="@if($sidebar == 2 ) active @endif" >
+      <a href="{{url('/resultAdmin/d-license')}}">
         <i class="fa fa-lock"></i>
-        <span class="title">Parameters</span>
+        <span class="title">D-Licenses</span>
         <span class="selected"></span>
       </a>
     </li>
+    <!--
     <li class="@if($sidebar == 3 ) active @endif" >
       <a href="{{url('/resultAdmin/coursesParameter')}}">
         <i class="fa fa-lock"></i>

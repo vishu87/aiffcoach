@@ -384,10 +384,12 @@ $(document).on('click','form.ajax_edit_pop button[type=submit]', function(e){
 		    data : dataString,
 		    success : function(data){
 		    	data = JSON.parse(data);
+
 		    	if(data.success){
 
 		    		$("#"+editDiv).replaceWith(data.message);
 			    	$(".modal").modal("hide");
+					if(data.confirm){bootbox.alert(data.message);}
 		    	} else {
 		    		bootbox.alert(data.message);
 		    	}

@@ -128,3 +128,36 @@ ALTER TABLE `courses` CHANGE `registration_start` `registration_start` DATE NULL
 // 24-01-2017
 
 ALTER TABLE `results` CHANGE `marks` `marks` VARCHAR(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL;
+
+
+// --
+// -- Table structure for table `d_courses`
+// --
+
+CREATE TABLE IF NOT EXISTS `d_courses` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `course_name` varchar(200) NOT NULL,
+  `start_date` date NOT NULL,
+  `end_date` date NOT NULL,
+  `venue` varchar(100) NOT NULL,
+  `description` text NOT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+
+
+CREATE TABLE IF NOT EXISTS `d_licenses` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `d_course_id` int(11) NOT NULL,
+  `applicant_name` varchar(150) NOT NULL,
+  `license_issue_date` date DEFAULT NULL,
+  `license_number` varchar(100) NOT NULL,
+  `remarks` text NOT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+ALTER TABLE `d_courses` CHANGE `start_date` `start_date` DATE NULL DEFAULT NULL, CHANGE `end_date` `end_date` DATE NULL DEFAULT NULL;

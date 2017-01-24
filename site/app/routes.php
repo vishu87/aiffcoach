@@ -159,6 +159,9 @@ Route::group(["before"=>['auth']],function(){
 
 			Route::get('/logins','AdminController@logins');
 			Route::get('/logins/{user_id}','AdminController@loginByUser');
+
+			Route::get('/reset-password/{user_id}','AdminController@resetUserPassword');
+			Route::put('/reset-password/{user_id}','AdminController@changeUserPassword');
 			
 			Route::get('/editRemark/{approval_log_id}','AdminController@editRemark');
 			Route::put('/updateRemark/{approval_log_id}','AdminController@updateRemark');
@@ -265,6 +268,14 @@ Route::group(["prefix"=>'resultAdmin','before'=>["auth","resultAdmin"]],function
 		Route::get('/','instructorCourseController@index');
 		Route::get('/viewApplications/{course_id}','instructorCourseController@courseApplications');
 		Route::post('/addResult','instructorCourseController@addResult');
+	
+	});
+
+	Route::group(["prefix"=>"d-license"],function(){
+		Route::get('/','dLicenseController@index');
+		Route::get('/add','dLicenseController@add');
+		Route::post('/add','dLicenseController@addLicense');
+		
 	
 	});
 
