@@ -1,5 +1,5 @@
 <?php
-ob_end_clean();
+// ob_end_clean();
 $objPHPExcel = new PHPExcel();
 
 $styleArray1 = array(

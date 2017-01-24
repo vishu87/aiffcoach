@@ -96,8 +96,12 @@ class ParameterController extends BaseController {
     }
 
     public function exportExcel(){
-        $parameters = Parameter::where('parameters.active',0)->get();
-        include(app_path().'/libraries/Classes/PHPExcel.php');
-        include(app_path().'/libraries/export/coach.php');
+        $parameters = Parameter::where('parameters.active',0)->where('parameters.user_type',Auth::user()->manage_official_type)->get();
+
+        if(sizeof($parameters)>0){
+            include(app_path().'/libraries/Classes/PHPExcel.php');
+            include(app_path().'/libraries/export/coach.php');
+        }
+        return Redirect::back()->with('failure','No record founds found to export');
     }
 }

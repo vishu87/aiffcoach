@@ -106,7 +106,7 @@
 				<th>Course Name</th>
 				<th>License Name</th>
 				<th>Coach Name</th>
-				<th>Remark</th>
+				<!-- <th>Remark</th> -->
 				<th>Result</th>
 				<th style="width:210px">#</th>
 			</tr></thead>
