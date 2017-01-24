@@ -19,7 +19,7 @@
 <div class="portlet box blue" style="margin-top:20px">
     <div class="portlet-title"><div class="caption">Change Password</div></div>
         <div class="portlet-body form">
-            {{Form::open(array('url'=>'/updatePassword','class'=>'form','method'=>'post'))}}
+            {{Form::open(array('url'=>'/updatePassword','class'=>'form check_form','method'=>'post'))}}
             <div class="form-body">
                 <div class="form-group">
                     <label>Old Password</label> <span class="error"> *</span>

@@ -27,7 +27,7 @@
 @if(sizeof($applications) > 0)
 	{{Form::open(["url"=>'resultAdmin/courses/addResult',"method"=>"post"])}}
 		{{Form::hidden('course_id',$course_id)}}
-	<div class="row" style="padding:20px; overflow-y: auto;">
+	<div class="row" style="padding: 0 15px; overflow-y: auto;">
 		<table class="table table-bordered table-hover">
 			<tr>
 				<th style="width:50px;">SN</th>
@@ -59,8 +59,9 @@
 		</table> 
 	</div>
 	<div class="row" style="margin-top: 20px;">
-		<div class="col-md-offset-2 col-md-4 "  ></div>
-		<button class="btn btn-sm blue "  >Submit</button>
+		<div class="col-md-offset-4 col-md-4 " style="text-align: center;">
+			<button class="btn btn-sm blue "  >Submit</button>
+		</div>
 	</div>
 	{{Form::close()}}
 @else
