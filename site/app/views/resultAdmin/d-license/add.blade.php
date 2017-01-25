@@ -1,7 +1,7 @@
 <div class="row">
 	<div class="col-md-7">
 		<h3 class="page-title">
-			Add D Licenses
+			{{(isset($license)?'Update':'Add')}} D Licenses
 		</h3>
 	</div>
 	<div class="col-md-5">
@@ -24,7 +24,7 @@
 
 
 @if(isset($license))
-{{Form::open(array("url"=>'resultAdmin/d-license/update/'.$license->id,"method"=>'PUT',"class"=>"check_form"))}}
+{{Form::open(array("url"=>'resultAdmin/d-license/update/'.$license->id,"method"=>'post',"class"=>"check_form"))}}
 @else
 {{Form::open(array("url"=>'resultAdmin/d-license/add',"method"=>'post',"class"=>"check_form"))}}
 @endif
@@ -56,19 +56,26 @@
 					<span class="error">{{$errors->first('venue')}}</span>
 				</div>
 			
-				<div class="col-md-4 form-group">
+				<div class="col-md-8 form-group">
 					{{Form::label('Description')}}<span class="error">*</span>
 					{{Form::text('description',(isset($license))?$license->description:'',["class"=>"form-control","required"=>"true"])}}
 					<span class="error">{{$errors->first('description')}}</span>
 				</div>
 			</div>
 
-			<div>
-				<h2 class="page-title" style="font-weight: 400;font-size: 20px;">Add Applicants</h2>
+			<div class="row">
+				<div class="col-md-8">
+					<h2 class="page-title" style="font-weight: 350;font-size: 20px;">{{(isset($license)?'Update':'Add')}} Applicants</h2>
+				</div>
+				<div class="col-md-4">
+					
+					<button type="button" class="btn btn-sm blue pull-right" id="addRow"><i class="fa fa-arrow-down" last-div=""></i> Add Rows</button>
+				</div>
+				
 			</div>
 
-			<div class="row" style="padding: 0 15px; overflow-y: auto;">
-				<table class="table table-bordered table-hover">
+			<div style="overflow-y: auto;">
+				<table class="table table-bordered table-hover" id="applicant_list">
 
 					<tr>
 						<th style="width:50px;">SN</th>
@@ -78,8 +85,34 @@
 						<th>Remarks</th>
 					</tr>
 					
-					@for($i = 1; $i <= 25; $i++ )
-					<tr id="applicant_{{$i}}">
+
+					<?php
+						$sn = 1;
+						if(isset($licenses)){
+							$last_entries = sizeof($licenses);
+							if($last_entries > 25){
+								$sn = 26;
+							}else{
+								$sn = $last_entries + $sn;
+							}
+						}
+						$count = 1;
+					?>
+					@if(isset($licenses))
+						@foreach($licenses as  $license)
+							<tr id="applicant_{{$count}}" idv = {{$count}}>
+								<td style="width:50px;">{{$count}}</td>
+								<td>{{Form::text('applicant_name_'.$count,$license->applicant_name,["class"=>"form-control" , "placeholder" => "Applicant name"])}}</td>
+								<td>{{Form::text('issue_date_'.$count,($license->license_issue_date !=null)?date('d-m-Y',strtotime($license->license_issue_date)):'',["class"=>"form-control datepicker" , "placeholder" => "license issue date" , "date_en" => true])}}</td>
+								<td>{{Form::text('license_number_'.$count,$license->license_number,["class"=>"form-control" , "placeholder" => "license number"])}}</td>
+								<td>{{Form::text('remarks_'.$count,$license->remarks,["class"=>"form-control" , "placeholder" => "remarks"])}}</td>
+							</tr>
+							<?php $count++ ; ?>
+						@endforeach
+
+					@endif
+					@for($i = $sn; $i <= 25; $i++ )
+					<tr idv = {{$i}}>
 						<td style="width:50px;">{{$i}}</td>
 						<td>{{Form::text('applicant_name_'.$i,'',["class"=>"form-control" , "placeholder" => "Applicant name"])}}</td>
 						<td>{{Form::text('issue_date_'.$i,'',["class"=>"form-control datepicker" , "placeholder" => "license issue date" , "date_en" => true])}}</td>

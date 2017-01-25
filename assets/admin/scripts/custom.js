@@ -510,3 +510,12 @@ $(document).on('click','#cash',function(){
 	$('.payment_details').removeAttr('required');
 })
 $('.dropzone').dropzone();
+
+
+$(document).on("click", "#addRow", function(e) {
+	var sn = $('#applicant_list tr:last').attr('idv');
+	sn = parseFloat(sn) + parseFloat(1);
+	var div = '<tr idv='+sn+'><td style="width:50px;">'+sn+'</td><td><input type="text" name="applicant_name_'+sn+'" class="form-control" placeholder="Applicant name"></td><td>		<input type="text" name="issue_date_'+sn+'" class="form-control datepicker"  placeholder="license issue date"  date_en = "date_en">	</td>	<td>		<input type="text" name="license_number_'+sn+'" class="form-control" placeholder="license number">	</td>	<td>		<input type="text" name="remarks_'+sn+'" class="form-control" placeholder="remarks">	</td></tr>';
+	$('#applicant_list').append(div);	
+
+});

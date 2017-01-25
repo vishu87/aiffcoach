@@ -1,10 +1,14 @@
 <div class="row">
 	<div class="col-md-7">
 		<h3 class="page-title">
-			Courses list
+			<!-- Course Name - {{$license->course_name}} <br>
+			Start Date - {{($license->start_date)?date('d-m-Y',strtotime($license->start_date)):''}} -->
+			{{$license->course_name}}
 		</h3>
 	</div>
-	
+	<div class="col-md-5">
+		<a href="{{url('/resultAdmin/d-license')}}" class="btn btn-sm blue pull-right" >Go Back</a>
+	</div>
 </div>
 
 @if(Session::has('success'))
@@ -21,43 +25,36 @@
 @endif
 
 
-@if(isset($courses))
-	<div>
-		<!-- <h3>Pending Activities</h3> -->
-	</div>
-	@if(sizeof($courses) > 0)
-	<?php $entity_type=5; ?>
+@if(sizeof($licenses) > 0)
+
 	<div class="row" style="padding:20px;">
 		<table class="table table-bordered table-hover tablesorter">
 			<thead>
 				<tr>
 					<th style="width:50px;">SN</th>
-					<th>Course</th>
-					<th>Start Date</th>
-					<th>End Date</th>
-					<th>Venue</th>
-					<th>#</th>
+					<th>Applicant Name</th>
+					<th>License Issue Date</th>
+					<th>License Number</th>
+					<th>Remarks</th>
 				</tr>
 			</thead>
+			
 			<?php $count=1;?>
-			@foreach($courses as $course)
+			@foreach($licenses as $license)
 				<tr>	
 					<td>{{$count}}</td>
-					<td>{{$course->name}}</td>
-					<td>{{($course->start_date)?date('d-m-Y',strtotime($course->start_date)):''}}</td>
-					<td>{{($course->end_date)?date('d-m-Y',strtotime($course->end_date)):''}}</td>
-					<td>{{$course->venue}}</td>
-					<th>
-						<a href="{{url('resultAdmin/courses/viewApplications/'.$course->id)}}" class="btn btn-sm yellow">Applications <i class="fa fa-arrow-right"></i></a>
-					</th>
+					<td>{{$license->applicant_name}}</td>
+					<td>{{($license->license_issue_date)?date('d-m-Y',strtotime($license->license_issue_date)):''}}</td>
+					<td>{{$license->license_number}}</td>
+					<td>{{$license->remarks}}</td>
 				</tr>
 				<?php $count++?>
 			@endforeach
 		</table> 
 	</div>
-	@else
+@else
 	<div class="alert alert-warning">
-		No courses found
+		No licenses found
 	</div>
-	@endif
-@endif	
+@endif
+	

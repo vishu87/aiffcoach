@@ -275,7 +275,10 @@ Route::group(["prefix"=>'resultAdmin','before'=>["auth","resultAdmin"]],function
 		Route::get('/','dLicenseController@index');
 		Route::get('/add','dLicenseController@add');
 		Route::post('/add','dLicenseController@addLicense');
-		
+		Route::get('/edit/{d_course_id}','dLicenseController@edit');
+		Route::post('/update/{d_course_id}','dLicenseController@update');
+		Route::delete('/delete/{d_course_id}','dLicenseController@delete');
+		Route::get('/view/{d_course_id}','dLicenseController@view');
 	
 	});
 

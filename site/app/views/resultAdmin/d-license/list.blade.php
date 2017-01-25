@@ -26,16 +26,19 @@
 @if(sizeof($licenses) > 0)
 
 <div class="row" style="padding:20px;">
-	<table class="table table-bordered table-hover">
-		<tr>
-			<th style="width:50px;">SN</th>
-			<th>Course</th>
-			<th>Start Date</th>
-			<th>End Date</th>
-			<th>Venue</th>
-			<th>Applicants</th>
-			<!-- <th>#</th> -->
-		</tr>
+	<table class="table table-bordered table-hover tablesorter">
+		<thead>
+			<tr>
+				<th style="width:50px;">SN</th>
+				<th>Course</th>
+				<th>Start Date</th>
+				<th>End Date</th>
+				<th>Venue</th>
+				<th>Applicants</th>
+				<!-- <th>#</th> -->
+			</tr>
+		</thead>
+		
 		<?php $count=1;?>
 		@foreach($licenses as $license)
 			<tr>	
@@ -46,7 +49,8 @@
 				<td>{{$license->venue}}</td>
 				<!-- <td>{{$license->applicant_name}}</td> -->
 				<th>
-					<a href="{{url('/')}}" class="btn btn-sm yellow">View <i class="fa fa-arrow-right"></i></a>
+					<a href="{{url('/resultAdmin/d-license/edit/'.$license->id)}}" class="btn btn-sm yellow"><i class="fa fa-edit"> </i> Edit </a>
+					<a href="{{url('/resultAdmin/d-license/view/'.$license->id)}}" class="btn btn-sm blue">View</a>
 				</th>
 			</tr>
 			<?php $count++?>

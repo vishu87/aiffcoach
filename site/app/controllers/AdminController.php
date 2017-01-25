@@ -438,17 +438,14 @@ class AdminController extends BaseController {
 
     $rules = ["new_pwd"=>'required|min:5',"con_pwd"=>'required'];
 
-    $oldpwd = Hash::make(Input::get('oldpwd'));
-
     $validator = Validator::make($cre,$rules);
 
     if($validator->passes()){
 
-      $new_pwd = Hash::make(Input::get("new_pwd"));
       if(Input::get('new_pwd') === Input::get('con_pwd')){
         $user = User::find($user_id);
         $user->password_check = Input::get("new_pwd");
-        $user->password = $new_pwd;
+        $user->password = Hash::make(Input::get('new_pwd'));
         $user->save();
         $data['success'] = true;
         $data['confirm'] = true;
