@@ -58,23 +58,23 @@
 			{{ Form::open(array('url' => '/view-all-coaches', 'method' => 'GET','role' => 'form','class'=>"")) }}
 			
 			<div class="row">
-				<div class="form-group col-md-4">
+				<div class="form-group col-md-3">
 					<label>Registration ID</label>
 					{{Form::text('registration_id',(Input::has('registration_id'))?Input::get('registration_id'):'',["class"=>"form-control"])}}
 					<span class="error"><?php echo $errors->first('registration_id'); ?></span>
 				</div>
-				<div class="form-group col-md-4">
+				<div class="form-group col-md-3">
 					<label>Name</label>
 					{{Form::text('official_name',(Input::has('official_name'))?Input::get('official_name'):'',["class"=>"form-control"])}}
 					<span class="error"><?php echo $errors->first('official_name'); ?></span>
 				</div>
-				<div class="form-group col-md-4">
+				<div class="form-group col-md-3">
 					<label>License</label>
 					{{Form::select('license_id',$licenses,(Input::has('license_id'))?Input::get('license_id'):'',["class"=>"form-control"])}}
 					<span class="error"><?php echo $errors->first('license_id'); ?></span>
 				</div>
 
-				<div class="form-group col-md-4">
+				<div class="form-group col-md-3">
 					<label>State</label>
 					{{Form::select('state_id',$states,(Input::has('state_id'))?Input::get('state_id'):'',["class"=>"form-control"])}}
 					<span class="error"><?php echo $errors->first('state_id'); ?></span>
