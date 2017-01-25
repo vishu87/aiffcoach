@@ -1,7 +1,7 @@
 <div class="row">
 	<div class="col-md-7">
 		<h3 class="page-title">
-			{{(isset($license)?'Update':'Add')}} D Licenses
+			{{(isset($license)?'Update':'Add')}} Course Details
 		</h3>
 	</div>
 	<div class="col-md-5">

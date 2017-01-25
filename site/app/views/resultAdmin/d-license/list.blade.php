@@ -1,7 +1,7 @@
 <div class="row">
 	<div class="col-md-7">
 		<h3 class="page-title">
-			D licenses
+			D license Courses
 		</h3>
 	</div>
 	<div class="col-md-5">
@@ -51,6 +51,8 @@
 				<th>
 					<a href="{{url('/resultAdmin/d-license/edit/'.$license->id)}}" class="btn btn-sm yellow"><i class="fa fa-edit"> </i> Edit </a>
 					<a href="{{url('/resultAdmin/d-license/view/'.$license->id)}}" class="btn btn-sm blue">View</a>
+
+					<!-- <button class="btn btn-sm blue red"><i class="fa fa-remove"></i></button> -->
 				</th>
 			</tr>
 			<?php $count++?>
