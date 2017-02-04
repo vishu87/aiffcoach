@@ -4,6 +4,8 @@
 Route::get('/', function(){
     return View::make('login',[]);
 });
+	
+Route::get('/capitalization','UserController@capitalization');	
 
 Route::get('/registerStep1/{id?}', 'RegistrationController@registration_step1');
 Route::post('/registerStep1/{id?}', 'RegistrationController@post_registration_step1');

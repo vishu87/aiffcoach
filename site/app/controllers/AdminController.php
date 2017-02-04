@@ -205,7 +205,7 @@ class AdminController extends BaseController {
     $validator = Validator::make($cre,$rules);
     if($validator->passes()){
       $coach = Coach::find($coach_id);
-      $coach->full_name = Input::get('full_name');
+      $coach->full_name = ucwords(strtolower(Input::get('full_name')));
       $coach->dob = date('Y-m-d',strtotime(Input::get('dob')));
       $coach->gender = Input::get('gender');
       $destinationPath = 'coaches-doc/';

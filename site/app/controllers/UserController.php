@@ -14,8 +14,6 @@ class UserController extends BaseController {
         return Redirect::to('/')->with('failure','Error While Verifying User Account/ Invalid Verify Link');
         }
 
-        
-
     }
     public function postLogin()
     {
@@ -119,5 +117,25 @@ class UserController extends BaseController {
         } else {
             return Redirect::Back()->withErrors($validator)->withInput();
         }
+    }
+
+    public function capitalization(){
+        $coaches = Coach::get();
+
+        foreach ($coaches as $coach) {
+            $first_name = ucwords(strtolower($coach->first_name));
+            $middle_name = ucwords(strtolower($coach->middle_name));
+            $last_name = ucwords(strtolower($coach->last_name));
+            $full_name = ucwords(strtolower($coach->full_name));
+
+            $updateCoach = Coach::find($coach->id);
+            $updateCoach->first_name = $first_name;
+            $updateCoach->middle_name = $middle_name;
+            $updateCoach->last_name = $last_name;
+            $updateCoach->full_name = $full_name;
+            $updateCoach->save();
+        }
+        $updated_data = Coach::select('first_name','middle_name','last_name','full_name')->get();
+        return $updated_data;
     }
 }

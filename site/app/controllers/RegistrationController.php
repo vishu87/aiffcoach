@@ -226,11 +226,12 @@ class RegistrationController extends BaseController {
             $data2 = unserialize($data2); 
             $data3 = $data_row->data3;
             $data3 = unserialize($data3);
+
             $coach = new Coach;
-            $coach->first_name = $data1['first_name'];
-            $coach->middle_name = $data1['middle_name'];
-            $coach->last_name = $data1['last_name'];
-            $coach->full_name = $data1['first_name'].' '.$data1['middle_name'].' '.$data1['last_name'];
+            $coach->first_name = ucwords(strtolower($data1['first_name']));
+            $coach->middle_name = ucwords(strtolower($data1['middle_name']));
+            $coach->last_name = ucwords(strtolower($data1['last_name']));
+            $coach->full_name = ucwords(strtolower($data1['first_name'])).' '.ucwords(strtolower($data1['middle_name'])).' '.ucwords(strtolower($data1['last_name']));
             $coach->dob = $data1['dob'];
             $coach->state_id = $data2['state_id'];
             $coach->photo = $data1['photo'];
@@ -239,6 +240,8 @@ class RegistrationController extends BaseController {
             $coach->save();
             $coach->registration_id = strtoupper(date("YM")).$coach->id;
             $coach->save();
+
+
 
             $coach_parameter = new CoachParameter;
             $coach_parameter->coach_id = $coach->id;
