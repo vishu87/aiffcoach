@@ -160,8 +160,8 @@ class RegistrationController extends BaseController {
             return Redirect::to('/registerStep1');
         }
         $official_types = [""=>"Select"] + User::OfficialTypes();
-        
-        $this->layout->main = View::make('registration.register_step3',["id"=>$id,'flag'=>3, 'official_types' => $official_types]);
+        $emp_status = ["" => "Select"] + EmploymentDetails::emp_status();
+        $this->layout->main = View::make('registration.register_step3',["id"=>$id,'flag'=>3, 'official_types' => $official_types , "emp_status" => $emp_status]);
     }
 
     public function post_registration_step3(){
@@ -172,13 +172,27 @@ class RegistrationController extends BaseController {
             "end_date"=>Input::get("end_date"),
             "license_number" => Input::get("license_number"),
             "license" => Input::file("license"),
+            'present_emp'=>Input::get('present_emp'),
+            'start_date'=>Input::get('date_since_emp'),
+            'employment_status' => Input::get('employment_status'),
+            'referral_contact' => Input::get('referral_contact'),
+            'referral_name' => Input::get('referral_name'),
+            'cv' => Input::file('cv'),
+            'present_emp_copy' => Input::file('present_emp_copy')
         ];
         $rules = [
             "official_types" => "required",
             "start_date" => "required |date",
             "end_date" => "date|after:start_date",
             "license_number" =>"required",
-            "license" =>"required"
+            "license" =>"required",
+            'present_emp'=>'required',
+            'start_date'=>'required',
+            'employment_status' => 'required',
+            'referral_contact' => 'required',
+            'referral_name' => 'required',
+            'cv' => 'required',
+            'present_emp_copy' => 'required'
         ];
 
         $validator = Validator::make($cre,$rules);
@@ -307,11 +321,39 @@ class RegistrationController extends BaseController {
                 $document->file = (isset($data1["dob_proof"]))?$data1["dob_proof"]:'';
                 $document->save();
             }
-
             // $coach_parameter->passport_no = $data3['passport'];
             // $coach_parameter->passport_expiry = $data3['passport_expiry'];
             // $coach_parameter->passport_copy = $data3["passport_proof"];
 
+
+            /* *****  Coach employment details starts here  ****** */
+            $employment = new EmploymentDetails;
+            $employment->coach_id = $coach->id;
+            $employment->employment = Input::get('present_emp');
+            $employment->emp_status = Input::get('employment_status');
+            $employment->referral_name = Input::get('referral_name');
+            $employment->referral_contact = Input::get('referral_contact');
+            $employment->start_date = date('Y-m-d',strtotime(Input::get('date_since_emp')));
+            $employment->end_date = (Input::get('end_date') != '') ? date('Y-m-d',strtotime(Input::get('end_date'))) : null;
+
+            if(Input::hasFile('present_emp_copy')){
+                $extension = Input::file('present_emp_copy')->getClientOriginalExtension();
+                $doc = "presentemp_".$coach->id.'_'.strtotime("now").'.'.$extension;
+                
+                Input::file('present_emp_copy')->move($destinationPath,$doc);
+                $employment->contract = $destinationPath.$doc;
+            }
+
+            if(Input::hasFile('cv')){
+                $extension = Input::file('cv')->getClientOriginalExtension();
+                $doc = "cv_".$coach->id.'_'.strtotime("now").'.'.$extension;
+                Input::file('cv')->move($destinationPath,$doc);
+                $employment->cv = $destinationPath.$doc;
+            }
+
+            $employment->save();
+
+            /* coach employment details ends here */
 
             $username = $user->username;
             require app_path().'/classes/PHPMailerAutoload.php';

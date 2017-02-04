@@ -71,6 +71,103 @@
               </div>
             </div>
             <div class="row">
+              <h4 style="padding: 0 15px;font-weight: 400">Employment Details <span style="font-size: 12px">Write about your employment</span></h4>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Organization</label><span class="error"> *</span>
+                    
+                      {{Form::text('present_emp',(isset($data))?$data->employment:'',['required'=>'true','placeholder'=>"Present Football Employment",'class'=>"form-control "])}}
+                      <span class="error">{{$errors->first('present_emp')}}</span>
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Employment Status</label><span class="error"> *</span>
+                    
+                      {{Form::select('employment_status',$emp_status,(isset($data))?$data->emp_status:'',['required'=>'true','class'=>"form-control "])}}
+                      <span class="error">{{$errors->first('employment_status')}}</span>
+                  </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Date Since Employed</label><span class="error"> *</span>
+                        {{Form::text('date_since_emp',(isset($data))?date('d-m-Y',strtotime($data->start_date)):'',['required'=>'true','class'=>"form-control datepicker ","date_en"=>'true'])}}
+                        <span class="error">{{$errors->first('date_since_emp')}}</span>
+                    </div>
+                </div>
+              <div class="col-md-6">
+                    <div class="form-group ">
+                      <label>End Date</label>
+                        {{Form::text('end_date',(isset($data))?($data->end_date)?date('d-m-Y',strtotime($data->end_date)):'':'',['class'=>"form-control datepicker ","date_en"=>'true'])}}
+                        <span class="error">{{$errors->first('date_since_emp')}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 form-group">
+                @if(isset($data))
+                      <div class="form-group">
+                        <label>Upload CV (Resume)<span class="error"> *</span></label>
+                        {{Form::file('cv',["class"=>"form-control" ,($data->cv =='')?'required':'',"id"=>"contract","pdf"=>'true'])}}
+                          <span class="error">{{$errors->first('cv')}}</span>
+                          <div class="col-md-4 form-group">
+                          @if($data->cv!='')<a href="{{url($data->cv)}}" target="_blank">view current</a>@endif
+                        </div>
+                      </div>
+                    @else
+                      <label>CV (Resume)<span class="error"> *</span></label>
+                      {{Form::file('cv',["class"=>"form-control","required"=>true,"id"=>"contract","pdf"=>'true'])}}
+                        <span class="error">{{$errors->first('cv')}}</span>
+                    @endif    
+                  </div>
+              <div class="col-md-6 form-group">
+                @if(isset($data))
+                      <div class="form-group">
+                        <label>Copy of Present Footballing Employment Contract <span class="error"> *</span></label>
+                        {{Form::file('present_emp_copy',["class"=>"form-control",($data->contract =='')?'required':'',"id"=>"present_emp","pdf"=>'true'])}}
+                          <span class="error">{{$errors->first('present_emp_copy')}}</span>
+                          <div class="col-md-4 form-group">
+                          @if($data->contract!='')<a href="{{url($data->contract)}}" target="_blank">view current</a>@endif
+                        </div>
+                      </div>
+                    @else
+                      <label>Copy of Present Footballing Employment Contract <span class="error">*</span></label>
+                      {{Form::file('present_emp_copy',["class"=>"form-control","required"=>true,"id"=>"present_emp","pdf"=>'true'])}}
+                        <span class="error">{{$errors->first('present_emp_copy')}}</span>
+                    @endif    
+                  </div>
+            </div>
+            <div>
+              <h4>
+                Referral Details
+              </h4>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Name</label><span class="error"> *</span>
+                    
+                      {{Form::text('referral_name',(isset($data))?$data->referral_name:'',['required'=>'true','placeholder'=>"Referral Name",'class'=>"form-control "])}}
+                      <span class="error">{{$errors->first('referral_name')}}</span>
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Contact Number</label><span class="error"> *</span>
+                    
+                      {{Form::text('referral_contact',(isset($data))?$data->referral_contact:'',['required'=>'true','class'=>"form-control " ,'placeholder'=>"Contact Number"])}}
+                      <span class="error">{{$errors->first('referral_contact')}}</span>
+                  </div>
+                </div>
+            </div>
+            <div class="row">
               <h4 style="padding: 0 15px;font-weight: 400">Passport Details</h4>
               <div class="col-md-6">
                 <div class="form-group"> 
