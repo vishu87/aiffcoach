@@ -155,6 +155,7 @@
 							<th data-placeholder="Search..">Contact Details</th>
 							<th data-placeholder="Search..">State</th>
 							<th data-placeholder="Search..">License</th>
+							<th data-placeholder="Search..">Other Licenses</th>
 							<th data-placeholder="Search..">Employment</th>
 							<!-- <th >#</th> -->
 						</tr>
@@ -167,9 +168,14 @@
 								<td>{{$data->full_name}}
 								</td>
 								<td>{{$data->registration_id}}</td>
-								<td>{{$data->email}} / {{$data->mobile}}</td>
+								<td>{{$data->email}}</td>
 								<td>{{$data->state_reference}}</td>
-								<td>{{(isset($latest_license[$data->id]))?$latest_license[$data->id]:''}}</td>
+								<td>
+									{{$data->latest_license}}
+								</td>
+								<td>
+									{{(isset($latest_license[$data->id]))?implode(',<br>',$latest_license[$data->id]):''}}
+								</td>
 								<td>{{(isset($latest_emps[$data->id]))?$latest_emps[$data->id]:''}}</td>
 								
 							</tr>

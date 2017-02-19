@@ -530,10 +530,10 @@ class CoachController extends BaseController {
 
     public function viewAllCoaches(){
         
-        $sql = Coach::listing()->approved();
+        $sql = Coach::listing()->addSelect('license.name as latest_license')->join('coach_licenses','coach_licenses.coach_id','=','coaches.id')->join('license','coach_licenses.license_id','=','license.id')->orderBy('coach_licenses.start_date','desc')->approved();
         
         if(Input::get("license_id") != ''){
-          $sql = $sql->join('coach_licenses','coach_licenses.coach_id','=','coaches.id')->where('coach_licenses.license_id','=',Input::get('license_id'));
+          $sql = $sql->where('coach_licenses.license_id','=',Input::get('license_id'));
         }
         if(Input::get("registration_id") != ''){
           $sql = $sql->where('coaches.registration_id','LIKE','%'.Input::get('registration_id').'%');
@@ -568,17 +568,23 @@ class CoachController extends BaseController {
         
         $coaches = $sql->skip(($page_id-1)*$max_per_page)->take($max_per_page)->get();
         $status = Coach::Status();
-
         $licenses = License::licenseList();
         $states = State::states();
 
-        $coach_licenses = CoachLicense::select('coach_id','start_date','license_id','license.name as license_name')->join('license','license.id','=','coach_licenses.license_id')->where('status',1)->orderBy('start_date','desc')->get();
+        $coach_licenses_sql = CoachLicense::select('coach_id','start_date','license_id','license.name as license_name')->join('license','license.id','=','coach_licenses.license_id')->where('status',1)->orderBy('start_date','desc');
+
+        if(Input::get("license_id") != ''){
+          $coach_licenses_sql = $coach_licenses_sql->where('coach_licenses.license_id','!=',Input::get('license_id'));
+        }
+
+        $coach_licenses = $coach_licenses_sql->get();
 
         $latest_license = [];
 
         foreach ($coach_licenses as $license) {
             if(!isset($latest_license[$license->coach_id]))
-                $latest_license[$license->coach_id] = $license->license_name;
+                $latest_license[$license->coach_id] = array();
+                array_push($latest_license[$license->coach_id], $license->license_name);
         }
 
         $coach_emps = EmploymentDetails::select('coach_id','employment')->where('status',1)->orderBy('start_date','desc')->get();
