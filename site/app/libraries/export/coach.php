@@ -65,9 +65,20 @@ if(isset($coaches)){
 	$title = 'Coaches';
 }
 if(isset($exportCoaches)){
-	$fields = array("sn",'registration_id',"full_name",'email','gender','state_reference','latest_license','other_license','employment');
-	$field_names = array("SN","Registration Id" ,"Name","Email","Gender","State of Reference","License","Other Licenses" , "Employment");
-	$widths = array("10","20","25","30","10","30","30","30", "40");
+	$fields = array("sn",'registration_id',"full_name",'email','gender','state_reference','employment');
+	$field_names = array("SN","Registration Id" ,"Name","Email","Gender","State of Reference", "Employment");
+
+	if(Input::has('license_id') && Input::get('license_id') != ''){
+		array_push($field_names, "License");
+		array_push($field_names, "Other Licenses");
+
+		array_push($fields, "latest_license");
+		array_push($fields, "other_license");	
+	}else{
+		array_push($field_names,"Licenses");
+		array_push($fields,"other_license");
+	}
+	$widths = array("10","20","25","30","10","30", "40","30","30");
 	$exportData = $exportCoaches;
 	$title = 'Coaches';
 }

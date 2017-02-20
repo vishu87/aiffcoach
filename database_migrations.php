@@ -161,3 +161,7 @@ CREATE TABLE IF NOT EXISTS `d_licenses` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 ALTER TABLE `d_courses` CHANGE `start_date` `start_date` DATE NULL DEFAULT NULL, CHANGE `end_date` `end_date` DATE NULL DEFAULT NULL;
+
+//20-02-2017 added by chirag
+
+ALTER TABLE `coach_licenses` ADD `recc` INT(1) NULL DEFAULT '0' AFTER `license_id`, ADD `equivalent_license_id` INT NULL DEFAULT NULL AFTER `recc`;

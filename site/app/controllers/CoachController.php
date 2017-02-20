@@ -484,6 +484,12 @@ class CoachController extends BaseController {
     public function addLicense(){
         $cre = ["license_id"=>Input::get("license_id"),"start_date"=>Input::get("start_date"),"number"=>Input::get("number"),"end_date"=>Input::get("end_date")];
         $rules = ["license_id"=>'required',"start_date"=>"required|date","end_date"=>"date|after:start_date","number"=>"required"];
+
+        if(Input::has('recc')){
+            $cre["equivalent_license_id"] = Input::get("equivalent_license_id");
+            $rules["equivalent_license_id"] = "required";
+        }
+
         $validator = Validator::make($cre,$rules);
         if($validator->passes()){
             $coachLicense = new CoachLicense;
@@ -500,6 +506,10 @@ class CoachController extends BaseController {
                 $doc = "license_".Auth::id().'_'.strtotime("now").'.'.$extension;
                 Input::file('document')->move($destinationPath,$doc);
                 $coachLicense->document = $destinationPath.$doc;
+            }
+            if(Input::has('recc')){
+                $coachLicense->recc = Input::get('recc');
+                $coachLicense->equivalent_license_id = Input::get('equivalent_license_id');
             }
             $coachLicense->save();
             return Redirect::back()->with('success','New license added successfully');

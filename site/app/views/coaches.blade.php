@@ -163,8 +163,10 @@
 							<th data-placeholder="Search..">Registration ID</th>
 							<th data-placeholder="Search..">Contact Details</th>
 							<th data-placeholder="Search..">State</th>
+							@if(Input::has('license_id') && Input::get('license_id') !='')
 							<th data-placeholder="Search..">License</th>
-							<th data-placeholder="Search..">Other Licenses</th>
+							@endif
+							<th data-placeholder="Search..">{{(Input::has('license_id') && Input::get('license_id') !='')?'Other License':'Licenses'}}</th>
 							<th data-placeholder="Search..">Employment</th>
 							<!-- <th >#</th> -->
 						</tr>
@@ -179,9 +181,11 @@
 								<td>{{$data->registration_id}}</td>
 								<td>{{$data->email}}</td>
 								<td>{{$data->state_reference}}</td>
-								<td>
-									{{$data->latest_license}}
-								</td>
+								@if(Input::has('license_id') && Input::get('license_id') !='')
+									<td>
+										{{$data->latest_license}}
+									</td>
+								@endif
 								<td>
 									{{(isset($latest_license[$data->id]))?implode(',<br>',$latest_license[$data->id]):''}}
 								</td>

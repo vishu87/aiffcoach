@@ -56,7 +56,7 @@
 	        <div class="row">
 	        	<div class="col-md-6 form-group"><label class="form-label" style="width:100%"> DOB</label>
 		           {{Form::text('dob',date('d-m-Y',strtotime($coach->dob)),["class"=>"form-control datepicker","id"=>"datepicker1","required"=>"true","date_en"=>"true"])}}
-		           <span class="dob-error"></span>
+		           <span class="error"></span>
 		        </div>
 	        	<div class="col-md-6">
 		          <div class="form-group"> 
@@ -348,17 +348,32 @@
             {{ Form::open(array('url' =>'coach/coachLicense/add', "method"=>"POST","files"=>'true','class'=>'form check_form')) }}
 	        <div class="row">
 	        	<div class="col-md-6 form-group"><label class="form-label">License Name <span class="error">*</span></label>
-		           {{Form::select('license_id',$licenses,'',["class"=>"form-control","required"=>"true"])}}
-		           <span class="dob-error">{{$errors->first('license_id')}}</span>
+		           {{Form::select('license_id',$licenses,'',["class"=>"form-control","required"=>"true" , "id" => "coach-license"])}}
+		           <span class="error">{{$errors->first('license_id')}}</span>
 		        </div>
-	        	<div class="col-md-6">
+
+		        <div class="col-md-6 form-group" id ="div-recc"  style="display: {{(Input::old('recc'))?'block':'none';}}">
+			        <div class="row">
+			        	<div class="col-md-4">
+			        		<label>RECC Authorised</label><br>
+			        		{{Form::checkbox('recc',1,'',["id" => "recc"])}}
+			        	</div>
+			        	<div class="col-md-8 " id = "equivalent-license-div" style="display: {{(Input::old('recc'))?'block':'none';}}">
+					        <label class="form-label">Equivalent License </label>
+				           {{Form::select('equivalent_license_id',$licenses,'',["class"=>"form-control" ,"id" => "equivalent_licenses"])}}
+				           <span class="error">{{$errors->first('equivalent_license_id')}}</span>
+					        
+			        	</div>
+			        </div>
+			    </div>
+	        	<div class="col-md-6 clear">
 		          <div class="form-group"> 
 		            <label class="form-label">License Number <span class="error">*</span></label><br>
 		            {{Form::text('number','',["class"=>"form-control",'required'=>'true'])}}
 		            <span class="error">{{$errors->first('number')}}</span>
 		          </div>
 		        </div>
-		        <div class="col-md-6 clear">
+		        <div class="col-md-6 ">
 		          <div class="form-group"> 
 		            <label class="form-label">Issue Date <span class="error">*</span></label><br>
 		            {{Form::text('start_date','',["class"=>"form-control datepicker",'required'=>'true',"date_en"=>"true"])}}
@@ -372,7 +387,7 @@
 		            <span class="error">{{$errors->first('end_date')}}</span>
 		          </div>
 		        </div>
-            	<div class="col-md-6 form-group clear">
+            	<div class="col-md-6 form-group ">
             		<label class="form-label">Document Copy <span class="error">*</span></label><br>
             		{{Form::file('document',["class"=>"form-control",'required'=>'true'])}}
             	</div>	

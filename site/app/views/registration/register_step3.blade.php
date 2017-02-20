@@ -41,7 +41,7 @@
               <div class="col-md-3">
                 <div class="form-group"> 
                   <label class="form-label">License Type <span class="error">*</span></label>
-                  {{Form::select('license_id',$types,(isset($data->license_id))?date('d-m-Y',strtotime($data->license_id)):'',['required'=>'true','class'=>'form-control'])}}
+                  {{Form::select('license_id',$types,(isset($data->license_id))?$data->license_id:'',['required'=>'true','class'=>'form-control', 'id' => 'coach-license'])}}
                     <span class="error">{{$errors->first('start_date')}}</span>
                 </div>
               </div>
@@ -61,7 +61,23 @@
                     <span class="error">{{$errors->first('license_number')}}</span>
                 </div>
               </div>
-              
+            </div>
+            <div class="row">
+                <div class="col-md-6 form-group" id ="div-recc"  style="display: {{(Input::old('recc'))?'block':'none';}}">
+                <div class="row">
+                  <div class="col-md-4">
+                    <label>RECC Authorised ?</label><br>
+                    {{Form::checkbox('recc',1,'',["id" => "recc"])}}
+                  </div>
+                  <div class="col-md-8 " id = "equivalent-license-div" style="display: {{(Input::old('recc'))?'block':'none';}}">
+                    <label class="form-label">Equivalent License </label>
+                     {{Form::select('equivalent_license_id',$types,'',["class"=>"form-control" ,"id" => "equivalent_licenses"])}}
+                     <span class="error">{{$errors->first('equivalent_license_id')}}</span>
+                    
+                  </div>
+                </div>
+            </div>
+           
               <div class="col-md-6">
                 <div class="form-group"> 
                   <label class="form-label">Upload License <span class="error">*</span></label>

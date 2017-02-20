@@ -57,12 +57,23 @@ class ApplicationController extends BaseController {
             $count_string++;
           }
         }
-
         $applications = $sql->skip(($page_id-1)*$max_per_page)->take($max_per_page)->get();
+
+        if(Input::has('excel_export') && Input::get('excel_export') == 1 ){
+            $export_applications = $sql->get(); 
+            if(sizeof($export_applications)>0){
+                include(app_path().'/libraries/Classes/PHPExcel.php');
+                include(app_path().'/libraries/export/applicationsExport.php'); 
+            }else{
+                return Redirect::back()->with('failure','No Data Found to export');
+            }
+        }
 
         $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'Applications','subsidebar'=>2]);
         
         $this->layout->main = View::make('admin.applications.list',['status'=>$status,"applications"=>$applications,'title'=>'Applications','flag'=>1, "courses" => $courses,"total" => $total, "page_id"=>$page_id, "max_per_page" => $max_per_page, "total_pages" => $total_pages,'input_string'=>$input_string, "application_status" => $application_status]);
+
+
     }
 
     /************* Coaches methods return here********/
@@ -232,6 +243,27 @@ class ApplicationController extends BaseController {
         $data['message'] = 'Selected';
         return json_encode($data);
     }
+
+    public function notSelectApplication($application_id){
+        
+        $application = Application::find($application_id);
+        $application->status = 6;
+        $application->save();
+        
+        // $check_payment = Payment::where('application_id',$application_id)->count();
+        // if($check_payment == 0){
+        //     $payment = new Payment;
+        //     $payment->application_id = $application_id;
+        //     $course_row = Course::select('fees')->where('id',$application->course_id)->first();
+        //     $payment->fees = $course_row->fees;
+        //     $payment->save();
+        // }
+
+        $data['success'] = true;
+        $data['message'] = 'Not Selected';
+        return json_encode($data);
+    }
+
 
     public function postLog($log_id){
         $cre=[

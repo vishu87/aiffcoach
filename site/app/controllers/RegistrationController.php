@@ -194,7 +194,10 @@ class RegistrationController extends BaseController {
             'cv' => 'required',
             'present_emp_copy' => 'required'
         ];
-
+        if(Input::has('recc')){
+            $cre['equivalent_license_id'] = Input::get('equivalent_license_id');
+            $rules['equivalent_license_id'] = 'required';
+        }
         $validator = Validator::make($cre,$rules);
         if($validator->passes()){
             $data = array();
@@ -255,8 +258,6 @@ class RegistrationController extends BaseController {
             $coach->registration_id = strtoupper(date("YM")).$coach->id;
             $coach->save();
 
-
-
             $coach_parameter = new CoachParameter;
             $coach_parameter->coach_id = $coach->id;
             $coach_parameter->birth_place = $data1['birth_place'];
@@ -294,6 +295,11 @@ class RegistrationController extends BaseController {
             $coach_license->document = (isset($data3["license"]))?$data3["license"]:'';
             $coach_license->number = $data3["license_number"];
             $coach_license->start_date = date('Y-m-d',strtotime($data3["start_date"]));
+            $coach_license->end_date = (Input::get('end_date') != '') ? date('Y-m-d',strtotime(Input::get('end_date'))) : null;
+            if(Input::has("recc")){
+                $coach_license->recc = Input::get('recc');
+                $coach_license->equivalent_license_id = Input::get('equivalent_license_id');
+            }
             $coach_license->save();
 
             //passport Details

@@ -12,7 +12,8 @@ class Application extends Eloquent {
 			"2" => "Selected",
 			"3" => "Payments Approved",
 			"4" => "Referred Back",
-			"5" => "Rejected"
+			"5" => "Rejected",
+			"6" => "Not Selected"
 		);
 	}
 

@@ -35,7 +35,7 @@
 	</div>
 	<div class="col-md-5">
 		@if(isset($total))
-			<div class="row" style="margin:20px 0;">
+			<div class="row" style="margin:20px -15px;">
 				<div class="col-md-3">
 					<h3 class="page-title"></h3>
 				</div>
@@ -91,8 +91,19 @@
 			</div>
 		@endif
 	</div>
+	<?php
+		$url_str = '/admin/Applications/all?excel_export=1';
+		$filter_inputs = Input::all();
+		if(sizeof($filter_inputs) > 0){
+			foreach ($filter_inputs as $key => $value) {
+				$url_str .= '&'.$key.'='.$value;
+			}
+		}
+	?>
+	<div class="col-md-12">
+		<a href="{{url($url_str)}}" class="btn btn-sm blue pull-right">Export Excel</a>
+	</div>
 </div>
-
 <div>
 	<ul class="nav nav-tabs">
 		@foreach($status as $val => $st)
@@ -100,6 +111,7 @@
 				<a href="{{url('admin/Applications/all')}}?course={{Input::get('course')}}&amp;status={{$val}}" >{{$st}}</a>
 			</li>
 		@endforeach
+		
 	</ul>
 </div>
 
@@ -113,7 +125,7 @@
 				<th>Venue</th>
 				<th>Coach Name</th>
 				<th>Status</th>
-				<th>#</th>
+				<th style="width:300px">#</th>
 			</tr></thead>
 			<tbody id="applications">
 				<?php $count = 1; ?>

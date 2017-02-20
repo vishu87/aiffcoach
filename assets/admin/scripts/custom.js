@@ -524,3 +524,20 @@ $(document).on("click", "#addRow", function(e) {
 	initialize();
 
 });
+
+$(document).on("change","#coach-license",function(){
+	if($(this).val() == "21"){
+		$("#div-recc").show(300);
+		$("#recc").attr('checked',false);
+
+	}else{
+		$("#div-recc").hide(300);
+		$("#recc").attr('checked',false);
+	}
+
+});
+
+$(document).on("change","#recc",function(){
+	$("#equivalent-license-div").toggle(300);
+
+})
