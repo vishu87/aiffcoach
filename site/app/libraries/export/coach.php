@@ -64,6 +64,13 @@ if(isset($coaches)){
 	$exportData = $coaches;
 	$title = 'Coaches';
 }
+if(isset($exportCoaches)){
+	$fields = array("sn",'registration_id',"full_name",'email','gender','state_reference','latest_license','other_license','employment');
+	$field_names = array("SN","Registration Id" ,"Name","Email","Gender","State of Reference","License","Other Licenses" , "Employment");
+	$widths = array("10","20","25","30","10","30","30","30", "40");
+	$exportData = $exportCoaches;
+	$title = 'Coaches';
+}
 if(isset($licenses)){
 	$fields = array("sn","name","description","authorised_by");
 	$field_names = array("SN", "License Name", "Description",'Authorised By');
@@ -203,6 +210,24 @@ foreach ($exportData as $data) {
 		}
 		else if($field == 'finalResult'){
 			$var = $resultStatus[$data[$field]];
+		}
+		else if($field == 'other_license'){
+			$field = 'id';
+			if(isset($latest_license[$data[$field]])){
+
+				$var = implode(', ',$latest_license[$data[$field]]);
+			}else{
+				$var = '';
+			}
+		}
+		elseif($field == 'employment'){
+			$field = 'id';
+			if(isset($latest_emps[$data[$field]])){
+
+				$var = $latest_emps[$data[$field]];
+			}else{
+				$var = '';
+			}
 		}
 		else {
 			$var = $data[$field];

@@ -87,8 +87,17 @@
 
 			@if(isset($total))
 				<div class="row" style="margin-bottom:20px">
+					<?php 
+						$inputs = Input::all();
+						$str = '/exportCoaches?type=1';
+						if(sizeof($inputs) > 0){
+							foreach ($inputs as $key => $value) {
+								$str .= "&".$key."=".$value;
+							}
+						}
+					?>
 					<div class="col-md-3">
-						<h3 class="page-title"></h3>
+						<a href="{{url($str)}}" class="btn btn-sm blue" style="margin-top: 10px;">Export Excel</a>
 					</div>
 					<div class="col-md-9">
 						<div class="pull-right hidden" style="font-style:italic; margin-top:5px;  margin-left:10px" >

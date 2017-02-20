@@ -22,6 +22,8 @@ Route::get('/reset', function(){
     return View::make('reset');
 });
 
+Route::get('/view-all-coaches','CoachController@viewAllCoaches');
+Route::get('/exportCoaches','ExcelExportController@exportCoaches');
 
 Route::get('/correctData', function(){
     $documents = CoachDocument::select('coach_documents.id','coaches.status as coach_status')->join('coaches','coaches.id','=','coach_documents.coach_id')->get();
@@ -64,7 +66,6 @@ Route::get('/logout', function(){
 });
 Route::post('/register', 'CoachController@register');
 
-Route::get('/view-all-coaches','CoachController@viewAllCoaches');
 Route::group(['before' => 'auth'], function () {
     Route::post('/approve/{entity_type}/{etity_id}','ApprovalController@postApprove');
     Route::get('/resultExport','ExcelExportController@resultExport');
