@@ -437,7 +437,9 @@
 				@foreach($coachLicense as $data)
 				<tr id="document_{{$data->id}}">
 					<td>{{$count}}</td>
-					<td>{{$data->license_name}} {{($data->license_id == 21)?"<br>($data->equivalent_license)":''}}</td>
+					<td>{{$data->license_name}} 
+						{{($data->recc == 1)?"<br>($data->equivalent_license)":''}}
+					</td>
 					<td>{{$data->number}}</td>
 					<td>{{date('d-m-Y',strtotime($data->start_date))}}</td>
 					<td>{{($data->end_date)?date('d-m-Y',strtotime($data->end_date)):''}}</td>

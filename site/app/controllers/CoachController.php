@@ -700,8 +700,7 @@ class CoachController extends BaseController {
         $states = State::states();
         // return $coaches;
         $coach_licenses_sql = CoachLicense::select('coach_licenses.coach_id','coach_licenses.start_date','coach_licenses.license_id','license.name as license_name','coach_licenses.equivalent_license_id','coach_licenses.recc')
-            ->join('license','license.id','=','coach_licenses.license_id')
-            ->where('status',1)->orderBy('start_date','desc');
+            ->join('license','license.id','=','coach_licenses.license_id');
 
         if(Input::has('license_id') && Input::get("license_id") != ''){
           $coach_licenses_sql = $coach_licenses_sql->where('coach_licenses.license_id','!=',Input::get('license_id'));
@@ -709,7 +708,7 @@ class CoachController extends BaseController {
         if(Input::has('license_id') && Input::get("license_id") != '' && Input::get('license_id') == 21){
             $coach_licenses_sql = $coach_licenses_sql->orWhere('coach_licenses.license_id','=',Input::get('license_id'));
         }
-        $coach_licenses = $coach_licenses_sql->get();
+        $coach_licenses = $coach_licenses_sql->where('status',1)->orderBy('start_date','desc')->get();
 
         $latest_license = [];
 
