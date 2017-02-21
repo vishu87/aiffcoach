@@ -538,6 +538,11 @@ $(document).on("change","#coach-license",function(){
 });
 
 $(document).on("change","#recc",function(){
-	$("#equivalent-license-div").toggle(300);
+	if(this.checked){
+		$("#equivalent-license-div").show(300);
+	}else{
+		$("#equivalent-license-div").hide(300);
+
+	}
 
 })

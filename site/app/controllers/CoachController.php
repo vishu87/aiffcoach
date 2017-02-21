@@ -152,7 +152,60 @@ class CoachController extends BaseController {
             return Redirect::back()->with('success','New Documents Added Successfully');
         }
         return Redirect::back()->withErrors($validator)->withInput();
-    }  
+    } 
+
+    public function editDocument($document_id){
+        $id = Auth::User()->coach_id;
+        $coach = Coach::find($id);
+        $ApprovalStatus = Approval::status();
+        $documents = CoachDocument::where('coach_id',$id)->get();
+        $document_types = [''=>"select"]+CoachDocument::DocTypes();
+        $document = CoachDocument::find($document_id);
+        $this->layout->sidebar = View::make('coaches.sidebar',["sidebar"=>'profile','subsidebar'=>1]);
+        $this->layout->main = View::make('coaches.profile',['documents'=>$documents,'document_types'=>$document_types,"profileType"=>5,'title'=>'Documents' , "ApprovalStatus"=>$ApprovalStatus , "document" => $document]);
+    }
+
+   public function updateDocument($document_id){
+        $document = CoachDocument::find($document_id);
+        $cre = [
+            "document"=>Input::get('document'),
+            "number" => Input::get('number'),
+        ];
+        $rules = [
+            "document"=>'required',
+            "number" => 'required',
+        ];
+        if($document->file == ''){
+            $cre["file"] = Input::file('file');
+            $rules["file"] = "required";
+        }
+        $validator = Validator::make($cre,$rules);
+        if($validator->passes()){
+
+            $document->document_id = Input::get('document');
+            $document->number = Input::get('number');
+            $document->remarks = Input::get('remarks');
+            
+            $document->start_date = (Input::get('start_date') != '')?date('Y-m-d',strtotime(Input::get('start_date'))):null;
+            $document->expiry_date = (Input::get('expiry') != '')?date('Y-m-d',strtotime(Input::get('expiry'))):null;
+
+            if(Input::has('doc_name')){
+                $document->name = Input::get('doc_name');
+            }
+
+            $destinationPath= 'coaches-doc/';
+            if(Input::hasFile('file')){
+                $extension = Input::file('file')->getClientOriginalExtension();
+                $doc = "file_".Auth::id().'_'.strtotime("now").'.'.$extension;
+                Input::file('file')->move($destinationPath,$doc);
+                $document->file = $destinationPath.$doc;
+            }
+            $document->save();
+            return Redirect::back()->with('success','Document Updated Successfully');
+        }
+        return Redirect::back()->withErrors($validator)->withInput();
+    }
+
     public function deleteDocument($id){
 
         if(Session::get('privilege') == 2){
@@ -467,10 +520,14 @@ class CoachController extends BaseController {
         $licenseUploaded = [];
         if(sizeof($coachLicense) > 0){
             foreach ($coachLicense as $license) {
-                array_push($licenseUploaded, $license->license_id);
+                if($license->license_id != 21){
+                    array_push($licenseUploaded, $license->license_id);
+                }
             }
+            if(sizeof($licenseUploaded) > 0){
 
             $sql = $sql->whereNotIn('id',$licenseUploaded);
+            }
         }
 
         $licenses = $sql->lists('name','id');
@@ -520,6 +577,60 @@ class CoachController extends BaseController {
         }
     }
 
+    public function editLicense($license_id){
+        $id = Auth::User()->coach_id;
+        $coachLicense = CoachLicense::listing()->where('coach_id',$id)->get();
+        $license = CoachLicense::find($license_id);
+
+        $licenses = License::where('user_type',Auth::user()->official_types)->lists('name','id');
+
+        $licenses = ["" => "Select"] + $licenses;
+
+        $this->layout->sidebar = View::make('coaches.sidebar',["sidebar"=>'profile','subsidebar'=>2]);
+        $this->layout->main = View::make('coaches.profile',['coachLicense'=>$coachLicense,"profileType"=>6,'title'=>'Licenses',"licenses"=>$licenses ,"license"=>$license]);
+    }
+
+    public function updateLicense($license_id){
+        $cre = ["start_date"=>Input::get("start_date"),"number"=>Input::get("number"),"end_date"=>Input::get("end_date")];
+        $rules = ["start_date"=>"required|date","end_date"=>"date|after:start_date","number"=>"required"];
+
+        if(Input::has('recc')){
+            $cre["equivalent_license_id"] = Input::get("equivalent_license_id");
+            $rules["equivalent_license_id"] = "required";
+        }
+
+        $validator = Validator::make($cre,$rules);
+        if($validator->passes()){
+            $coachLicense = CoachLicense::find($license_id);
+
+            $coachLicense->number = Input::get("number");
+
+            $coachLicense->start_date = date("Y-m-d",strtotime(Input::get("start_date")));
+            if(Input::get("end_date") != '') $coachLicense->end_date = date("Y-m-d",strtotime(Input::get("end_date")));
+            
+            $destinationPath = "coach-licenses/";
+            if(Input::hasFile('document')){
+                $extension = Input::file('document')->getClientOriginalExtension();
+                $doc = "license_".Auth::id().'_'.strtotime("now").'.'.$extension;
+                Input::file('document')->move($destinationPath,$doc);
+                $coachLicense->document = $destinationPath.$doc;
+            }
+            if(Input::has('recc')){
+                $coachLicense->recc = Input::get('recc');
+                $coachLicense->equivalent_license_id = Input::get('equivalent_license_id');
+            }else{
+                $coachLicense->recc = 0;
+                $coachLicense->equivalent_license_id = 0;
+            }
+            $coachLicense->save();
+            return Redirect::back()->with('success','New license added successfully');
+
+        }
+        else{
+            return Redirect::back()->withErrors($validator)->withInput()->with('failure','All fields are not properly field');
+        }
+    }
+
     public function deleteLicense($coach_license_id){
         if(Session::get('privilege') == 2){
             $count = CoachLicense::find($coach_license_id)->count();
@@ -540,25 +651,32 @@ class CoachController extends BaseController {
 
     public function viewAllCoaches(){
         
-        $sql = Coach::listing()->addSelect('license.name as latest_license')->join('coach_licenses','coach_licenses.coach_id','=','coaches.id')->join('license','coach_licenses.license_id','=','license.id')->orderBy('coach_licenses.start_date','desc')->approved();
+        $sql = Coach::listing()->approved();
         
-        if(Input::get("license_id") != ''){
-          $sql = $sql->where('coach_licenses.license_id','=',Input::get('license_id'));
-        }
+
         if(Input::get("registration_id") != ''){
           $sql = $sql->where('coaches.registration_id','LIKE','%'.Input::get('registration_id').'%');
         }
+
         if(Input::get("official_name") != ''){
           $sql = $sql->where('coaches.full_name','LIKE','%'.Input::get('official_name').'%');
         }
 
+        if(Input::get("license_id") != ''){
+          $sql = $sql->addSelect('license.name as latest_license','license.id as license_id','coach_licenses.recc','coach_licenses.equivalent_license_id')
+            ->join('coach_licenses','coach_licenses.coach_id','=','coaches.id')
+            ->join('license','coach_licenses.license_id','=','license.id')
+            ->orderBy('coach_licenses.start_date','desc')->where('coach_licenses.license_id','=',Input::get('license_id'))->orWhere('coach_licenses.equivalent_license_id','=',Input::get('license_id'));
+        }
 
         if(Input::get("state_id") != ''){
           $sql = $sql->where('coaches.state_id',Input::get('state_id'));
         }
 
         $total = $sql->count();
+
         $max_per_page = 100;
+
         $total_pages = ceil($total/$max_per_page);
         if(Input::has('page')){
           $page_id = Input::get('page');
@@ -576,25 +694,38 @@ class CoachController extends BaseController {
           }
         }
         
-        $coaches = $sql->skip(($page_id-1)*$max_per_page)->take($max_per_page)->get();
+        $coaches = $sql->skip(($page_id-1)*$max_per_page)->take($max_per_page)->groupBy('coaches.id')->get();
         $status = Coach::Status();
         $licenses = License::licenseList();
         $states = State::states();
+        // return $coaches;
+        $coach_licenses_sql = CoachLicense::select('coach_licenses.coach_id','coach_licenses.start_date','coach_licenses.license_id','license.name as license_name','coach_licenses.equivalent_license_id','coach_licenses.recc')
+            ->join('license','license.id','=','coach_licenses.license_id')
+            ->where('status',1)->orderBy('start_date','desc');
 
-        $coach_licenses_sql = CoachLicense::select('coach_id','start_date','license_id','license.name as license_name')->join('license','license.id','=','coach_licenses.license_id')->where('status',1)->orderBy('start_date','desc');
-
-        if(Input::get("license_id") != ''){
+        if(Input::has('license_id') && Input::get("license_id") != ''){
           $coach_licenses_sql = $coach_licenses_sql->where('coach_licenses.license_id','!=',Input::get('license_id'));
         }
-
+        if(Input::has('license_id') && Input::get("license_id") != '' && Input::get('license_id') == 21){
+            $coach_licenses_sql = $coach_licenses_sql->orWhere('coach_licenses.license_id','=',Input::get('license_id'));
+        }
         $coach_licenses = $coach_licenses_sql->get();
 
         $latest_license = [];
 
         foreach ($coach_licenses as $license) {
-            if(!isset($latest_license[$license->coach_id]))
-                $latest_license[$license->coach_id] = array();
-                array_push($latest_license[$license->coach_id], $license->license_name);
+            if(!isset($latest_license[$license->coach_id]))$latest_license[$license->coach_id] = array();
+
+            if(Input::has('license_id') && Input::get('license_id') != $license->equivalent_license_id ){
+
+                if($license->recc == 1){
+
+                    array_push($latest_license[$license->coach_id], $license->license_name.' ( '.$licenses[$license->equivalent_license_id].' ) ');
+                }else{
+
+                    array_push($latest_license[$license->coach_id], $license->license_name);
+                }
+            }
         }
 
         $coach_emps = EmploymentDetails::select('coach_id','employment')->where('status',1)->orderBy('start_date','desc')->get();

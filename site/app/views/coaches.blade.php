@@ -184,10 +184,15 @@
 								@if(Input::has('license_id') && Input::get('license_id') !='')
 									<td>
 										{{$data->latest_license}}
+										@if($data->recc == 1)
+											{{(isset($licenses[$data->equivalent_license_id]))?' ( '.($licenses[$data->equivalent_license_id]).' ) ':''}}
+										@endif
 									</td>
 								@endif
 								<td>
+									
 									{{(isset($latest_license[$data->id]))?implode(',<br>',$latest_license[$data->id]):''}}
+
 								</td>
 								<td>{{(isset($latest_emps[$data->id]))?$latest_emps[$data->id]:''}}</td>
 								
