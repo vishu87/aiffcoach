@@ -119,13 +119,18 @@ class CoachController extends BaseController {
         $cre = [
             "document"=>Input::get('document'),
             "file"=>Input::file('file'),
-            "number" => Input::get('number'),
+
         ];
         $rules = [
             "document"=>'required',
             "file"=>'required',
-            "number" => 'required',
+
         ];
+        if(Input::get('document') != 2){
+            $cre["number"] = Input::get('number');
+            $rules["number"] = 'required';
+        }
+
         $validator = Validator::make($cre,$rules);
         if($validator->passes()){
             $document = new CoachDocument;
@@ -169,12 +174,16 @@ class CoachController extends BaseController {
         $document = CoachDocument::find($document_id);
         $cre = [
             "document"=>Input::get('document'),
-            "number" => Input::get('number'),
+            
         ];
         $rules = [
             "document"=>'required',
-            "number" => 'required',
+            
         ];
+        if(Input::get('document') != 2){
+            $cre["number"] = Input::get('number');
+            $rules["number"] = 'required';
+        }
         if($document->file == ''){
             $cre["file"] = Input::file('file');
             $rules["file"] = "required";
@@ -201,7 +210,7 @@ class CoachController extends BaseController {
                 $document->file = $destinationPath.$doc;
             }
             $document->save();
-            return Redirect::back()->with('success','Document Updated Successfully');
+            return Redirect::to('/coach/addDocument')->with('success','Document Updated Successfully');
         }
         return Redirect::back()->withErrors($validator)->withInput();
     }
@@ -623,7 +632,7 @@ class CoachController extends BaseController {
                 $coachLicense->equivalent_license_id = 0;
             }
             $coachLicense->save();
-            return Redirect::back()->with('success','New license added successfully');
+            return Redirect::to('/coach/coachLicense')->with('success','license updated successfully');
 
         }
         else{

@@ -243,62 +243,55 @@
 @endif
 @if($profileType==5)	
 <?php $entity_type = 2;?>
-<div class="portlet box blue ">
-    <div class="portlet-title">
-    	<div class="caption">
-    		Add Document
-    	</div>
-    </div>
-    <div class="portlet-body form">
-      	<div class="form-body">
-            <div class="">
-            	@if(isset($document))
-                {{ Form::open(array('url' =>'coach/addDocument/update/'.$document->id, "method"=>"POST","files"=>'true','class'=>'form check_form check_form_2')) }}
-                @else
-                {{ Form::open(array('url' =>'coach/addDocument/add', "method"=>"POST","files"=>'true','class'=>'form check_form check_form_2')) }}
-                @endif
-	            <div class="row" >
-					<div class="col-md-4 form-group" id="document-div">
-						<label>Select Document</label><span class="error">*</span>
-						{{Form::select('document',$document_types,(isset($document))?$document->document_id:'',["class"=>"form-control",'required'=>'true',"id"=>"document_id"])}}
-					</div>
-					<div class="col-md-4 form-group"> 
-				        <label class="form-label">Document Number</label>   <span class="error">*</span>    
-				        {{Form::text('number',(isset($document))?$document->number:'',['class'=>'form-control','required'=>'true'])}}
-				        <span class="error">{{$errors->first('number')}}</span>
-				    </div>
-					<div class="col-md-4 form-group">
 
-				        <label class="form-label">Attach Document</label> <span class="error">*</span>      
-				        {{Form::file('file',['class'=>'form-control','placeholder'=>'Attach Passport Copy','pdf'=>'true',(isset($document) && $document->file != '')?'':'required'])}}
-				        
-				        @if(isset($document) && $document->file != '')
-				        	<a href="{{url($document->file)}}" target="_blank"> view</a>
-				        @endif
-				    </div>
-				    <div class="col-md-4 form-group"> 
-				        <label class="form-label">Issue Date</label>
-				        {{Form::text('start_date',(isset($document) && $document->start_date != '')?date('d-m-Y',strtotime($document->start_date)):'',['class'=>'form-control datepicker','date_en'=>'true' ])}}
-				        <span class="error">{{$errors->first('start_date')}}</span>
-				    </div>
-				    <div class="col-md-4 form-group"> 
-				        <label class="form-label">Expiry Date</label>
-				        {{Form::text('expiry',(isset($document) && $document->expiry_date != '')?date('d-m-Y',strtotime($document->expiry_date)):'',['class'=>'form-control datepicker','date_en'=>'true'])}}
-				        
-				    </div>
-				    <div class="col-md-4 form-group">
-				    	<label>Remarks</label>
-				    	{{Form::text('remarks',(isset($document))?$document->remarks:'',["class"=>"form-control"])}}
-				    </div>
+@if(isset($document))
+{{ Form::open(array('url' =>'coach/addDocument/update/'.$document->id, "method"=>"POST","files"=>'true','class'=>'form check_form check_form_2')) }}
+@else
+{{ Form::open(array('url' =>'coach/addDocument/add', "method"=>"POST","files"=>'true','class'=>'form check_form check_form_2')) }}
+@endif
+  	<div class="form-body">
+        <div class="">
+            <div class="row" >
+				<div class="col-md-4 form-group" id="document-div">
+					<label>Select Document</label><span class="error">*</span>
+					{{Form::select('document',$document_types,(isset($document))?$document->document_id:'',["class"=>"form-control",'required'=>'true',"id"=>"document_id"])}}
 				</div>
-            </div>
+				<div class="col-md-4 form-group"> 
+			        <label class="form-label">Document Number</label>  
+			        {{Form::text('number',(isset($document))?$document->number:'',['class'=>'form-control'])}}
+			        <span class="error">{{$errors->first('number')}}</span>
+			    </div>
+				<div class="col-md-4 form-group">
+
+			        <label class="form-label">Attach Document</label> <span class="error">*</span>      
+			        {{Form::file('file',['class'=>'form-control','placeholder'=>'Attach Passport Copy','pdf'=>'true',(isset($document) && $document->file != '')?'':'required'])}}
+			        
+			        @if(isset($document) && $document->file != '')
+			        	<a href="{{url($document->file)}}" target="_blank"> view</a>
+			        @endif
+			    </div>
+			    <div class="col-md-4 form-group"> 
+			        <label class="form-label">Issue Date</label>
+			        {{Form::text('start_date',(isset($document) && $document->start_date != '')?date('d-m-Y',strtotime($document->start_date)):'',['class'=>'form-control datepicker','date_en'=>'true' ])}}
+			        <span class="error">{{$errors->first('start_date')}}</span>
+			    </div>
+			    <div class="col-md-4 form-group"> 
+			        <label class="form-label">Expiry Date</label>
+			        {{Form::text('expiry',(isset($document) && $document->expiry_date != '')?date('d-m-Y',strtotime($document->expiry_date)):'',['class'=>'form-control datepicker','date_en'=>'true'])}}
+			        
+			    </div>
+			    <div class="col-md-4 form-group">
+			    	<label>Remarks</label>
+			    	{{Form::text('remarks',(isset($document))?$document->remarks:'',["class"=>"form-control"])}}
+			    </div>
+			</div>
         </div>
-        <div class="form-actions">
-        	<button type="submit" class="btn green">Submit</button>
-        </div>
-        {{Form::close()}}
-	</div>
-</div>
+    </div>
+    <div class="form-actions">
+    	<button type="submit" class="btn green">Submit</button>
+    </div>
+{{Form::close()}}
+
 <div style="overflow-y:auto;margin-top:40px;">
 	<table class="table table-bordered table-hover tablesorter">
 		<thead>
