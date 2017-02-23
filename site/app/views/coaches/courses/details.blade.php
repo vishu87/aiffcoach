@@ -66,7 +66,7 @@
 				@foreach($prerequisites as $prerequisite)
 					@if(isset($coach_licenses[$prerequisite]))
 						<?php
-							$three_months = date("Y-m-d",strtotime("-3 months"));
+							$three_months = date("Y-m-d",strtotime($course->start_date));
 						?>
 						@if($coach_licenses[$prerequisite]["status"] == 0 )
 							<span class="color-green"><i class="fa fa-check"></i> {{$licenses[$prerequisite]}}</span><span class="color-red"> (License available but not approved or profile is under approval)</span>
