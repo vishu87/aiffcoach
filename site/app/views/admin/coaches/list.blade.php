@@ -4,8 +4,18 @@
 			{{$title}}
 		</h3>
 	</div>
+	<?php 
+		$str = url('/admin/coachExport/'.$flag.'?type=export');
+
+		$inputs = Input::all();
+		if(sizeof($inputs) >0){
+			foreach ($inputs as $key => $value) {
+				$str .= '&'.$key.'='.$value;
+			}
+		}
+	?>
 	<div class="col-md-5">
-		<a class="btn green pull-right" href="{{url('/admin/coachExport/'.$flag)}}">Export Excel</a>
+		<a class="btn green pull-right" href="{{$str}}">Export Excel</a>
 	</div>
 </div>
 

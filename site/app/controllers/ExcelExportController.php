@@ -3,14 +3,45 @@ class ExcelExportController extends BaseController {
     public function coachExport($flag){
         // flag = "1"=>Approved Coach,"2"=>pending Coach,"3"=>All Coaches
         if($flag==1){
-            $coaches = Coach::listing()->approved()->where('users.official_types','LIKE','%'.Auth::user()->manage_official_type.'%')->get();  
+            $sql = Coach::listing()->approved()->where('users.official_types','LIKE','%'.Auth::user()->manage_official_type.'%');  
         }
         if($flag==2){
-            $coaches = Coach::listing()->pending()->where('users.official_types','LIKE','%'.Auth::user()->manage_official_type.'%')->get();    
+            $sql = Coach::listing()->pending()->where('users.official_types','LIKE','%'.Auth::user()->manage_official_type.'%');    
+            
+            $pending_type = 0;
+
+            if(Input::has('pending_type')){
+              $pending_type = Input::get('pending_type');
+            }
+
+            if(Session::get('privilege') == 4){
+              $sql = $sql->where('coaches.status', $pending_type);
+            } else {
+              $sql = $sql->where('coaches.status', $pending_type)->where('users.official_types','LIKE','%'.Auth::user()->manage_official_type.'%');
+            }
         }
         if($flag==3){
-            $coaches = Coach::listing()->get();    
+            $sql = Coach::listing();    
         }
+
+        if(Input::get("registration_id") != ''){
+          $sql = $sql->where('coaches.registration_id','LIKE','%'.Input::get('registration_id').'%');
+        }
+
+        if(Input::get("license_id") != ''){
+          $sql = $sql->join('coach_licenses','coach_licenses.coach_id','=','coaches.id')->where('coach_licenses.license_id','=',Input::get('license_id'));
+        }
+
+        if(Input::get("official_name") != ''){
+          $sql = $sql->where('coaches.full_name','LIKE','%'.Input::get('official_name').'%');
+        }
+
+        if(Input::get("state_id") != ''){
+          $sql = $sql->where('coaches.state_id',Input::get('state_id'));
+        }
+
+        $coaches =$sql->get();
+
         if(sizeof($coaches)>0){
             include(app_path().'/libraries/Classes/PHPExcel.php');
             include(app_path().'/libraries/export/coach.php'); 
