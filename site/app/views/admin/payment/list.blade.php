@@ -2,8 +2,17 @@
 	<div class="col-md-8">
 		<h3 class="page-title">{{$title}}</h3>
 	</div>
-	<div class="col-md-4 hidden">
-		<a class="btn green pull-right" href="{{url('/admin/paymentExport/'.$flag.'/'.app('request')->input('course'))}}">Export Excel</a>
+	<div class="col-md-4">
+		<?php 
+			$inputs = Input::all();
+			$str = url('/admin/Payment?type=export');
+			if(sizeof($inputs) >0){
+				foreach ($inputs as $key => $value) {
+					$str .= '&'.$key.'='.$value;
+				}
+			}
+		?>
+		<a class="btn green pull-right" href="{{$str}}">Export Excel</a>
 	</div>
 </div>
 @if(Session::has('success'))

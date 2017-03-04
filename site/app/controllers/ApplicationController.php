@@ -60,7 +60,45 @@ class ApplicationController extends BaseController {
         $applications = $sql->skip(($page_id-1)*$max_per_page)->take($max_per_page)->get();
 
         if(Input::has('excel_export') && Input::get('excel_export') == 1 ){
+            $sql = $sql->addSelect('states.name as state_registration')->leftJoin('states','states.id','=','coaches.state_id');
+
             $export_applications = $sql->get(); 
+
+            $present_emp = [];
+            $past_emp = [];
+            $d_license_date = [];
+
+            foreach ($export_applications as $application) {
+                $coach_present_emp = EmploymentDetails::select('employment')->where('coach_id',$application->coach_id)->where('emp_status',1)->where('status',1)->orderBy('start_date','desc')->first();
+                $coach_past_emp = EmploymentDetails::select('employment')->where('coach_id',$application->coach_id)->where('emp_status',2)->where('status',1)->orderBy('start_date','desc')->first();
+                $coach_dlicense = CoachLicense::select('start_date')->where('coach_id',$application->coach_id)->where('license_id',8)->orderBy('start_date','desc')->first();
+
+                if(sizeof($coach_present_emp)>0){
+                    if($coach_present_emp->employment != ''){
+
+                        if(!isset($present_emp[$application->coach_id]))$present_emp[$application->coach_id]=array();
+                        $present_emp[$application->coach_id] = $coach_present_emp->employment;
+                    }
+                }
+
+                if(sizeof($coach_past_emp) > 0){
+                    if($coach_past_emp->employment != ''){
+
+                        if(!isset($past_emp[$application->coach_id]))$past_emp[$application->coach_id]=array();
+                        $past_emp[$application->coach_id] = $coach_past_emp->employment;
+                    }
+                }
+
+                if(sizeof($coach_dlicense) > 0){
+                    if($coach_dlicense->start_date != ''){
+
+                        if(!isset($d_license_date[$application->coach_id]))$d_license_date[$application->coach_id] = array();
+                        $d_license_date[$application->coach_id] =  $coach_dlicense->start_date;
+                    }
+                }
+
+            }
+
             if(sizeof($export_applications)>0){
                 include(app_path().'/libraries/Classes/PHPExcel.php');
                 include(app_path().'/libraries/export/applicationsExport.php'); 

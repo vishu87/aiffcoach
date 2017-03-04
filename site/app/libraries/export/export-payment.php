@@ -57,12 +57,12 @@ function getNameFromNumber($num) {
 
 $row = 1;
 $i = 0;
-if(isset($export_applications)){
-	$fields = array("sn",'full_name','state_registration','present_emp','past_emp','d_license_date');
-	$field_names = array("SN","Coach Name",'State of Registration','Present Employment','Past Employment','D-License Date');
-	$widths = array("10","30","30","50","50","20","30","20","20","20");
-	$exportData = $export_applications;
-	$title = 'Applications ';
+if(isset($exportPayment)){
+	$fields = array("sn",'full_name','course_name','bank_name','fees','payment_method','status_app','remarks');
+	$field_names = array("SN","Coach Name",'Course','Bank','Fee Amount','Mode','Application Status','Remarks');
+	$widths = array("10","30","30","20","20","20","30","20","20","20");
+	$exportData = $exportPayment;
+	$title = 'Payments ';
 }
 
 
@@ -85,30 +85,27 @@ foreach ($exportData as $data) {
 		if($field == 'sn'){
 			$var = $count;
 		}
-		elseif($field == 'present_emp'){
-			$field = $data['coach_id'];
-			if(isset($present_emp[$field])){
-
-				$var = $present_emp[$field];	
-			}else{
-				$var = '';
+		elseif($field == 'payment_method'){
+			switch ($data[$field]) {
+				case 1:
+					$var = 'Cheque';
+					break;
+				case 1:
+					$var = 'Draft';
+					break;
+				case 1:
+					$var = 'Cash';
+					break;	
+				default:
+					$var = '';
+					break;
 			}
 		}
 
-		elseif($field == 'past_emp'){
-			$field = $data['coach_id'];
-			if(isset($past_emp[$field])) {
+		elseif($field == 'status_app'){
+			if(isset($status[$data[$field]])) {
 				
-				$var = $past_emp[$field];
-			}else{
-				$var = '';
-			}
-		}
-		elseif ($field == 'd_license_date') {
-			$field = $data['coach_id'];
-			if(isset($d_license_date[$field])){
-
-				$var = $d_license_date[$field];
+				$var = $status[$data[$field]];
 			}else{
 				$var = '';
 			}

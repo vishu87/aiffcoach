@@ -4,6 +4,7 @@ class PaymentController extends BaseController {
     protected $layout = 'layout';
     // admin panel function  starts
     public function index(){
+
         if(Input::has('course')){
             $sql = Payment::listing()->where('courses.user_type',Auth::user()->manage_official_type)->where('applications.course_id',Input::get('course'));
         }
@@ -38,6 +39,17 @@ class PaymentController extends BaseController {
         }
 
         $status = Application::status();
+
+        if(Input::has('type') && Input::get('type')=='export'){
+            $exportPayment = $sql->get();
+            if(sizeof($exportPayment)>0){
+                include(app_path().'/libraries/Classes/PHPExcel.php');
+                include(app_path().'/libraries/export/export-payment.php'); 
+            } else {
+                return Redirect::back()->with('failure','No data found to export');
+            }
+        }
+        
         $this->layout->sidebar = View::make('admin.sidebar',["sidebar"=>'payment','subsidebar'=>1]);
         $this->layout->main = View::make('admin.payment.list',['courses'=>$courses,'status'=>$status,'payments'=>$payments,"title"=>'Payment Due List','flag'=>1,"total" => $total, "page_id"=>$page_id, "max_per_page" => $max_per_page, "total_pages" => $total_pages,'input_string'=>$input_string]);
     }

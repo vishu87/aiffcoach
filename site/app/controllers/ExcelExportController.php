@@ -97,30 +97,7 @@ class ExcelExportController extends BaseController {
             return Redirect::back()->with('failure','No data found to export');
         }
     }
-    public function paymentExport($flag,$course_id=0){
-        if($flag==1){
-            if($course_id!='' && $course_id!=0){
-                $payments = Payment::listing()->where('applications.course_id',$course_id)->get();
-            }
-            else{
-                $payments = Payment::listing()->get();
-            }
-        }
-        if($flag==2){
-            if($course_id!='' && $course_id!=0){
-                $payments = Payment::listing()->pendingPayments()->where('applications.course_id',$course_id)->get();
-            }
-            else{
-                $payments = Payment::listing()->pendingPayments()->get();
-            }  
-        }
-        if(sizeof($payments)>0){
-            include(app_path().'/libraries/Classes/PHPExcel.php');
-            include(app_path().'/libraries/export/coach.php'); 
-        } else {
-            return Redirect::back()->with('failure','No data found to export');
-        }
-    }
+    
     public function resultExport(){
         $results = [];
         if(sizeof($results)>0){
