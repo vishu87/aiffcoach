@@ -60,10 +60,9 @@ class ApplicationController extends BaseController {
         $applications = $sql->skip(($page_id-1)*$max_per_page)->take($max_per_page)->get();
 
         if(Input::has('excel_export') && Input::get('excel_export') == 1 ){
-            $sql = $sql->addSelect('states.name as state_registration')->leftJoin('states','states.id','=','coaches.state_id');
+            $sql = $sql->addSelect('states.name as state_registration','coach_parameters.email','coach_parameters.mobile')->join('coach_parameters','coach_parameters.coach_id','=','coaches.id')->leftJoin('states','states.id','=','coaches.state_id');
 
             $export_applications = $sql->get(); 
-
             $present_emp = [];
             $past_emp = [];
             $d_license_date = [];

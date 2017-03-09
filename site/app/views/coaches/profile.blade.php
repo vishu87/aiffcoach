@@ -366,22 +366,23 @@
 			        		<label>RECC Authorised </label><br>
 			        		{{Form::checkbox('recc',1,(isset($license) && $license->recc == 1)?true:false,["id" => "recc"])}}
 			        	</div>
+			        	<div class="" id = "equivalent-license-div" style="display: {{(Input::old('recc') || isset($license))?'block':'none';}}" >
+				        	<div class="col-md-5" style="display: {{(isset($license) && $license->license_id != 21) ? 'none':'';}}">
+				        		<label>RECC Document Upload </label><br>
+				        		{{Form::file('recc_document',[(isset($license) && $license->recc_document != '')?'':'required'])}}
+				        		@if(isset($license) && $license->recc_document != '')
+			            			<a href="{{url($license->recc_document)}}" target="_blank">view</a>
+			            		@endif
+				        	</div>
 
-			        	<div class="col-md-5" style="display: {{(isset($license) && $license->license_id != 21) ? 'none':'';}}">
-			        		<label>RECC Document Upload </label><br>
-			        		{{Form::file('recc_document',["class" => "form-"])}}
-			        		@if(isset($license) && $license->recc_document != '')
-		            			<a href="{{url($license->recc_document)}}" target="_blank">view</a>
-		            		@endif
-			        	</div>
-
-			        	<div class="col-md-5 " id = "equivalent-license-div" style="display: {{(Input::old('recc') || isset($license))?'block':'none';}}">
-					        <div style="display: {{(isset($license) && $license->license_id != 21) ? 'none':'';}}">
-					        	<label class="form-label">Equivalent License </label>
-					           {{Form::select('equivalent_license_id',$licenses,(isset($license))?$license->equivalent_license_id:'',["class"=>"form-control" ,"id" => "equivalent_licenses"])}}
-					           <span class="error">{{$errors->first('equivalent_license_id')}}</span>
-					        </div>
-					        
+				        	<div class="col-md-5 " >
+						        <div style="display: {{(isset($license) && $license->license_id != 21) ? 'none':'';}}">
+						        	<label class="form-label">Equivalent License </label>
+						           {{Form::select('equivalent_license_id',$licenses,(isset($license))?$license->equivalent_license_id:'',["class"=>"form-control" ,"id" => "equivalent_licenses"])}}
+						           <span class="error">{{$errors->first('equivalent_license_id')}}</span>
+						        </div>
+			        		</div>
+			        		
 			        	</div>
 			        </div>
 			    </div>

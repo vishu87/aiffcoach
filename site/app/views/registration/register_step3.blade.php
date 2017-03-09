@@ -69,17 +69,19 @@
                     <label>RECC Authorised ?</label><br>
                     {{Form::checkbox('recc',1,'',["id" => "recc"])}}
                   </div>
-                   
-                  <div class="col-md-8" style="display: {{(isset($license) && $license->license_id != 21) ? 'none':'';}}">
-                    <label>RECC Document Upload </label><br>
-                    {{Form::file('recc_document',["class" => "form-control"])}}
-                  </div>
-                  <div class="col-md-12 " id = "equivalent-license-div" style="display: {{(Input::old('recc'))?'block':'none';}}">
-                    <label class="form-label">Equivalent License </label>
-                     {{Form::select('equivalent_license_id',$types,'',["class"=>"form-control" ,"id" => "equivalent_licenses"])}}
-                     <span class="error">{{$errors->first('equivalent_license_id')}}</span>
+                  <div id = "equivalent-license-div" style="display: {{(Input::old('recc'))?'block':'none';}}">
                     
-                  </div>
+                    <div class="col-md-8" style="display: 'none'">
+                      <label>RECC Document Upload <span class="error">*</span></label><br>
+                      {{Form::file('recc_document',["class" => "form-control","id"=>"recc_document"])}}
+                    </div>
+                    <div class="col-md-12 " >
+                      <label class="form-label">Equivalent License </label>
+                       {{Form::select('equivalent_license_id',$types,'',["class"=>"form-control" ,"id" => "equivalent_licenses"])}}
+                       <span class="error">{{$errors->first('equivalent_license_id')}}</span>
+                      
+                    </div>
+                  </div> 
                 </div>
               </div>
            

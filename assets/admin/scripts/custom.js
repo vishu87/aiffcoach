@@ -540,6 +540,7 @@ $(document).on("change","#coach-license",function(){
 $(document).on("change","#recc",function(){
 	if(this.checked){
 		$("#equivalent-license-div").show(300);
+		$("#recc_document").prop('required', true);
 	}else{
 		$("#equivalent-license-div").hide(300);
 

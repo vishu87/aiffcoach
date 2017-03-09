@@ -58,8 +58,8 @@ function getNameFromNumber($num) {
 $row = 1;
 $i = 0;
 if(isset($exportPayment)){
-	$fields = array("sn",'full_name','course_name','bank_name','fees','payment_method','status_app','remarks');
-	$field_names = array("SN","Coach Name",'Course','Bank','Fee Amount','Mode','Application Status','Remarks');
+	$fields = array("sn",'full_name','bank_name','cheque_date','cheque_number','amount');
+	$field_names = array("SN","Name",'Bank Name','Date','DD No.','Amount');
 	$widths = array("10","30","30","20","20","20","30","20","20","20");
 	$exportData = $exportPayment;
 	$title = 'Payments ';
@@ -109,6 +109,8 @@ foreach ($exportData as $data) {
 			}else{
 				$var = '';
 			}
+		}else if($field == 'cheque_date'){
+			$var = date('d-m-Y',strtotime($data[$field]));
 		}
 		else {
 			$var = $data[$field];
