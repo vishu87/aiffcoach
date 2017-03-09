@@ -63,20 +63,25 @@
               </div>
             </div>
             <div class="row">
-                <div class="col-md-6 form-group" id ="div-recc"  style="display: {{(Input::old('recc'))?'block':'none';}}">
+              <div class="col-md-6 form-group" id ="div-recc"  style="display: {{(Input::old('recc'))?'block':'none';}}">
                 <div class="row">
                   <div class="col-md-4">
                     <label>RECC Authorised ?</label><br>
                     {{Form::checkbox('recc',1,'',["id" => "recc"])}}
                   </div>
-                  <div class="col-md-8 " id = "equivalent-license-div" style="display: {{(Input::old('recc'))?'block':'none';}}">
+                   
+                  <div class="col-md-8" style="display: {{(isset($license) && $license->license_id != 21) ? 'none':'';}}">
+                    <label>RECC Document Upload </label><br>
+                    {{Form::file('recc_document',["class" => "form-control"])}}
+                  </div>
+                  <div class="col-md-12 " id = "equivalent-license-div" style="display: {{(Input::old('recc'))?'block':'none';}}">
                     <label class="form-label">Equivalent License </label>
                      {{Form::select('equivalent_license_id',$types,'',["class"=>"form-control" ,"id" => "equivalent_licenses"])}}
                      <span class="error">{{$errors->first('equivalent_license_id')}}</span>
                     
                   </div>
                 </div>
-            </div>
+              </div>
            
               <div class="col-md-6">
                 <div class="form-group"> 

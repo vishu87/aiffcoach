@@ -299,6 +299,14 @@ class RegistrationController extends BaseController {
             if(Input::has("recc")){
                 $coach_license->recc = Input::get('recc');
                 $coach_license->equivalent_license_id = Input::get('equivalent_license_id');
+
+                if(Input::hasFile('recc_document')){
+                    $extension = Input::file('recc_document')->getClientOriginalExtension();
+                    $doc = "license_recc_".Auth::id().'_'.strtotime("now").'.'.$extension;
+                    Input::file('recc_document')->move($licensePath,$doc);
+                    $coach_license->recc_document = $licensePath.$doc;
+                }
+                
             }
             $coach_license->save();
 
