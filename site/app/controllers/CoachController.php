@@ -576,6 +576,12 @@ class CoachController extends BaseController {
             if(Input::has('recc')){
                 $coachLicense->recc = Input::get('recc');
                 $coachLicense->equivalent_license_id = Input::get('equivalent_license_id');
+                if(Input::hasFile('recc_document')){
+                    $extension = Input::file('recc_document')->getClientOriginalExtension();
+                    $doc = "license_recc_".Auth::id().'_'.strtotime("now").'.'.$extension;
+                    Input::file('recc_document')->move($destinationPath,$doc);
+                    $coachLicense->recc_document = $destinationPath.$doc;
+                }
             }
             $coachLicense->save();
             return Redirect::back()->with('success','New license added successfully');
@@ -627,6 +633,12 @@ class CoachController extends BaseController {
             if(Input::has('recc')){
                 $coachLicense->recc = Input::get('recc');
                 $coachLicense->equivalent_license_id = Input::get('equivalent_license_id');
+                if(Input::hasFile('recc_document')){
+                    $extension = Input::file('recc_document')->getClientOriginalExtension();
+                    $doc = "license_recc_".Auth::id().'_'.strtotime("now").'.'.$extension;
+                    Input::file('recc_document')->move($destinationPath,$doc);
+                    $coachLicense->recc_document = $destinationPath.$doc;
+                }
             }else{
                 $coachLicense->recc = 0;
                 $coachLicense->equivalent_license_id = 0;

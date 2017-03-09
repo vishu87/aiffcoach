@@ -165,3 +165,5 @@ ALTER TABLE `d_courses` CHANGE `start_date` `start_date` DATE NULL DEFAULT NULL,
 //20-02-2017 added by chirag
 
 ALTER TABLE `coach_licenses` ADD `recc` INT(1) NULL DEFAULT '0' AFTER `license_id`, ADD `equivalent_license_id` INT NULL DEFAULT NULL AFTER `recc`;
+
+ALTER TABLE `coach_licenses`  ADD `recc_document` TEXT NOT NULL  AFTER `recc`;
