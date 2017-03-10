@@ -425,7 +425,7 @@ class AdminController extends BaseController {
 
   public function loginByUser($user_id){
     Auth::loginUsingId($user_id);
-
+    Session::put('privilege', Auth::user()->privilege);
     return Redirect::to('/coach/dashboard');
   }
 
