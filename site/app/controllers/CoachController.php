@@ -619,6 +619,7 @@ class CoachController extends BaseController {
             $coachLicense = CoachLicense::find($license_id);
 
             $coachLicense->number = Input::get("number");
+            $coachLicense->status = 0;
 
             $coachLicense->start_date = date("Y-m-d",strtotime(Input::get("start_date")));
             if(Input::get("end_date") != '') $coachLicense->end_date = date("Y-m-d",strtotime(Input::get("end_date")));
