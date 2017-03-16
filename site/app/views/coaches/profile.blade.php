@@ -451,8 +451,8 @@
 							<a type="button" class="btn yellow btn-sm "  href="{{url($data->document)}}" target="_blank"> <i class="fa fa-cube"></i> View</a>
 						@endif
 
-						<a type="button" class="btn yellow btn-sm" href="{{url('coach/coachLicense/edit/'.$data->id)}}"> <i class="fa fa-edit"></i> Edit</a>
 						
+						<a type="button" class="btn yellow btn-sm" href="{{url('coach/coachLicense/edit/'.$data->id)}}"> <i class="fa fa-edit"></i> Edit</a>
 						@if($data->status == 0)
 
 							<button type="button" class="btn red btn-sm delete-div" div-id="document_{{$data->id}}"  action="{{'coach/coachLicense/delete/'.$data->id}}"> <i class="fa fa-remove"></i> Delete</button>
