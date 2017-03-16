@@ -13,9 +13,13 @@ class AdminController extends BaseController {
       ->join('license','courses.license_id','=','license.id')
       ->where('courses.user_type',Auth::user()->manage_official_type)
       ->count();
-    $approved_applications =   Application::applications()->where('courses.user_type',Auth::user()->manage_official_type)->where('applications.status',1)->count();
+
+    $approved_applications =   Application::applications()->where('courses.user_type',Auth::user()->manage_official_type)->where('applications.status',2)->count();
+
     $pending_applications =   Application::applications()->where('courses.user_type',Auth::user()->manage_official_type)->where('applications.status',0)->count();
-    $payment_under_approval =   Application::applications()->where('courses.user_type',Auth::user()->manage_official_type)->where('applications.status',2)->count();
+    
+    $payment_under_approval =   Application::applicationsWithPayments()->where('courses.user_type',Auth::user()->manage_official_type)->where('applications.status',2)->where('payment.status',0)->where('payment.amount','!=',0)->count();
+
     $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'dashboard','subsidebar'=>1]);
     
     $this->layout->main = View::make('admin.index',["approved_officials" => $approved_officials, "pending_officials" => $pending_officials, "active_courses" => $active_courses,"all_courses" => $all_courses, "approved_applications" => $approved_applications, "pending_applications" => $pending_applications, "payment_under_approval" => $payment_under_approval,]);

@@ -14,7 +14,7 @@ class ApplicationController extends BaseController {
 
         $status = Application::status();
 
-        $sql = Application::applications()->where('courses.user_type',Auth::user()->manage_official_type);
+        $sql = Application::applicationsWithPayments()->where('courses.user_type',Auth::user()->manage_official_type);
 
         $application_status = 0;
 
@@ -25,7 +25,7 @@ class ApplicationController extends BaseController {
         }
 
         if($application_status == 3){
-            $sql = $sql->join('payment','payment.application_id','=','applications.id')->where('payment.status',1);
+            $sql = $sql->where('payment.status',1);
         } else {
             $sql = $sql->where('applications.status',$application_status);
         }
@@ -266,6 +266,8 @@ class ApplicationController extends BaseController {
         $application = Application::find($application_id);
         $application->status = 2;
         $application->save();
+
+        $course = Course::find($application->course_id);
         
         $check_payment = Payment::where('application_id',$application_id)->count();
         if($check_payment == 0){
@@ -275,6 +277,18 @@ class ApplicationController extends BaseController {
             $payment->fees = $course_row->fees;
             $payment->save();
         }
+
+        $email = User::where('coach_id',$application->coach_id)->pluck('username');
+
+        require app_path().'/classes/PHPMailerAutoload.php';
+        $mail = new PHPMailer;
+        $mail->isMail();
+        $mail->setFrom('info@the-aiff.com', 'All India Football Federation');
+        $mail->addAddress($email);
+        $mail->isHTML(true);
+        $mail->Subject = "AIFF - your application is selected";
+        $mail->Body = View::make('mail',["type" => 5, "course" => $course]);
+        $mail->send();
 
         $data['success'] = true;
         $data['message'] = 'Selected';
@@ -384,12 +398,26 @@ class ApplicationController extends BaseController {
                 } else {
                     $application->status = $type;
                     if($type == 4){ // if referred back
-                        //create new log entry for coach
+                        //create new log entry for application
                         $new_log = new ApplicationLog;
                         $new_log->entity_id = $application->id;
                         $new_log->status = $type;
                         $new_log->save();
                     }
+                }
+
+                if($type == 4 || $type == 5){
+                    $email = User::where('coach_id',$application->coach_id)->pluck('username');
+                    $ref_type = ($type == 4)?'referred back':'rejected';
+                    require app_path().'/classes/PHPMailerAutoload.php';
+                    $mail = new PHPMailer;
+                    $mail->isMail();
+                    $mail->setFrom('info@the-aiff.com', 'All India Football Federation');
+                    $mail->addAddress($email);
+                    $mail->isHTML(true);
+                    $mail->Subject = "AIFF - Problem with your application";
+                    $mail->Body = View::make('mail',["type" => 4, "ref_type" => $ref_type, "remarks" => Input::get('remarks')]);
+                    $mail->send();
                 }
                 $application->save();
      

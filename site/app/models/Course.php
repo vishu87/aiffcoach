@@ -17,9 +17,11 @@ class Course extends Eloquent {
 		$currentDate = date('y-m-d',strtotime('now'));
 		$query = DB::table('courses')->select('courses.*','license.name as license_name','license.authorised_by')
             ->join('license','courses.license_id','=','license.id')
-            ->where('registration_start','>',$currentDate)
-            ->orWhere('registration_start',null)
-            ->orWhere('registration_end',null);
+            ->where(function($query) use ($currentDate){
+            	$query->where('registration_start','>',$currentDate)
+			          ->orWhere('registration_start',null)
+			          ->orWhere('registration_end',null);
+            });
 		return $query;
 	}
 

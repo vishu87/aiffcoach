@@ -125,6 +125,9 @@
 				<th>Venue</th>
 				<th>Coach Name</th>
 				<th>Status</th>
+				@if(Input::get('status') == 2 || Input::get('status') == 3)
+					<th>Payment Status</th>
+				@endif
 				<th style="width:300px">#</th>
 			</tr></thead>
 			<tbody id="applications">
