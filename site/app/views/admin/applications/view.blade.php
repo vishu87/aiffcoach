@@ -4,9 +4,20 @@
 	<td>{{$data->venue}}</td>
 	<td>
 		<a href="{{url('/admin/viewCoachDetails/'.$data->coach_id)}}" target="_blank">{{$data->full_name}}</a>
-		
 	</td>
 	<td>{{(isset($status[$data->status]))?$status[$data->status]:''}}</td>
+
+	@if(Input::get('status') == 2 || Input::get('status') == 3)
+		<td>
+			{{($data->payment_status == 0)?'Not Approved':'Approved'}}
+			@if($data->payment_status == 0)
+				@if($data->amount != 0 && $data->bank_name != '' && $data->cheque_number != 0 && $data->cheque_number != '')
+					<span class="badge badge-success badge-roundless">Available</span>
+				@endif
+			@endif
+		</td>
+	@endif
+
 	<td>
 		<a href="{{url('/control/applications/details/'.$data->id)}}" class="btn blue btn-sm" target="_blank">View</a>
 		@if($data->status == 1)

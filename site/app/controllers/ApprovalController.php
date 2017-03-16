@@ -302,6 +302,21 @@ class ApprovalController extends BaseController {
                 $log->document = $destinationPath.$filename;
             }
             $log->save();
+
+            if((Input::get('type') == 2 || Input::get('type') == 3) && $entity_type == 1){
+                $email = User::where('coach_id',$entity_id)->pluck('username');
+                $ref_type = (Input::get('type') == 2)?'referred back':'rejected';
+                require app_path().'/classes/PHPMailerAutoload.php';
+                $mail = new PHPMailer;
+                $mail->isMail();
+                $mail->setFrom('info@the-aiff.com', 'All India Football Federation');
+                $mail->addAddress($email);
+                $mail->isHTML(true);
+                $mail->Subject = "AIFF - Problem with your profile";
+                $mail->Body = View::make('mail',["type" => 3, "ref_type" => $ref_type, "remarks" => Input::get('remarks')]);
+                $mail->send();
+            }
+
             return Redirect::Back()->with('success','Status updated');
  
         } else {
