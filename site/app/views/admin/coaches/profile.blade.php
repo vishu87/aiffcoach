@@ -139,7 +139,14 @@
 		@foreach($coachLicense as $license)
 			<tr id="license_{{$license->id}}">	
 				<td>{{$count}}</td>
-				<td>{{$license->license_name}}</td>
+				<td>{{$license->license_name}}
+				@if($license->equivalent_license != '' )
+					<br>({{$license->equivalent_license}})
+				@endif
+				@if($license->recc == 1 && $license->recc_document != '')
+					<br> <a href="{{url($license->recc_document)}}" target="_blank">RECC Approval</a>
+				@endif
+				</td>
 				<td>{{$license->number}}</td>
 				<td>{{date('d-m-Y',strtotime($license->start_date))}}</td>
 				<td>{{($license->end_date)?date('d-m-Y',strtotime($license->end_date)):''}}</td>

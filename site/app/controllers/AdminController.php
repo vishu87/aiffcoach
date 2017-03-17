@@ -171,7 +171,9 @@ class AdminController extends BaseController {
   public function viewCoachDetails($id){
     $coach = Coach::select('coaches.*','states.name as state_registation','coach_parameters.email','coach_parameters.address1','coach_parameters.address2','coach_parameters.city','coach_parameters.pincode','coach_parameters.mobile')->join('states','coaches.state_id','=','states.id')->join('coach_parameters','coaches.id','=','coach_parameters.coach_id')->where('coaches.id',$id)->first();
     $documents = CoachDocument::select('coach_documents.*','documents.name as document_name')->leftJoin('documents','coach_documents.document_id','=','documents.id')->where('coach_id',$id)->get();
+
     $coachLicense = CoachLicense::listing()->where('coach_id',$id)->get();
+    // return $coachLicense;
     $employmentDetails = EmploymentDetails::where('coach_id',$id)->get();
     $activities = CoachActivity::where('coach_id',$id)->get();
     $courses = Application::select('applications.*','courses.name as course_name','courses.venue')->join('courses','applications.course_id','=','courses.id')->where('coach_id',$id)->get();
