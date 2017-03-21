@@ -59,7 +59,7 @@ $row = 1;
 $i = 0;
 if(isset($exportPayment)){
 	$fields = array("sn",'full_name','bank_name','cheque_date','cheque_number','amount');
-	$field_names = array("SN","Name",'Bank Name','Date','DD No.','Amount');
+	$field_names = array("SN","Name",'Bank Name','DD Date','DD No.','Amount');
 	$widths = array("10","30","30","20","20","20","30","20","20","20");
 	$exportData = $exportPayment;
 	$title = 'Payments ';

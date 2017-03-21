@@ -67,17 +67,17 @@
                 <div class="row">
                   <div class="col-md-4">
                     <label>RECC Authorised ?</label><br>
-                    {{Form::checkbox('recc',1,'',["id" => "recc"])}}
+                    {{Form::checkbox('recc',1,'',["id" => "recc","required"=>true])}}
                   </div>
                   <div id = "equivalent-license-div" style="display: {{(Input::old('recc'))?'block':'none';}}">
                     
                     <div class="col-md-8" style="display: 'none'">
                       <label>RECC Document Upload <span class="error">*</span></label><br>
-                      {{Form::file('recc_document',["class" => "form-control","id"=>"recc_document"])}}
+                      {{Form::file('recc_document',["class" => "form-control","id"=>"recc_document","required"=>true])}}
                     </div>
                     <div class="col-md-12 " >
                       <label class="form-label">Equivalent License </label>
-                       {{Form::select('equivalent_license_id',$types,'',["class"=>"form-control" ,"id" => "equivalent_licenses"])}}
+                       {{Form::select('equivalent_license_id',$types,'',["class"=>"form-control" ,"id" => "equivalent_licenses","required"=>true])}}
                        <span class="error">{{$errors->first('equivalent_license_id')}}</span>
                       
                     </div>

@@ -57,14 +57,21 @@ function getNameFromNumber($num) {
 
 $row = 1;
 $i = 0;
-if(isset($export_applications)){
+
+
+if(isset($export_applications) && $application_status != 2){
+	$fields = array("sn",'full_name','state_registration','present_emp','past_emp','d_license_date');
+	$field_names = array("SN","Coach Name",'State of Registration','Present Employment','Past Employment','D-License Date');
+	$widths = array("10","30","30","50","50","20","30","20","20","20");
+	$exportData = $export_applications;
+	$title = 'Applications ';
+}elseif(isset($export_applications)){
 	$fields = array("sn",'full_name','state_registration','email','mobile');
 	$field_names = array("SN","Coach Name",'State of Registration','Email','Contact');
 	$widths = array("10","30","30","40","30","20","30","20","20","20");
 	$exportData = $export_applications;
 	$title = 'Applications ';
 }
-
 
 foreach ($field_names as $name) {
 	$objPHPExcel->getActiveSheet()->SetCellValue( getNameFromNumber($i).$row , $name);

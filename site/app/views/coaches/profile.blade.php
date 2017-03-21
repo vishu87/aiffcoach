@@ -364,7 +364,7 @@
 			        <div class="row">
 			        	<div class="col-md-2" style="display: {{(isset($license) && $license->license_id != 21) ? 'none':'';}}">
 			        		<label>RECC Authorised </label><br>
-			        		{{Form::checkbox('recc',1,(isset($license) && $license->recc == 1)?true:false,["id" => "recc"])}}
+			        		{{Form::checkbox('recc',1,(isset($license) && $license->recc == 1)?true:false,["id" => "recc","required"=>true])}}
 			        	</div>
 			        	<div class="" id = "equivalent-license-div" style="display: {{(Input::old('recc') || isset($license))?'block':'none';}}" >
 				        	<div class="col-md-5" style="display: {{(isset($license) && $license->license_id != 21) ? 'none':'';}}">
@@ -378,7 +378,7 @@
 				        	<div class="col-md-5 " >
 						        <div style="display: {{(isset($license) && $license->license_id != 21) ? 'none':'';}}">
 						        	<label class="form-label">Equivalent License </label>
-						           {{Form::select('equivalent_license_id',$licenses,(isset($license))?$license->equivalent_license_id:'',["class"=>"form-control" ,"id" => "equivalent_licenses"])}}
+						           {{Form::select('equivalent_license_id',$licenses,(isset($license))?$license->equivalent_license_id:'',["class"=>"form-control" ,"id" => "equivalent_licenses","required"=>true])}}
 						           <span class="error">{{$errors->first('equivalent_license_id')}}</span>
 						        </div>
 			        		</div>
