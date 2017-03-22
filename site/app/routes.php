@@ -4,7 +4,10 @@
 Route::get('/', function(){
     return View::make('login',[]);
 });
-	
+Route::get('/receipt',function(){
+	return View::make('admin.payment.receipt');
+});	
+
 Route::get('/capitalization','UserController@capitalization');	
 
 Route::get('/registerStep1/{id?}', 'RegistrationController@registration_step1');
