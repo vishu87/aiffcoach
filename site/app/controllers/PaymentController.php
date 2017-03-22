@@ -165,7 +165,7 @@ class PaymentController extends BaseController {
             $mail->isHTML(true);
             $mail->Subject = "Payment Approval - AIFF Official Registration System";
             $mail->Body = "Your payment has been approved please find the attached receipt";
-            $mail->AddAttachment($pdf_name , 'Receipt');
+            $mail->AddAttachment($pdf_name , 'Payment Receipt');
             $mail->send();
         }
 

@@ -9,7 +9,7 @@
 	<div class="content">
 		<h1>Payment Receipt</h1>
 		<p>
-			Your payment is Received with {{$payment->bank_name}} DD No- {{$payment->cheque_number}} , DD Date - {{date('d-m-Y',strtotime($payment->cheque_date))}} , Amount - Rs. {{$payment->amount}}
+			Your payment is Received with Bank - {{$payment->bank_name}} , DD No- {{$payment->cheque_number}} , DD Date - {{date('d-m-Y',strtotime($payment->cheque_date))}} , Amount - Rs. {{$payment->amount}}
 		</p>
 
 	</div>
