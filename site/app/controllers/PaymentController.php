@@ -139,6 +139,36 @@ class PaymentController extends BaseController {
         $payment->status = ($payment->status == 0)?1:0;
         $payment->save();
 
+        if($payment->status == 1){
+
+            $user = Payment::select('users.username')
+                ->join('applications','payment.application_id','=','applications.id')
+                ->join('users','users.coach_id','=','applications.coach_id')
+                ->where('payment.id',$payment_id)
+                ->first();
+            $html = View::make('admin.payment.receipt',["payment" => $payment]);
+            $pdf_path = 'coaches_doc/';
+            include(app_path().'/dompdf/dompdf_config.inc.php');
+            $dompdf = new DOMPDF();
+            $dompdf->load_html($html);
+            $dompdf->render();
+            $pdf_name = $pdf_path.'Receipt_'.strtotime("now").'.pdf';  
+            file_put_contents($pdf_name,$dompdf->output());
+
+            require app_path().'/classes/PHPMailerAutoload.php';
+            $mail = new PHPMailer;
+            $mail->isMail();
+            $mail->setFrom('info@the-aiff.com', 'All India Football Federation');
+            $mail->addAddress($user->username);
+            // $mail->addAddress("chiragverma2207@gmail.com");
+
+            $mail->isHTML(true);
+            $mail->Subject = "Payment Approval - AIFF Official Registration System";
+            $mail->Body = "Your payment has been approved please find the attached receipt";
+            $mail->AddAttachment($pdf_name , 'Receipt');
+            $mail->send();
+        }
+
         return Redirect::back();
     }
 }
