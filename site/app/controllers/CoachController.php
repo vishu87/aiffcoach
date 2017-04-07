@@ -403,23 +403,30 @@ class CoachController extends BaseController {
     }
     public function addEmployment(){
         $cre = [
-            'present_emp'=>Input::get('present_emp'),
-            'start_date'=>Input::get('date_since_emp'),
             'employment_status' => Input::get('employment_status'),
             'referral_contact' => Input::get('referral_contact'),
             'referral_name' => Input::get('referral_name'),
             'cv' => Input::file('cv'),
-            'present_emp_copy' => Input::file('present_emp_copy')
         ];
         $rules = [
-            'present_emp'=>'required',
-            'start_date'=>'required',
             'employment_status' => 'required',
             'referral_contact' => 'required',
             'referral_name' => 'required',
             'cv' => 'required',
-            'present_emp_copy' => 'required'
-        ];        
+        ];     
+
+        if(Input::get('employment_status') != 3){
+            $cre = $cre + [
+                'present_emp'=>Input::get('present_emp'),
+                'start_date'=>Input::get('date_since_emp'),
+                'present_emp_copy' => Input::file('present_emp_copy')
+            ];
+            $rules = $rules + [
+                'present_emp'=>'required',
+                'start_date'=>'required',
+                'present_emp_copy' => 'required'
+            ]; 
+        }
         $validator = Validator::make($cre,$rules);
         if($validator->passes()){
             $destinationPath = 'coaches-doc/';
@@ -429,7 +436,8 @@ class CoachController extends BaseController {
             $employment->emp_status = Input::get('employment_status');
             $employment->referral_name = Input::get('referral_name');
             $employment->referral_contact = Input::get('referral_contact');
-            $employment->start_date = date('Y-m-d',strtotime(Input::get('date_since_emp')));
+            $employment->start_date = (Input::get('date_since_emp') != '') ? date('Y-m-d',strtotime(Input::get('date_since_emp'))) : null;
+
             $employment->end_date = (Input::get('end_date') != '') ? date('Y-m-d',strtotime(Input::get('end_date'))) : null;
 
             if(Input::hasFile('present_emp_copy')){
@@ -461,19 +469,28 @@ class CoachController extends BaseController {
     }
     public function updateEmployment($id){
         $cre = [
-            'present_emp'=>Input::get('present_emp'),
-            'start_date'=>Input::get('date_since_emp'),
             'employment_status' => Input::get('employment_status'),
             'referral_contact' => Input::get('referral_contact'),
             'referral_name' => Input::get('referral_name'),
         ];
         $rules = [
-            'present_emp'=>'required',
-            'start_date'=>'required',
             'employment_status' => 'required',
-            'referral_contact' =>'required',
+            'referral_contact' => 'required',
             'referral_name' => 'required',
-        ];
+        ];     
+
+        if(Input::get('employment_status') != 3){
+            $cre = $cre + [
+                'present_emp'=>Input::get('present_emp'),
+                'start_date'=>Input::get('date_since_emp'),
+                'present_emp_copy' => Input::file('present_emp_copy')
+            ];
+            $rules = $rules + [
+                'present_emp'=>'required',
+                'start_date'=>'required',
+                'present_emp_copy' => 'required'
+            ]; 
+        }
         $validator = Validator::make($cre,$rules);
         if($validator->passes()){
 
@@ -481,7 +498,9 @@ class CoachController extends BaseController {
             $updateEmployment = EmploymentDetails::find($id);
             $updateEmployment->employment = Input::get('present_emp');
             $updateEmployment->emp_status = Input::get('employment_status');
-            $updateEmployment->start_date = date('Y-m-d',strtotime(Input::get('date_since_emp')));
+
+            $updateEmployment->start_date  = (Input::get('date_since_emp') != '')?date('Y-m-d',strtotime(Input::get('date_since_emp'))):null;
+
             $updateEmployment->end_date  = (Input::get('end_date') != '')?date('Y-m-d',strtotime(Input::get('end_date'))):null;
             
             if(Input::hasFile('present_emp_copy')){
@@ -688,7 +707,9 @@ class CoachController extends BaseController {
           $sql = $sql->addSelect('license.name as latest_license','license.id as license_id','coach_licenses.recc','coach_licenses.equivalent_license_id')
             ->join('coach_licenses','coach_licenses.coach_id','=','coaches.id')
             ->join('license','coach_licenses.license_id','=','license.id')
-            ->orderBy('coach_licenses.start_date','desc')->where('coach_licenses.license_id','=',Input::get('license_id'))->orWhere('coach_licenses.equivalent_license_id','=',Input::get('license_id'));
+            ->orderBy('coach_licenses.start_date','desc')
+            ->where('coach_licenses.license_id','=',Input::get('license_id'));
+            // ->orWhere('coach_licenses.equivalent_license_id','=',Input::get('license_id'));
         }
 
         if(Input::get("state_id") != ''){

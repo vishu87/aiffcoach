@@ -161,7 +161,7 @@
 				<div class="row">
 				    <div class="col-md-6 form-group"> 
 				        <label class="form-label">Attach Passport Copy</label>  <span class="error"> *</span>      
-				        {{Form::file('passport_proof',['class'=>'form-control','placeholder'=>'Attach Passport Copy','pdf'=>'true'])}}
+				        {{Form::file('passport_proof',['class'=>'form-control','placeholder'=>'Attach Passport Copy'])}}
 				        <span class="error">{{$errors->first('passport_proof')}}</span>
 				    </div>
 				</div>
@@ -264,7 +264,7 @@
 				<div class="col-md-4 form-group">
 
 			        <label class="form-label">Attach Document</label> <span class="error">*</span>      
-			        {{Form::file('file',['class'=>'form-control','placeholder'=>'Attach Passport Copy','pdf'=>'true',(isset($document) && $document->file != '')?'':'required'])}}
+			        {{Form::file('file',['class'=>'form-control','placeholder'=>'Attach Passport Copy',(isset($document) && $document->file != '')?'':'required'])}}
 			        
 			        @if(isset($document) && $document->file != '')
 			        	<a href="{{url($document->file)}}" target="_blank"> view</a>

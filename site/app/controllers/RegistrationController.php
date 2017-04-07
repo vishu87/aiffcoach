@@ -172,13 +172,10 @@ class RegistrationController extends BaseController {
             "end_date"=>Input::get("end_date"),
             "license_number" => Input::get("license_number"),
             "license" => Input::file("license"),
-            'present_emp'=>Input::get('present_emp'),
-            'start_date'=>Input::get('date_since_emp'),
             'employment_status' => Input::get('employment_status'),
             'referral_contact' => Input::get('referral_contact'),
             'referral_name' => Input::get('referral_name'),
             'cv' => Input::file('cv'),
-            'present_emp_copy' => Input::file('present_emp_copy')
         ];
         $rules = [
             "official_types" => "required",
@@ -186,14 +183,21 @@ class RegistrationController extends BaseController {
             "end_date" => "date|after:start_date",
             "license_number" =>"required",
             "license" =>"required",
-            'present_emp'=>'required',
-            'start_date'=>'required',
             'employment_status' => 'required',
             'referral_contact' => 'required',
             'referral_name' => 'required',
             'cv' => 'required',
-            'present_emp_copy' => 'required'
         ];
+        if(Input::get('employment_status') != 3){
+            $cre['present_emp'] = Input::get('present_emp');
+            $cre['date_since_emp'] = Input::get('date_since_emp');
+            $cre['present_emp_copy'] = Input::file('present_emp_copy');
+
+            $rules['present_emp'] = 'required';
+            $rules['date_since_emp'] = 'required |date';
+            $rules['present_emp_copy'] = 'required';
+
+        }
         if(Input::has('recc')){
             $cre['equivalent_license_id'] = Input::get('equivalent_license_id');
             $rules['equivalent_license_id'] = 'required';

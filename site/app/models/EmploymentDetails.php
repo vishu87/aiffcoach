@@ -13,6 +13,6 @@ class EmploymentDetails extends Eloquent {
     }
 
     public static function emp_status(){
-    	return array("1" => "Present" , "2" => "Previous");
+    	return array("1" => "Present" , "2" => "Previous" , '3' => 'Unemployed');
     }
 }

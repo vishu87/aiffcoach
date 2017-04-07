@@ -546,4 +546,21 @@ $(document).on("change","#recc",function(){
 
 	}
 
-})
+});
+
+
+$(document).on("change","#emp_status",function(){
+	var btnVal = $(this).val();
+	if(btnVal == 3){
+		$(".emp_validate ").parent().hide('300');
+		$(".emp_validate ").parent().addClass('hiddenDiv');
+		initialize();
+		
+	}else{
+		$(".emp_validate").parent().show('300');
+		$(".emp_validate").parent().removeClass('hiddenDiv');
+		initialize();
+
+	}
+
+});
