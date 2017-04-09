@@ -75,6 +75,7 @@
     				</div>
         			
 		        @else
+		        
 		        	<label>Copy of Present Footballing Employment ( Contract / Appointment Letter)<span class="error">*</span></label>
 	        		{{Form::file('present_emp_copy',["class"=>"form-control emp_validate","required"=>true,"id"=>"present_emp"])}}
 		            <span class="error">{{$errors->first('present_emp_copy')}}</span>

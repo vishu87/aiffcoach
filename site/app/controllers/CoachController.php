@@ -483,12 +483,12 @@ class CoachController extends BaseController {
             $cre = $cre + [
                 'present_emp'=>Input::get('present_emp'),
                 'start_date'=>Input::get('date_since_emp'),
-                'present_emp_copy' => Input::file('present_emp_copy')
+                
             ];
             $rules = $rules + [
                 'present_emp'=>'required',
                 'start_date'=>'required',
-                'present_emp_copy' => 'required'
+                
             ]; 
         }
         $validator = Validator::make($cre,$rules);
@@ -523,7 +523,7 @@ class CoachController extends BaseController {
 
             return Redirect::back()->with('success','Details Updated Successfully');    
         }
-        return Redirect::back()->withErrors($validator)->withInput()->with('failure','All Fields Are Not Field!');
+        return Redirect::back()->withErrors($validator)->withInput()->with('failure','All Fields Are Not Filled !');
     }
     
     public function deleteEmployment($id){
