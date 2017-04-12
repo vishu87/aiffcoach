@@ -6,6 +6,7 @@ use Illuminate\Auth\Reminders\RemindableTrait;
 use Illuminate\Auth\Reminders\RemindableInterface;
 
 /* priviledge
+
 	1 - official
 	2 - admin
 	3 - result admin
@@ -52,4 +53,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		);
 	}
 
+	public static function gender(){
+		return array('1' =>'Male' , '2' => 'Female' );
+	}
 }

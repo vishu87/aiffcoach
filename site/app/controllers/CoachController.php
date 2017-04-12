@@ -703,6 +703,11 @@ class CoachController extends BaseController {
           $sql = $sql->where('coaches.full_name','LIKE','%'.Input::get('official_name').'%');
         }
 
+        if(Input::get("gender") != ''){
+          $sql = $sql->where('coaches.gender',Input::get('gender'));
+        }
+
+
         if(Input::get("license_id") != ''){
           $sql = $sql->addSelect('license.name as latest_license','license.id as license_id','coach_licenses.recc','coach_licenses.equivalent_license_id')
             ->join('coach_licenses','coach_licenses.coach_id','=','coaches.id')
