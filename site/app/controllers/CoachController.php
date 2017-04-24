@@ -761,6 +761,7 @@ class CoachController extends BaseController {
         $latest_license = [];
 
         foreach ($coach_licenses as $license) {
+
             if(!isset($latest_license[$license->coach_id]))$latest_license[$license->coach_id] = array();
 
             if(Input::has('license_id') && Input::get('license_id') != $license->equivalent_license_id ){
@@ -772,6 +773,8 @@ class CoachController extends BaseController {
 
                     array_push($latest_license[$license->coach_id], $license->license_name);
                 }
+            }else{
+                array_push($latest_license[$license->coach_id], $license->license_name);
             }
         }
 
@@ -783,6 +786,16 @@ class CoachController extends BaseController {
             if(!isset($latest_emps[$emps->coach_id]))
                 $latest_emps[$emps->coach_id] = $emps->employment;
         }
+
+        if(Input::has('export_excel') && Input::get('export_excel')){
+            if(sizeof($coaches)>0){
+                include(app_path().'/libraries/Classes/PHPExcel.php');
+                include(app_path().'/libraries/export/export-all-coaches.php'); 
+            } else {
+                return Redirect::back()->with('failure','No data found to export');
+            }
+        }
+        
         
         return View::make('coaches',['coaches'=>$coaches,"title"=>'Registered Coaches', "status" => $status,'flag'=>1,"total" => $total, "page_id"=>$page_id, "max_per_page" => $max_per_page, "total_pages" => $total_pages,'input_string'=>$input_string , "licenses" => $licenses , "states" => $states , "latest_license" => $latest_license , "latest_emps" => $latest_emps]);
     }

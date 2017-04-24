@@ -26,7 +26,7 @@ Route::get('/reset', function(){
 });
 
 Route::get('/view-all-coaches','CoachController@viewAllCoaches');
-Route::get('/exportCoaches','ExcelExportController@exportCoaches');
+// Route::get('/exportCoaches','ExcelExportController@exportCoaches');
 
 Route::get('/correctData', function(){
     $documents = CoachDocument::select('coach_documents.id','coaches.status as coach_status')->join('coaches','coaches.id','=','coach_documents.coach_id')->get();

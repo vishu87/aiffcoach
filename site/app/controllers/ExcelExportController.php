@@ -1,5 +1,6 @@
 <?php
 class ExcelExportController extends BaseController {
+    
     public function coachExport($flag){
         // flag = "1"=>Approved Coach,"2"=>pending Coach,"3"=>All Coaches
         if($flag==1){
@@ -50,6 +51,7 @@ class ExcelExportController extends BaseController {
         }
         
     }
+
     public function exportLicence(){
         $licenses = License::where('user_type',Auth::user()->manage_official_type)->get();
         if(sizeof($licenses)>0){

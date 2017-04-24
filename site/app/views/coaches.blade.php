@@ -96,10 +96,12 @@
 				<div class="row" style="margin-bottom:20px">
 					<?php 
 						$inputs = Input::all();
-						$str = '/exportCoaches?type=1';
+						$str = '/view-all-coaches?export_excel=1';
 						if(sizeof($inputs) > 0){
 							foreach ($inputs as $key => $value) {
-								$str .= "&".$key."=".$value;
+								if($key != 'export_excel'){
+									$str .= "&".$key."=".$value;
+								}
 							}
 						}
 					?>
