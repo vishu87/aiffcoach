@@ -7,6 +7,6 @@ class State extends Eloquent {
 		$states = State::orderBy('name')->lists('name','id');
 		unset($states[37]);
 		$states[37] = 'Other';
-		return [''=>'Select State']+$states;
+		return [''=>'Select State'] + $states;
 	}
 }
