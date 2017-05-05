@@ -170,3 +170,9 @@ ALTER TABLE `coach_licenses`  ADD `recc_document` TEXT NOT NULL  AFTER `recc`;
 
 // 7-04-2017 added by chirag
 ALTER TABLE `employment_details` CHANGE `start_date` `start_date` DATE NULL DEFAULT NULL, CHANGE `end_date` `end_date` DATE NULL DEFAULT NULL;
+
+// 4/8/2017 added by chirag
+
+ALTER TABLE `coaches`  ADD `domicile_country` TEXT NULL DEFAULT NULL  AFTER `state_id`,  ADD `domicile_state` TEXT NULL DEFAULT NULL  AFTER `domicile_country`;
+
+ALTER TABLE `coach_parameters`  ADD `address_country` TEXT NULL DEFAULT NULL  AFTER `address_state_id`,  ADD `address_state` TEXT NULL DEFAULT NULL  AFTER `address_country`;

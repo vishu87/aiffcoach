@@ -113,6 +113,7 @@ class RegistrationController extends BaseController {
         }
         $data = $data_row->data2;
         $data = unserialize($data);
+
     
         $this->layout->main = View::make('registration.register_step2',['state'=>$state,'data'=>$data,"id"=>$id,'flag'=>2]);
     }
@@ -168,10 +169,10 @@ class RegistrationController extends BaseController {
         $id = Input::get('id');
         $cre = [
             "official_types"=>Input::get("official_types"),
-            "start_date"=>Input::get("start_date"),
+            
             "end_date"=>Input::get("end_date"),
-            "license_number" => Input::get("license_number"),
-            "license" => Input::file("license"),
+            
+            
             'employment_status' => Input::get('employment_status'),
             'referral_contact' => Input::get('referral_contact'),
             'referral_name' => Input::get('referral_name'),
@@ -179,15 +180,30 @@ class RegistrationController extends BaseController {
         ];
         $rules = [
             "official_types" => "required",
-            "start_date" => "required |date",
+            
             "end_date" => "date|after:start_date",
-            "license_number" =>"required",
-            "license" =>"required",
+            
             'employment_status' => 'required',
             'referral_contact' => 'required',
             'referral_name' => 'required',
             'cv' => 'required',
         ];
+
+        if(Input::get("official_types") == 1){
+            $cre = $cre + [
+                    "start_date"=>Input::get("start_date"),
+                    "license_number" => Input::get("license_number"),
+                    "license" => Input::file("license"),
+                ];
+
+            $rules = $rules + [
+                    "start_date" => "required |date",
+                    "license_number" =>"required",
+                    "license" =>"required",
+                ];
+
+        }
+
         if(Input::get('employment_status') != 3){
             $cre['present_emp'] = Input::get('present_emp');
             $cre['date_since_emp'] = Input::get('date_since_emp');
@@ -245,6 +261,7 @@ class RegistrationController extends BaseController {
             $data1 = unserialize($data1);
             $data2 = $data_row->data2;
             $data2 = unserialize($data2); 
+            // return $data2;
             $data3 = $data_row->data3;
             $data3 = unserialize($data3);
 
@@ -254,9 +271,14 @@ class RegistrationController extends BaseController {
             $coach->last_name = ucwords(strtolower($data1['last_name']));
             $coach->full_name = ucwords(strtolower($data1['first_name'])).' '.ucwords(strtolower($data1['middle_name'])).' '.ucwords(strtolower($data1['last_name']));
             $coach->dob = $data1['dob'];
-            $coach->state_id = $data2['state_id'];
             $coach->photo = $data1['photo'];
-            $coach->state_id = $data2['state_id'];
+            $coach->state_id = $data2['state_id']; // state if domicile
+
+            if($data2['state_id'] == 37){
+                $coach->domicile_country = $data2['domicile_country'];
+                $coach->domicile_state = $data2['domicile_state'];
+            }
+
             $coach->gender = $data1['gender'];
             $coach->save();
             $coach->registration_id = strtoupper(date("YM")).$coach->id;
@@ -269,6 +291,10 @@ class RegistrationController extends BaseController {
             $coach_parameter->address1 = $data2['address1'];
             $coach_parameter->address2 = $data2['address2'];
             $coach_parameter->address_state_id = $data2['state'];
+            if($data2['state'] == 37){
+                $coach_parameter->address_country = $data2['address_country'];
+                $coach_parameter->address_state = $data2['address_state'];
+            }
             $coach_parameter->city = $data2['city'];
             $coach_parameter->pincode = $data2['pincode'];
             $coach_parameter->email = $data1['email'];

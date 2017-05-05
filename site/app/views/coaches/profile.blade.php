@@ -68,10 +68,37 @@
 		        </div>
             </div>
             <div class="row">
-            	<div class="col-md-6 form-group">
-            		<label class="form-label">Photograph</label><br>
-            		{{Form::file('photo',["class"=>"form-control"])}}
+
+            	<div class="col-md-6">
+            		<div class="row">
+            			
+		            	<div class="col-md-12 form-group">
+		            		<label class="form-label">Photograph</label><br>
+		            		{{Form::file('photo',["class"=>"form-control"])}}
+		            	</div>
+		            	<div class="col-md-12 form-group">
+			              	<label>State of Domicile</label>
+			              	{{Form::select('state_id',$state,$coach->state_id,['class'=>'form-control',"id"=>"domicile_state"])}}
+			            </div>
+
+			            <div class="col-md-6 domicile_state clear" style="{{(isset($coach) && $coach->state_id == 37)?'':'display:none'}}">
+		                  <div class="form-group"> 
+		                    <label class="form-label">Country </label>       
+		                    {{Form::text('domicile_country',(isset($coach))?$coach->domicile_country:'',['class'=>'form-control'])}}
+		                    <span class="error">{{$errors->first('domicile_country')}}</span>
+		                  </div>
+		                </div>
+		                <div class="col-md-6 domicile_state" style="{{(isset($coach) && $coach->state_id == 37)?'':'display:none'}}">
+		                  <div class="form-group"> 
+		                    <label class="form-label">State </label>       
+		                    {{Form::text('domicile_state',(isset($coach))?$coach->domicile_state:'',['class'=>'form-control'])}}
+		                    <span class="error">{{$errors->first('domicile_state')}}</span>
+		                  </div>
+		                </div>
+		            	
+            		</div>
             	</div>
+
             	<div class="col-md-3 form-group">
             		<label class="form-label">Current Photograph</label><br>
             		<img src="{{url($coach->photo)}}" style="width:100%">
@@ -118,18 +145,33 @@
              	</div>
             </div>  
             <div class="row">
-            	<div class="col-md-4 form-group">
+            	<div class="col-md-6 form-group">
             		<label>City<span class="error">*</span></label>
             		{{Form::text('city',$coach->city,['class'=>'form-control','placeholder'=>'City Name','required'=>"true"])}}
             	</div>
-            	<div class="col-md-4 form-group">
+            	<div class="col-md-6 form-group">
               		<label>Pin Code<span class="error">*</span></label>
               		{{Form::text('pincode',$coach->pincode,['class'=>'form-control','placeholder'=>'Pin Code', 'required'=>'true'])}}
               	</div>
-            	<div class="col-md-4 form-group">
+            	<div class="col-md-6 form-group">
 	              	<label>State <span class="error">*</span></label>
-	              	{{Form::select('state',$state,$coach->address_state_id,['class'=>'form-control','required'=>"true"])}}
+	              	{{Form::select('state',$state,$coach->address_state_id,['class'=>'form-control','required'=>"true","id"=>"address_state"])}}
 	            </div>
+
+	            <div class="col-md-6 address_state clear" style="{{(isset($coach) && $coach->address_state_id == 37)?'':'display:none'}}">
+                  <div class="form-group"> 
+                    <label class="form-label">Country <span class="error"> *</span></label>       
+                    {{Form::text('address_country',(isset($coach))?$coach->address_country:'',['required'=>'true','class'=>'form-control'])}}
+                    <span class="error">{{$errors->first('address_country')}}</span>
+                  </div>
+                </div>
+                <div class="col-md-6 address_state" style="{{(isset($coach) && $coach->address_state_id == 37)?'':'display:none'}}">
+                  <div class="form-group"> 
+                    <label class="form-label">State <span class="error"> *</span></label>       
+                    {{Form::text('address_state',(isset($coach))?$coach->address_state:'',['required'=>'true','class'=>'form-control'])}}
+                    <span class="error">{{$errors->first('address_state')}}</span>
+                  </div>
+                </div>
             </div>  
         </div>
     </div>

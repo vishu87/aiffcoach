@@ -16,10 +16,26 @@
               <div class="col-md-12">
                 <div class="form-group"> 
                   <label class="form-label">State of Domicile <span class="error"> *</span></label>       
-                  {{Form::select('state_id',$state,(isset($data["state_id"]))?$data["state_id"]:'',['required'=>'true','class'=>'form-control','placeholder'=>'State of Registration'])}}
+                  {{Form::select('state_id',$state,(isset($data["state_id"]))?$data["state_id"]:'',['required'=>'true','class'=>'form-control',"id"=>"domicile_state"])}}
                   <span class="error">{{$errors->first('state_id')}}</span>
                 </div>
               </div>
+              <div class="col-md-6 domicile_state " style="{{(isset($data['state_id']) && $data['state_id'] == 37)?'':'display:none'}}">
+                <div class="form-group"> 
+                  <label class="form-label">Country <span class="error"> *</span></label>       
+                  {{Form::text('domicile_country',(isset($data["domicile_country"]))?$data["domicile_country"]:'',['required'=>'true','class'=>'form-control'])}}
+                  <span class="error">{{$errors->first('domicile_country')}}</span>
+                </div>
+              </div>
+              <div class="col-md-6 domicile_state" style="{{(isset($data['state_id']) && $data['state_id'] == 37)?'':'display:none'}}">
+                <div class="form-group"> 
+                  <label class="form-label">State <span class="error"> *</span></label>       
+                  {{Form::text('domicile_state',(isset($data["domicile_state"]))?$data["domicile_state"]:'',['required'=>'true','class'=>'form-control'])}}
+                  <span class="error">{{$errors->first('domicile_state')}}</span>
+                </div>
+              </div>
+
+
             </div>
             <div class="row">
               <div class="col-md-12">
@@ -47,9 +63,23 @@
                     </div>
                     
                     <div class="col-md-6 form-group">
-                      <label class="form-label">State <span class="error"> *</span> </label>
-                      {{Form::select('state',$state,(isset($data["state"]))?$data["state"]:'',['class'=>'form-control',"required"=>"true"])}}
-                    </div>
+                          <label class="form-label">State <span class="error"> *</span> </label>
+                          {{Form::select('state',$state,(isset($data["state"]))?$data["state"]:'',['class'=>'form-control',"required"=>"true","id"=>"address_state"])}}
+                        </div>
+                        <div class="col-md-6 address_state clear" style="{{(isset($data['state']) && $data['state'] == 37)?'':'display:none'}}">
+                          <div class="form-group"> 
+                            <label class="form-label">Country <span class="error"> *</span></label>       
+                            {{Form::text('address_country',(isset($data["address_country"]))?$data["address_country"]:'',['required'=>'true','class'=>'form-control'])}}
+                            <span class="error">{{$errors->first('address_country')}}</span>
+                          </div>
+                        </div>
+                        <div class="col-md-6 address_state" style="{{(isset($data['state']) && $data['state'] == 37)?'':'display:none'}}">
+                          <div class="form-group"> 
+                            <label class="form-label">State <span class="error"> *</span></label>       
+                            {{Form::text('address_state',(isset($data["address_state"]))?$data["address_state"]:'',['required'=>'true','class'=>'form-control'])}}
+                            <span class="error">{{$errors->first('address_state')}}</span>
+                          </div>
+                        </div>
                   </div>
                 </div>
               </div>
@@ -76,7 +106,7 @@
             </div>
           </div>    
           <div class="form-actions">
-            <a href="{{url('/registerStep1/'.$id)}}" class="btn blue pull-left"> previous</a>
+            <a href="{{url('/registerStep1/'.$id)}}" class="btn blue pull-left"> Previous</a>
             <button type="submit" class="btn blue pull-right">Next</button>
           </div>
           {{Form::close()}}

@@ -564,3 +564,39 @@ $(document).on("change","#emp_status",function(){
 	}
 
 });
+
+$(document).on("change","#domicile_state",function(){
+	var btnVal = $(this).val();
+	if(btnVal == 37){
+		$(".domicile_state ").show();
+		
+	}else{
+		$(".domicile_state").hide();
+
+	}
+
+});
+
+$(document).on("change","#address_state",function(){
+	var btnVal = $(this).val();
+	if(btnVal == 37){
+		$(".address_state ").show();
+		
+	}else{
+		$(".address_state").hide();
+
+	}
+
+});
+
+$(document).on("change","#registration_for",function(){
+	var btnVal = $(this).val();
+	if(btnVal == 1){
+		$("#license_data ").show();
+		
+	}else{
+		$("#license_data").hide();
+
+	}
+
+});

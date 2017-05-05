@@ -18,13 +18,13 @@
               <div class="col-md-6">
                 <div class="form-group"> 
                   <label class="form-label">Registration For <span class="error">*</span></label>
-                  {{Form::select('official_types',$official_types,(isset($data->official_types))?$data->official_types:'',['required'=>'true','class'=>'form-control'])}}
+                  {{Form::select('official_types',$official_types,(isset($data->official_types))?$data->official_types:'',['required'=>'true','class'=>'form-control',"id"=>"registration_for"])}}
                     <span class="error">{{$errors->first('official_types')}}</span>
                 </div>
               </div>
               
             </div>
-            <div class="row">
+            <div class="row" id="license_data" style="(isset($data->official_types) && $data->official_types == 1)?'':'display:none' " >
               <div class="col-md-12">
                 
               </div>
@@ -61,38 +61,41 @@
                     <span class="error">{{$errors->first('license_number')}}</span>
                 </div>
               </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6 form-group" id ="div-recc"  style="display: {{(Input::old('recc'))?'block':'none';}}">
+              <div class="col-md-12">
                 <div class="row">
-                  <div class="col-md-4">
-                    <label>RECC Authorised ?</label><br>
-                    {{Form::checkbox('recc',1,'',["id" => "recc","required"=>true])}}
+                  <div class="col-md-6 form-group" id ="div-recc"  style="display: {{(Input::old('recc'))?'block':'none';}}">
+                    <div class="row">
+                      <div class="col-md-4">
+                        <label>RECC Authorised ?</label><br>
+                        {{Form::checkbox('recc',1,'',["id" => "recc","required"=>true])}}
+                      </div>
+                      <div id = "equivalent-license-div" style="display: {{(Input::old('recc'))?'block':'none';}}">
+                        
+                        <div class="col-md-8" style="display: 'none'">
+                          <label>RECC Document Upload <span class="error">*</span></label><br>
+                          {{Form::file('recc_document',["class" => "form-control","id"=>"recc_document","required"=>true])}}
+                        </div>
+                        <div class="col-md-12 " >
+                          <label class="form-label">Equivalent License </label>
+                           {{Form::select('equivalent_license_id',$types,'',["class"=>"form-control" ,"id" => "equivalent_licenses","required"=>true])}}
+                           <span class="error">{{$errors->first('equivalent_license_id')}}</span>
+                          
+                        </div>
+                      </div> 
+                    </div>
                   </div>
-                  <div id = "equivalent-license-div" style="display: {{(Input::old('recc'))?'block':'none';}}">
-                    
-                    <div class="col-md-8" style="display: 'none'">
-                      <label>RECC Document Upload <span class="error">*</span></label><br>
-                      {{Form::file('recc_document',["class" => "form-control","id"=>"recc_document","required"=>true])}}
+               
+                  <div class="col-md-6">
+                    <div class="form-group"> 
+                      <label class="form-label">Upload License <span class="error">*</span></label>
+                      {{Form::file('license',['class'=>'form-control', 'required' => 'true'])}}
+                        <span class="error">{{$errors->first('license')}}</span>
                     </div>
-                    <div class="col-md-12 " >
-                      <label class="form-label">Equivalent License </label>
-                       {{Form::select('equivalent_license_id',$types,'',["class"=>"form-control" ,"id" => "equivalent_licenses","required"=>true])}}
-                       <span class="error">{{$errors->first('equivalent_license_id')}}</span>
-                      
-                    </div>
-                  </div> 
-                </div>
-              </div>
-           
-              <div class="col-md-6">
-                <div class="form-group"> 
-                  <label class="form-label">Upload License <span class="error">*</span></label>
-                  {{Form::file('license',['class'=>'form-control', 'required' => 'true'])}}
-                    <span class="error">{{$errors->first('license')}}</span>
+                  </div>
                 </div>
               </div>
             </div>
+            
             <div class="row">
               <h4 style="padding: 0 15px;font-weight: 400">Employment Details <span style="font-size: 12px">Write about your employment</span></h4>
             </div>
@@ -216,7 +219,7 @@
             </div>   
           </div>      
           <div class="form-actions">
-                <a href="{{url('/registerStep2/'.$id)}}" class="btn blue pull-left"> previous</a>
+                <a href="{{url('/registerStep2/'.$id)}}" class="btn blue pull-left"> Previous</a>
             <button type="submit" class="btn blue pull-right">Confirm</button>
           </div>
           

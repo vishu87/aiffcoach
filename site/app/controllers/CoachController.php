@@ -37,9 +37,10 @@ class CoachController extends BaseController {
     public function personalInformation(){
         $id = Auth::User()->coach_id;
         $coach = Coach::find($id);
+        $state = State::states();
         $CoachParameter = CoachParameter::where('coach_id',Auth::User()->coach_id)->first();
         $this->layout->sidebar = View::make('coaches.sidebar',["sidebar"=>'profile','subsidebar'=>1]);
-        $this->layout->main = View::make('coaches.profile',['coach'=>$coach,'CoachParameter'=>$CoachParameter,"profileType"=>1,'title'=>'Personal Details']);
+        $this->layout->main = View::make('coaches.profile',['coach'=>$coach,'CoachParameter'=>$CoachParameter,"profileType"=>1,'title'=>'Personal Details' , "state" => $state]);
     }
 
     public function updatePersonalInformation(){
@@ -59,6 +60,19 @@ class CoachController extends BaseController {
                 Input::file('photo')->move($destinationPath,$doc);
                 $coach->photo = $destinationPath.$doc;
             }
+
+            $coach->state_id = Input::get('state_id');
+            
+            if(Input::get('state_id') == 37){
+
+                $coach->domicile_state = Input::get('domicile_state');
+                $coach->domicile_country = Input::get('domicile_country');
+            }else{
+                $coach->domicile_state = '';
+                $coach->domicile_country = '';
+            }   
+
+
             $coach->save();
             return Redirect::back()->with('success','Details Updated Successfully');
         }
@@ -383,7 +397,24 @@ class CoachController extends BaseController {
             ];   
         $validator = Validator::make($cre,$rules);
         if($validator->passes()){
-            $updateContact = CoachParameter::where('coach_id',Auth::User()->coach_id)->update(["address1"=>Input::get('address1'),"address2"=>Input::get('address2'),"city"=>Input::get('city'),"pincode"=>Input::get('pincode'),"address_state_id"=>Input::get('state'),"mobile"=>Input::get('mobile'),"landline"=>Input::get('landline'),"alternate_email"=>Input::get('aemail')]);
+            // return Input::get('address_state_id');
+            $params = [
+                    "address1"=>Input::get('address1'),
+                    "address2"=>Input::get('address2'),
+                    "city"=>Input::get('city'),
+                    "pincode"=>Input::get('pincode'),
+                    "address_state_id"=>Input::get('state'),
+                    "mobile"=>Input::get('mobile'),
+                    "landline"=>Input::get('landline'),
+                    "alternate_email"=>Input::get('aemail')
+                    ];
+            if(Input::get('state') == 37){
+                $params = $params + ["address_state" => Input::get("address_state") , "address_country" => Input::get("address_country")];
+            }else{
+                $params = $params + ["address_state" => '' , "address_country" => ''];
+            }
+            $updateContact = CoachParameter::where('coach_id',Auth::User()->coach_id)
+                ->update($params);
             return Redirect::Back()->with('success','Contact Details Updated Successfully');
         } 
         return Redirect::back()->withErrors($validator)->withInput()->with('failure','All Fields Are Not Field!');  
