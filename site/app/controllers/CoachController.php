@@ -56,9 +56,11 @@ class CoachController extends BaseController {
             $destinationPath = 'coaches-doc/';//folder in root for all uploaded documents
             if(Input::hasFile('photo')){
                 $extension = Input::file('photo')->getClientOriginalExtension();
-                $doc = "photo_".Auth::id().'_'.str_replace(' ','-',Input::file('photo')->getClientOriginalName());
-                Input::file('photo')->move($destinationPath,$doc);
-                $coach->photo = $destinationPath.$doc;
+                if(in_array($extension, User::fileExtensions())){
+                    $doc = "photo_".Auth::id().'_'.str_replace(' ','-',Input::file('photo')->getClientOriginalName());
+                    Input::file('photo')->move($destinationPath,$doc);
+                    $coach->photo = $destinationPath.$doc;
+                }
             }
 
             $coach->state_id = Input::get('state_id');
@@ -163,9 +165,11 @@ class CoachController extends BaseController {
             $destinationPath= 'coaches-doc/';
             if(Input::hasFile('file')){
                 $extension = Input::file('file')->getClientOriginalExtension();
-                $doc = "file_".Auth::id().'_'.strtotime("now").'.'.$extension;
-                Input::file('file')->move($destinationPath,$doc);
-                $document->file = $destinationPath.$doc;
+                if(in_array($extension, User::fileExtensions())){
+                    $doc = "file_".Auth::id().'_'.strtotime("now").'.'.$extension;
+                    Input::file('file')->move($destinationPath,$doc);
+                    $document->file = $destinationPath.$doc;
+                }
             }
             $document->save();
             return Redirect::back()->with('success','New Documents Added Successfully');
