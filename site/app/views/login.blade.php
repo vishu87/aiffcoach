@@ -70,24 +70,39 @@
       <label class="control-label visible-ie8 visible-ie9">Username</label>
       <div class="input-icon">
         <i class="fa fa-user"></i>
-        <input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="Username" name="username"/>
+        {{Form::text('username','',array("class" => "form-control placeholder-no-fix", "autocomplete" => "off", "placeholder" => "Username"))}}
       </div>
     </div>
     <div class="form-group">
       <label class="control-label visible-ie8 visible-ie9">Password</label>
       <div class="input-icon">
         <i class="fa fa-lock"></i>
-        <input class="form-control placeholder-no-fix" type="password" autocomplete="off" placeholder="Password" name="password"/>
+        {{Form::password('password',array("class" => "form-control placeholder-no-fix", "placeholder" => "Password", "autocomplete" => "off"))}}
       </div>
     </div>
+    <div class="form-group" id="captcha">
+      <div class="row">
+        <div class="col-md-4">
+          {{ HTML::image(URL::to('simplecaptcha'),'Captcha') }}
+        </div>
+        <div class="col-md-6">
+          <input type="text" name="captcha" class="form-control" placeholder="Enter the code">
+        </div>
+      </div>  
+    </div>
     <div class="form-actions">
-      <a href="{{url('/registerStep1')}}" class="btn blue pull-left">Register Here!</a>
-      <button type="submit" class="btn blue pull-right">
+      <button type="submit" class="btn green pull-right">
       Login <i class="m-icon-swapright m-icon-white"></i>
       </button>
     </div>
 
-    <div class="forget-password">
+    <div style="margin-top:30px; text-align: center;">
+      
+      <a href="{{url('/registerStep1')}}" class="btn blue pull-left btn-block">Register Here!</a><br>
+
+    </div>
+
+    <div class="forget-password clear">
       <h4>Forgot your password ?</h4>
       <p>
          no worries, <a href="{{URL("/reset")}}" id="forget-password" style="color:#000">
