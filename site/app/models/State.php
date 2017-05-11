@@ -1,4 +1,5 @@
 <?php
+
 class State extends Eloquent {
 
 	protected $table = 'states';
@@ -9,4 +10,5 @@ class State extends Eloquent {
 		$states[37] = 'Other';
 		return [''=>'Select State'] + $states;
 	}
+
 }
