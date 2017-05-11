@@ -19,22 +19,29 @@ class UserController extends BaseController {
     {
         $credentials = [
             'username' => Input::get('username'),
-            'password' => Input::get('password')
+            'password' => Input::get('password'),
+            'captcha'  => Input::get('captcha')
         ];
         $rules = [
             'username' => 'required',
-            'password' => 'required'
+            'password' => 'required',
+            'captcha' => 'required'
         ];
         $validator = Validator::make($credentials, $rules);
         if ($validator->passes()) {
-            if (Auth::attempt(['username' => Input::get('username'), 'password' => Input::get('password'), 'active' => 0] )){
-                Session::put('privilege', Auth::user()->privilege);
-                if(Auth::user()->privilege == 1 ) return Redirect::to('coach/dashboard');
-                if(Auth::user()->privilege == 2 ) return Redirect::to('admin');
-                if(Auth::user()->privilege == 3 ) return Redirect::to('resultAdmin/dashboard');
-                if(Auth::user()->privilege == 4 ) return Redirect::to('superAdmin/dashboard');
+            $check = SimpleCaptcha::check(Input::get('captcha'));
+            if($check){
+                if (Auth::attempt(['username' => Input::get('username'), 'password' => Input::get('password'), 'active' => 0] )){
+                    Session::put('privilege', Auth::user()->privilege);
+                    if(Auth::user()->privilege == 1 ) return Redirect::to('coach/dashboard');
+                    if(Auth::user()->privilege == 2 ) return Redirect::to('admin');
+                    if(Auth::user()->privilege == 3 ) return Redirect::to('resultAdmin/dashboard');
+                    if(Auth::user()->privilege == 4 ) return Redirect::to('superAdmin/dashboard');
+                }
+                else return Redirect::back()->withInput()->with('failure', 'username or password is invalid!');
+            } else {
+                return Redirect::back()->withInput()->with('failure', 'invalid captcha code');
             }
-            else return Redirect::back()->withInput()->with('failure', 'username or password is invalid!');
         } else {
             return Redirect::back()->withErrors($validator)->withInput()->with('failure','All Fields Are Not Field!');
         }
