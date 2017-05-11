@@ -42,4 +42,5 @@ class Course extends Eloquent {
 		return [""=>"Select"]+Course::where('active',0)->lists('name','id');
 
 	}
+	
 }
