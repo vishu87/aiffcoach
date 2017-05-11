@@ -85,7 +85,7 @@
 							        <div class="col-md-6">
 							          <div class="form-group"> 
 							            <label class="form-label">Attach DOB Proof @if(!isset($data["dob_proof"]))<span class="error"> *</span>@endif</label>       
-							            {{Form::file('dob_proof',['class'=>'form-control','placeholder'=>'Attach Proof',(!isset($data['dob_proof']))?'required':''])}}
+							            {{Form::file('dob_proof',['class'=>'form-control','placeholder'=>'Attach Proof',(!isset($data['dob_proof']))?'required':'',"pdf"=>"true"])}}
 							              <span class="error">{{$errors->first('dob_proof')}}</span>
 								          @if(isset($data["dob_proof"]))
 								          	<div><a target="_blank" href="{{url($data['dob_proof'])}}">view current</a></div>
@@ -97,7 +97,7 @@
 							            <label class="control-label ">Upload Photograph @if(!isset($data["photo"]))<span class="error"> *</span>@endif</label>
 							              {{Form::file('photo',[(!isset($data['photo']))?'required':'','placeholder'=>"Upload Photograph",'filesize_img'=>'true','jpg'=>'true','class'=>"form-control placeholder-no-fix"])}}
 							              <span class="error">{{$errors->first('photo')}}</span>
-													@if(isset($data["photo"]))
+										@if(isset($data["photo"]))
 								          	<div><a target="_blank" href="{{url($data['photo'])}}">view current</a></div>
 								          @endif
 							          </div>

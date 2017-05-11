@@ -73,7 +73,7 @@
                         
                         <div class="col-md-8" style="display: 'none'">
                           <label>RECC Document Upload <span class="error">*</span></label><br>
-                          {{Form::file('recc_document',["class" => "form-control","id"=>"recc_document","required"=>true])}}
+                          {{Form::file('recc_document',["class" => "form-control","id"=>"recc_document","required"=>true,"pdf"=>"true"])}}
                         </div>
                         <div class="col-md-12 " >
                           <label class="form-label">Equivalent License </label>
@@ -88,7 +88,7 @@
                   <div class="col-md-6">
                     <div class="form-group"> 
                       <label class="form-label">Upload License <span class="error">*</span></label>
-                      {{Form::file('license',['class'=>'form-control', 'required' => 'true'])}}
+                      {{Form::file('license',['class'=>'form-control', 'required' => 'true',"pdf"=>"true"])}}
                         <span class="error">{{$errors->first('license')}}</span>
                     </div>
                   </div>
@@ -135,7 +135,7 @@
                 @if(isset($data))
                       <div class="form-group">
                         <label>Copy of Present Footballing Employment Contract <span class="error"> *</span></label>
-                        {{Form::file('present_emp_copy',["class"=>"form-control emp_validate",($data->contract =='')?'required':'',"id"=>"present_emp"])}}
+                        {{Form::file('present_emp_copy',["class"=>"form-control emp_validate",($data->contract =='')?'required':'',"pdf"=>"true"])}}
                           <span class="error">{{$errors->first('present_emp_copy')}}</span>
                           <div class="col-md-4 form-group">
                           @if($data->contract!='')<a href="{{url($data->contract)}}" target="_blank">view current</a>@endif
@@ -143,7 +143,7 @@
                       </div>
                     @else
                       <label>Copy of Present Footballing Employment Contract <span class="error">*</span></label>
-                      {{Form::file('present_emp_copy',["class"=>"form-control emp_validate","required"=>true,"id"=>"present_emp"])}}
+                      {{Form::file('present_emp_copy',["class"=>"form-control emp_validate","required"=>true,"id"=>"present_emp","pdf"=>"true"])}}
                         <span class="error">{{$errors->first('present_emp_copy')}}</span>
                     @endif    
                   </div>
@@ -151,7 +151,7 @@
                 @if(isset($data))
                       <div class="form-group">
                         <label>Upload CV (Resume)<span class="error"> *</span></label>
-                        {{Form::file('cv',["class"=>"form-control" ,($data->cv =='')?'required':'',"id"=>"contract"])}}
+                        {{Form::file('cv',["class"=>"form-control" ,($data->cv =='')?'required':'',"pdf"=>"true"])}}
                           <span class="error">{{$errors->first('cv')}}</span>
                           <div class="col-md-4 form-group">
                           @if($data->cv!='')<a href="{{url($data->cv)}}" target="_blank">view current</a>@endif
@@ -159,7 +159,7 @@
                       </div>
                     @else
                       <label>CV (Resume)<span class="error"> *</span></label>
-                      {{Form::file('cv',["class"=>"form-control","required"=>true,"id"=>"contract"])}}
+                      {{Form::file('cv',["class"=>"form-control","required"=>true,"id"=>"contract","pdf"=>"true"])}}
                         <span class="error">{{$errors->first('cv')}}</span>
                     @endif    
                 </div>
@@ -212,7 +212,7 @@
               <div class="col-md-6">
                 <div class="form-group"> 
                   <label class="form-label">Attach Passport Copy</label>       
-                  {{Form::file('passport_proof',['class'=>'form-control','placeholder'=>'Attach Passport Copy'])}}
+                  {{Form::file('passport_proof',['class'=>'form-control','placeholder'=>'Attach Passport Copy',"pdf"=>"true"])}}
                     <span class="error">{{$errors->first('passport_proof')}}</span>
                 </div>
               </div>

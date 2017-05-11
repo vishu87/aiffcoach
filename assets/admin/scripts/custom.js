@@ -115,7 +115,6 @@ $.validator.addMethod('jpg', function(value, element) {
     return this.optional(element) || (extension == 'jpg' || extension=='jpeg') 
 }, "Please select a valid jpg/jpeg file");
 
-
 $.validator.addMethod('filesize', function(value, element) {
     return this.optional(element) || (element.files[0].size <= 4194304) 
 }, "Please select a PDF file less than 4 MB");

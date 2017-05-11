@@ -56,4 +56,10 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	public static function gender(){
 		return array('1' =>'Male' , '2' => 'Female' );
 	}
+
+	public static function fileExtensions(){
+		return array (
+			"pdf" , "jpg" , "jpeg", "png"
+		);
+	}
 }

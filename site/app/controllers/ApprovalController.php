@@ -297,9 +297,11 @@ class ApprovalController extends BaseController {
             if(Input::hasFile('document')){
                 $destinationPath = "coaches_doc/";
                 $extension = Input::file('document')->getClientOriginalExtension();
-                $filename = $log->id.'-LogDocument-'.strtotime("now").'.'.$extension;
-                Input::file('document')->move($destinationPath,$filename);
-                $log->document = $destinationPath.$filename;
+                if(in_array($extension, User::fileExtensions())){
+                    $filename = $log->id.'-LogDocument-'.strtotime("now").'.'.$extension;
+                    Input::file('document')->move($destinationPath,$filename);
+                    $log->document = $destinationPath.$filename;
+                }
             }
             $log->save();
 

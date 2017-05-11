@@ -217,9 +217,11 @@ class AdminController extends BaseController {
       $destinationPath = 'coaches-doc/';
       if(Input::hasFile('photo')){
         $extension = Input::file('photo')->getClientOriginalExtension();
-        $doc = "photo_".str_replace(' ','-',Input::file('photo')->getClientOriginalName());
-        Input::file('photo')->move($destinationPath,$doc);
-        $coach->photo = $destinationPath.$doc;
+        if(in_array($extension, User::fileExtensions())){
+          $doc = "photo_".str_replace(' ','-',Input::file('photo')->getClientOriginalName());
+          Input::file('photo')->move($destinationPath,$doc);
+          $coach->photo = $destinationPath.$doc;
+        }
       }
       $coach->save();
       $coach_parameters = CoachParameter::where('coach_id',$coach_id)->update(["email"=>Input::get('email'),'mobile'=>Input::get('mobile')]);
@@ -369,9 +371,11 @@ class AdminController extends BaseController {
       $destinationPath = "coach-licenses/";
       if(Input::hasFile('document')){
         $extension = Input::file('document')->getClientOriginalExtension();
-        $doc = "dobProof_".Auth::id().'_'.str_replace(' ','-',Input::file('document')->getClientOriginalName());
-        Input::file('document')->move($destinationPath,$doc);
-        $coachLicense->document = $destinationPath.$doc;
+        if(in_array($extension, User::fileExtensions())){
+          $doc = "dobProof_".Auth::id().'_'.str_replace(' ','-',Input::file('document')->getClientOriginalName());
+          Input::file('document')->move($destinationPath,$doc);
+          $coachLicense->document = $destinationPath.$doc;
+        }
       }
       $coachLicense->save();
       return Redirect::back()->with('success','License added successfully');
