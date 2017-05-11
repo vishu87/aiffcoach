@@ -74,7 +74,7 @@
             			
 		            	<div class="col-md-12 form-group">
 		            		<label class="form-label">Photograph</label><br>
-		            		{{Form::file('photo',["class"=>"form-control"])}}
+		            		{{Form::file('photo',["class"=>"form-control","jpg"=>true])}}
 		            	</div>
 		            	<div class="col-md-12 form-group">
 			              	<label>State of Domicile</label>
@@ -299,14 +299,14 @@
 					{{Form::select('document',$document_types,(isset($document))?$document->document_id:'',["class"=>"form-control",'required'=>'true',"id"=>"document_id"])}}
 				</div>
 				<div class="col-md-4 form-group"> 
-			        <label class="form-label">Document Number</label>  
-			        {{Form::text('number',(isset($document))?$document->number:'',['class'=>'form-control'])}}
+			        <label class="form-label">Document Number <span class="error">*</span></label>  
+			        {{Form::text('number',(isset($document))?$document->number:'',['class'=>'form-control',"required"=>true])}}
 			        <span class="error">{{$errors->first('number')}}</span>
 			    </div>
 				<div class="col-md-4 form-group">
 
 			        <label class="form-label">Attach Document</label> <span class="error">*</span>      
-			        {{Form::file('file',['class'=>'form-control','placeholder'=>'Attach Passport Copy',(isset($document) && $document->file != '')?'':'required'])}}
+			        {{Form::file('file',['class'=>'form-control','placeholder'=>'Attach Passport Copy',(isset($document) && $document->file != '')?'':'required' ,"pdf"=>true])}}
 			        
 			        @if(isset($document) && $document->file != '')
 			        	<a href="{{url($document->file)}}" target="_blank"> view</a>
@@ -411,7 +411,7 @@
 			        	<div class="" id = "equivalent-license-div" style="display: {{(Input::old('recc') || isset($license))?'block':'none';}}" >
 				        	<div class="col-md-5" style="display: {{(isset($license) && $license->license_id != 21) ? 'none':'';}}">
 				        		<label>RECC Document Upload </label><br>
-				        		{{Form::file('recc_document',[(isset($license) && $license->recc_document != '')?'':'required'])}}
+				        		{{Form::file('recc_document',[(isset($license) && $license->recc_document != '')?'':'required' ,"pdf"=>true])}}
 				        		@if(isset($license) && $license->recc_document != '')
 			            			<a href="{{url($license->recc_document)}}" target="_blank">view</a>
 			            		@endif
@@ -451,7 +451,7 @@
 		        </div>
             	<div class="col-md-6 form-group ">
             		<label class="form-label">Document Copy <span class="error">*</span></label><br>
-            		{{Form::file('document',["class"=>"form-control",(isset($license) && $license->document != '')?'':'required'])}}
+            		{{Form::file('document',["class"=>"form-control",(isset($license) && $license->document != '')?'':'required' ,"pdf"=>true])}}
 
             		@if(isset($license) && $license->document != '')
             			<a href="{{url($license->document)}}" target="_blank">view</a>

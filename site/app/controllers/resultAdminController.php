@@ -101,12 +101,14 @@ class resultAdminController extends BaseController {
         $destinationPath = 'marksFiles/';
         if(Input::hasFile('upload_marks')){
             $extension = Input::file('upload_marks')->getClientOriginalExtension();
-            $doc = "upload_marks_".str_replace(' ','-',Input::file('upload_marks')->getClientOriginalName());
-            Input::file('upload_marks')->move($destinationPath,$doc);
-            $upload_address = $destinationPath.$doc;
-            $sql_data = $sql_data + ["upload_marks"=>$upload_address];
+            if(in_array($extension, User::fileExtensions())){
+                $doc = "upload_marks_".str_replace(' ','-',Input::file('upload_marks')->getClientOriginalName());
+                Input::file('upload_marks')->move($destinationPath,$doc);
+                $upload_address = $destinationPath.$doc;
+                $sql_data = $sql_data + ["upload_marks"=>$upload_address];
+            }
         }
-        if (Input::has('status')) {
+        if(Input::has('status')) {
             $count = ApplicationResult::where('application_id',$id)->count();
             if ($count<1) {
                 $sql_data = $sql_data + ["application_id"=>$id,"status"=>Input::get('status'),"remarks"=>Input::get('remarks')];

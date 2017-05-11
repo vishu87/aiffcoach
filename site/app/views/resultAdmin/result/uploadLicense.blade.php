@@ -51,7 +51,7 @@
 		        </div>
             	<div class="col-md-6 form-group ">
             		<label class="form-label">Document Copy</label><br>
-            		{{Form::file('document',["class"=>"form-control"])}}
+            		{{Form::file('document',["class"=>"form-control","pdf"=>true])}}
             		@if(isset($editLicense))
             			@if($editLicense->document!='')
             				<a href="{{url($editLicense->document)}}">view current</a>

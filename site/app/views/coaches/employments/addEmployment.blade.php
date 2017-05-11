@@ -68,7 +68,7 @@
 				@if(isset($employment))
         			
     				<label>Copy of Present Footballing Employment ( Contract / Appointment Letter)<span class="error"> *</span></label>
-	        		{{Form::file('present_emp_copy',["class"=>"form-control emp_validate",($employment->contract =='')?'required':'',"id"=>"present_emp"])}}
+	        		{{Form::file('present_emp_copy',["class"=>"form-control emp_validate",($employment->contract =='')?'required':'',"id"=>"present_emp","pdf"=>true])}}
 		            <span class="error">{{$errors->first('present_emp_copy')}}</span>
 		            <div class="col-md-4 form-group">
     					@if($employment->contract!='')<a href="{{url($employment->contract)}}" target="_blank">view current</a>@endif
@@ -77,7 +77,7 @@
 		        @else
 		        
 		        	<label>Copy of Present Footballing Employment ( Contract / Appointment Letter)<span class="error">*</span></label>
-	        		{{Form::file('present_emp_copy',["class"=>"form-control emp_validate","required"=>true,"id"=>"present_emp"])}}
+	        		{{Form::file('present_emp_copy',["class"=>"form-control emp_validate","required"=>true,"id"=>"present_emp","pdf"=>true])}}
 		            <span class="error">{{$errors->first('present_emp_copy')}}</span>
 		        @endif    
 	        </div>
@@ -85,7 +85,7 @@
 				@if(isset($employment))
     			
     				<label>Upload CV (Resume)<span class="error"> *</span></label>
-	        		{{Form::file('cv',["class"=>"form-control " ,($employment->cv =='')?'required':'',"id"=>"contract"])}}
+	        		{{Form::file('cv',["class"=>"form-control " ,($employment->cv =='')?'required':'',"id"=>"contract","pdf"=>true])}}
 		            <span class="error">{{$errors->first('cv')}}</span>
 		            <div class="col-md-4 form-group">
     					@if($employment->cv!='')<a href="{{url($employment->cv)}}" target="_blank">view current</a>@endif
@@ -93,7 +93,7 @@
         			
 		        @else
 		        	<label>CV (Resume)<span class="error"> *</span></label>
-	        		{{Form::file('cv',["class"=>"form-control","required"=>true,"id"=>"contract"])}}
+	        		{{Form::file('cv',["class"=>"form-control","required"=>true,"id"=>"contract","pdf"=>true])}}
 		            <span class="error">{{$errors->first('cv')}}</span>
 		        @endif    
 	        </div>

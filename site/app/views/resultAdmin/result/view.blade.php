@@ -48,7 +48,7 @@
 					</div>
 					<div class="col-md-4 form-group">
 						{{Form::label('Upload Marks')}}
-						{{Form::file('upload_marks',["class"=>"form-control"])}}
+						{{Form::file('upload_marks',["class"=>"form-control","pdf"=>true])}}
 						<div style="margin-top:5px;">
 							@if(!empty($finalResult->upload_marks))
 								<a href="{{url($finalResult->upload_marks)}}" target="_blank">view current</a>

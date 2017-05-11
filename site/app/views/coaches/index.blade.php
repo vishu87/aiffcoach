@@ -64,7 +64,7 @@
 				        </div>
 				         <div class="col-md-6 form-group">
 				        	<label>Attach Proof Copy</label><span class="error"> *</span>
-				        	{{Form::file('aiff_certificate_copy',["class"=>"form-control"])}}
+				        	{{Form::file('aiff_certificate_copy',["class"=>"form-control","pdf"=>true])}}
 				        </div>
 	                </div>
 	                <div class="row">
@@ -74,13 +74,13 @@
 				        </div>
 				        <div class="col-md-6 form-group">
 				        	<label>Copy of Latest AFC/AIFF Certificate</label><span class="error"> *</span>
-				        	{{Form::file('aiff_latest_copy',["class"=>"form-control"])}}
+				        	{{Form::file('aiff_latest_copy',["class"=>"form-control","pdf"=>true])}}
 				        </div>
 	                </div>
 	                <div class="row">
 		                <div class="col-md-6 form-group">
 				        	<label>Copy of Present Footballing Employment Contract</label><span class="error"> *</span>
-				        	{{Form::file('present_emp_copy',["class"=>"form-control"])}}
+				        	{{Form::file('present_emp_copy',["class"=>"form-control","pdf"=>true])}}
 				        </div>
 	                </div>
         

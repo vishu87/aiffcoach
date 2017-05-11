@@ -107,7 +107,7 @@
 		          </div>
 		          <div>
 		            <label>Document</label>
-		            {{Form::file('document',["class"=>'form-control'])}}
+		            {{Form::file('document',["class"=>'form-control',"pdf"=>true])}}
 		          </div>
 		        </div>
 		        <div class="col-md-12">

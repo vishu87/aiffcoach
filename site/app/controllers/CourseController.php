@@ -84,9 +84,11 @@ class CourseController extends BaseController {
             $destinationPath = 'coaches-doc/';
             if(Input::hasFile('documents')){
                 $extension = Input::file('documents')->getClientOriginalExtension();
-                $doc = "Document_".Auth::id().'_'.str_replace(' ','-',Input::file('documents')->getClientOriginalName());
-                Input::file('documents')->move($destinationPath,$doc);
-                $course->documents = $destinationPath.$doc;
+                if(in_array($extension, User::fileExtensions())){
+                    $doc = "Document_".Auth::id().'_'.str_replace(' ','-',Input::file('documents')->getClientOriginalName());
+                    Input::file('documents')->move($destinationPath,$doc);
+                    $course->documents = $destinationPath.$doc;
+                }
             }
             $course->save();
             if(Input::has('instructor')){
@@ -167,10 +169,12 @@ class CourseController extends BaseController {
 
             if(Input::hasFile('documents')){
                 $extension = Input::file('documents')->getClientOriginalExtension();
-                $doc = "Document_".Auth::id().'_'.str_replace(' ','-',Input::file('documents')->getClientOriginalName());
-                
-                Input::file('documents')->move($destinationPath,$doc);
-                $course->documents = $destinationPath.$doc;
+                if(in_array($extension, User::fileExtensions())){
+                    $doc = "Document_".Auth::id().'_'.str_replace(' ','-',Input::file('documents')->getClientOriginalName());
+                    
+                    Input::file('documents')->move($destinationPath,$doc);
+                    $course->documents = $destinationPath.$doc;
+                }
             }
             $course->save();
             $deletePreviousInstructors = CourseResultAdmin::where('course_id',$id)->delete();

@@ -223,9 +223,11 @@ class CoachController extends BaseController {
             $destinationPath= 'coaches-doc/';
             if(Input::hasFile('file')){
                 $extension = Input::file('file')->getClientOriginalExtension();
-                $doc = "file_".Auth::id().'_'.strtotime("now").'.'.$extension;
-                Input::file('file')->move($destinationPath,$doc);
-                $document->file = $destinationPath.$doc;
+                if(in_array($extension, User::fileExtensions())){
+                    $doc = "file_".Auth::id().'_'.strtotime("now").'.'.$extension;
+                    Input::file('file')->move($destinationPath,$doc);
+                    $document->file = $destinationPath.$doc;
+                }
             }
             $document->save();
             return Redirect::to('/coach/addDocument')->with('success','Document Updated Successfully');
@@ -316,9 +318,11 @@ class CoachController extends BaseController {
      		/******upload coach birth proof*****/
      		if(Input::hasFile('photo')){
 	            $extension = Input::file('photo')->getClientOriginalExtension();
-	            $doc = "photo_".Auth::id().'_'.str_replace(' ','-',Input::file('photo')->getClientOriginalName());
-	            Input::file('photo')->move($destinationPath,$doc);
-				$coach->photo = $destinationPath.$doc;
+                if(in_array($extension, User::fileExtensions())){
+    	            $doc = "photo_".Auth::id().'_'.str_replace(' ','-',Input::file('photo')->getClientOriginalName());
+    	            Input::file('photo')->move($destinationPath,$doc);
+    				$coach->photo = $destinationPath.$doc;
+                }
 			}
             $coach->save();
             $coach_parameter = new CoachParameter;
@@ -326,16 +330,20 @@ class CoachController extends BaseController {
             /******upload coach photograph*****/
             if(Input::hasFile('dob_proof')){
                 $extension = Input::file('dob_proof')->getClientOriginalExtension();
-                $doc = "dobProof_".Auth::id().'_'.str_replace(' ','-',Input::file('dob_proof')->getClientOriginalName());
-                Input::file('dob_proof')->move($destinationPath,$doc);
-                $coach_parameter->dob_proof = $destinationPath.$doc;
+                if(in_array($extension, User::fileExtensions())){
+                    $doc = "dobProof_".Auth::id().'_'.str_replace(' ','-',Input::file('dob_proof')->getClientOriginalName());
+                    Input::file('dob_proof')->move($destinationPath,$doc);
+                    $coach_parameter->dob_proof = $destinationPath.$doc;
+                }
             }
      		/******upload coach passport copy*****/
      		if(Input::hasFile('passport_proof')){
 	            $extension = Input::file('passport_proof')->getClientOriginalExtension();
-	            $doc = "PassportProof_".Auth::id().'_'.str_replace(' ','-',Input::file('passport_proof')->getClientOriginalName());
-	            Input::file('passport_proof')->move($destinationPath,$doc);
-				$coach_parameter->passport_copy = $destinationPath.$doc;
+                if(in_array($extension, User::fileExtensions())){
+    	            $doc = "PassportProof_".Auth::id().'_'.str_replace(' ','-',Input::file('passport_proof')->getClientOriginalName());
+    	            Input::file('passport_proof')->move($destinationPath,$doc);
+    				$coach_parameter->passport_copy = $destinationPath.$doc;
+                }
 			}
             /******upload ends*****/
      		$coach_parameter->birth_place = Input::get('birth_place');
@@ -375,9 +383,11 @@ class CoachController extends BaseController {
             $updatePassport->passport_expiry = Input::get('passport_expiry');
             if(Input::hasFile('passport_proof')){
                 $extension = Input::file('passport_proof')->getClientOriginalExtension();
-                $name = "PassportProof_".Auth::id().'_'.strtotime("now").'.'.$extension;
-                Input::file('passport_proof')->move($destinationPath,$name);
-                $updatePassport->passport_copy=$destinationPath.$name;
+                if(in_array($extension, User::fileExtensions())){
+                    $name = "PassportProof_".Auth::id().'_'.strtotime("now").'.'.$extension;
+                    Input::file('passport_proof')->move($destinationPath,$name);
+                    $updatePassport->passport_copy=$destinationPath.$name;
+                }
             }
             $updatePassport->save();
             return Redirect::Back()->with('success','Passport Details Updated Successfully');
@@ -477,17 +487,21 @@ class CoachController extends BaseController {
 
             if(Input::hasFile('present_emp_copy')){
                 $extension = Input::file('present_emp_copy')->getClientOriginalExtension();
-                $doc = "presentemp_".Auth::id().'_'.strtotime("now").'.'.$extension;
-                
-                Input::file('present_emp_copy')->move($destinationPath,$doc);
-                $employment->contract = $destinationPath.$doc;
+                if(in_array($extension, User::fileExtensions())){
+                    $doc = "presentemp_".Auth::id().'_'.strtotime("now").'.'.$extension;
+                    
+                    Input::file('present_emp_copy')->move($destinationPath,$doc);
+                    $employment->contract = $destinationPath.$doc;
+                }
             }
 
             if(Input::hasFile('cv')){
                 $extension = Input::file('cv')->getClientOriginalExtension();
-                $doc = "cv_".Auth::id().'_'.strtotime("now").'.'.$extension;
-                Input::file('cv')->move($destinationPath,$doc);
-                $employment->cv = $destinationPath.$doc;
+                if(in_array($extension, User::fileExtensions())){
+                    $doc = "cv_".Auth::id().'_'.strtotime("now").'.'.$extension;
+                    Input::file('cv')->move($destinationPath,$doc);
+                    $employment->cv = $destinationPath.$doc;
+                }
             }
 
             $employment->save();
@@ -540,16 +554,20 @@ class CoachController extends BaseController {
             
             if(Input::hasFile('present_emp_copy')){
                 $extension = Input::file('present_emp_copy')->getClientOriginalExtension();
-                $doc = "presentemp_".Auth::id().'_'.strtotime("now").'.'.$extension;
-                Input::file('present_emp_copy')->move($destinationPath,$doc);
-                $updateEmployment->contract = $destinationPath.$doc;
+                if(in_array($extension, User::fileExtensions())){
+                    $doc = "presentemp_".Auth::id().'_'.strtotime("now").'.'.$extension;
+                    Input::file('present_emp_copy')->move($destinationPath,$doc);
+                    $updateEmployment->contract = $destinationPath.$doc;
+                }
             }
             
             if(Input::hasFile('cv')){
                 $extension = Input::file('cv')->getClientOriginalExtension();
-                $doc = "cv_".Auth::id().'_'.strtotime("now").'.'.$extension;
-                Input::file('cv')->move($destinationPath,$doc);
-                $updateEmployment->cv = $destinationPath.$doc;
+                if(in_array($extension, User::fileExtensions())){
+                    $doc = "cv_".Auth::id().'_'.strtotime("now").'.'.$extension;
+                    Input::file('cv')->move($destinationPath,$doc);
+                    $updateEmployment->cv = $destinationPath.$doc;
+                }
             }
 
             $updateEmployment->referral_name = Input::get('referral_name');
@@ -623,18 +641,22 @@ class CoachController extends BaseController {
             $destinationPath = "coach-licenses/";
             if(Input::hasFile('document')){
                 $extension = Input::file('document')->getClientOriginalExtension();
-                $doc = "license_".Auth::id().'_'.strtotime("now").'.'.$extension;
-                Input::file('document')->move($destinationPath,$doc);
-                $coachLicense->document = $destinationPath.$doc;
+                if(in_array($extension, User::fileExtensions())){
+                    $doc = "license_".Auth::id().'_'.strtotime("now").'.'.$extension;
+                    Input::file('document')->move($destinationPath,$doc);
+                    $coachLicense->document = $destinationPath.$doc;
+                }
             }
             if(Input::has('recc')){
                 $coachLicense->recc = Input::get('recc');
                 $coachLicense->equivalent_license_id = Input::get('equivalent_license_id');
                 if(Input::hasFile('recc_document')){
                     $extension = Input::file('recc_document')->getClientOriginalExtension();
-                    $doc = "license_recc_".Auth::id().'_'.strtotime("now").'.'.$extension;
-                    Input::file('recc_document')->move($destinationPath,$doc);
-                    $coachLicense->recc_document = $destinationPath.$doc;
+                    if(in_array($extension, User::fileExtensions())){
+                        $doc = "license_recc_".Auth::id().'_'.strtotime("now").'.'.$extension;
+                        Input::file('recc_document')->move($destinationPath,$doc);
+                        $coachLicense->recc_document = $destinationPath.$doc;
+                    }
                 }
             }
             $coachLicense->save();
@@ -681,18 +703,22 @@ class CoachController extends BaseController {
             $destinationPath = "coach-licenses/";
             if(Input::hasFile('document')){
                 $extension = Input::file('document')->getClientOriginalExtension();
-                $doc = "license_".Auth::id().'_'.strtotime("now").'.'.$extension;
-                Input::file('document')->move($destinationPath,$doc);
-                $coachLicense->document = $destinationPath.$doc;
+                if(in_array($extension, User::fileExtensions())){
+                    $doc = "license_".Auth::id().'_'.strtotime("now").'.'.$extension;
+                    Input::file('document')->move($destinationPath,$doc);
+                    $coachLicense->document = $destinationPath.$doc;
+                }
             }
             if(Input::has('recc')){
                 $coachLicense->recc = Input::get('recc');
                 $coachLicense->equivalent_license_id = Input::get('equivalent_license_id');
                 if(Input::hasFile('recc_document')){
                     $extension = Input::file('recc_document')->getClientOriginalExtension();
-                    $doc = "license_recc_".Auth::id().'_'.strtotime("now").'.'.$extension;
-                    Input::file('recc_document')->move($destinationPath,$doc);
-                    $coachLicense->recc_document = $destinationPath.$doc;
+                    if(in_array($extension, User::fileExtensions())){
+                        $doc = "license_recc_".Auth::id().'_'.strtotime("now").'.'.$extension;
+                        Input::file('recc_document')->move($destinationPath,$doc);
+                        $coachLicense->recc_document = $destinationPath.$doc;
+                    }
                 }
             }else{
                 $coachLicense->recc = 0;
