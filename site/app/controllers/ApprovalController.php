@@ -15,7 +15,7 @@ class ApprovalController extends BaseController {
     // }
 
     public function pendingDocument(){
-        $sql = CoachDocument::select('coach_documents.*','documents.name as document_name','coaches.full_name')->leftJoin('documents','coach_documents.document_id','=','documents.id')->leftJoin('coaches','coach_documents.coach_id','=','coaches.id')->join('users','users.coach_id','=','coach_documents.coach_id')->where('users.official_types','LIKE','%'.Auth::user()->manage_official_type.'%')->where('coach_documents.status',0);
+        $sql = CoachDocument::select('coach_documents.*','documents.name as document_name','coaches.full_name')->leftJoin('documents','coach_documents.document_id','=','documents.id')->leftJoin('coaches','coach_documents.coach_id','=','coaches.id')->join('users','users.coach_id','=','coach_documents.coach_id')->where('users.official_types','LIKE','%'.Auth::user()->manage_official_type.'%')->where('coach_documents.status',0)->where('coaches.status','!=',3);
 
         // $sql = CoachDocument::select('coach_documents.*','documents.name as document_name','coaches.full_name')->leftJoin('documents','coach_documents.document_id','=','documents.id')->leftJoin('coaches','coach_documents.coach_id','=','coaches.id')->join('users','users.coach_id','=','coach_documents.coach_id')->where('coach_documents.start_date',null)->orderBy('coach_documents.id','asc');
 
@@ -63,7 +63,7 @@ class ApprovalController extends BaseController {
         $this->layout->main = View::make('admin.pendingDocuments.list',["docType"=>'pendingDocument' , "documents"=>$documents , 'ApprovalStatus'=>$ApprovalStatus ,"total" => $total, "page_id"=>$page_id, "max_per_page" => $max_per_page, "total_pages" => $total_pages,'input_string'=>$input_string,'link_string'=>$link_string]);
     }
     public function pendingLicenses(){
-        $sql = CoachLicense::listing()->join('users','users.coach_id','=','coach_licenses.coach_id')->where('users.official_types','LIKE','%'.Auth::user()->manage_official_type.'%')->where('coach_licenses.status','!=',1);
+        $sql = CoachLicense::listing()->join('users','users.coach_id','=','coach_licenses.coach_id')->where('users.official_types','LIKE','%'.Auth::user()->manage_official_type.'%')->where('coach_licenses.status','!=',1)->where('coaches.status','!=',3);
         if(Input::get("registration_id") != ''){
           $sql = $sql->where('coaches.registration_id','LIKE','%'.Input::get('registration_id').'%');
         }
@@ -108,7 +108,7 @@ class ApprovalController extends BaseController {
         $this->layout->main = View::make('admin.pendingDocuments.list',["docType"=>'pendingLicenses', "coachLicense"=>$coachLicense, 'ApprovalStatus'=>$ApprovalStatus ,"total" => $total, "page_id"=>$page_id, "max_per_page" => $max_per_page, "total_pages" => $total_pages,'input_string'=>$input_string, "link_string"=>$link_string]);
     }
     public function pendingEmploymentDetails(){
-        $sql = EmploymentDetails::select('employment_details.*','coaches.full_name')->leftJoin('coaches','employment_details.coach_id','=','coaches.id')->join('users','users.coach_id','=','employment_details.coach_id')->where('users.official_types','LIKE','%'.Auth::user()->manage_official_type.'%')->where('employment_details.status','!=',1);
+        $sql = EmploymentDetails::select('employment_details.*','coaches.full_name')->leftJoin('coaches','employment_details.coach_id','=','coaches.id')->join('users','users.coach_id','=','employment_details.coach_id')->where('users.official_types','LIKE','%'.Auth::user()->manage_official_type.'%')->where('employment_details.status','!=',1)->where('coaches.status','!=',3);
         if(Input::get("registration_id") != ''){
           $sql = $sql->where('coaches.registration_id','LIKE','%'.Input::get('registration_id').'%');
         }

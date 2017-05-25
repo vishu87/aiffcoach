@@ -753,7 +753,7 @@ class CoachController extends BaseController {
 
     public function viewAllCoaches(){
         
-        $sql = Coach::listing()->approved();
+        $sql = Coach::listing()->approved()->where('users.official_types',1);
         
 
         if(Input::get("registration_id") != ''){
