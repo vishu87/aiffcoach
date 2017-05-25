@@ -24,7 +24,7 @@
 {{HTML::style("assets/global/css/components.css")}}
 <!-- {{HTML::style("assets/admin/css/layout.css")}} -->
 <!-- {{HTML::style("assets/admin/css/themes/darkblue.css")}} -->
-{{HTML::style("assets/admin/css/login-soft.css")}}
+{{HTML::style("assets/admin/css/login-soft.css?v=1.0.1")}}
 <!-- {{HTML::style("assets/admin/css/custom.css")}} -->
 <!-- END THEME STYLES -->
 <link rel="shortcut icon" href="favicon.ico"/>
@@ -32,16 +32,6 @@
 <!-- END HEAD -->
 
 <body class="login">
-  <div class="row">
-    <div class="col-md-12">
-      <div style="padding: 10px;">
-        <a href="{{url('/view-all-coaches')}}" class="btn pull-right blue">View All Coaches</a>
-      </div>
-    </div>
-  </div>
-  <div class="logo">
-    <img src="{{url('assets/img/aiff.png')}}" style="width:240px; height:auto">
-  </div>
 <div style="max-width:700px; margin:0 auto">
   @if(Session::has('success'))
     <div class="alert alert-success alert-dismissable">
@@ -51,6 +41,9 @@
   @endif
 </div>
 <div class="content">
+  <div class="logo">
+    <img src="{{url('assets/img/aiff.png')}}" style="width:240px; height:auto">
+  </div>
   <!-- BEGIN LOGIN FORM -->
   {{ Form::open(array('action' => 'UserController@postLogin','class' => 'login-form',"method"=>"POST")) }}
   @if(Session::has('failure'))
@@ -85,21 +78,25 @@
         <div class="col-md-4">
           {{ HTML::image(URL::to('simplecaptcha'),'Captcha') }}
         </div>
-        <div class="col-md-6">
+        <div class="col-md-5" style="padding-top: 3px">
           <input type="text" name="captcha" class="form-control" placeholder="Enter the code">
+        </div>
+        <div class="col-md-3" style="padding-top: 3px">
+          <button type="submit" class="btn green pull-right">
+          Login <i class="m-icon-swapright m-icon-white"></i>
+          </button>
         </div>
       </div>  
     </div>
-    <div class="form-actions">
-      <button type="submit" class="btn green pull-right">
-      Login <i class="m-icon-swapright m-icon-white"></i>
-      </button>
-    </div>
 
-    <div style="margin-top:30px; text-align: center;">
+
+    <div style="margin-top:20px; text-align: center;">
       
-      <a href="{{url('/registerStep1')}}" class="btn blue pull-left btn-block">Register Here!</a><br>
+      <a href="{{url('/registerStep1')}}" class="btn blue btn-block">Register Here!</a><br>
 
+    </div>
+    <div style="margin-top: 0px;" class="clear">
+        <a href="{{url('/view-all-coaches')}}" class="btn btn-block default">View All Coaches</a>
     </div>
 
     <div class="forget-password clear">

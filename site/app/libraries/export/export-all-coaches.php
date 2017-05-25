@@ -58,8 +58,8 @@ function getNameFromNumber($num) {
 $row = 1;
 $i = 0;
 if(isset($coaches)){
-	$fields = array("sn",'full_name','registration_id','email','state_reference','employment');
-	$field_names = array("SN","Name",'Registration Id','Contact Details','State','Employment');
+	$fields = array("sn",'full_name','registration_id','state_reference','employment');
+	$field_names = array("SN","Name",'Registration Id','State','Employment');
 
 	if(Input::has('license_id') && Input::get('license_id') !=''){
 		array_push($field_names,"License");

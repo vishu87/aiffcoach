@@ -6,17 +6,19 @@ Login page
   background-image: url(../img/1.jpg);
   background-size: cover;
   background-color: #666 !important;
+  padding-top: 30px !important;
 }
 
 .login .logo {
-  margin: 60px auto 20px auto;
-  padding: 15px;
+  margin: 0px auto 0px auto;
   text-align: center;
 }
 
 .login .content {
-  background: url(../img/bg-white-lock.png) repeat;
-  width: 360px;
+  /*background: url(../img/bg-white-lock.png) repeat;*/
+  /*margin-top: 30px;*/
+  background: #FFF;
+  width: 420px;
   margin: 0 auto;
   margin-bottom: 0px;
   padding: 30px;
