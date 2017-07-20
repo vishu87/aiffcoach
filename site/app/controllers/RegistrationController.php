@@ -278,7 +278,10 @@ class RegistrationController extends BaseController {
             $coach->last_name = ucwords(strtolower($data1['last_name']));
             $coach->full_name = ucwords(strtolower($data1['first_name'])).' '.ucwords(strtolower($data1['middle_name'])).' '.ucwords(strtolower($data1['last_name']));
             $coach->dob = $data1['dob'];
-            $coach->photo = $data1['photo'];
+            if(isset($data1['photo'])){
+
+                $coach->photo = $data1['photo'];
+            }
             $coach->state_id = $data2['state_id']; // state if domicile
 
             if($data2['state_id'] == 37){
