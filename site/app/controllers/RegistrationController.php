@@ -165,6 +165,7 @@ class RegistrationController extends BaseController {
         }
         $official_types = [""=>"Select"] + User::OfficialTypes();
         $emp_status = ["" => "Select"] + EmploymentDetails::emp_status();
+        
         $this->layout->main = View::make('registration.register_step3',["id"=>$id,'flag'=>3, 'official_types' => $official_types , "emp_status" => $emp_status]);
     }
 

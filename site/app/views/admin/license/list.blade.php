@@ -25,6 +25,7 @@
 			<tr>
 				<th style="width:50px">SN</th>
 				<th>Name</th>
+				<th>Hide in Dropdown</th>
 				<th>#</th>
 				
 				

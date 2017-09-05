@@ -62,6 +62,11 @@
 					<span class="error">{{$errors->first('description')}}</span>
 				</div>
 			</div>
+			<div class="form-group">
+				<label>
+					{{Form::checkbox('show_dropdown',1,(isset($license) && $license->show_dropdown == 1)?true :false)}} &nbsp;&nbsp;&nbsp;Hide Dropdown
+				</label>
+			</div>
 		<!---my form end-->
 	</div>
 	<div class="form-actions" style="margin-top:40px;">
