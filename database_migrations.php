@@ -176,3 +176,6 @@ ALTER TABLE `employment_details` CHANGE `start_date` `start_date` DATE NULL DEFA
 ALTER TABLE `coaches`  ADD `domicile_country` TEXT NULL DEFAULT NULL  AFTER `state_id`,  ADD `domicile_state` TEXT NULL DEFAULT NULL  AFTER `domicile_country`;
 
 ALTER TABLE `coach_parameters`  ADD `address_country` TEXT NULL DEFAULT NULL  AFTER `address_state_id`,  ADD `address_state` TEXT NULL DEFAULT NULL  AFTER `address_country`;
+
+// 08/09/2017 added by chirag
+ALTER TABLE `license` ADD `show_dropdown` INT(1) NOT NULL DEFAULT '0' AFTER `description`;

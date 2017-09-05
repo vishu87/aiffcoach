@@ -15,8 +15,9 @@ class instructorCourseController extends BaseController {
     		->join('courses','applications.course_id','=','courses.id')
     		->join('coaches','applications.coach_id','=','coaches.id')
     		->leftJoin('application_result','applications.id','=','application_result.application_id')
+            ->leftJoin('payment','payment.application_id','=','applications.id')
     		->where('course_id',$course_id)
-    		->where('applications.status',3)
+    		->where('payment.status',1)
     		->get();
 
     	$course_parameters = CourseParameter::select('parameters.*')
@@ -24,6 +25,7 @@ class instructorCourseController extends BaseController {
     		->join('parameters','parameters.id','=','courses_parameter.parameter_id')
             ->where('courses_parameter.license_id',$course_details->license_id)
     		->get();
+
 
         $evaluated_apps = [];
         if(sizeof($applications) > 0){
@@ -48,7 +50,7 @@ class instructorCourseController extends BaseController {
 
 
         $result_status = Result::status();  
-
+        
     	$this->layout->sidebar = View::make('resultAdmin.sidebar',['sidebar'=>12]);
         $this->layout->main = View::make('resultAdmin.courses.applications',["applications" => $applications , "course_details" => $course_details , "course_parameters" => $course_parameters , "result_status" => $result_status , "course_id" => $course_id , "app_result_status" => $app_result_status , "app_marks" => $app_marks]);
     }
@@ -59,9 +61,10 @@ class instructorCourseController extends BaseController {
 
         $course_details = Course::select('courses.license_id')->where('courses.id',$course_id)->first();
 
-        $applications = Application::select('id')
+        $applications = Application::select('applications.id')
+            ->leftJoin('payment','payment.application_id','=','applications.id')
             ->where('course_id',$course_id)
-            ->where('applications.status',3)
+            ->where('payment.status',1)
             ->get();
 
         $course_parameters = CourseParameter::select('parameter_id')

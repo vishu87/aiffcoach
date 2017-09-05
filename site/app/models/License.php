@@ -10,6 +10,6 @@ class License extends Eloquent {
 	}
 
 	public static function licenseList(){
-		return [""=>"Select"]+License::lists('name','id');
+		return [""=>"Select"]+License::where('show_dropdown','!=',1)->lists('name','id');
 	}
 }

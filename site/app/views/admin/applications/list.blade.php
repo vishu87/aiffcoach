@@ -25,10 +25,10 @@
 		<label>Filter by course</label>
 		<div class="row">
 			<div class="col-md-8">
-				{{Form::select('course',$courses,(Input::has('course'))?Input::get('course'):'', ["class"=>"form-control"])}}
+				{{Form::select('course',$courses,(Input::has('course'))?Input::get('course'):'', ["class"=>"select form-control "])}}
 			</div>
 			<div class="col-md-4">
-				{{Form::submit('Submit',["class"=>"btn blue"])}}
+				{{Form::submit('Submit',["class"=>"btn btn-sm blue"])}}
 			</div>
 		</div>
 		{{Form::close()}}

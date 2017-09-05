@@ -169,7 +169,8 @@ class AdminController extends BaseController {
   }
   
   public function viewCoachDetails($id){
-    $coach = Coach::select('coaches.*','states.name as state_registation','coach_parameters.email','coach_parameters.address1','coach_parameters.address2','coach_parameters.city','coach_parameters.pincode','coach_parameters.mobile')->join('states','coaches.state_id','=','states.id')->join('coach_parameters','coaches.id','=','coach_parameters.coach_id')->where('coaches.id',$id)->first();
+    $coach = Coach::select('coaches.*','states.name as state_registation','coach_parameters.email','coach_parameters.address1','coach_parameters.address2','coach_parameters.city','coach_parameters.pincode','coach_parameters.mobile')->leftJoin('states','coaches.state_id','=','states.id')->join('coach_parameters','coaches.id','=','coach_parameters.coach_id')->where('coaches.id',$id)->first();
+    // return $coach;
     $documents = CoachDocument::select('coach_documents.*','documents.name as document_name')->leftJoin('documents','coach_documents.document_id','=','documents.id')->where('coach_id',$id)->get();
 
     $coachLicense = CoachLicense::listing()->where('coach_id',$id)->get();
@@ -187,7 +188,6 @@ class AdminController extends BaseController {
 
       $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'coach','subsidebar'=>2]);
     }
-    
     $this->layout->main = View::make('admin.coaches.profile',['coach' => $coach, 'employmentDetails' => $employmentDetails, "documents" => $documents, "activities" => $activities, "courses" => $courses, "licenseList" => $licenseList, "coachStatus" => $coachStatus, "coachLicense" => $coachLicense, 'ApprovalStatus' => $ApprovalStatus]);
   }
 
@@ -238,11 +238,11 @@ class AdminController extends BaseController {
     }
   }  
   
-
   public function ApplicationsResults(){
     $status = Application::status();
     $courses[""] = "All Courses";
-    $courses_get = Course::where('user_type',Auth::user()->manage_official_type)->get();
+    $courses_get = Course::where('user_type',Auth::user()->manage_official_type)->orderBy('start_date','DES')->get();
+
     foreach ($courses_get as $course) {
         $courses[$course->id] = $course->name.', '.$course->venue.', '.date("d-m-Y", strtotime($course->start_date));
     }

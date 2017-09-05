@@ -596,7 +596,7 @@ class CoachController extends BaseController {
         $id = Auth::User()->coach_id;
         $coachLicense = CoachLicense::listing()->where('coach_id',$id)->get();
 
-        $sql = License::where('user_type',Auth::user()->official_types);
+        $sql = License::where('user_type',Auth::user()->official_types)->where('show_dropdown','!=',1);
 
         $licenseUploaded = [];
         if(sizeof($coachLicense) > 0){

@@ -28,6 +28,12 @@ class LicenseController extends BaseController {
             if(Input::has('prerequisite_id')){
                 $license->prerequisite_id = implode(',',Input::get('prerequisite_id'));
             }
+
+            if(Input::has('show_dropdown')){
+                $license->show_dropdown = Input::get("show_dropdown");
+            }else{
+                $license->show_dropdown = 0;
+            }
             $license->authorised_by = Input::get('authorised_by');
             $license->user_type = Auth::user()->manage_official_type;
             $license->save();
@@ -57,6 +63,13 @@ class LicenseController extends BaseController {
             if(Input::has('prerequisite_id')){
                 $license->prerequisite_id = implode(',',Input::get('prerequisite_id'));
             }
+
+            if(Input::has('show_dropdown')){
+                $license->show_dropdown = Input::get("show_dropdown");
+            }else{
+                $license->show_dropdown = 0;
+            }
+            
             $license->authorised_by = Input::get('authorised_by');
             $license->save();
             return Redirect::back()->with('success','License Updated Successfully!!');

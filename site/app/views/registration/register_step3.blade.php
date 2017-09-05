@@ -36,7 +36,7 @@
                 </span>
               </h4>
               <?php
-                $types = ["" => "Select"] + License::lists("name", "id");
+                $types = ["" => "Select"] + License::where('show_dropdown','!=',1)->lists("name", "id");
               ?>
               <div class="col-md-3">
                 <div class="form-group"> 

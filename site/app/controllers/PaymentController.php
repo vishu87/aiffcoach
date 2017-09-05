@@ -33,7 +33,7 @@ class PaymentController extends BaseController {
         $payments = $sql->skip(($page_id-1)*$max_per_page)->take($max_per_page)->get();
         
         $courses[""] = "All Courses";
-        $courses_get = Course::where('user_type',Auth::user()->manage_official_type)->get();
+        $courses_get = Course::where('user_type',Auth::user()->manage_official_type)->orderBy('start_date','DES')->get();
         foreach ($courses_get as $course) {
             $courses[$course->id] = $course->name.', '.$course->venue.', '.date("d-m-Y", strtotime($course->start_date));
         }
