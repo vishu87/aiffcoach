@@ -170,7 +170,6 @@
 							<th  style="width:50px">SN</th>
 							<th data-placeholder="Search..">Name</th>
 							<th data-placeholder="Search..">Registration ID</th>
-							<th data-placeholder="Search..">Contact Details</th>
 							<th data-placeholder="Search..">State</th>
 							@if(Input::has('license_id') && Input::get('license_id') !='')
 							<th data-placeholder="Search..">License</th>
@@ -188,7 +187,6 @@
 								<td>{{$data->full_name}}
 								</td>
 								<td>{{$data->registration_id}}</td>
-								<td>{{$data->email}}</td>
 								<td>{{$data->state_reference}}</td>
 								@if(Input::has('license_id') && Input::get('license_id') !='')
 									<td>
