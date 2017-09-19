@@ -15,7 +15,7 @@ class resultAdminController extends BaseController {
         }
         if(sizeof($courseIdArray)>0){
 
-            $courses_get = Course::whereIn('id',$courseIdArray)->orderBy('start_date','DES')->get();
+            $courses_get = Course::whereIn('id',$courseIdArray)->orderBy('start_date')->get();
             $courses = ["" => "Select Course"];
 
             foreach ($courses_get as $course) {

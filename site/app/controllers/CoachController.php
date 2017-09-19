@@ -781,7 +781,7 @@ class CoachController extends BaseController {
         if(Input::get("state_id") != ''){
           $sql = $sql->where('coaches.state_id',Input::get('state_id'));
         }
-
+        $exportCoaches = $sql->get();
         $total = $sql->count();
 
         $max_per_page = 100;
@@ -849,6 +849,7 @@ class CoachController extends BaseController {
         }
 
         if(Input::has('export_excel') && Input::get('export_excel')){
+            $coaches = $exportCoaches;
             if(sizeof($coaches)>0){
                 include(app_path().'/libraries/Classes/PHPExcel.php');
                 include(app_path().'/libraries/export/export-all-coaches.php'); 
