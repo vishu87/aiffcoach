@@ -828,8 +828,10 @@ class CoachController extends BaseController {
             if(Input::has('license_id') && Input::get('license_id') != $license->equivalent_license_id ){
 
                 if($license->recc == 1){
+                    if(isset($licenses[$license->equivalent_license_id])){
 
-                    array_push($latest_license[$license->coach_id], $license->license_name.' ( '.$licenses[$license->equivalent_license_id].' ) ');
+                        array_push($latest_license[$license->coach_id], $license->license_name.' ( '.$licenses[$license->equivalent_license_id].' ) ');
+                    }
                 }else{
 
                     array_push($latest_license[$license->coach_id], $license->license_name);

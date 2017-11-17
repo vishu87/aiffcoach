@@ -192,7 +192,7 @@ class AdminController extends BaseController {
   }
 
   public function editCoachProfile($coach_id){
-    $coach = Coach::select('coaches.*','states.name as state_registation','coach_parameters.email','coach_parameters.address1','coach_parameters.address2','coach_parameters.city','coach_parameters.pincode','coach_parameters.mobile')->join('states','coaches.state_id','=','states.id')->join('coach_parameters','coaches.id','=','coach_parameters.coach_id')->where('coaches.id',$coach_id)->first();
+    $coach = Coach::select('coaches.*','states.name as state_registation','coach_parameters.email','coach_parameters.address1','coach_parameters.address2','coach_parameters.city','coach_parameters.pincode','coach_parameters.mobile')->leftJoin('states','coaches.state_id','=','states.id')->join('coach_parameters','coaches.id','=','coach_parameters.coach_id')->where('coaches.id',$coach_id)->first();
     $officialTypes = User::OfficialTypes();
     $selectedOfficialTypes = User::where('coach_id',$coach_id)->first();
     if($selectedOfficialTypes->official_types != ''){

@@ -163,7 +163,7 @@ class RegistrationController extends BaseController {
         if($check<1){
             return Redirect::to('/registerStep1');
         }
-        $official_types = [""=>"Select"] + User::OfficialTypes();
+        $official_types = [""=>"Select"] + User::OfficialTypeForRegistration();
         $emp_status = ["" => "Select"] + EmploymentDetails::emp_status();
         
         $this->layout->main = View::make('registration.register_step3',["id"=>$id,'flag'=>3, 'official_types' => $official_types , "emp_status" => $emp_status]);
@@ -428,6 +428,7 @@ class RegistrationController extends BaseController {
             $mail->send();
 
             $delete_temp_row = DB::table('reg_data')->where('id',$id)->delete();
+            
             return Redirect::to('/')->with('success','You have successfully registered. An email has been sent to your registered e-mail with login details!');
             
         } else {
