@@ -40,8 +40,16 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	public static function OfficialTypes(){
 		return array(
 			"1" => "Coach",
-			// "2" => "Team/Club Official",
+			"2" => "Team/Club Official",
 			"3" => "Match Official",
+		);
+	}
+
+	public static function OfficialTypeForRegistration(){
+		return array(
+			"1" => "Coach",
+			"2" => "Team/Club Official",
+			// "3" => "Match Official",
 		);
 	}
 

@@ -60,7 +60,7 @@ $(document).ready(function(e){
 		changeMonth:true,
 		changeYear:true,
 		dateFormat: "dd-mm-yy",
-		yearRange: "1950:2050"
+		yearRange: "1945:2050"
 	})
 	$(".dob-validate").validate({
 	  groups: {
