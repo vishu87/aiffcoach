@@ -67,7 +67,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 	public static function fileExtensions(){
 		return array (
-			"pdf" , "jpg" , "jpeg", "png" , "JPG"
+			"pdf" , "jpg" , "jpeg", "png" , "JPG", "PDF", "PNG", "JPEG"
 		);
 	}
 }
