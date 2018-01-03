@@ -49,7 +49,16 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		return array(
 			"1" => "Coach",
 			// "2" => "Team/Club Official",
+
 			"3" => "Match Official",
+		);
+	}
+
+	public static function OfficialTypeForRegistration(){
+		return array(
+			"1" => "Coach",
+			"2" => "Team/Club Official",
+			// "3" => "Match Official",
 		);
 	}
 
@@ -67,7 +76,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 	public static function fileExtensions(){
 		return array (
-			"pdf" , "jpg" , "jpeg", "png" , "JPG"
+			"pdf" , "jpg" , "jpeg", "png" , "JPG", "PDF", "PNG", "JPEG"
 		);
 	}
 }
