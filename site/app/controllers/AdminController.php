@@ -439,6 +439,28 @@ class AdminController extends BaseController {
     return Redirect::to('/coach/dashboard');
   }
 
+  public function changeOfficialType($user_id){
+    $user = User::find($user_id);
+    $current_user_types = explode(',',$user->official_types);
+    return View::make('admin.logins.change-official-type',["user_id" => $user_id,"current_user_types"=>$current_user_types]);
+  }
+
+  public function updateOfficialType($user_id){
+    $official_types = Input::get('official_types');
+    if(sizeof($official_types) >0){
+      $user = User::find($user_id);
+      $user->official_types = implode(',',$official_types);
+      $user->save();
+      $data['success'] = true;
+      $data['confirm'] = true;
+      $data['message'] = "User official types are updated successfully";
+    }else{
+      $data['success'] = false;
+      $data['message'] = 'Select at least 1 user type';
+    }
+    return json_encode($data);
+  }
+
   public function resetUserPassword($user_id){
     return View::make('admin.logins.reset-password',["user_id" => $user_id]);
   }

@@ -169,6 +169,8 @@ Route::group(["before"=>['auth']],function(){
 
 			Route::get('/logins','AdminController@logins');
 			Route::get('/logins/{user_id}','AdminController@loginByUser');
+			Route::get('/changeOfficialType/{user_id}','AdminController@changeOfficialType');
+			Route::put('/changeOfficialType/{user_id}','AdminController@updateOfficialType');
 
 			Route::get('/reset-password/{user_id}','AdminController@resetUserPassword');
 			Route::put('/reset-password/{user_id}','AdminController@changeUserPassword');
