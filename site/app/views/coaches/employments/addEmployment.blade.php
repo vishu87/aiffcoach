@@ -58,8 +58,8 @@
 	            <span class="error">{{$errors->first('date_since_emp')}}</span>
 		    </div>
 			<div class="col-md-6 form-group {{(isset($employment) && $employment->emp_status == 3)?'hiddenDiv':''}}">
-	        	<label>End Date</label>
-	            {{Form::text('end_date',(isset($employment))?($employment->end_date)?date('d-m-Y',strtotime($employment->end_date)):'':'',['class'=>"form-control emp_validate datepicker ","date_en"=>'true'])}}
+	        	<label>End Date <span class="error">*</span></label>
+	            {{Form::text('end_date',(isset($employment))?($employment->end_date)?date('d-m-Y',strtotime($employment->end_date)):'':'',['class'=>"form-control emp_validate datepicker ","date_en"=>'true' , "required"=>true])}}
 	            <span class="error">{{$errors->first('date_since_emp')}}</span>
 		    </div>
 		

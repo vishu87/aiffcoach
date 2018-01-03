@@ -179,3 +179,6 @@ ALTER TABLE `coach_parameters`  ADD `address_country` TEXT NULL DEFAULT NULL  AF
 
 // 08/09/2017 added by chirag
 ALTER TABLE `license` ADD `show_dropdown` INT(1) NOT NULL DEFAULT '0' AFTER `description`;
+
+// 17/11/2017 added by chirag
+ALTER TABLE `employment_details` CHANGE `emp_status` `emp_status` INT(1) NULL DEFAULT '0';

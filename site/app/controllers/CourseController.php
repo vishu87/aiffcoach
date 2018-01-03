@@ -7,6 +7,7 @@ class CourseController extends BaseController {
         $courses = Course::select('courses.*','license.name as license_name','license.authorised_by')
             ->join('license','courses.license_id','=','license.id')
             ->where('courses.user_type',Auth::user()->manage_official_type)
+            ->orderBy('courses.start_date','DESC')
             ->get();
         $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'courses','subsidebar'=>1]);
         $this->layout->main = View::make('admin.courses.list',['courses'=>$courses,'title'=>'Courses','flag'=>1]);

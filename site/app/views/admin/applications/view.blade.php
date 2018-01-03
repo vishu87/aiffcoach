@@ -20,11 +20,16 @@
 
 	<td>
 		<a href="{{url('/control/applications/details/'.$data->id)}}" class="btn blue btn-sm" target="_blank">View</a>
-		@if($data->status == 1)
+		@if($data->status == 1 || $data->status == 2)
 
-		<button type="button" class="btn green btn-sm delete-div" div-id="coach_{{$data->id}}"  action="{{'admin/Applications/select/'.$data->id}}">Select <i class="fa fa-angle-double-right"></i></button>
+			@if($data->status != 2 )
 
-		<button type="button" class="btn yellow btn-sm delete-div" div-id="coach_{{$data->id}}"  action="{{'admin/Applications/not-select/'.$data->id}}">Not Select <i class="fa fa-angle-double-right"></i></button>
+
+				<button type="button" class="btn green btn-sm delete-div" div-id="coach_{{$data->id}}"  action="{{'admin/Applications/select/'.$data->id}}">Select <i class="fa fa-angle-double-right"></i></button>
+			@endif
+			<button type="button" class="btn yellow btn-sm delete-div" div-id="coach_{{$data->id}}"  action="{{'admin/Applications/not-select/'.$data->id}}">Not Select <i class="fa fa-angle-double-right"></i></button>
+
+
 
 		@endif
 
