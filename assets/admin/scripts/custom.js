@@ -592,9 +592,23 @@ $(document).on("change","#registration_for",function(){
 	var btnVal = $(this).val();
 	if(btnVal == 1){
 		$("#license_data ").show();
+		$("#official_degree ").hide();
 		
 	}else{
 		$("#license_data").hide();
+		$("#official_degree").show();
+
+	}
+
+});
+
+$(document).on("change","#is_doctor",function(){
+	var btnVal = $(this).val();
+	if(btnVal == 1){
+		$("#upload_degree ").show();
+		
+	}else{
+		$("#upload_degree").hide();
 
 	}
 

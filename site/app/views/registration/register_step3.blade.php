@@ -24,7 +24,7 @@
               </div>
               
             </div>
-            <div class="row" id="license_data" style="(isset($data->official_types) && $data->official_types == 1)?'':'display:none' " >
+            <div class="row" id="license_data" style="{{(isset($data->official_types) && $data->official_types == 1)?'':'display:none' }}" >
               <div class="col-md-12">
                 
               </div>
@@ -93,6 +93,21 @@
                     </div>
                   </div>
                 </div>
+              </div>
+            </div>
+
+            <div class="row" id="official_degree" style="{{(isset($data->official_types) && $data->official_types == 2)?'':'display:none' }}">
+              <div class="col-md-6">
+                <label>Are you a Doctor / Physiotherapist ?</label><br>
+                <label>
+                  {{Form::radio('is_doctor',1,'',["id"=>"is_doctor"])}}  Yes &nbsp;&nbsp;&nbsp;
+                </label>
+                <label>{{Form::radio('is_doctor',0,'',["id"=>"is_doctor"])}} No</label>
+              </div>
+
+              <div class="col-md-6" id="upload_degree" style="{{(isset($data->is_doctor) && $data->is_doctor == 1)?'':'display:none' }}">
+                <label>Upload Degree</label>
+                {{Form::file('official_degree',["class"=>"form-control"])}}
               </div>
             </div>
             

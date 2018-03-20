@@ -104,6 +104,30 @@
             		<img src="{{url($coach->photo)}}" style="width:100%">
             	</div>	
             </div>
+
+            <?php $user_official_types = explode(',',Auth::user()->official_types);?>
+            @if(in_array(2,$user_official_types))
+            <div class="row" id="official_degree">
+	            <div class="col-md-6">
+	                <label>Are you a Doctor / Physiotherapist ?</label><br>
+	                <label>
+	                  {{Form::radio('is_doctor',1,($coach->is_doctor==1)?true:false,["id"=>"is_doctor"])}}  Yes &nbsp;&nbsp;&nbsp;
+	                </label>
+	                <label>{{Form::radio('is_doctor',0,($coach->is_doctor==0)?true:false,["id"=>"is_doctor"])}} No</label>
+	            </div>
+
+	            <div class="col-md-6" id="upload_degree" style="{{($coach->is_doctor==1)?'':'display:none';}}">
+	                <label>Upload Degree</label>
+
+	                {{Form::file('doctor_degree',["class"=>"form-control"])}}
+
+	                @if($coach->doctor_degree != '')
+	                	<a href="{{url($coach->doctor_degree)}}" target="_blank">View</a>
+	                @endif
+	            </div>
+            </div>
+            @endif
+
         </div>
     </div>
     <div class="form-actions">

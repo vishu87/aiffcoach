@@ -38,11 +38,21 @@
 						</tr>
 						<tr>
 							<td>Mobile<br><b>{{$coach->mobile}}</b></td>
-						</tr><tr>
+						</tr>
+
+						<tr>
 							<td>Address<br>
 								<b>{{$coach->address1.' '.$coach->address2.' '.$coach->city.' '.$coach->pincode}}</b>
 							</td>
 						</tr>
+						@if($coach->is_doctor ==1 && $coach->doctor_degree != '')
+						<tr>
+							<td>Doctor / Physiotherapist Degree<br>
+								<a style="font-weight: bold;color:#222" href="{{url($coach->doctor_degree)}}" target="_blank">View</a>
+							</td>
+						</tr>
+						@endif
+
 					</table>
 				</div>
 			</div>

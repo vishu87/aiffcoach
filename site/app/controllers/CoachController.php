@@ -63,6 +63,23 @@ class CoachController extends BaseController {
                 }
             }
 
+            if(Input::hasFile('doctor_degree')){
+                $extension = Input::file('doctor_degree')->getClientOriginalExtension();
+                if(in_array($extension, User::fileExtensions())){
+                    $doc = "Doctor_degree_".strtotime("now").'_'.rand(1,100).'.'.$extension;
+                    
+                    Input::file('doctor_degree')->move($destinationPath,$doc);
+                    $coach->doctor_degree = $destinationPath.$doc;
+                }
+            }
+
+            if(Input::has('is_doctor') && Input::get('is_doctor') ==1){
+                $coach->is_doctor = Input::get('is_doctor');
+            }else{
+                $coach->is_doctor = 0;
+                $coach->doctor_degree = '';
+            }
+
             $coach->state_id = Input::get('state_id');
             
             if(Input::get('state_id') == 37){

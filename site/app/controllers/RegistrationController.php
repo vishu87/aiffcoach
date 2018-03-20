@@ -235,6 +235,16 @@ class RegistrationController extends BaseController {
                     $data["passport_proof"] = $destinationPath.$doc;
                 }
             }
+
+            if(Input::hasFile('doctor_degree')){
+                $extension = Input::file('doctor_degree')->getClientOriginalExtension();
+                if(in_array($extension, User::fileExtensions())){
+                    $doc = "Doctor_degree_".strtotime("now").'_'.rand(1,100).'.'.$extension;
+                    
+                    Input::file('doctor_degree')->move($destinationPath,$doc);
+                    $data["doctor_degree"] = $destinationPath.$doc;
+                }
+            }
             
             $licensePath = 'coach-licenses/';
 
@@ -256,6 +266,7 @@ class RegistrationController extends BaseController {
             $data["license_id"] = Input::get('license_id');
             $data["license_number"] = Input::get('license_number');
             $data["start_date"] = Input::get('start_date');
+            $data["is_doctor"] = (Input::has('is_doctor'))?Input::get('is_doctor'):0;
 
             $data = serialize($data);
             if(Input::get('id') == 0){
@@ -291,6 +302,8 @@ class RegistrationController extends BaseController {
             }
 
             $coach->gender = $data1['gender'];
+            $coach->is_doctor = $data3['is_doctor'];
+            $coach->doctor_degree = (isset($data3["doctor_degree"]))?$data3["doctor_degree"]:'';
             $coach->save();
             $coach->registration_id = strtoupper(date("YM")).$coach->id;
             $coach->save();
