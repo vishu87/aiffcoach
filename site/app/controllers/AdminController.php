@@ -177,7 +177,6 @@ class AdminController extends BaseController {
     if(sizeof($match_ids) < 1){
       $match_ids = CoachParameter::where(function($query) use ($coach){
         $query->where('coach_parameters.email',$coach->email);
-        $query->orWhere('coach_parameters.mobile',$coach->mobile);
       })->where('coach_parameters.coach_id','!=',$coach_id)->lists('coach_id');
     }
 
