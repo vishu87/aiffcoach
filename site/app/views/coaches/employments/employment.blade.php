@@ -34,6 +34,7 @@
 					<th>Start Date</th>
 					<th>End Date</th>
 					<th>Documents</th>
+					<th>Approval</th>
 					<th>Manage</th>
 				</tr>
 			</thead>

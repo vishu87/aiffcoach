@@ -32,6 +32,13 @@ class UserController extends BaseController {
             $check = SimpleCaptcha::check(Input::get('captcha'));
             if($check){
                 if (Auth::attempt(['username' => Input::get('username'), 'password' => Input::get('password'), 'active' => 0] )){
+                    if(Auth::user()->privilege == 1){
+                        $coach = Coach::where('id',Auth::user()->coach_id)->where('status',3)->first();
+                        if($coach){
+                            Auth::logout();
+                            return Redirect::back()->withInput()->with('failure', 'Your profile has been rejected please contact aiff administration');
+                        }
+                    }
                     Session::put('privilege', Auth::user()->privilege);
                     if(Auth::user()->privilege == 1 ) return Redirect::to('coach/dashboard');
                     if(Auth::user()->privilege == 2 ) return Redirect::to('admin');

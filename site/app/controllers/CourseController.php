@@ -4,31 +4,77 @@ class CourseController extends BaseController {
     //*********methods for admin panel*********
 
     public function index(){
+        if(Input::has('year') && Input::get('year') != ''){
+            $year = Input::get('year');
+        }else{
+            $year = "2018";
+        }
+        
+        $start_date = $year."-01-01";
+        $end_date = $year."-12-31";
+
         $courses = Course::select('courses.*','license.name as license_name','license.authorised_by')
             ->join('license','courses.license_id','=','license.id')
             ->where('courses.user_type',Auth::user()->manage_official_type)
-            ->orderBy('courses.start_date','DESC')
+            ->orderBy('courses.start_date','ASC')
+            ->whereBetween('courses.start_date',[$start_date,$end_date])
             ->get();
         $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'courses','subsidebar'=>1]);
-        $this->layout->main = View::make('admin.courses.list',['courses'=>$courses,'title'=>'Courses','flag'=>1]);
+        $this->layout->main = View::make('admin.courses.list',['courses'=>$courses,'title'=>'Courses','flag'=>1 , "year"=>$year]);
     }
 
     public function active(){
-        $courses =  Course::Active()->where('courses.user_type',Auth::user()->manage_official_type)->get();
+        if(Input::has('year') && Input::get('year') != ''){
+            $year = Input::get('year');
+        }else{
+            $year = "2018";
+        }
+        
+        $start_date = $year."-01-01";
+        $end_date = $year."-12-31";
+
+        $courses =  Course::Active()->where('courses.user_type',Auth::user()->manage_official_type)
+            ->orderBy('courses.start_date','ASC')
+            ->whereBetween('courses.start_date',[$start_date,$end_date])
+            ->get();
         $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'courses','subsidebar'=>2]);
-        $this->layout->main = View::make('admin.courses.list',['courses'=>$courses,'title'=>'Active Courses','flag'=>2]);
+        $this->layout->main = View::make('admin.courses.list',['courses'=>$courses,'title'=>'Active Courses','flag'=>2 , "year"=>$year]);
     }
 
     public function upcoming(){
-        $courses =  Course::Upcoming()->where('courses.user_type',Auth::user()->manage_official_type)->get();
+        if(Input::has('year') && Input::get('year') != ''){
+            $year = Input::get('year');
+        }else{
+            $year = "2018";
+        }
+        
+        $start_date = $year."-01-01";
+        $end_date = $year."-12-31";
+
+        $courses =  Course::Upcoming()->where('courses.user_type',Auth::user()->manage_official_type)
+            ->orderBy('courses.start_date','ASC')
+            ->whereBetween('courses.start_date',[$start_date,$end_date])
+            ->get();
         $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'courses','subsidebar'=>3]);
-        $this->layout->main = View::make('admin.courses.list',['courses'=>$courses,'title'=>'Upcoming Courses','flag'=>2]);
+        $this->layout->main = View::make('admin.courses.list',['courses'=>$courses,'title'=>'Upcoming Courses','flag'=>2 , "year"=>$year]);
     }
 
     public function inactive(){
-        $courses =  Course::Inactive()->where('courses.user_type',Auth::user()->manage_official_type)->get();
+        if(Input::has('year') && Input::get('year') != ''){
+            $year = Input::get('year');
+        }else{
+            $year = "2018";
+        }
+        
+        $start_date = $year."-01-01";
+        $end_date = $year."-12-31";
+
+        $courses =  Course::Inactive()->where('courses.user_type',Auth::user()->manage_official_type)
+            ->orderBy('courses.start_date','ASC')
+            ->whereBetween('courses.start_date',[$start_date,$end_date])
+            ->get();
         $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'courses','subsidebar'=>3]);
-        $this->layout->main = View::make('admin.courses.list',['courses'=>$courses,'title'=>'Past Courses']);
+        $this->layout->main = View::make('admin.courses.list',['courses'=>$courses,'title'=>'Past Courses' , "year"=>$year]);
     }
 
     public function add(){
@@ -213,23 +259,59 @@ class CourseController extends BaseController {
     /**********courses for coach panel*******/
 
     public function activeCourse(){
+        if(Input::has('year') && Input::get('year') != ''){
+            $year = Input::get('year');
+        }else{
+            $year = "2018";
+        }
+        
+        $start_date = $year."-01-01";
+        $end_date = $year."-12-31";
+
         $user_type = explode(',',Auth::user()->official_types);
-        $courses =  Course::Active()->whereIn('courses.user_type',$user_type)->get();
+        $courses =  Course::Active()->whereIn('courses.user_type',$user_type)
+            ->orderBy('courses.start_date','ASC')
+            ->whereBetween('courses.start_date',[$start_date,$end_date])
+            ->get();
         $this->layout->sidebar = View::make('coaches.sidebar',['sidebar'=>5,'subsidebar'=>1]);
-        $this->layout->main = View::make('coaches.courses.list',['courses'=>$courses,'title'=>'Active Courses']);
+        $this->layout->main = View::make('coaches.courses.list',['courses'=>$courses,'title'=>'Active Courses', "year"=>$year]);
     }
 
     public function upcomingCourse(){
+        if(Input::has('year') && Input::get('year') != ''){
+            $year = Input::get('year');
+        }else{
+            $year = "2018";
+        }
+        
+        $start_date = $year."-01-01";
+        $end_date = $year."-12-31";
+
         $user_type = explode(',',Auth::user()->official_types);
-        $courses =  Course::Upcoming()->whereIn('courses.user_type',$user_type)->get();
+        $courses =  Course::Upcoming()->whereIn('courses.user_type',$user_type)
+            ->orderBy('courses.start_date','ASC')
+            ->whereBetween('courses.start_date',[$start_date,$end_date])
+            ->get();
         $this->layout->sidebar = View::make('coaches.sidebar',['sidebar'=>5,'subsidebar'=>3]);
-        $this->layout->main = View::make('coaches.courses.list',['courses'=>$courses,'title'=>'Upcoming Courses']);
+        $this->layout->main = View::make('coaches.courses.list',['courses'=>$courses,'title'=>'Upcoming Courses', "year"=>$year]);
     }
 
     public function inactiveCourse(){
+        if(Input::has('year') && Input::get('year') != ''){
+            $year = Input::get('year');
+        }else{
+            $year = "2018";
+        }
+        
+        $start_date = $year."-01-01";
+        $end_date = $year."-12-31";
+
         $user_type = explode(',',Auth::user()->official_types);
-        $courses =  Course::Inactive()->whereIn('courses.user_type',$user_type)->get();
+        $courses =  Course::Inactive()->whereIn('courses.user_type',$user_type)
+            ->orderBy('courses.start_date','ASC')
+            ->whereBetween('courses.start_date',[$start_date,$end_date])
+            ->get();
         $this->layout->sidebar = View::make('coaches.sidebar',['sidebar'=>5,'subsidebar'=>2]);
-        $this->layout->main = View::make('coaches.courses.list',['courses'=>$courses,'title'=>'Past Courses','status'=>'inactive']);
+        $this->layout->main = View::make('coaches.courses.list',['courses'=>$courses,'title'=>'Past Courses','status'=>'inactive', "year"=>$year]);
     }
 }

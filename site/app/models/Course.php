@@ -43,4 +43,8 @@ class Course extends Eloquent {
 
 	}
 	
+
+	public static function years(){
+		return [""=>"Select","2017"=>"2017","2018"=>"2018","2019"=>"2019"];
+	}	
 }

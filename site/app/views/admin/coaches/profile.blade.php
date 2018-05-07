@@ -4,7 +4,8 @@
 		<h2 class="page-title">{{strtoupper($coach->full_name)}}<br>{{strtoupper($coach->registration_id)}}</h2>
 	</div>
 	<div class="col-md-6">
-		<a href="{{url('admin/editCoachProfile/'.$coach->id)}}" class="btn yellow pull-right" style="margin-top:10px">Edit</a>
+		<a href="{{url('admin/editCoachProfile/'.$coach->id)}}" class="btn yellow pull-right" style="margin-top:10px">Edit</a> 
+		<button action="{{url('admin/checkDuplicate/'.$coach->id)}}" modal-title="Duplicate profiles" class="btn details green pull-right" style="margin-top:10px">Check Duplicate</button>
 	</div>
 </div>
 <div class="row">

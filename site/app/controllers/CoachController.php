@@ -589,6 +589,9 @@ class CoachController extends BaseController {
 
             $updateEmployment->referral_name = Input::get('referral_name');
             $updateEmployment->referral_contact = Input::get('referral_contact');
+
+            $updateEmployment->status = 0;
+            
             $updateEmployment->save();  
 
             return Redirect::back()->with('success','Details Updated Successfully');    

@@ -7,7 +7,7 @@
         @include('register_status')
         
       </div>
-      {{ Form::open(array('url' =>'registerStep3',"method"=>"POST","files"=>'true','class'=>'form check_form')) }}
+      {{ Form::open(array('url' =>'registerStep3',"method"=>"POST","files"=>'true','class'=>'form check_form' , 'id'=>'registration')) }}
         {{Form::text('id',(isset($id))?$id:'',["class"=>'hidden'])}}
 
       <div class="portlet box blue">
@@ -235,11 +235,25 @@
           </div>      
           <div class="form-actions">
                 <a href="{{url('/registerStep2/'.$id)}}" class="btn blue pull-left"> Previous</a>
-            <button type="submit" class="btn blue pull-right">Confirm</button>
+            <button type="button" id="registerForm" class="btn blue pull-right">Confirm</button>
           </div>
           
         </div>
       </div>
+      {{Form::close()}}
     </div>  
   </div>
 </div>  
+
+
+<script type="text/javascript">
+  $(document).on("click","#registerForm",function(e){
+    if($(".check_form").validate().checkForm()){
+
+      $(this).prop('disabled',true);
+    }else{
+      
+    }
+    $("#registration").submit();
+  });
+</script>

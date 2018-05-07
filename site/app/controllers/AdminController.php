@@ -167,6 +167,31 @@ class AdminController extends BaseController {
 
     return json_encode($data);
   }
+
+  public function checkDuplicate($coach_id){
+    $coach = Coach::select('coaches.first_name','coaches.id','coaches.dob','coach_parameters.email','coach_parameters.mobile')
+      ->leftJoin('coach_parameters','coach_parameters.coach_id','=','coaches.id')->where('coaches.id',$coach_id)->first();
+
+    $match_ids = Coach::where('coaches.first_name',$coach->first_name)->where('coaches.dob','=',$coach->dob)->where('coaches.id','!=',$coach_id)->lists('id');
+
+    if(sizeof($match_ids) < 1){
+      $match_ids = CoachParameter::where(function($query) use ($coach){
+        $query->where('coach_parameters.email',$coach->email);
+        $query->orWhere('coach_parameters.mobile',$coach->mobile);
+      })->where('coach_parameters.coach_id','!=',$coach_id)->lists('coach_id');
+    }
+
+    if(sizeof($match_ids) > 0){
+      $coaches = Coach::select('coaches.full_name','coaches.registration_id','coaches.dob','coaches.photo','coaches.id','coaches.dob','coach_parameters.email','coach_parameters.mobile')
+      ->leftJoin('coach_parameters','coach_parameters.coach_id','=','coaches.id')->whereIn('coaches.id',$match_ids)->get();
+    }else{
+      $coaches = [];
+    }
+
+
+    return View::make('admin.coaches.duplicate',["coaches"=>$coaches]);
+
+  }
   
   public function viewCoachDetails($id){
     $coach = Coach::select('coaches.*','states.name as state_registation','coach_parameters.email','coach_parameters.address1','coach_parameters.address2','coach_parameters.city','coach_parameters.pincode','coach_parameters.mobile')->leftJoin('states','coaches.state_id','=','states.id')->join('coach_parameters','coaches.id','=','coach_parameters.coach_id')->where('coaches.id',$id)->first();

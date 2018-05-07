@@ -186,6 +186,7 @@ Route::group(["before"=>['auth']],function(){
 
 			Route::get('/inactiveCoach','AdminController@inactiveCoach');
 			Route::get('viewCoach/{id}','AdminController@viewCoach');
+			Route::get('checkDuplicate/{coach_id}','AdminController@checkDuplicate');
 			Route::get('editCoachProfile/{coach_id}','AdminController@editCoachProfile');
 			Route::post('updateCoachProfile/{coach_id}','AdminController@updateCoachProfile');
 			Route::get('viewCoachDetails/{id}','AdminController@viewCoachDetails');

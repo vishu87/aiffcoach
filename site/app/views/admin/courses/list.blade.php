@@ -1,3 +1,4 @@
+<?php $years = Course::years();?>
 <div class="row">
 	<div class="col-md-6">
 		<h3 class="page-title">{{$title}}</h3>
@@ -8,6 +9,18 @@
 		<!-- <a type="button" class="btn green pull-right" style="margin-right:10px;" href="{{url('admin/Courses/add')}}"> <i class="fa fa-plus"></i> Add Course</a> -->
 	</div>
 </div>
+{{Form::open(["method"=>"get"])}}
+<div class="row" style="margin-bottom: 10px;">
+	<div class="col-md-3">
+		<label>View by Year</label>
+		{{Form::select('year',$years,$year,["class"=>"form-control"])}}
+	</div>
+	<div class="col-md-3">
+		<button class="btn btn-primary" style="margin-top: 23px;">Go</button>
+	</div>
+</div>
+{{Form::close()}}
+
 @if(Session::has('success'))
 	<div class="alert alert-success alert-dismissable">
 		<button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>
