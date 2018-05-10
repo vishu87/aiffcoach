@@ -4,8 +4,8 @@ class CoachController extends BaseController {
     public function dashboard(){
         
         $courses = array();
-
-        $courses_get =  Course::Active()->where('courses.user_type','LIKE','%'.Auth::user()->official_types.'%')->get();
+        $user_type = explode(',',Auth::user()->official_types);
+        $courses_get =  Course::Active()->whereIn('courses.user_type',$user_type)->get();
         
         foreach ($courses_get as $course) {
             $application = Application::where('coach_id',Auth::User()->coach_id)->where('course_id',$course->id)->first();
