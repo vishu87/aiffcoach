@@ -1,3 +1,5 @@
+<?php $years = Course::years();?>
+
 <div class="row">
 	<div class="col-md-8">
 		<h3 class="page-title">{{$title}}</h3>
@@ -17,6 +19,19 @@
         	<i class="fa fa-ban-circle"></i><strong>Failure!</strong> {{Session::get('failure')}}
        	</div>
 @endif
+
+{{Form::open(["method"=>"get"])}}
+<div class="row" style="margin-bottom: 10px;">
+	<div class="col-md-3">
+		<label>View by Year</label>
+		{{Form::select('year',$years,$year,["class"=>"form-control"])}}
+	</div>
+	<div class="col-md-3">
+		<button class="btn btn-primary" style="margin-top: 23px;">Go</button>
+	</div>
+</div>
+{{Form::close()}}
+
 <div style="overflow-y:auto">
 	<table class="table table-bordered table-hover tablesorter">
 		<thead>
