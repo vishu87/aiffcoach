@@ -1,5 +1,13 @@
 <?php
 
+// private routes for upload data
+
+// Route::get('upload-data',function(){
+// 	return View::make('admin.upload_data');
+// });
+// Route::post('upload-data','UserController@uploadData');
+
+
 /* Admin routes */
 Route::get('/', function(){
     return View::make('login',[]);

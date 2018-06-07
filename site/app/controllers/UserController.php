@@ -152,4 +152,60 @@ class UserController extends BaseController {
         $updated_data = Coach::select('first_name','middle_name','last_name','full_name')->get();
         return $updated_data;
     }
+
+    public function uploadData(){
+        $destination = 'coaches-doc/';
+        $file = Input::file('file');
+        $filename = Input::file('file')->getClientOriginalName();
+        $extension = Input::file('file')->getClientOriginalExtension();
+        $name = strtotime("now").'.'.strtolower($extension);
+        $file = $file->move($destination, $name);
+        $cData = array();
+        if(File::exists($destination.$name) && $extension == 'csv'){
+
+            $row = 3;
+            $fields = [];
+            if (($handle = fopen($destination.$name, "r")) !== FALSE) {
+
+                while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+                    if($row > 4){
+                        $check_user = User::where('username',$data[2])->first();
+
+                        $cData[$row] = $data;
+                        if(!$check_user){
+                            $coach = new Coach;
+                            $coach->full_name = $data[1];
+                            $coach->save();
+                            $coach->registration_id = strtoupper(date("YM")).$coach->id;
+                            $coach->save();
+
+                            $user = new User;
+                            $user->name = $data[1];
+                            $user->username = $data[2];
+                            $user->coach_id = $coach->id;
+                            $user->mobile = $data[3];
+                            $user->official_types = 3;
+                            $user->privilege = 1;
+                            $user->save(); 
+                            $cData[$row]['message'] = 'Success';
+                        }else{
+                            $cData[$row]['message'] = 'Duplicate Entry';
+                        }
+                    }
+
+                    
+                    $row++;
+                }
+                fclose($handle);
+                $message = 'Records are uploaded successfully';
+            }else{
+                $message = 'file not found';
+            }
+
+            return View::make('admin.upload_data')->with(compact('cData','message'));
+        }else{
+            $message = 'Please upload a valid file';
+            return View::make('admin.upload_data')->with(compact('message'));
+        }
+    }
 }
