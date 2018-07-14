@@ -162,7 +162,7 @@
 				<td>{{date('d-m-Y',strtotime($license->start_date))}}</td>
 				<td>{{($license->end_date)?date('d-m-Y',strtotime($license->end_date)):''}}</td>
 				<td>@if($license->document!='')<a href="{{url($license->document)}}" target="_blank">View </a>@endif</td>
-				<td>{{$ApprovalStatus[$license->status]}}</td>
+				<td>{{(isset($ApprovalStatus[$license->status]))?$ApprovalStatus[$license->status]:''}}</td>
 				<td>
 					<button type="button" class="btn red btn-sm delete-div" div-id="license_{{$license->id}}"  action="{{'coach/coachLicense/delete/'.$license->id}}"> <i class="fa fa-remove"></i></button>
 					<button  div-id="{{'approve_list_'.$count_main}}" class="btn btn-xs blue showApprovals hidden"><i class="fa fa-angle-double-right"></i> Details</button>
@@ -227,7 +227,7 @@
 					<?php $emp_status = EmploymentDetails::emp_status(); ?>
 					{{(isset($emp_status[$employment->emp_status]))?$emp_status[$employment->emp_status]:''}}
 				</td>
-				<td>{{$ApprovalStatus[$employment->status]}}</td>
+				<td>{{(isset($ApprovalStatus[$employment->status]))?$ApprovalStatus[$employment->status]:''}}</td>
 				<td>
 					@if($employment->contract!='')<a href="{{url($employment->contract)}}" target="_blank">Contract<br></a>@endif
 					@if($employment->cv!='')<a href="{{url($employment->cv)}}" target="_blank">CV<br></a>@endif
@@ -286,7 +286,7 @@
 				<td>{{$activity->place}}</td>
 				<td>{{date('d-m-Y',strtotime($activity->from_date))}}</td>
 				<td>{{date('d-m-Y',strtotime($activity->to_date))}}</td>
-				<td>{{$ApprovalStatus[$activity->status]}}</td>
+				<td>{{(isset($ApprovalStatus[$activity->status]))?$ApprovalStatus[$activity->status]:''}}</td>
 				<td>
 					<button  div-id="{{'approve_list_'.$count_main}}" class="btn btn-xs blue showApprovals"><i class="fa fa-angle-double-right"></i> Details</button></td>
 				</td>

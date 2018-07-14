@@ -345,7 +345,7 @@ class RegistrationController extends BaseController {
 
             $coach_license = new CoachLicense;
             $coach_license->coach_id = $coach->id;
-            $coach_license->license_id = $data3["license_id"];
+            $coach_license->license_id = ($data3["license_id"] != "")?$data3["license_id"]:"0";
             $coach_license->document = (isset($data3["license"]))?$data3["license"]:'';
             $coach_license->number = $data3["license_number"];
             $coach_license->start_date = date('Y-m-d',strtotime($data3["start_date"]));
