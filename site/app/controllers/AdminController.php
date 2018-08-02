@@ -485,6 +485,29 @@ class AdminController extends BaseController {
     return json_encode($data);
   }
 
+  public function changeEmail($user_id){
+    $user = User::find($user_id);
+    $current_user_types = explode(',',$user->official_types);
+    return View::make('admin.logins.update-email',["user_id" => $user_id,"user"=>$user]);
+  }
+
+  public function updateEmail($user_id){
+    $email = Input::get('email');
+    if($email){
+      $user = User::find($user_id);
+      $user->username = $email;
+      $user->save();
+      $coach_parameter = CoachParameter::where('coach_id',$user->coach_id)->update(["email"=>$email]);
+      $data['success'] = true;
+      // $data['confirm'] = true;
+      $data['message'] = html_entity_decode(View::make('admin.logins.view',["count"=>Input::get("count"), "data"=>$user]));
+    }else{
+      $data['success'] = false;
+      $data['message'] = 'Email can not be left blank';
+    }
+    return json_encode($data);
+  }
+
   public function resetUserPassword($user_id){
     return View::make('admin.logins.reset-password',["user_id" => $user_id]);
   }
