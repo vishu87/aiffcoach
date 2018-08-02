@@ -14,6 +14,9 @@ class Payment extends Eloquent {
 
 	public static function covertDate($date){
 		$parts = explode('-', $date);
+
+		if(!isset($parts[1])) return '';
+
 		if(checkdate($parts[1], $parts[2], $parts[0])){
 			return date("d-m-Y",strtotime($date));
 		} else {
