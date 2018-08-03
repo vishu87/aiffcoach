@@ -169,7 +169,7 @@ class AdminController extends BaseController {
   }
 
   public function checkDuplicate($coach_id){
-    $coach = Coach::select('coaches.first_name','coaches.id','coaches.dob','coach_parameters.email','coach_parameters.mobile')
+    $coach = Coach::select('coaches.first_name','coaches.id','coaches.dob','coach_parameters.email','coach_parameters.mobile' , 'coaches.status')
       ->leftJoin('coach_parameters','coach_parameters.coach_id','=','coaches.id')->where('coaches.id',$coach_id)->first();
 
     $match_ids = Coach::where('coaches.first_name',$coach->first_name)->where('coaches.dob','=',$coach->dob)->where('coaches.id','!=',$coach_id)->lists('id');
@@ -181,14 +181,14 @@ class AdminController extends BaseController {
     }
 
     if(sizeof($match_ids) > 0){
-      $coaches = Coach::select('coaches.full_name','coaches.registration_id','coaches.dob','coaches.photo','coaches.id','coaches.dob','coach_parameters.email','coach_parameters.mobile')
+      $coaches = Coach::select('coaches.full_name','coaches.registration_id','coaches.dob','coaches.photo','coaches.id','coaches.dob','coach_parameters.email','coach_parameters.mobile' , 'coaches.status')
       ->leftJoin('coach_parameters','coach_parameters.coach_id','=','coaches.id')->whereIn('coaches.id',$match_ids)->get();
     }else{
       $coaches = [];
     }
 
-
-    return View::make('admin.coaches.duplicate',["coaches"=>$coaches]);
+    $status = Coach::status();
+    return View::make('admin.coaches.duplicate',["coaches"=>$coaches , "status" => $status]);
 
   }
   
