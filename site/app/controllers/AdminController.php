@@ -215,6 +215,19 @@ class AdminController extends BaseController {
     $this->layout->main = View::make('admin.coaches.profile',['coach' => $coach, 'employmentDetails' => $employmentDetails, "documents" => $documents, "activities" => $activities, "courses" => $courses, "licenseList" => $licenseList, "coachStatus" => $coachStatus, "coachLicense" => $coachLicense, 'ApprovalStatus' => $ApprovalStatus]);
   }
 
+  public function deleteCoachEmployment($employment_id){
+    $employmentDetails = EmploymentDetails::find($employment_id);
+    if($employmentDetails){
+      $employmentDetails->delete();
+      $data['success'] = true;
+      $data['message'] = 'employment is removed successfully';
+    }else{
+      $data['success'] = false;
+      $data['message'] = 'Employment Details does not exist please try again ';
+    }
+    return json_encode($data);
+  }
+
   public function editCoachProfile($coach_id){
     $coach = Coach::select('coaches.*','states.name as state_registation','coach_parameters.email','coach_parameters.address1','coach_parameters.address2','coach_parameters.city','coach_parameters.pincode','coach_parameters.mobile')->leftJoin('states','coaches.state_id','=','states.id')->join('coach_parameters','coaches.id','=','coach_parameters.coach_id')->where('coaches.id',$coach_id)->first();
     $officialTypes = User::OfficialTypes();
