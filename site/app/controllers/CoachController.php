@@ -54,7 +54,7 @@ class CoachController extends BaseController {
             $coach = Coach::find($id);
             $coach->dob = date('Y-m-d',strtotime(Input::get('dob')));
             $coach->gender = Input::get('gender');
-            $coach->association_id = Input::get('association_id');
+            $coach->association_id = (Input::has('association_id'))?Input::get('association_id'):0;
             $destinationPath = 'coaches-doc/';//folder in root for all uploaded documents
             if(Input::hasFile('photo')){
                 $extension = Input::file('photo')->getClientOriginalExtension();
