@@ -60,20 +60,20 @@ $i = 0;
 
 
 if(isset($export_applications) && $application_status == 2){
-	$fields = array("sn",'full_name','state_registration','email','mobile');
+	$fields = array("sn",'full_name','dob','state_registration','email','mobile');
 	$field_names = array("SN","Coach Name",'State of Registration','Email','Contact');
 	$widths = array("10","30","30","40","30","20","30","20","20","20");
 	$exportData = $export_applications;
 	$title = 'Applications ';
 }elseif(isset($export_applications) && $application_status == 3){
-	$fields = array("sn",'full_name','bank_name','cheque_date','cheque_number','amount');
-	$field_names = array("SN","Name",'Bank Name','DD Date','DD No.','Amount');
+	$fields = array("sn",'full_name','dob','Email','Contact','bank_name','cheque_date','cheque_number','amount');
+	$field_names = array("SN","Name",'email','mobile','Bank Name','DD Date','DD No.','Amount');
 	$widths = array("10","30","30","20","20","20","30","20","20","20");
 	$exportData = $export_applications;
 	$title = 'Applications ';
 }elseif(isset($export_applications)){
-	$fields = array("sn",'full_name','state_registration','present_emp','past_emp','prerequisite_license_date');
-	$field_names = array("SN","Coach Name",'State of Registration','Present Employment','Past Employment','Prerequisite-License Date');
+	$fields = array("sn",'full_name','dob','email','mobile','state_registration','present_emp','past_emp','prerequisite_license_date');
+	$field_names = array("SN","Coach Name","DOB",'Email','Contact','State of Registration','Present Employment','Past Employment','Prerequisite-License Date');
 	$widths = array("10","30","30","50","50","20","30","20","20","30");
 	$exportData = $export_applications;
 	$title = 'Applications ';

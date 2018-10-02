@@ -169,10 +169,15 @@ class AdminController extends BaseController {
   }
 
   public function checkDuplicate($coach_id){
-    $coach = Coach::select('coaches.first_name','coaches.id','coaches.dob','coach_parameters.email','coach_parameters.mobile')
+    $coach = Coach::select('coaches.first_name','coaches.middle_name','coaches.last_name','coaches.full_name','coaches.id','coaches.dob','coach_parameters.email','coach_parameters.mobile')
       ->leftJoin('coach_parameters','coach_parameters.coach_id','=','coaches.id')->where('coaches.id',$coach_id)->first();
 
-    $match_ids = Coach::where('coaches.first_name',$coach->first_name)->where('coaches.dob','=',$coach->dob)->where('coaches.id','!=',$coach_id)->lists('id');
+    $first_names = explode(',', $coach->first_name);
+    $coach->first_name_one = $first_names[0];
+
+    $match_ids = Coach::where(function($query) use ($coach){
+      $query->where('coaches.first_name','=',$coach->first_name)->orWhere('coaches.full_name','=',$coach->full_name)->orWhere('coaches.first_name','=',$coach->first_name." ".$coach->middle_name)->orWhere('coaches.full_name','=',$coach->first_name." ".$coach->middle_name." ".$coach->last_name)->orWhere('coaches.first_name','LIKE','%'.$coach->first_name_one);
+    })->where('coaches.dob',$coach->dob)->where('coaches.id','!=',$coach_id)->lists('id');
 
     if(sizeof($match_ids) < 1){
       $match_ids = CoachParameter::where(function($query) use ($coach){

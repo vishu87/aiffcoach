@@ -62,6 +62,15 @@
 					<span class="error">{{$errors->first('description')}}</span>
 				</div>
 			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<div class=" form-group">
+						{{Form::label('Duration from Prerequisite Course in months')}} <span class="error"> *</span>
+						{{Form::number('duration',(isset($license))?$license->duration:'',["class"=>"form-control ","required"=>"true"])}}
+						<span class="error">{{$errors->first('duration')}}</span>
+					</div>
+				</div>
+			</div>
 			<div class="form-group">
 				<label>
 					{{Form::checkbox('show_dropdown',1,(isset($license) && $license->show_dropdown == 1)?true :false)}} &nbsp;&nbsp;&nbsp;Hide Dropdown

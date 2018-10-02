@@ -60,7 +60,8 @@ class ApplicationController extends BaseController {
         $applications = $sql->skip(($page_id-1)*$max_per_page)->take($max_per_page)->get();
 
         if(Input::has('excel_export') && Input::get('excel_export') == 1 ){
-            $sql = $sql->addSelect('states.name as state_registration','coach_parameters.email','coach_parameters.mobile','coach_licenses.start_date as prerequisite_license_date')->join('coach_parameters','coach_parameters.coach_id','=','coaches.id')->leftJoin('states','states.id','=','coaches.state_id')
+
+            $sql = $sql->addSelect('states.name as state_registration','coach_parameters.email','coach_parameters.mobile','coach_licenses.start_date as prerequisite_license_date','coaches.dob')->join('coach_parameters','coach_parameters.coach_id','=','coaches.id')->leftJoin('states','states.id','=','coaches.state_id')
                 ->leftJoin('coach_licenses',function($join){
                     $join->on("coach_licenses.license_id",'=','license.prerequisite_id');
                     $join->on("coach_licenses.coach_id",'=','applications.coach_id');
@@ -175,7 +176,7 @@ class ApplicationController extends BaseController {
     /************ Coaches Apply For Courses **********/
     public function details($course_id){
 
-        $course = Course::select('courses.*','license.name as license_name','license.prerequisite_id','license.authorised_by')
+        $course = Course::select('courses.*','license.name as license_name','license.prerequisite_id','license.authorised_by','license.duration as prerequisite_duration')
             ->join('license','courses.license_id','=','license.id')->where('courses.id',$course_id)->first();
 
         $is_applied = Application::where('course_id',$course_id)->where('coach_id',Auth::user()->coach_id)->first();
@@ -205,7 +206,7 @@ class ApplicationController extends BaseController {
 
     public function detailsApplication($application_id){
 
-        $application = Application::select('applications.*','license.name as license_name','coaches.full_name', 'coaches.status as coach_status')->join('coaches','applications.coach_id','=','coaches.id')->join('courses','applications.course_id','=','courses.id')->leftJoin('license','courses.license_id','=','license.id')->where('applications.id',$application_id)->first();
+        $application = Application::select('applications.*','license.name as license_name','coaches.full_name', 'coaches.status as coach_status','license.duration as prerequisite_duration')->join('coaches','applications.coach_id','=','coaches.id')->join('courses','applications.course_id','=','courses.id')->leftJoin('license','courses.license_id','=','license.id')->where('applications.id',$application_id)->first();
         $course = Course::select('courses.*','license.name as license_name','license.prerequisite_id','license.authorised_by')
             ->join('license','courses.license_id','=','license.id')->where('courses.id',$application->course_id)->first();
         $ApplicationStatus = Application::status();
