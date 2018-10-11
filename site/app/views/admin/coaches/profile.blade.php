@@ -214,11 +214,11 @@
 			<th>Employment Status</th>
 			<th>Status</th>
 			<th>Document</th>
-			<th style="display: none">#</th>
+			<th>#</th>
 		</tr>
 		<?php $count=1;?>
 		@foreach($employmentDetails as $employment)
-			<tr>	
+			<tr id="employment_{{$employment->id}}">	
 				<td>{{$count}}</td>
 				<td>{{$employment->employment}}</td>
 				<td>{{date('d-m-Y',strtotime($employment->start_date))}}</td>
@@ -232,8 +232,9 @@
 					@if($employment->contract!='')<a href="{{url($employment->contract)}}" target="_blank">Contract<br></a>@endif
 					@if($employment->cv!='')<a href="{{url($employment->cv)}}" target="_blank">CV<br></a>@endif
 				</td>
-				<td style="display: none">
-					<button  div-id="{{'approve_list_'.$count_main}}" class="btn btn-xs blue showApprovals"><i class="fa fa-angle-double-right"></i> Details</button></td>
+				<td>
+					<button type="button" class="btn red btn-sm delete-div" div-id="employment_{{$employment->id}}"  action="{{'admin/deleteCoachEmployment/'.$employment->id}}"> <i class="fa fa-remove"></i></button>
+					<!-- <button  div-id="{{'approve_list_'.$count_main}}" class="btn btn-xs blue showApprovals"><i class="fa fa-angle-double-right"></i> Details</button></td> -->
 				</td>
 			</tr>
 			<tr id="{{'approve_list_'.$count_main++}}" style="display:none;">

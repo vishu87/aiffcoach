@@ -95,7 +95,10 @@
 		                    <span class="error">{{$errors->first('domicile_state')}}</span>
 		                  </div>
 		                </div>
-		            	
+		            	<div class="col-md-12 form-group">
+		            		<label class="form-label">Association</label>
+		            		{{Form::select('association_id',$associations,(isset($coach))?$coach->association_id:'',["class"=>"form-control"])}}
+		            	</div>
             		</div>
             	</div>
 

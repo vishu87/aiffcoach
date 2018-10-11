@@ -177,8 +177,12 @@ Route::group(["before"=>['auth']],function(){
 
 			Route::get('/logins','AdminController@logins');
 			Route::get('/logins/{user_id}','AdminController@loginByUser');
+
 			Route::get('/changeOfficialType/{user_id}','AdminController@changeOfficialType');
 			Route::put('/changeOfficialType/{user_id}','AdminController@updateOfficialType');
+
+			Route::get('/changeEmail/{user_id}','AdminController@changeEmail');
+			Route::put('/changeEmail/{user_id}','AdminController@updateEmail');
 
 			Route::get('/reset-password/{user_id}','AdminController@resetUserPassword');
 			Route::put('/reset-password/{user_id}','AdminController@changeUserPassword');
@@ -258,6 +262,9 @@ Route::group(["before"=>['auth']],function(){
 				Route::put('/update/{id}','LicenseController@update');
 				Route::delete('/delete/{id}','LicenseController@delete');
 			});
+
+			Route::delete('/deleteCoachEmployment/{employment_id}','AdminController@deleteCoachEmployment');
+
 			Route::group(["prefix"=>'Applications'],function(){
 				Route::get('/','ApplicationController@ApprovedApplications');
 				Route::get('/all','ApplicationController@ApprovedApplications');

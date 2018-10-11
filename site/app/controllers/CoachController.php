@@ -38,9 +38,10 @@ class CoachController extends BaseController {
         $id = Auth::User()->coach_id;
         $coach = Coach::find($id);
         $state = State::states();
+        $associations = [""=>"Select"] + DB::table('associations')->lists('association_name','id');
         $CoachParameter = CoachParameter::where('coach_id',Auth::User()->coach_id)->first();
         $this->layout->sidebar = View::make('coaches.sidebar',["sidebar"=>'profile','subsidebar'=>1]);
-        $this->layout->main = View::make('coaches.profile',['coach'=>$coach,'CoachParameter'=>$CoachParameter,"profileType"=>1,'title'=>'Personal Details' , "state" => $state]);
+        $this->layout->main = View::make('coaches.profile',['coach'=>$coach,'CoachParameter'=>$CoachParameter,"profileType"=>1,'title'=>'Personal Details' , "state" => $state , "associations"=>$associations]);
     }
 
     public function updatePersonalInformation(){
@@ -53,6 +54,11 @@ class CoachController extends BaseController {
             $coach = Coach::find($id);
             $coach->dob = date('Y-m-d',strtotime(Input::get('dob')));
             $coach->gender = Input::get('gender');
+            if(Input::get('association_id')){
+                $coach->association_id = Input::get('association_id');
+            } else {
+                $coach->association_id = 0;
+            }
             $destinationPath = 'coaches-doc/';//folder in root for all uploaded documents
             if(Input::hasFile('photo')){
                 $extension = Input::file('photo')->getClientOriginalExtension();

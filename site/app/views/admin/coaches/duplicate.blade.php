@@ -15,6 +15,7 @@
 			<th>DOB</th>
 			<th>Email</th>
 			<th>Mobile</th>
+			<th>Status</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -24,10 +25,11 @@
 			<th>{{$sn++}}</th>
 			<th><img src="{{url($coach->photo)}}" style="width: 120px"></th>
 			<th>{{$coach->registration_id}}</th>
-			<th>{{$coach->full_name}}</th>
+			<th><a href="{{url('/admin/viewCoachDetails/'.$coach->id)}}" target="_blank">{{$coach->full_name}}</a></th>
 			<th>{{date('d-m-Y',strtotime($coach->dob))}}</th>
 			<th>{{$coach->email}}</th>
 			<th>{{$coach->mobile}}</th>
+			<th>{{(isset($status[$coach->status]))?$status[$coach->status]:''}}</th>
 		</tr>
 		@endforeach
 	</tbody>
