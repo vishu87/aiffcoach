@@ -25,6 +25,7 @@ class LicenseController extends BaseController {
             $license = new License;
             $license->name= Input::get('name');
             $license->description = Input::get('description');
+            $license->duration = Input::get('duration');
             if(Input::has('prerequisite_id')){
                 $license->prerequisite_id = implode(',',Input::get('prerequisite_id'));
             }
@@ -60,6 +61,7 @@ class LicenseController extends BaseController {
             $license = License::find($id);
             $license->name= Input::get('name');
             $license->description = Input::get('description');
+            $license->duration = Input::get('duration');
             if(Input::has('prerequisite_id')){
                 $license->prerequisite_id = implode(',',Input::get('prerequisite_id'));
             }

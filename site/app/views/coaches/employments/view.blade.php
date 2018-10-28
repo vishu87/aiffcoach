@@ -1,6 +1,7 @@
 <tr id="emp_{{$data->id}}">
 	<td>{{$count}}</td>
 	<td>{{$data->employment}}</td>
+	<td>{{$data->designation_name}}</td>
 
 	<td>{{(isset($emp_status[$data->emp_status]))?$emp_status[$data->emp_status]:''}}</td>
 

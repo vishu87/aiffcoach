@@ -54,7 +54,9 @@ class CoachController extends BaseController {
             $coach = Coach::find($id);
             $coach->dob = date('Y-m-d',strtotime(Input::get('dob')));
             $coach->gender = Input::get('gender');
+
             $coach->association_id = (Input::has('association_id'))?Input::get('association_id'):0;
+
             $destinationPath = 'coaches-doc/';//folder in root for all uploaded documents
             if(Input::hasFile('photo')){
                 $extension = Input::file('photo')->getClientOriginalExtension();
@@ -453,7 +455,33 @@ class CoachController extends BaseController {
         return Redirect::back()->withErrors($validator)->withInput()->with('failure','All Fields Are Not Field!');  
     }
     public function employmentDetails(){
+        $schools = EmploymentDetails::schools();
+        $clubs = EmploymentDetails::clubs();
+        $associations = EmploymentDetails::associations();
+        $designations = EmploymentDetails::designations();
+
         $employment = EmploymentDetails::where('coach_id',Auth::User()->coach_id)->get();
+        foreach ($employment as $record) {
+            if($record->emp_status != 3){
+
+                if($record->organization_id != 0){
+                    if($record->organization_type == 1){
+
+                        $record->employment = $associations[$record->organization_id];
+                    }else if($record->organization_type == 2){
+
+                        $record->employment = $clubs[$record->organization_id];
+                    }else if($record->organization_type == 3){
+
+                        $record->employment = $schools[$record->organization_id];
+                    }
+                }
+
+                if($record->designation_id != 0){
+                    $record->designation_name = $designations[$record->designation_id];
+                }
+            }
+        }
         $emp_status = ["" => "Select"] + EmploymentDetails::emp_status();
 
         $employmentStatus = Approval::status();
@@ -462,8 +490,13 @@ class CoachController extends BaseController {
     }
     public function addNewEmployment(){
         $emp_status = ["" => "Select"] + EmploymentDetails::emp_status();
+        $organization_types = ["" => "Select"] + EmploymentDetails::organization_types();
+        $schools = ["" => "Select"] + EmploymentDetails::schools();
+        $clubs = ["" => "Select"] + EmploymentDetails::clubs();
+        $associations = ["" => "Select"] + EmploymentDetails::associations();
+        $designations = ["" => "Select"] + EmploymentDetails::designations();
         $this->layout->sidebar = View::make('coaches.sidebar',['sidebar'=>2]);
-        $this->layout->main = View::make('coaches.employments.addEmployment',["emp_status" => $emp_status]);
+        $this->layout->main = View::make('coaches.employments.addEmployment',compact("organization_types" , "emp_status" ,'schools' , 'associations' , 'clubs' , 'designations'));
     }
     public function addEmployment(){
         $cre = [
@@ -481,28 +514,59 @@ class CoachController extends BaseController {
 
         if(Input::get('employment_status') != 3){
             $cre = $cre + [
-                'present_emp'=>Input::get('present_emp'),
                 'start_date'=>Input::get('date_since_emp'),
-                'present_emp_copy' => Input::file('present_emp_copy')
+                'present_emp_copy' => Input::file('present_emp_copy'),
+                'organization_type' => Input::get('organization_type'),
+                'designation_id' => Input::get('designation_id')
             ];
             $rules = $rules + [
-                'present_emp'=>'required',
                 'start_date'=>'required',
-                'present_emp_copy' => 'required'
+                'present_emp_copy' => 'required',
+                'organization_type'=>'required',
+                'designation_id'=>'required'
             ]; 
+
+            if(Input::get('organization_type') == 0){
+                $cre['organization_name'] = Input::get('present_emp');
+                $rules['organization_name'] = 'required';
+            }
+
+            if(Input::get('designation_id') == 0){
+                $cre['designation_name'] = Input::get('designation_name');
+                $rules['designation_name'] = 'required';
+            }
+
+
         }
         $validator = Validator::make($cre,$rules);
         if($validator->passes()){
             $destinationPath = 'coaches-doc/';
             $employment = new EmploymentDetails;
             $employment->coach_id = Auth::User()->coach_id;
-            $employment->employment = Input::get('present_emp');
             $employment->emp_status = Input::get('employment_status');
+            if(Input::get('employment_status') != 3){
+                $employment->organization_type = Input::get('organization_type');
+                if(Input::get('organization_type') != 0){
+                    $employment->organization_id = Input::get('organization_id');
+                    $employment->employment = NULL;
+                }else{
+                    $employment->employment = Input::get('present_emp');
+                    $employment->organization_id = 0;
+                }
+                $employment->designation_id = Input::get('designation_id');
+                if(Input::get('designation_id') == 0){
+                    $employment->designation_name = Input::get('designation_name');
+                }else{
+                    $employment->designation_name = NULL;
+                }
+            }else{
+
+            }
             $employment->referral_name = Input::get('referral_name');
             $employment->referral_contact = Input::get('referral_contact');
-            $employment->start_date = (Input::get('date_since_emp') != '') ? date('Y-m-d',strtotime(Input::get('date_since_emp'))) : null;
+            $employment->start_date = (Input::get('date_since_emp') != '') ? date('Y-m-d',strtotime(Input::get('date_since_emp'))) : NULL;
 
-            $employment->end_date = (Input::get('end_date') != '') ? date('Y-m-d',strtotime(Input::get('end_date'))) : null;
+            $employment->end_date = (Input::get('end_date') != '') ? date('Y-m-d',strtotime(Input::get('end_date'))) : NULL;
 
             if(Input::hasFile('present_emp_copy')){
                 $extension = Input::file('present_emp_copy')->getClientOriginalExtension();
@@ -526,14 +590,19 @@ class CoachController extends BaseController {
             $employment->save();
             return Redirect::to('coach/employmentDetails')->with('success','Employment Details Added Successfully');    
         }
-        return Redirect::back()->withErrors($validator)->withInput()->with('failure','All Fields Are Not Field!');
+       return Redirect::back()->withErrors($validator)->withInput()->with('failure',$validator->messages()->first());
         
     }
     public function editEmployment($id){
         $employment = EmploymentDetails::find($id);
         $emp_status = ["" => "Select"] + EmploymentDetails::emp_status();
+        $organization_types = ["" => "Select"] + EmploymentDetails::organization_types();
+        $schools = ["" => "Select"] + EmploymentDetails::schools();
+        $clubs = ["" => "Select"] + EmploymentDetails::clubs();
+        $associations = ["" => "Select"] + EmploymentDetails::associations();
+        $designations = EmploymentDetails::designations();
         $this->layout->sidebar = View::make('coaches.sidebar',["sidebar"=>"2"]);
-        $this->layout->main =  View::make('coaches.employments.addEmployment',['employment'=>$employment , "emp_status" => $emp_status]);
+        $this->layout->main =  View::make('coaches.employments.addEmployment',compact('employment' , "organization_types" , "emp_status" ,'schools' , 'associations' , 'clubs','designations'));
     }
     public function updateEmployment($id){
         $cre = [
@@ -551,35 +620,79 @@ class CoachController extends BaseController {
             $cre = $cre + [
                 'present_emp'=>Input::get('present_emp'),
                 'start_date'=>Input::get('date_since_emp'),
-                
+                'present_emp_copy' => Input::file('present_emp_copy'),
+                'organization_type' => Input::get('organization_type'),
+                'designation_id' => Input::get('designation_id')
             ];
             $rules = $rules + [
                 'present_emp'=>'required',
                 'start_date'=>'required',
-                
+                'present_emp_copy' => 'required',
+                'organization_type'=>'required',
+                'designation_id'=>'required'
             ]; 
+
+            if(Input::get('organization_type') == 0){
+                $cre['organization_name'] = Input::get('organization_name');
+                $rules['organization_name'] = 'required';
+            }
+
+            if(Input::get('designation_id') == 0){
+                $cre['designation_name'] = Input::get('designation_name');
+                $rules['designation_name'] = 'required';
+            }
+
+
         }
         $validator = Validator::make($cre,$rules);
         if($validator->passes()){
 
             $destinationPath = 'coaches-doc/';
             $updateEmployment = EmploymentDetails::find($id);
-            $updateEmployment->employment = Input::get('present_emp');
             $updateEmployment->emp_status = Input::get('employment_status');
 
-            $updateEmployment->start_date  = (Input::get('date_since_emp') != '')?date('Y-m-d',strtotime(Input::get('date_since_emp'))):null;
-
-            $updateEmployment->end_date  = (Input::get('end_date') != '')?date('Y-m-d',strtotime(Input::get('end_date'))):null;
-            
-            if(Input::hasFile('present_emp_copy')){
-                $extension = Input::file('present_emp_copy')->getClientOriginalExtension();
-                if(in_array($extension, User::fileExtensions())){
-                    $doc = "presentemp_".Auth::id().'_'.strtotime("now").'.'.$extension;
-                    Input::file('present_emp_copy')->move($destinationPath,$doc);
-                    $updateEmployment->contract = $destinationPath.$doc;
+            if(Input::get('employment_status') != 3){
+                $updateEmployment->organization_type = Input::get('organization_type');
+                if(Input::get('organization_type') != 0){
+                    $updateEmployment->organization_id = Input::get('organization_id');
+                    $updateEmployment->employment = NULL;
+                }else{
+                    $updateEmployment->employment = Input::get('present_emp');
+                    $updateEmployment->organization_id = 0;
                 }
+                $updateEmployment->designation_id = Input::get('designation_id');
+                if(Input::get('designation_id') == 0){
+                    $updateEmployment->designation_name = Input::get('designation_name');
+                }else{
+                    $updateEmployment->designation_name = NULL;
+                }
+
+                $updateEmployment->start_date  = (Input::get('date_since_emp') != '')?date('Y-m-d',strtotime(Input::get('date_since_emp'))):null;
+
+                $updateEmployment->end_date  = (Input::get('end_date') != '')?date('Y-m-d',strtotime(Input::get('end_date'))):null;
+                
+                if(Input::hasFile('present_emp_copy')){
+                    $extension = Input::file('present_emp_copy')->getClientOriginalExtension();
+                    if(in_array($extension, User::fileExtensions())){
+                        $doc = "presentemp_".Auth::id().'_'.strtotime("now").'.'.$extension;
+                        Input::file('present_emp_copy')->move($destinationPath,$doc);
+                        $updateEmployment->contract = $destinationPath.$doc;
+                    }
+                }
+                
+                
+            }else{
+                $updateEmployment->organization_type = NULL;
+                $updateEmployment->organization_id = 0;
+                $updateEmployment->employment = NULL;
+                $updateEmployment->designation_id =0;
+                $updateEmployment->designation_name =NULL;
+                $updateEmployment->start_date =NULL;
+                $updateEmployment->end_date =NULL;
+                $updateEmployment->contract =NULL;
             }
-            
+
+
             if(Input::hasFile('cv')){
                 $extension = Input::file('cv')->getClientOriginalExtension();
                 if(in_array($extension, User::fileExtensions())){
@@ -588,7 +701,6 @@ class CoachController extends BaseController {
                     $updateEmployment->cv = $destinationPath.$doc;
                 }
             }
-
             $updateEmployment->referral_name = Input::get('referral_name');
             $updateEmployment->referral_contact = Input::get('referral_contact');
 
@@ -598,7 +710,7 @@ class CoachController extends BaseController {
 
             return Redirect::back()->with('success','Details Updated Successfully');    
         }
-        return Redirect::back()->withErrors($validator)->withInput()->with('failure','All Fields Are Not Filled !');
+        return Redirect::back()->withErrors($validator)->withInput()->with('failure',$validator->messages()->first());
     }
     
     public function deleteEmployment($id){

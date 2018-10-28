@@ -551,15 +551,53 @@ $(document).on("change","#recc",function(){
 $(document).on("change","#emp_status",function(){
 	var btnVal = $(this).val();
 	if(btnVal == 3){
-		$(".emp_validate ").parent().hide('300');
+		$(".emp_validate ").parent().hide();
 		$(".emp_validate ").parent().addClass('hiddenDiv');
 		initialize();
 		
 	}else{
-		$(".emp_validate").parent().show('300');
+		$(".emp_validate").parent().show();
 		$(".emp_validate").parent().removeClass('hiddenDiv');
 		initialize();
 
+	}
+
+});
+
+$(document).on("change","#designation_id",function(){
+	var btnVal = $(this).val();
+	if(btnVal == 0){
+		$("#designation_name").show();
+		
+	}else{
+		$("#designation_name").hide();
+	}
+
+});
+
+
+$(document).on("change","#organization_type",function(){
+	var btn = $(this).val();
+	if(btn == 0){
+		$("#organization_name").show();
+		$("#clubs").hide();
+		$("#associations").hide();
+		$("#schools").hide();
+	}else if(btn == 1){
+		$("#organization_name").hide();
+		$("#clubs").hide();
+		$("#associations").show();
+		$("#schools").hide();
+	}else if(btn == 2){
+		$("#organization_name").hide();
+		$("#clubs").show();
+		$("#associations").hide();
+		$("#schools").hide();
+	}else if(btn == 3){
+		$("#organization_name").hide();
+		$("#clubs").hide();
+		$("#associations").hide();
+		$("#schools").show();
 	}
 
 });

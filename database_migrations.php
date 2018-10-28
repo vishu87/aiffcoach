@@ -243,3 +243,8 @@ ALTER TABLE `associations`
 ALTER TABLE `associations`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 COMMIT;
+
+//28-10-2018 chirag
+ALTER TABLE `employment_details` ADD `organization_type` INT(1) NOT NULL DEFAULT '0' AFTER `employment`, ADD `organization_id` INT NOT NULL AFTER `organization_type`, ADD `designation_id` INT NOT NULL AFTER `organization_id`, ADD `designation_name` INT NOT NULL AFTER `designation_id`;
+ALTER TABLE `employment_details` CHANGE `employment` `employment` VARCHAR(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL;
+ALTER TABLE `employment_details` CHANGE `designation_name` `designation_name` VARCHAR(100) NULL DEFAULT NULL;

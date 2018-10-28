@@ -41,14 +41,71 @@
 		      </div>
 		    </div>
 
+		    <div id="organization_fields" class="{{(isset($employment) && $employment->emp_status == 3)?'hiddenDiv':''}}">
+		    	
+				<div class="col-md-6 form-group emp_validate">
+			      
+			        <label>Organization Type</label><span class="error"> *</span>
+			        
+			          {{Form::select('organization_type',$organization_types,(isset($employment))?$employment->organization_type:'',['required'=>'true','class'=>"form-control" , "id"=>"organization_type"])}}
+			          <span class="error">{{$errors->first('organization_type')}}</span>
+			     
+			    </div>
 
-			<div class="col-md-6 form-group {{(isset($employment) && $employment->emp_status == 3)?'hiddenDiv':''}}">
-		      
-		        <label>Organization</label><span class="error"> *</span>
-		        
-		          {{Form::text('present_emp',(isset($employment))?$employment->employment:'',['required'=>'true','placeholder'=>"Present Football Employment",'class'=>"form-control emp_validate "])}}
-		          <span class="error">{{$errors->first('present_emp')}}</span>
-		     
+			    <div class="col-md-6 form-group {{(isset($employment) && $employment->organization_type == 1 && $employment->organization_id != 0)?'':'hiddenDiv'}}" id="associations">
+			      
+			        <label>Associations</label><span class="error"> *</span>
+			        
+			          {{Form::select('organization_id',$associations,(isset($employment))?$employment->organization_id:'',['required'=>'true','class'=>"form-control" , "id"=>"organization_id"])}}
+			          <span class="error">{{$errors->first('organization_id')}}</span>
+			     
+			    </div>
+
+			    <div class="col-md-6 form-group {{(isset($employment) && $employment->organization_type == 2 && $employment->organization_id != 0)?'':'hiddenDiv'}}" id="clubs">
+			      
+			        <label>Clubs</label><span class="error"> *</span>
+			        
+			          {{Form::select('organization_id',$clubs,(isset($employment))?$employment->organization_id:'',['required'=>'true','class'=>"form-control" , "id"=>"organization_id"])}}
+			          <span class="error">{{$errors->first('organization_id')}}</span>
+			     
+			    </div>
+
+			    <div class="col-md-6 form-group {{(isset($employment) && $employment->organization_type == 3 && $employment->organization_id != 0)?'':'hiddenDiv'}}" id="schools">
+			      
+			        <label>Schools</label><span class="error"> *</span>
+			        
+			          {{Form::select('organization_id',$schools,(isset($employment))?$employment->organization_id:'',['required'=>'true','class'=>"form-control" , "id"=>"organization_id"])}}
+			          <span class="error">{{$errors->first('organization_id')}}</span>
+			     
+			    </div>
+
+			    <div class="col-md-6 form-group {{(isset($employment) && $employment->organization_type == 0)?'':'hiddenDiv'}}" id="organization_name">
+			      
+			        <label>Organization</label>
+			        
+			          {{Form::text('present_emp',(isset($employment))?$employment->employment:'',['placeholder'=>"Present Football Employment",'class'=>"form-control "])}}
+			          <span class="error">{{$errors->first('present_emp')}}</span>
+			     
+			    </div>
+
+			    <div class="col-md-6 form-group">
+			      
+			        <label>Designation</label><span class="error"> *</span>
+			        
+			          {{Form::select('designation_id',$designations,(isset($employment))?$employment->designation_id:'',['required'=>'true','class'=>"form-control" , "id"=>"designation_id"])}}
+			          <span class="error">{{$errors->first('designation_id')}}</span>
+			     
+			    </div>
+
+			    <div class="col-md-6 form-group {{(isset($employment) && $employment->designation_id == 0)?'':'hiddenDiv'}}" id="designation_name">
+			      
+			        <label>Specify Designation <span class="error">*</span></label>
+			        
+			          {{Form::text('designation_name',(isset($employment))?$employment->designation_name:'',['class'=>"form-control " , "required"=>true])}}
+			          <span class="error">{{$errors->first('designation_name')}}</span>
+			     
+			    </div>
+
 		    </div>
 
 		    

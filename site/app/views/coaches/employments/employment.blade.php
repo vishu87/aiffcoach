@@ -29,6 +29,7 @@
 				<tr>
 					<th style="width:50px">SN</th>
 					<th>Employment</th>
+					<th>Designation</th>
 					<th>Status</th>
 					<th>Referral Details</th>
 					<th>Start Date</th>
