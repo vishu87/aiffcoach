@@ -173,7 +173,10 @@ Route::group(['prefix'=>'coach','before'=>'auth'], function () {
 Route::group(["before"=>['auth']],function(){
 	Route::group(["before"=>['admin']],function(){
 		Route::group(["prefix"=>'admin'],function(){
+
 			Route::get('/','AdminController@index');
+
+			Route::get('/coach-employments','AdminController@coachEmployments');
 
 			Route::get('/logins','AdminController@logins');
 			Route::get('/logins/{user_id}','AdminController@loginByUser');

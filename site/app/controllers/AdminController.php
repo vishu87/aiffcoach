@@ -36,6 +36,80 @@ class AdminController extends BaseController {
     }
   }
 
+  public function coachEmployments(){
+    $current_season = 2;
+    $designations = [
+      "1"=>"Certified Head of Youth Development",
+      "2"=>"Certified Head Coach - Elite Youth Age-Groups",
+      "3"=>"Certified Assistant Coach - Elite Youth Age-Groups",
+      "4"=>"Certified Grassroot Leaders/Grassroot Coaches - Children's Age-groups",
+      "5"=>"Dedicated Certified Goalkeeping Coaches",
+      "6"=>"Certified Physiotherapist #1",
+      "7"=>"Certified Physiotherapist #2",
+      "8"=>"Certified Physiotherapist #3",
+      "9"=>"Doctor",
+    ];
+
+    $sql = DB::connection('mysql_teams')->table('club_coaches')->select('club_coaches.season_id','club_coaches.coach_id','club_coaches.designation_id','club_coaches.contract','Club.ClubName as club_name')->leftJoin('Club','Club.ClubId','=','club_coaches.club_id')
+      ->where('club_coaches.session_id',$current_season)->orderBy('Club.ClubName');
+
+    $total = $sql->count();
+    $max_per_page = 100;
+    $total_pages = ceil($total/$max_per_page);
+    if(Input::has('page')){
+      $page_id = Input::get('page');
+    } else {
+      $page_id = 1;
+    }
+
+    $input_string = 'admin/coach-employments?';
+    $count_string = 0;
+    foreach (Input::all() as $key => $value) {
+      if($key != 'page'){
+        $input_string .= ($count_string == 0)?'':'&';
+        $input_string .= $key.'='.$value;
+        $count_string++;
+      }
+    }
+
+    if(Input::has('exportExcel') && Input::get('exportExcel') == 1){
+
+      $coaches = $sql->get();
+    }else{
+
+      $coaches = $sql->skip(($page_id-1)*$max_per_page)->take($max_per_page)->get();
+    }
+
+
+    foreach ($coaches as $coach) {
+      $coachdetail = Coach::select('coaches.full_name','coaches.registration_id','coach_parameters.email')->where('coaches.id',$coach->coach_id)->leftJoin('coach_parameters','coach_parameters.coach_id','=','coaches.id')->first();
+      $coach->full_name = $coachdetail->full_name;
+      $coach->registration_id = $coachdetail->registration_id;
+      $coach->email = $coachdetail->email;
+
+      $coach->hyperlink = ($coach->contract != '')?url($coach->contract):'';
+
+      $employments  = EmploymentDetails::where('coach_id',$coach->coach_id)->where('status',1)->lists('employment');
+      $coach->employments = implode(' , ',$employments);
+      $coach->designation = (isset($designations[$coach->designation_id]))?$designations[$coach->designation_id]:'';
+      
+    } 
+    // return $coaches;
+    if(Input::has('exportExcel') && Input::get('exportExcel') == 1){
+
+      if(sizeof($coaches) > 0){
+        include(app_path().'/libraries/Classes/PHPExcel.php');
+        include(app_path().'/libraries/export/export-employments.php');
+      }else{
+        return Redirect::back()->with('failure','No data found to export');
+      }
+    }
+
+    $this->layout->sidebar = View::make('admin.sidebar',['sidebar'=>'coach-employments','subsidebar'=>0]);
+    
+    $this->layout->main = View::make('admin.coaches.employments',["coaches"=>$coaches,'flag'=>1,"total" => $total, "page_id"=>$page_id, "max_per_page" => $max_per_page, "total_pages" => $total_pages,'input_string'=>$input_string ]);
+  }
+
   public function approvedCoach(){
 
     if(Session::get('privilege') == 4){

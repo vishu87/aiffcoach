@@ -47,6 +47,15 @@
         <span class="selected"></span>
       </a>
     </li>
+
+    <li class="@if($sidebar == 'coach-employments' ) active @endif" >
+      <a href="{{url('/admin/coach-employments')}}">
+        <i class="fa fa-cube"></i>
+        <span class="title">Coach Employments</span>
+        <span class="selected"></span>
+      </a>
+    </li>
+
     <li class="@if($sidebar == 2 ) active @endif" >
       <a href="{{url('/admin/Parameter')}}">
         <i class="fa fa-lock"></i>
