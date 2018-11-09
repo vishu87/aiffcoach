@@ -539,6 +539,7 @@ class CoachController extends BaseController {
 
         }
         $validator = Validator::make($cre,$rules);
+        // return Input::get('organization_id');
         if($validator->passes()){
             $destinationPath = 'coaches-doc/';
             $employment = new EmploymentDetails;
@@ -546,8 +547,17 @@ class CoachController extends BaseController {
             $employment->emp_status = Input::get('employment_status');
             if(Input::get('employment_status') != 3){
                 $employment->organization_type = Input::get('organization_type');
-                if(Input::get('organization_type') != 0){
-                    $employment->organization_id = Input::get('organization_id');
+                if(Input::get('organization_type')){
+                    if(Input::get('organization_type') == 1){
+
+                        $employment->organization_id = Input::get('association_id');
+                    }elseif(Input::get('organization_type') == 2){
+
+                        $employment->organization_id = Input::get('club_id');
+                    }elseif(Input::get('organization_type') == 3){
+
+                        $employment->organization_id = Input::get('school_id');
+                    }
                     $employment->employment = NULL;
                 }else{
                     $employment->employment = Input::get('present_emp');
@@ -605,6 +615,7 @@ class CoachController extends BaseController {
         $this->layout->main =  View::make('coaches.employments.addEmployment',compact('employment' , "organization_types" , "emp_status" ,'schools' , 'associations' , 'clubs','designations'));
     }
     public function updateEmployment($id){
+        $updateEmployment = EmploymentDetails::find($id);
         $cre = [
             'employment_status' => Input::get('employment_status'),
             'referral_contact' => Input::get('referral_contact'),
@@ -618,16 +629,12 @@ class CoachController extends BaseController {
 
         if(Input::get('employment_status') != 3){
             $cre = $cre + [
-                'present_emp'=>Input::get('present_emp'),
                 'start_date'=>Input::get('date_since_emp'),
-                'present_emp_copy' => Input::file('present_emp_copy'),
                 'organization_type' => Input::get('organization_type'),
                 'designation_id' => Input::get('designation_id')
             ];
             $rules = $rules + [
-                'present_emp'=>'required',
                 'start_date'=>'required',
-                'present_emp_copy' => 'required',
                 'organization_type'=>'required',
                 'designation_id'=>'required'
             ]; 
@@ -648,13 +655,23 @@ class CoachController extends BaseController {
         if($validator->passes()){
 
             $destinationPath = 'coaches-doc/';
-            $updateEmployment = EmploymentDetails::find($id);
+            
             $updateEmployment->emp_status = Input::get('employment_status');
 
             if(Input::get('employment_status') != 3){
                 $updateEmployment->organization_type = Input::get('organization_type');
                 if(Input::get('organization_type') != 0){
-                    $updateEmployment->organization_id = Input::get('organization_id');
+                    if(Input::get('organization_type') == 1){
+
+                        $updateEmployment->organization_id = Input::get('association_id');
+                    }elseif(Input::get('organization_type') == 2){
+
+                        $updateEmployment->organization_id = Input::get('club_id');
+                    }elseif(Input::get('organization_type') == 3){
+
+                        $updateEmployment->organization_id = Input::get('school_id');
+                    }
+                    
                     $updateEmployment->employment = NULL;
                 }else{
                     $updateEmployment->employment = Input::get('present_emp');

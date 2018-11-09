@@ -579,25 +579,25 @@ $(document).on("change","#designation_id",function(){
 $(document).on("change","#organization_type",function(){
 	var btn = $(this).val();
 	if(btn == 0){
-		$("#organization_name").show();
-		$("#clubs").hide();
-		$("#associations").hide();
-		$("#schools").hide();
+		$("#organization_name").removeClass('hiddenDiv');
+		$("#clubs").addClass('hiddenDiv');
+		$("#associations").addClass('hiddenDiv');
+		$("#schools").addClass('hiddenDiv');
 	}else if(btn == 1){
-		$("#organization_name").hide();
-		$("#clubs").hide();
-		$("#associations").show();
-		$("#schools").hide();
+		$("#organization_name").addClass('hiddenDiv');
+		$("#clubs").addClass('hiddenDiv');
+		$("#associations").removeClass('hiddenDiv');
+		$("#schools").addClass('hiddenDiv');
 	}else if(btn == 2){
-		$("#organization_name").hide();
-		$("#clubs").show();
-		$("#associations").hide();
-		$("#schools").hide();
+		$("#organization_name").addClass('hiddenDiv');
+		$("#clubs").removeClass('hiddenDiv');
+		$("#associations").addClass('hiddenDiv');
+		$("#schools").addClass('hiddenDiv');
 	}else if(btn == 3){
-		$("#organization_name").hide();
-		$("#clubs").hide();
-		$("#associations").hide();
-		$("#schools").show();
+		$("#organization_name").addClass('hiddenDiv');
+		$("#clubs").addClass('hiddenDiv');
+		$("#associations").addClass('hiddenDiv');
+		$("#schools").removeClass('hiddenDiv');
 	}
 
 });

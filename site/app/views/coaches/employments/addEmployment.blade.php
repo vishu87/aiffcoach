@@ -56,7 +56,7 @@
 			      
 			        <label>Associations</label><span class="error"> *</span>
 			        
-			          {{Form::select('organization_id',$associations,(isset($employment))?$employment->organization_id:'',['required'=>'true','class'=>"form-control" , "id"=>"organization_id"])}}
+			          {{Form::select('association_id',$associations,(isset($employment))?$employment->organization_id:'',['required'=>'true','class'=>"form-control" , "id"=>"organization_id"])}}
 			          <span class="error">{{$errors->first('organization_id')}}</span>
 			     
 			    </div>
@@ -65,7 +65,7 @@
 			      
 			        <label>Clubs</label><span class="error"> *</span>
 			        
-			          {{Form::select('organization_id',$clubs,(isset($employment))?$employment->organization_id:'',['required'=>'true','class'=>"form-control" , "id"=>"organization_id"])}}
+			          {{Form::select('club_id',$clubs,(isset($employment))?$employment->organization_id:'',['required'=>'true','class'=>"form-control" , "id"=>"organization_id"])}}
 			          <span class="error">{{$errors->first('organization_id')}}</span>
 			     
 			    </div>
@@ -74,7 +74,7 @@
 			      
 			        <label>Schools</label><span class="error"> *</span>
 			        
-			          {{Form::select('organization_id',$schools,(isset($employment))?$employment->organization_id:'',['required'=>'true','class'=>"form-control" , "id"=>"organization_id"])}}
+			          {{Form::select('school_id',$schools,(isset($employment))?$employment->organization_id:'',['required'=>'true','class'=>"form-control" , "id"=>"organization_id"])}}
 			          <span class="error">{{$errors->first('organization_id')}}</span>
 			     
 			    </div>

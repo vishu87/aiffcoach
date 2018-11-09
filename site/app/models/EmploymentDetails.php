@@ -21,11 +21,11 @@ class EmploymentDetails extends Eloquent {
     }
 
     public static function associations(){
-        return DB::connection('mysql_teams')->table('association')->lists('AssociationName','AssociationId');
+        return DB::connection('mysql_teams')->table('Association')->lists('AssociationName','AssociationId');
     }
 
     public static function clubs(){
-        return DB::connection('mysql_teams')->table('club')->lists('ClubName','ClubId');
+        return DB::connection('mysql_teams')->table('Club')->lists('ClubName','ClubId');
     }
 
     public static function schools(){
