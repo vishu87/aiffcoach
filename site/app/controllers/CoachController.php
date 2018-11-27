@@ -539,8 +539,11 @@ class CoachController extends BaseController {
 
         }
         $validator = Validator::make($cre,$rules);
-        // return Input::get('organization_id');
         if($validator->passes()){
+            $schools = EmploymentDetails::schools();
+            $clubs = EmploymentDetails::clubs();
+            $associations = EmploymentDetails::associations();
+
             $destinationPath = 'coaches-doc/';
             $employment = new EmploymentDetails;
             $employment->coach_id = Auth::User()->coach_id;
@@ -551,14 +554,16 @@ class CoachController extends BaseController {
                     if(Input::get('organization_type') == 1){
 
                         $employment->organization_id = Input::get('association_id');
+                        $employment->employment = $associations[Input::get('association_id')];
                     }elseif(Input::get('organization_type') == 2){
 
                         $employment->organization_id = Input::get('club_id');
+                        $employment->employment = $clubs[Input::get('club_id')];
                     }elseif(Input::get('organization_type') == 3){
 
                         $employment->organization_id = Input::get('school_id');
+                        $employment->employment = $schools[Input::get('school_id')];
                     }
-                    $employment->employment = NULL;
                 }else{
                     $employment->employment = Input::get('present_emp');
                     $employment->organization_id = 0;
@@ -653,7 +658,9 @@ class CoachController extends BaseController {
         }
         $validator = Validator::make($cre,$rules);
         if($validator->passes()){
-
+            $schools = EmploymentDetails::schools();
+            $clubs = EmploymentDetails::clubs();
+            $associations = EmploymentDetails::associations();
             $destinationPath = 'coaches-doc/';
             
             $updateEmployment->emp_status = Input::get('employment_status');
@@ -664,15 +671,16 @@ class CoachController extends BaseController {
                     if(Input::get('organization_type') == 1){
 
                         $updateEmployment->organization_id = Input::get('association_id');
+                        $updateEmployment->employment = $associations[Input::get('association_id')];
                     }elseif(Input::get('organization_type') == 2){
 
                         $updateEmployment->organization_id = Input::get('club_id');
+                        $updateEmployment->employment = $clubs[Input::get('club_id')];
                     }elseif(Input::get('organization_type') == 3){
 
                         $updateEmployment->organization_id = Input::get('school_id');
+                        $updateEmployment->employment = $schools[Input::get('school_id')];
                     }
-                    
-                    $updateEmployment->employment = NULL;
                 }else{
                     $updateEmployment->employment = Input::get('present_emp');
                     $updateEmployment->organization_id = 0;
