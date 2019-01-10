@@ -7,7 +7,7 @@ class CourseController extends BaseController {
         if(Input::has('year') && Input::get('year') != ''){
             $year = Input::get('year');
         }else{
-            $year = "2018";
+            $year = "2019";
         }
         
         $start_date = $year."-01-01";
@@ -27,7 +27,7 @@ class CourseController extends BaseController {
         if(Input::has('year') && Input::get('year') != ''){
             $year = Input::get('year');
         }else{
-            $year = "2018";
+            $year = "2019";
         }
         
         $start_date = $year."-01-01";
@@ -45,7 +45,7 @@ class CourseController extends BaseController {
         if(Input::has('year') && Input::get('year') != ''){
             $year = Input::get('year');
         }else{
-            $year = "2018";
+            $year = "2019";
         }
         
         $start_date = $year."-01-01";
@@ -63,7 +63,7 @@ class CourseController extends BaseController {
         if(Input::has('year') && Input::get('year') != ''){
             $year = Input::get('year');
         }else{
-            $year = "2018";
+            $year = "2019";
         }
         
         $start_date = $year."-01-01";
@@ -262,7 +262,7 @@ class CourseController extends BaseController {
         if(Input::has('year') && Input::get('year') != ''){
             $year = Input::get('year');
         }else{
-            $year = "2018";
+            $year = "2019";
         }
         
         $start_date = $year."-01-01";
@@ -281,7 +281,7 @@ class CourseController extends BaseController {
         if(Input::has('year') && Input::get('year') != ''){
             $year = Input::get('year');
         }else{
-            $year = "2018";
+            $year = "2019";
         }
         
         $start_date = $year."-01-01";
@@ -300,7 +300,7 @@ class CourseController extends BaseController {
         if(Input::has('year') && Input::get('year') != ''){
             $year = Input::get('year');
         }else{
-            $year = "2018";
+            $year = "2019";
         }
         
         $start_date = $year."-01-01";
