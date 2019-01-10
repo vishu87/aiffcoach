@@ -46,7 +46,7 @@ class SuperAdminController extends BaseController {
             $user->username = Input::get('email');
             $user->password = Hash::make($password);
             $user->password_check = $password;
-            $user->manage_official_type = Input::get('manage_official_type');
+            $user->manage_official_type = Input::has('manage_official_type') ? Input::get('manage_official_type') : 0;
             $user->mobile = Input::get('mobile');
             $user->privilege = Input::get('user_type');
             $user->save();
