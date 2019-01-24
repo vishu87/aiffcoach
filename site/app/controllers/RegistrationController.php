@@ -288,7 +288,14 @@ class RegistrationController extends BaseController {
             $coach->first_name = ucwords(strtolower($data1['first_name']));
             $coach->middle_name = ucwords(strtolower($data1['middle_name']));
             $coach->last_name = ucwords(strtolower($data1['last_name']));
-            $coach->full_name = ucwords(strtolower($data1['first_name'])).' '.ucwords(strtolower($data1['middle_name'])).' '.ucwords(strtolower($data1['last_name']));
+
+            $full_name = ucwords(strtolower($data1['first_name']));
+            if(isset($data1['middle_name']) && $data1['middle_name']){
+                $full_name .=' '.ucwords(strtolower($data1['middle_name']));
+            }
+            $full_name = ' '.ucwords(strtolower($data1['last_name']));
+
+            $coach->full_name = $full_name;
             $coach->dob = $data1['dob'];
             if(isset($data1['photo'])){
 

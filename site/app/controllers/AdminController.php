@@ -2,6 +2,20 @@
 
 class AdminController extends BaseController {
   protected $layout = 'layout';
+
+  public function removeSpace(){
+    $coaches = Coach::select("full_name","id")->get();
+    foreach ($coaches as $coach) {
+      $full_name = $coach->full_name ;
+      $full_name = str_replace("  "," ",$full_name);
+      if($full_name != $coach->full_name){
+        echo $coach->full_name." updated<br>";
+      }
+      Coach::where('id',$coach->id)->update(["full_name"=>$full_name]); 
+    }
+    die();
+    
+  }
   
   public function index(){
     

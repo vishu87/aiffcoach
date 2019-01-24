@@ -488,8 +488,7 @@ function initialize(){
 		addRemoveLinks: true, 
 	});
 
-	
-
+	$('.select').select2();
 }
 
 
@@ -599,7 +598,7 @@ $(document).on("change","#organization_type",function(){
 		$("#associations").addClass('hiddenDiv');
 		$("#schools").removeClass('hiddenDiv');
 	}
-
+	initialize();
 });
 
 $(document).on("change","#domicile_state",function(){

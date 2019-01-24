@@ -21,15 +21,15 @@ class EmploymentDetails extends Eloquent {
     }
 
     public static function associations(){
-        return DB::connection('mysql_teams')->table('Association')->lists('AssociationName','AssociationId');
+        return DB::connection('mysql_teams')->table('Association')->orderBy('AssociationName')->lists('AssociationName','AssociationId');
     }
 
     public static function clubs(){
-        return DB::connection('mysql_teams')->table('Club')->lists('ClubName','ClubId');
+        return DB::connection('mysql_teams')->table('Club')->orderBy('ClubName')->lists('ClubName','ClubId');
     }
 
     public static function schools(){
-        return DB::connection('mysql_teams')->table('schools')->lists('school_name','id');
+        return DB::connection('mysql_teams')->table('schools')->orderBy('school_name')->lists('school_name','id');
     }
 
     public static function designations(){

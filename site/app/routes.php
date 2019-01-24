@@ -16,6 +16,8 @@ Route::get('/receipt',function(){
 	return View::make('admin.payment.receipt');
 });	
 
+Route::get('/remove-name-space','AdminController@removeSpace');
+
 Route::get('/capitalization','UserController@capitalization');	
 
 Route::get('/registerStep1/{id?}', 'RegistrationController@registration_step1');
