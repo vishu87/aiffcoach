@@ -293,7 +293,7 @@ class RegistrationController extends BaseController {
             if(isset($data1['middle_name']) && $data1['middle_name']){
                 $full_name .=' '.ucwords(strtolower($data1['middle_name']));
             }
-            $full_name = ' '.ucwords(strtolower($data1['last_name']));
+            $full_name .= ' '.ucwords(strtolower($data1['last_name']));
 
             $coach->full_name = $full_name;
             $coach->dob = $data1['dob'];
