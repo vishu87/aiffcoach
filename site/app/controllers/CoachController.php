@@ -645,7 +645,7 @@ class CoachController extends BaseController {
             ]; 
 
             if(Input::get('organization_type') == 0){
-                $cre['organization_name'] = Input::get('organization_name');
+                $cre['organization_name'] = Input::get('present_emp');
                 $rules['organization_name'] = 'required';
             }
 

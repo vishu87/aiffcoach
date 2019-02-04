@@ -42,7 +42,7 @@
 {{HTML::script("assets/admin/scripts/jquery-ui-1.11.4.js")}}
 
 
-{{HTML::script("assets/admin/scripts/custom.js?v=1.1.4")}}
+{{HTML::script("assets/admin/scripts/custom.js?v=1.1.6")}}
 <script>
 jQuery(document).ready(function() {   
    // initiate layout and plugins
